@@ -14,6 +14,7 @@ export default function Web() {
       <Head>
         <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta key="robots" name="robots" content="noindex" />
       </Head>
       {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
       <Script
