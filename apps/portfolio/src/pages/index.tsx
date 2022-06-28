@@ -2,6 +2,7 @@ import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import { Button } from 'ui'
 import Script from 'next/script'
+import Head from 'next/head'
 
 export default function Web() {
   return (
@@ -10,15 +11,19 @@ export default function Web() {
         title="Rafael Thayto - Home"
         description="Software Engineer apaixonado por novas tecnologias e contruindo seu primeiro portfolio e blog <3!"
       />
+      <Head>
+        <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      </Head>
       {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
       <Script
-        id='google-tagmanager'
+        id="google-tagmanager"
         async
         strategy="afterInteractive"
         src="https://www.googletagmanager.com/gtag/js?id=G-TFB52R9T0C"
       />
       <Script
-        id='google-analytics'
+        id="google-analytics"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
