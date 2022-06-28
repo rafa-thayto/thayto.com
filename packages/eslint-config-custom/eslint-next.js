@@ -1,14 +1,23 @@
 module.exports = {
+  env: {
+    browser: true,
+    node: true,
+  },
   extends: [
     'next',
     'airbnb',
     'airbnb-typescript',
     'plugin:import/recommended',
     'plugin:import/typescript',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
     'prettier',
   ],
   plugins: ['@typescript-eslint', 'import'],
   settings: {
+    next: {
+      rootDir: ['apps/*/', 'packages/*/'],
+    },
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
@@ -20,17 +29,22 @@ module.exports = {
     },
   },
   rules: {
+    // react
     'react/function-component-definition': [
       2,
       {
         namedComponents: 'arrow-function',
       },
     ],
+    'react/jsx-key': 'warn',
+    'react/react-in-jsx-scope': 'off',
+
+    // next
     '@next/next/no-html-link-for-pages': 'off',
-    'react/jsx-key': 'off',
   },
   overrides: [
     {
+      // 3) Now we enable eslint-plugin-testing-library rules or preset only for matching files!
       env: {
         jest: true,
       },
@@ -48,5 +62,16 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
       },
     },
+  ],
+  ignorePatterns: [
+    '**/*.js',
+    '**/*.json',
+    'node_modules',
+    'public',
+    'styles',
+    '.next',
+    'coverage',
+    'dist',
+    '.turbo',
   ],
 }
