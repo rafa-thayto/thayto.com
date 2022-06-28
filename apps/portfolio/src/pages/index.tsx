@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import { Button } from 'ui'
-import { Title } from '../components/Title'
+import Script from 'next/script'
 
 export default function Web() {
   return (
@@ -9,6 +9,25 @@ export default function Web() {
       <NextSeo
         title="Rafael Thayto - Home"
         description="Software Engineer apaixonado por novas tecnologias e contruindo seu primeiro portfolio e blog <3!"
+      />
+      {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
+      <Script
+        id='google-tagmanager'
+        async
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-TFB52R9T0C"
+      />
+      <Script
+        id='google-analytics'
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-XBFX6EH2WM');
+          `,
+        }}
       />
       <main>
         <div style={{ position: 'relative', width: '200px', height: '200px' }}>
