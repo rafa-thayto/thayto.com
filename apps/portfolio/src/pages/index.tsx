@@ -15,6 +15,10 @@ export default function Web() {
         <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta key="robots" name="robots" content="noindex" />
+        <meta
+          name="google-site-verification"
+          content="sROMY6Ll7LXNivDpdIlLDY1OJGm5C1lQwA8DHhtabLo"
+        />
       </Head>
       {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
       <Script
