@@ -59,8 +59,8 @@ export default function Web() {
         </p>
         <Button />
         <h2 className="text-lg">Vem ver algumas coisas que eu ainda não publiquei</h2>
-        <Link href="/blog" className="text-blue-400">
-          Link pro blog que eu ainda não publiquei nada kkkkk
+        <Link href="/blog">
+          <a className="text-blue-400">Link pro blog que eu ainda não publiquei nada kkkkk</a>
         </Link>
         <h2 className="text-lg">Alguns links úteis</h2>
         <a href="https://www.linkedin.com/in/thayto/" className="text-blue-400">
