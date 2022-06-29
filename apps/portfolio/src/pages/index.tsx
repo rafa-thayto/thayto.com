@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Button } from 'ui'
 import Script from 'next/script'
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function Web() {
   return (
@@ -57,6 +58,10 @@ export default function Web() {
           paciência que logo menos vai ter um blog por aqui, tmj!
         </p>
         <Button />
+        <h2 className="text-lg">Vem ver algumas coisas que eu ainda não publiquei</h2>
+        <Link href="/blog" className="text-blue-400">
+          Link pro blog que eu ainda não publiquei nada kkkkk
+        </Link>
         <h2 className="text-lg">Alguns links úteis</h2>
         <a href="https://www.linkedin.com/in/thayto/" className="text-blue-400">
           LinkedIn
