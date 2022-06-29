@@ -1,48 +1,27 @@
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import { Button } from 'ui'
-import Script from 'next/script'
-import Head from 'next/head'
 import Link from 'next/link'
+import { ComponentA } from '../components/ComponentA'
+import { ComponentB } from '../components/ComponentB'
+import { Title } from '../components/Title'
 
 export default function Web() {
   return (
     <>
       <NextSeo
         title="Rafael Thayto - Home"
-        description="Software Engineer apaixonado por novas tecnologias e contruindo seu primeiro portfolio e blog <3!"
-      />
-      <Head>
-        <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta key="robots" name="robots" content="index follow" />
-        <meta
-          name="google-site-verification"
-          content="sROMY6Ll7LXNivDpdIlLDY1OJGm5C1lQwA8DHhtabLo"
-        />
-      </Head>
-      {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
-      <Script
-        id="google-tagmanager"
-        async
-        strategy="afterInteractive"
-        src="https://www.googletagmanager.com/gtag/js?id=G-TFB52R9T0C"
-      />
-      <Script
-        id="google-analytics"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-XBFX6EH2WM');
-          `,
-        }}
+        description="Software Engineer apaixonado por novas tecnologias, contruindo seu primeiro portfolio e blog <3!"
       />
       <main>
         <div style={{ position: 'relative', width: '200px', height: '200px' }}>
-          <Image src="/static/images/profile.jpeg" layout="fixed" width="200px" height="200px" />
+          <Image
+            src="/static/images/profile.jpeg"
+            layout="fixed"
+            width="200px"
+            height="200px"
+            priority
+          />
         </div>
         <h1 className="text-3xl">Rafael Thayto Tani</h1>
         <h2 className="text-2xl mb-4">Senior Software Engineer</h2>
@@ -57,6 +36,11 @@ export default function Web() {
           Também tem o esquema que eu ainda não criei o design nem coisas do tipo ainda então tenham
           paciência que logo menos vai ter um blog por aqui, tmj!
         </p>
+        <div className="m-4">
+          <Title />
+          <ComponentA />
+          <ComponentB />
+        </div>
         <Button />
         <h2 className="text-lg">Vem ver algumas coisas que eu ainda não publiquei</h2>
         <Link href="/blog">
