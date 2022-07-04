@@ -1,7 +1,6 @@
 import { ComponentA } from '@src/components/ComponentA'
 import { ComponentB } from '@src/components/ComponentB'
 import { Header } from '@src/components/Header'
-import { Title } from '@src/components/Title'
 import { Button } from '@thayto/ui'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
