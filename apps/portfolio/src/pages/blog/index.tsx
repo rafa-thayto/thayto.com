@@ -1,12 +1,68 @@
 import { NextSeo } from 'next-seo'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Confetti from 'react-confetti'
 import { Header } from '@src/components/Header'
+import { BlogCard } from '@thayto/ui'
+import { nanoid } from 'nanoid'
 
 const Blog = () => {
   const [confettiWidth, setConfettiWidth] = useState(0)
   const [confettiHeight, setConfettiHeight] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
+
+  const fakeCards = useMemo(
+    () => [
+      {
+        title: 'Como configurar o deploy do Turborepo no Netlify',
+        published: 'Published: 21 de jun.',
+        description:
+          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+        tags: ['turborepo', 'netlify', 'howTo', 'guide', 'thayto'],
+        href: 'https://dev.to/thayto/como-configurar-o-deploy-do-turborepo-no-netlify-45f8',
+      },
+      {
+        title: "Como 'settar' a versão default do Node usando nvm",
+        published: 'Published: 19 de jun.',
+        description:
+          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+        tags: ['node', 'nvm', 'thayto'],
+        href: 'https://dev.to/thayto/como-settar-a-versao-default-do-node-usando-nvm-47dg',
+      },
+      {
+        title: 'Aqui tem um artigo se pá',
+        published: 'Published: 03 de jul.',
+        description:
+          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+        tags: ['tag', 'someTag', 'moreTags', 'thayto'],
+        href: '/blog',
+      },
+      {
+        title: 'Aqui tem um artigo se pá',
+        published: 'Published: 03 de jul.',
+        description:
+          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+        tags: ['tag', 'someTag', 'moreTags', 'thayto'],
+        href: '/blog',
+      },
+      {
+        title: 'Aqui tem um artigo se pá',
+        published: 'Published: 03 de jul.',
+        description:
+          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+        tags: ['tag', 'someTag', 'moreTags', 'thayto'],
+        href: '/blog',
+      },
+      {
+        title: 'Aqui tem um artigo se pá',
+        published: 'Published: 03 de jul.',
+        description:
+          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+        tags: ['tag', 'someTag', 'moreTags', 'thayto'],
+        href: '/blog',
+      },
+    ],
+    [],
+  )
 
   useEffect(() => {
     function handleResize() {
@@ -61,34 +117,22 @@ const Blog = () => {
       )}
       <Header />
       <main>
-        <h1 className="text-xl">Blog</h1>
-        <h2 className="text-lg">Aqui a gente vai ter um blog</h2>
-        <article className="border-black border-solid border-2 mx-1 mb-2 p-1">
-          <h1>Aqui tem um artigo se pá</h1>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex voluptatibus atque
-            excepturi velit eos nesciunt doloribus! Ducimus blanditiis aut quod, voluptates
-            doloribus recusandae suscipit minus, ex animi quae neque rerum?
-          </p>
-        </article>
-        <article className="border-black border-solid border-2 mx-1 mb-2 p-1">
-          <h1>Como configurar o deploy do Turborepo no Netlify</h1>
-          <span>Published: 21 de jun.</span>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex voluptatibus atque
-            excepturi velit eos nesciunt doloribus! Ducimus blanditiis aut quod, voluptates
-            doloribus recusandae suscipit minus, ex animi quae neque rerum?
-          </p>
-        </article>
-        <article className="border-black border-solid border-2 mx-1 mb-2 p-1">
-          <h1>Como &apos;settar&apos; a versão default do Node usando nvm</h1>
-          <span>Published: 19 de jun.</span>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex voluptatibus atque
-            excepturi velit eos nesciunt doloribus! Ducimus blanditiis aut quod, voluptates
-            doloribus recusandae suscipit minus, ex animi quae neque rerum?
-          </p>
-        </article>
+        <h1 className="text-4xl text-gray-800 font-bold m-4 text-center">Blog</h1>
+        <h2 className="text-lg text-gray-800 mb-10 text-center">Aqui a gente vai ter um blog</h2>
+
+        <div className="flex flex-wrap justify-center">
+          {fakeCards.map(card => (
+            <article key={nanoid()} className="m-2">
+              <BlogCard
+                title={card.title}
+                description={card.description}
+                tags={card.tags}
+                published={card.published}
+                href={card.href}
+              />
+            </article>
+          ))}
+        </div>
       </main>
     </>
   )

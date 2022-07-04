@@ -51,6 +51,7 @@ module.exports = {
     ],
     'react/jsx-key': 'warn',
     'react/react-in-jsx-scope': 'off',
+    'react/require-default-props': 'off',
     'react/jsx-no-constructed-context-values': 'off',
 
     // next
