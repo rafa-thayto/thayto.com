@@ -1,5 +1,6 @@
 import { ComponentA } from '@src/components/ComponentA'
 import { ComponentB } from '@src/components/ComponentB'
+import { Header } from '@src/components/Header'
 import { Title } from '@src/components/Title'
 import { Button } from '@thayto/ui'
 import { NextSeo } from 'next-seo'
@@ -33,18 +34,24 @@ const PorfolioPage = () => (
         handle: '@thayto',
       }}
     />
+    <Header />
     <main>
-      <div style={{ position: 'relative', width: '200px', height: '200px' }}>
-        <Image
-          src="/static/images/profile.jpeg"
-          layout="fixed"
-          width="200px"
-          height="200px"
-          priority
-        />
+      <div className="flex mt-20 justify-center">
+        <div className="relative">
+          <Image
+            src="/static/images/profile.jpeg"
+            layout="fixed"
+            width={200}
+            height={200}
+            priority
+            className="rounded-full"
+          />
+        </div>
+        <div className="ml-6">
+          <h1 className="text-3xl">Rafael Thayto Tani</h1>
+          <h2 className="text-2xl mt-4">Senior Software Engineer</h2>
+        </div>
       </div>
-      <h1 className="text-3xl">Rafael Thayto Tani</h1>
-      <h2 className="text-2xl mb-4">Senior Software Engineer</h2>
       <p>Aqui vai ter uma descrição</p>
       <p>😎</p>
       <p>

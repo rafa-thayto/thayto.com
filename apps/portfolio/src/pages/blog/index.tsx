@@ -1,6 +1,7 @@
 import { NextSeo } from 'next-seo'
 import { useEffect, useState } from 'react'
 import Confetti from 'react-confetti'
+import { Header } from '@src/components/Header'
 
 const Blog = () => {
   const [confettiWidth, setConfettiWidth] = useState(0)
@@ -58,6 +59,7 @@ const Blog = () => {
           gravity={0.15}
         />
       )}
+      <Header />
       <main>
         <h1 className="text-xl">Blog</h1>
         <h2 className="text-lg">Aqui a gente vai ter um blog</h2>

@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.5",
+    "@heroicons/react": "^1.0.6",
     "@thayto/ui": "*",
     "@xstate/react": "^3.0.0",
     "nanoid": "^4.0.0",
