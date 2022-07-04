@@ -13,6 +13,7 @@ const PorfolioPage = () => (
       description="Software Engineer apaixonado por novas tecnologias, contruindo seu primeiro portfolio e blog <3!"
       canonical="https://www.thayto.com/"
       openGraph={{
+        type: 'article',
         url: 'https://www.thayto.com/',
         title: 'Rafael Thayto - Home',
         description: "Rafael Thayto's Portfolio",
