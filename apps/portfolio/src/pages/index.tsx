@@ -12,6 +12,26 @@ const PorfolioPage = () => (
       title="Rafael Thayto - Home"
       description="Software Engineer apaixonado por novas tecnologias, contruindo seu primeiro portfolio e blog <3!"
       canonical="https://thayto.com/"
+      openGraph={{
+        url: 'https://thayto.com/',
+        title: 'Rafael Thayto - Home',
+        description: "Rafael Thayto's Portfolio",
+        images: [
+          {
+            url: 'http://thayto.com/static/images/profile.jpeg',
+            width: 460,
+            height: 460,
+            alt: 'Rafael Thayto Profile Picture',
+            type: 'image/jpeg',
+          },
+        ],
+        site_name: 'RafaelThayto',
+      }}
+      twitter={{
+        cardType: 'summary_large_image',
+        site: '@thayto',
+        handle: '@thayto',
+      }}
     />
     <main>
       <div style={{ position: 'relative', width: '200px', height: '200px' }}>

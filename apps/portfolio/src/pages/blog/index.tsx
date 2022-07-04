@@ -27,6 +27,26 @@ const Blog = () => {
         title="Rafael Thayto - Blog"
         description="Aqui você encontra vários artigos sobre tecnologia e carreira."
         canonical="https://thayto.com/blog"
+        openGraph={{
+          url: 'https://thayto.com/blog',
+          title: 'Rafael Thayto - Blog',
+          description: "Rafael Thayto's Blog",
+          images: [
+            {
+              url: 'http://thayto.com/static/images/profile.jpeg',
+              width: 460,
+              height: 460,
+              alt: 'Rafael Thayto Profile Picture',
+              type: 'image/jpeg',
+            },
+          ],
+          site_name: 'RafaelThayto',
+        }}
+        twitter={{
+          cardType: 'summary_large_image',
+          site: '@thayto',
+          handle: '@thayto',
+        }}
       />
       {showConfetti && (
         <Confetti
