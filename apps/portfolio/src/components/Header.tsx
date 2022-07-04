@@ -51,7 +51,7 @@ export const Header = () => {
       <Popover>
         <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
           <nav
-            className="relative flex items-center justify-between sm:h-10 lg:justify-center"
+            className="relative flex items-center justify-between sm:h-10 lg:justify-center pb-4 border-b"
             aria-label="Global"
           >
             <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
