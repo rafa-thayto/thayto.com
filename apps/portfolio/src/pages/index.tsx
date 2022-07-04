@@ -36,7 +36,7 @@ const PorfolioPage = () => (
     />
     <Header />
     <main>
-      <div className="flex mt-20 justify-center">
+      <div className="flex mt-2 justify-center">
         <div className="relative">
           <Image
             src="/static/images/profile.jpeg"
