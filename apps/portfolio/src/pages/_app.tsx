@@ -3,8 +3,8 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
 import '../../styles/globals.css'
-import { MyContext } from '../store/contexts'
-import { myMachine } from '../store/myMachine'
+import { MyContext } from '@src/store/contexts'
+import { myMachine } from '@src/store/myMachine'
 
 const STORAGE_KEY = 'myPersistedState'
 

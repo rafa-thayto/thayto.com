@@ -58,7 +58,7 @@ const Blog = () => {
           </p>
         </article>
         <article className="border-black border-solid border-2 mx-1 mb-2 p-1">
-          <h1>Como 'settar' a versão default do Node usando nvm</h1>
+          <h1>Como &apos;settar&apos; a versão default do Node usando nvm</h1>
           <span>Published: 19 de jun.</span>
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex voluptatibus atque

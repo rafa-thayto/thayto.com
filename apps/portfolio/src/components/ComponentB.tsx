@@ -1,7 +1,7 @@
+import { MyContext } from '@src/store/contexts'
+import { myModel, selectIsState3 } from '@src/store/myMachine'
 import { useSelector } from '@xstate/react'
-import { useContext, useEffect, useState } from 'react'
-import { MyContext } from '../store/contexts'
-import { myModel, selectIsState3 } from '../store/myMachine'
+import { useContext } from 'react'
 
 export const ComponentB = () => {
   const globalState = useContext(MyContext)
@@ -13,7 +13,9 @@ export const ComponentB = () => {
       <output>
         isState3: <strong>{JSON.stringify(isState3)}</strong>
       </output>
-      <button onClick={() => service.send(myModel.events.button1Clicked())}>BUTTON 1</button>
+      <button type="button" onClick={() => service.send(myModel.events.button1Clicked())}>
+        BUTTON 1
+      </button>
     </section>
   )
 }

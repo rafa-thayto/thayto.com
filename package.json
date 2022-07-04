@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "@thayto/core",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -18,7 +18,7 @@
   "devDependencies": {
     "esbuild": "^0.14.47",
     "esbuild-jest": "^0.5.0",
-    "eslint-config-custom": "*",
+    "@thayto/configs": "*",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "latest",

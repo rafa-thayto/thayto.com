@@ -29,6 +29,19 @@ module.exports = {
     },
   },
   rules: {
+    // defaults
+    'import/prefer-default-export': 'off',
+
+    // JSX
+    'jsx-a11y/anchor-is-valid': [
+      'error',
+      {
+        components: ['Link'],
+        specialLink: ['hrefLeft', 'hrefRight'],
+        aspects: ['invalidHref', 'preferButton'],
+      },
+    ],
+
     // react
     'react/function-component-definition': [
       2,
@@ -38,6 +51,7 @@ module.exports = {
     ],
     'react/jsx-key': 'warn',
     'react/react-in-jsx-scope': 'off',
+    'react/jsx-no-constructed-context-values': 'off',
 
     // next
     '@next/next/no-html-link-for-pages': 'off',

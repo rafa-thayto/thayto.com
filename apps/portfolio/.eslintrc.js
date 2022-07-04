@@ -1,4 +1,7 @@
 module.exports = {
-  root: true,
-  extends: ["custom"],
-};
+  ...require('@thayto/configs/eslint-next'),
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    project: './tsconfig.json',
+  },
+}
