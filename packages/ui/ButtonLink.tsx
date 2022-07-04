@@ -6,8 +6,11 @@ interface ButtonLinkProps
     HTMLAnchorElement
   > {}
 
-export const ButtonLink: FC<ButtonLinkProps> = ({ href, children, ...props }) => (
-  <a className="p-2 ml-4 rounded border border-slate-900 hover:bg-yellow-50" {...props}>
+export const ButtonLink: FC<ButtonLinkProps> = ({ children, ...props }) => (
+  <a
+    className="p-2 ml-4 rounded border border-slate-900 hover:bg-yellow-50"
+    {...props}
+  >
     {children}
   </a>
 )
