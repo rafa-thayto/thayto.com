@@ -83,9 +83,9 @@ const Blog = () => {
       <NextSeo
         title="Rafael Thayto - Blog"
         description="Aqui você encontra vários artigos sobre tecnologia e carreira."
-        canonical="https://thayto.com/blog"
+        canonical="https://www.thayto.com/blog"
         openGraph={{
-          url: 'https://thayto.com/blog',
+          url: 'https://www.thayto.com/blog',
           title: 'Rafael Thayto - Blog',
           description: "Rafael Thayto's Blog",
           images: [
@@ -117,8 +117,12 @@ const Blog = () => {
       )}
       <Header />
       <main>
-        <h1 className="text-4xl text-gray-800 font-bold m-4 text-center">Blog</h1>
-        <h2 className="text-lg text-gray-800 mb-10 text-center">Aqui a gente vai ter um blog</h2>
+        <h1 className="text-4xl text-gray-800 font-bold m-4 text-center">
+          Blog
+        </h1>
+        <h2 className="text-lg text-gray-800 mb-10 text-center">
+          Aqui a gente vai ter um blog
+        </h2>
 
         <div className="flex flex-wrap justify-center">
           {fakeCards.map(card => (
