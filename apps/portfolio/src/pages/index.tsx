@@ -5,7 +5,6 @@ import { DevTo, GitHub, LinkedIn, Medium, TabNews } from '@src/components/icons'
 import { Button, ButtonLink } from '@thayto/ui'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
-import Link from 'next/link'
 
 const PorfolioPage = () => (
   <>
