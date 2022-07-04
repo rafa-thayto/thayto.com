@@ -1,16 +1,17 @@
-import { NextSeo } from 'next-seo'
-import Image from 'next/image'
-import { Button } from '@thayto/ui'
-import Link from 'next/link'
 import { ComponentA } from '@src/components/ComponentA'
 import { ComponentB } from '@src/components/ComponentB'
 import { Title } from '@src/components/Title'
+import { Button } from '@thayto/ui'
+import { NextSeo } from 'next-seo'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const PorfolioPage = () => (
   <>
     <NextSeo
       title="Rafael Thayto - Home"
       description="Software Engineer apaixonado por novas tecnologias, contruindo seu primeiro portfolio e blog <3!"
+      canonical="https://thayto.com/"
     />
     <main>
       <div style={{ position: 'relative', width: '200px', height: '200px' }}>

@@ -26,6 +26,7 @@ const Blog = () => {
       <NextSeo
         title="Rafael Thayto - Blog"
         description="Aqui você encontra vários artigos sobre tecnologia e carreira."
+        canonical="https://thayto.com/blog"
       />
       {showConfetti && (
         <Confetti

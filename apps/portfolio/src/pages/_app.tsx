@@ -1,10 +1,10 @@
+import { MyContext } from '@src/store/contexts'
+import { myMachine } from '@src/store/myMachine'
 import { useInterpret } from '@xstate/react'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
 import '../../styles/globals.css'
-import { MyContext } from '@src/store/contexts'
-import { myMachine } from '@src/store/myMachine'
 
 const STORAGE_KEY = 'myPersistedState'
 
@@ -20,7 +20,7 @@ function rehydrateState() {
   return myMachine.initialState
 }
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps }: AppProps) => {
   const service = useInterpret(myMachine, { state: rehydrateState() }, state =>
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state)),
   )
@@ -55,4 +55,4 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   )
 }
 
-export default MyApp
+export default App
