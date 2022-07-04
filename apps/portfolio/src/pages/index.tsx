@@ -1,6 +1,7 @@
 import { ComponentA } from '@src/components/ComponentA'
 import { ComponentB } from '@src/components/ComponentB'
 import { Header } from '@src/components/Header'
+import { DevTo, GitHub, LinkedIn, Medium } from '@src/components/icons'
 import { Button } from '@thayto/ui'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
@@ -34,7 +35,7 @@ const PorfolioPage = () => (
       }}
     />
     <Header />
-    <main>
+    <main className="container mx-auto">
       <div className="flex mt-2 justify-center">
         <div className="relative">
           <Image
@@ -72,21 +73,32 @@ const PorfolioPage = () => (
         <a className="text-blue-400">Link pro blog que eu ainda não publiquei nada kkkkk</a>
       </Link>
       <h2 className="text-lg">Alguns links úteis</h2>
-      <a href="https://www.linkedin.com/in/thayto/" className="text-blue-400">
-        LinkedIn
-      </a>
-      <a href="https://github.com/rafa-thayto" className="text-blue-400 ml-4">
-        GitHub
-      </a>
-      <a href="https://dev.to/thayto" className="text-blue-400 ml-4">
-        Dev.to
-      </a>
-      <a href="https://www.tabnews.com.br/thayto" className="text-blue-400 ml-4">
-        TabNews
-      </a>
-      <a href="https://medium.com/@thayto" className="text-blue-400 ml-4">
-        Medium
-      </a>
+      <div className="flex mt-4">
+        <a
+          href="https://www.linkedin.com/in/thayto/"
+          className="p-2 rounded border hover:bg-yellow-50"
+        >
+          <LinkedIn />
+        </a>
+        <a
+          href="https://github.com/rafa-thayto"
+          className="p-2 ml-4 rounded border hover:bg-yellow-50"
+        >
+          <GitHub />
+        </a>
+        <a href="https://dev.to/thayto" className="p-2 ml-4 rounded border hover:bg-yellow-50">
+          <DevTo />
+        </a>
+        <a
+          href="https://www.tabnews.com.br/thayto"
+          className="p-2 ml-4 rounded border hover:bg-yellow-50"
+        >
+          TabNews
+        </a>
+        <a href="https://medium.com/@thayto" className="p-2 ml-4 rounded border hover:bg-yellow-50">
+          <Medium />
+        </a>
+      </div>
     </main>
   </>
 )
