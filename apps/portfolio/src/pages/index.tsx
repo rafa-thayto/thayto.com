@@ -63,7 +63,6 @@ const PorfolioPage = () => (
         paciência que logo menos vai ter um blog por aqui, tmj!
       </p>
       <div className="m-4">
-        <Title />
         <ComponentA />
         <ComponentB />
       </div>
