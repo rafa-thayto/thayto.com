@@ -12,7 +12,7 @@ export const Header = () => {
   const navigation = [
     {
       name: ';)',
-      href: '/',
+      href: '#',
       onClick: () => {
         setShowConfetti(true)
       },

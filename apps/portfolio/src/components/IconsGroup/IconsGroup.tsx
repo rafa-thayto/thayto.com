@@ -1,9 +1,5 @@
 import { ButtonLink } from '@thayto/ui'
-import { DevTo } from '../icons/DevTo'
-import { GitHub } from '../icons/GitHub'
-import { LinkedIn } from '../icons/LinkedIn'
-import { Medium } from '../icons/Medium'
-import { TabNews } from '../icons/TabNews'
+import { TabNews, Medium, LinkedIn, DevTo, GitHub } from '@src/components/Icons'
 
 export const IconsGroup = () => (
   <div className="flex">
