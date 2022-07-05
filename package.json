@@ -32,13 +32,18 @@
   "packageManager": "yarn@1.22.19",
   "lint-staged": {
     "apps/**/*.{js,ts,jsx,tsx}": [
-      "eslint --fix"
+      "eslint --fix",
+      "prettier --write",
+      "git add"
     ],
     "packages/ui/**/*.{js,ts,jsx,tsx}": [
-      "eslint --fix"
+      "eslint --fix",
+      "prettier --write",
+      "git add"
     ],
     "*.json": [
-      "prettier --write"
+      "prettier --write",
+      "git add"
     ]
   }
 }

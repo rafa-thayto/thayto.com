@@ -1,8 +1,8 @@
 import { ComponentA } from '@src/components/ComponentA'
 import { ComponentB } from '@src/components/ComponentB'
 import { Header } from '@src/components/Header'
-import { DevTo, GitHub, LinkedIn, Medium, TabNews } from '@src/components/icons'
-import { Button, ButtonLink } from '@thayto/ui'
+import { IconsGroup } from '@src/components/IconsGroup'
+import { Button } from '@thayto/ui'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 
@@ -68,21 +68,7 @@ const PorfolioPage = () => (
         Alguns links úteis
       </h2>
       <div className="flex mt-4">
-        <ButtonLink href="https://www.linkedin.com/in/thayto/">
-          <LinkedIn />
-        </ButtonLink>
-        <ButtonLink href="https://github.com/rafa-thayto">
-          <GitHub />
-        </ButtonLink>
-        <ButtonLink href="https://dev.to/thayto/">
-          <DevTo />
-        </ButtonLink>
-        <ButtonLink href="https://www.tabnews.com.br/thayto">
-          <TabNews />
-        </ButtonLink>
-        <ButtonLink href="https://www.linkedin.com/in/thayto/">
-          <Medium />
-        </ButtonLink>
+        <IconsGroup />
       </div>
 
       <p className="mt-8">

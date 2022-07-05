@@ -2,25 +2,39 @@ import Link from 'next/link'
 
 interface BlogCardProps {
   title: string
+  image?: {
+    src: string
+    alt?: string
+  }
   description: string
   published: string
   tags: string[]
   href: string
 }
 
-export const BlogCard = ({ title, description, tags, published, href }: BlogCardProps) => (
-  <div className="max-w-sm rounded overflow-hidden shadow-lg border-gray-400 border">
-    <div className="px-6 py-4">
-      <Link href={href} passHref>
-        <div className="cursor-pointer">
+export const BlogCard = ({
+  title,
+  description,
+  tags,
+  published,
+  href,
+  image,
+}: BlogCardProps) => (
+  <div className="rounded overflow-hidden shadow-lg border-gray-400 border">
+    <Link href={href} passHref>
+      <div className="cursor-pointer">
+        {image && (
+          <img className="object-cover h-64" src={image.src} alt={image.alt} />
+        )}
+        <div className="px-6 py-4">
           <a rel="noopener" aria-label="Post Preview Title" href={href}>
             <h1 className="font-bold text-xl mb-2">{title}</h1>
           </a>
           <p className="text-gray-400 text-sm mb-2">{published}</p>
           <p className="text-gray-700 text-base">{description}</p>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
     <div className="px-6 pt-4 pb-2">
       {tags.map(tag => (
         <a

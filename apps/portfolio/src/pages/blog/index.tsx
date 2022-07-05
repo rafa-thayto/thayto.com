@@ -4,6 +4,7 @@ import Confetti from 'react-confetti'
 import { Header } from '@src/components/Header'
 import { BlogCard } from '@thayto/ui'
 import { nanoid } from 'nanoid'
+import { IconsGroup } from '@src/components/IconsGroup'
 
 const Blog = () => {
   const [confettiWidth, setConfettiWidth] = useState(0)
@@ -17,6 +18,9 @@ const Blog = () => {
         published: 'Published: 21 de jun.',
         description:
           ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+        image: {
+          src: '/static/images/como-configurar-o-deploy-do-turborepo-no-netlify.png',
+        },
         tags: ['turborepo', 'netlify', 'howTo', 'guide', 'thayto'],
         href: 'https://dev.to/thayto/como-configurar-o-deploy-do-turborepo-no-netlify-45f8',
       },
@@ -25,40 +29,11 @@ const Blog = () => {
         published: 'Published: 19 de jun.',
         description:
           ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+        image: {
+          src: '/static/images/como-settar-a-versao-default-do-node-usando-nvm.png',
+        },
         tags: ['node', 'nvm', 'thayto'],
         href: 'https://dev.to/thayto/como-settar-a-versao-default-do-node-usando-nvm-47dg',
-      },
-      {
-        title: 'Aqui tem um artigo se pá',
-        published: 'Published: 03 de jul.',
-        description:
-          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
-        tags: ['tag', 'someTag', 'moreTags', 'thayto'],
-        href: '/blog',
-      },
-      {
-        title: 'Aqui tem um artigo se pá',
-        published: 'Published: 03 de jul.',
-        description:
-          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
-        tags: ['tag', 'someTag', 'moreTags', 'thayto'],
-        href: '/blog',
-      },
-      {
-        title: 'Aqui tem um artigo se pá',
-        published: 'Published: 03 de jul.',
-        description:
-          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
-        tags: ['tag', 'someTag', 'moreTags', 'thayto'],
-        href: '/blog',
-      },
-      {
-        title: 'Aqui tem um artigo se pá',
-        published: 'Published: 03 de jul.',
-        description:
-          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
-        tags: ['tag', 'someTag', 'moreTags', 'thayto'],
-        href: '/blog',
       },
     ],
     [],
@@ -105,6 +80,7 @@ const Blog = () => {
           handle: '@thayto',
         }}
       />
+
       {showConfetti && (
         <Confetti
           width={confettiWidth}
@@ -115,27 +91,35 @@ const Blog = () => {
           gravity={0.15}
         />
       )}
+
       <Header />
-      <main>
+
+      <main className="p-2">
         <h1 className="text-4xl text-gray-800 font-bold m-4 text-center">
           Blog
         </h1>
-        <h2 className="text-lg text-gray-800 mb-10 text-center">
-          Aqui a gente vai ter um blog
+        <h2 className="text-lg text-gray-800 mb-4 text-center">
+          É aqui onde você encontra tudo que gostaria de saber, o que sabe e até
+          o que nem sabia que queria saber! :D
         </h2>
 
         <div className="flex flex-wrap justify-center">
           {fakeCards.map(card => (
-            <article key={nanoid()} className="m-2">
+            <article key={nanoid()} className="m-2 lg:max-w-md ">
               <BlogCard
                 title={card.title}
                 description={card.description}
                 tags={card.tags}
                 published={card.published}
+                image={card.image}
                 href={card.href}
               />
             </article>
           ))}
+        </div>
+
+        <div className="flex justify-center my-6">
+          <IconsGroup />
         </div>
       </main>
     </>
