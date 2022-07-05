@@ -1,5 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import {
+  HeartIcon as HeartIconOutline,
+  ChatAlt2Icon,
+} from '@heroicons/react/outline'
+import { HeartIcon as HeartIconSolid } from '@heroicons/react/solid'
+import { useCallback, useState } from 'react'
 
 interface BlogCardProps {
   title: string
@@ -24,60 +30,85 @@ export const BlogCard = ({
   image,
   reactionsLength,
   commentsLength,
-}: BlogCardProps) => (
-  <div className="rounded overflow-hidden shadow-lg border-gray-400 hover:border-orange-300 border">
-    <Link href={href} passHref>
-      <div className="cursor-pointer">
-        {image && (
-          <div className="h-64 relative">
-            <Image
-              className="object-cover"
-              layout="fill"
-              src={image.src}
-              alt={image.alt || title}
-            />
-          </div>
-        )}
-        <div className="px-6 py-4">
-          <a rel="noopener" aria-label="Post Preview Title" href={href}>
-            <h1 className="font-bold text-xl mb-2">{title}</h1>
-          </a>
-          <p className="text-gray-400 text-sm mb-2">{published}</p>
-          <p className="text-gray-700 text-base">{description}</p>
-        </div>
-      </div>
-    </Link>
-    <div className="px-6 pt-4 pb-2">
-      {tags.map(tag => (
-        <a
-          rel="noopener nofollow"
-          key={tag}
-          className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-        >
-          #{tag}
-        </a>
-      ))}
-    </div>
-    <div className="px-6 pt-4 pb-4">
+}: BlogCardProps) => {
+  const [hasLike, setHasLike] = useState(false)
+
+  const handleLikeClick = useCallback(() => {
+    setHasLike(oldState => !oldState)
+  }, [])
+
+  return (
+    <div className="rounded overflow-hidden shadow-lg border-gray-400 hover:border-orange-300 border">
       <Link href={href} passHref>
-        <a>
-          <span title="Number of reactions">
-            {reactionsLength}
+        <div className="cursor-pointer">
+          {image && (
+            <div className="h-64 relative">
+              <Image
+                className="object-cover"
+                layout="fill"
+                src={image.src}
+                alt={image.alt || title}
+              />
+            </div>
+          )}
+          <div className="px-6 py-4">
+            <a rel="noopener" aria-label="Post Preview Title" href={href}>
+              <h1 className="font-bold text-xl mb-2">{title}</h1>
+            </a>
+            <p className="text-gray-400 text-sm mb-2">{published}</p>
+            <p className="text-gray-700 text-base">{description}</p>
+          </div>
+        </div>
+      </Link>
+      <div className="px-6 pt-4 pb-2">
+        {tags.map(tag => (
+          <a
+            rel="noopener nofollow"
+            key={tag}
+            className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+          >
+            #{tag}
+          </a>
+        ))}
+      </div>
+      <div className="px-6 pt-4 pb-4 flex">
+        {/* <Link href={href} passHref> */}
+        <a className="flex">
+          {hasLike && (
+            <HeartIconSolid
+              height={24}
+              className="cursor-pointer"
+              color="#dc2626d9"
+              onClick={handleLikeClick}
+            />
+          )}
+          {!hasLike && (
+            <HeartIconOutline
+              height={24}
+              className="cursor-pointer"
+              color="#dc2626d9"
+              onClick={handleLikeClick}
+            />
+          )}
+          <span title="Number of reactions" className="ml-1">
+            {reactionsLength + (hasLike ? 1 : 0)}
             <span>&nbsp;Reactions</span>
           </span>
         </a>
-      </Link>
-      <Link href={`${href}#comments`} passHref>
-        <a
-          aria-label={`Comments for post ${title}  (${commentsLength})`}
-          className="ml-4"
-        >
-          <span title="Number of comments">
-            {commentsLength}
-            <span>&nbsp;Comments</span>
-          </span>
-        </a>
-      </Link>
+        {/* </Link> */}
+        <Link href={`${href}#comments`} passHref>
+          <a
+            aria-label={`Comments for post ${title} (${commentsLength})`}
+            className="ml-4 flex"
+          >
+            <ChatAlt2Icon height={24} />
+            <span title="Number of comments" className="ml-1">
+              {commentsLength}
+              <span>&nbsp;Comments</span>
+            </span>
+          </a>
+        </Link>
+      </div>
     </div>
-  </div>
-)
+  )
+}
