@@ -8,6 +8,8 @@
     "lint": "eslint *.ts*"
   },
   "devDependencies": {
+    "@headlessui/react": "^1.6.5",
+    "@heroicons/react": "^1.0.6",
     "@thayto/configs": "*",
     "@thayto/tsconfig": "*",
     "@types/react": "^17.0.37",

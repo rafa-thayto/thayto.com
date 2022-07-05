@@ -1,3 +1,5 @@
+import { Footer } from '@src/components/Footer'
+import { Header } from '@src/components/Header'
 import { GetServerSideProps } from 'next'
 
 interface Props {
@@ -7,9 +9,13 @@ interface Props {
 }
 
 const PostsPage = ({ post }: Props) => (
-  <main>
-    <h1>Post: {post.name}</h1>
-  </main>
+  <>
+    <main>
+      <Header />
+      <h1>Post: {post.name}</h1>
+    </main>
+    <Footer />
+  </>
 )
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({

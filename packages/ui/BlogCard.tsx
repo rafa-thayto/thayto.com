@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface BlogCardProps {
   title: string
@@ -10,6 +11,8 @@ interface BlogCardProps {
   published: string
   tags: string[]
   href: string
+  reactionsLength: number
+  commentsLength: number
 }
 
 export const BlogCard = ({
@@ -19,12 +22,21 @@ export const BlogCard = ({
   published,
   href,
   image,
+  reactionsLength,
+  commentsLength,
 }: BlogCardProps) => (
-  <div className="rounded overflow-hidden shadow-lg border-gray-400 border">
+  <div className="rounded overflow-hidden shadow-lg border-gray-400 hover:border-orange-300 border">
     <Link href={href} passHref>
       <div className="cursor-pointer">
         {image && (
-          <img className="object-cover h-64" src={image.src} alt={image.alt} />
+          <div className="h-64 relative">
+            <Image
+              className="object-cover"
+              layout="fill"
+              src={image.src}
+              alt={image.alt || title}
+            />
+          </div>
         )}
         <div className="px-6 py-4">
           <a rel="noopener" aria-label="Post Preview Title" href={href}>
@@ -45,6 +57,27 @@ export const BlogCard = ({
           #{tag}
         </a>
       ))}
+    </div>
+    <div className="px-6 pt-4 pb-4">
+      <Link href={href} passHref>
+        <a>
+          <span title="Number of reactions">
+            {reactionsLength}
+            <span>&nbsp;Reactions</span>
+          </span>
+        </a>
+      </Link>
+      <Link href={`${href}#comments`} passHref>
+        <a
+          aria-label={`Comments for post ${title}  (${commentsLength})`}
+          className="ml-4"
+        >
+          <span title="Number of comments">
+            {commentsLength}
+            <span>&nbsp;Comments</span>
+          </span>
+        </a>
+      </Link>
     </div>
   </div>
 )

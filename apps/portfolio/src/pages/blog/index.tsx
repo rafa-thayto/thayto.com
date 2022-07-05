@@ -1,16 +1,12 @@
-import { NextSeo } from 'next-seo'
-import { useEffect, useMemo, useState } from 'react'
-import Confetti from 'react-confetti'
+import { Footer } from '@src/components/Footer'
 import { Header } from '@src/components/Header'
+import { IconsGroup } from '@src/components/IconsGroup'
 import { BlogCard } from '@thayto/ui'
 import { nanoid } from 'nanoid'
-import { IconsGroup } from '@src/components/IconsGroup'
+import { NextSeo } from 'next-seo'
+import { useMemo } from 'react'
 
 const Blog = () => {
-  const [confettiWidth, setConfettiWidth] = useState(0)
-  const [confettiHeight, setConfettiHeight] = useState(0)
-  const [showConfetti, setShowConfetti] = useState(false)
-
   const fakeCards = useMemo(
     () => [
       {
@@ -23,6 +19,8 @@ const Blog = () => {
         },
         tags: ['turborepo', 'netlify', 'howTo', 'guide', 'thayto'],
         href: 'https://dev.to/thayto/como-configurar-o-deploy-do-turborepo-no-netlify-45f8',
+        reactionsLength: 0,
+        commentsLength: 0,
       },
       {
         title: "Como 'settar' a versão default do Node usando nvm",
@@ -34,24 +32,12 @@ const Blog = () => {
         },
         tags: ['node', 'nvm', 'thayto'],
         href: 'https://dev.to/thayto/como-settar-a-versao-default-do-node-usando-nvm-47dg',
+        reactionsLength: 0,
+        commentsLength: 0,
       },
     ],
     [],
   )
-
-  useEffect(() => {
-    function handleResize() {
-      setConfettiWidth(window.screen.width)
-      setConfettiHeight(window.screen.height)
-    }
-
-    window.addEventListener('resize', handleResize)
-    handleResize()
-
-    setShowConfetti(true)
-
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   return (
     <>
@@ -81,17 +67,6 @@ const Blog = () => {
         }}
       />
 
-      {showConfetti && (
-        <Confetti
-          width={confettiWidth}
-          height={confettiHeight}
-          recycle={false}
-          numberOfPieces={800}
-          tweenDuration={15000}
-          gravity={0.15}
-        />
-      )}
-
       <Header />
 
       <main className="p-2">
@@ -113,6 +88,8 @@ const Blog = () => {
                 published={card.published}
                 image={card.image}
                 href={card.href}
+                reactionsLength={card.reactionsLength}
+                commentsLength={card.commentsLength}
               />
             </article>
           ))}
@@ -122,6 +99,8 @@ const Blog = () => {
           <IconsGroup />
         </div>
       </main>
+
+      <Footer />
     </>
   )
 }
