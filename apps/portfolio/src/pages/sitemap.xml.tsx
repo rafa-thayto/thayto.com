@@ -12,13 +12,13 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
 >
   <url>
+    <loc>${domainUrl}</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>${domainUrl}blog</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${domainUrl}</loc>
-    <priority>1.0</priority>
   </url>
 </urlset>
 `.trim()
