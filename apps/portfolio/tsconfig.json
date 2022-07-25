@@ -2,10 +2,17 @@
   "extends": "@thayto/tsconfig/nextjs.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "tsBuildInfoFile": "./tsbuild_cache/project.tsbuildinfo",
     "paths": {
       "@src/*": ["src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.(test|spec).tsx", "**/*.test.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.(test|spec).tsx",
+    "**/*.test.tsx"
+  ],
   "exclude": ["node_modules"]
 }
