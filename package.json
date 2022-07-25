@@ -11,6 +11,7 @@
     "dev": "turbo run dev --parallel",
     "test": "turbo run test",
     "lint": "turbo run lint",
+    "typescript": "turbo run typescript",
     "lint-staged": "lint-staged",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install"
@@ -33,17 +34,14 @@
   "lint-staged": {
     "apps/**/*.{js,ts,jsx,tsx}": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "packages/ui/**/*.{js,ts,jsx,tsx}": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "*.json": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }

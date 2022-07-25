@@ -24,6 +24,9 @@
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-testing-library": "^5.5.1"
   },
+  "peerDependencies": {
+    "eslint": ">=8"
+  },
   "publishConfig": {
     "access": "public"
   }

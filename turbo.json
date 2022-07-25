@@ -11,6 +11,9 @@
     "lint": {
       "outputs": []
     },
+    "typescript": {
+      "outputs": []
+    },
     "dev": {
       "cache": false
     }

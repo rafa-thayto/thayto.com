@@ -44,9 +44,9 @@ const Blog = () => {
       <NextSeo
         title="Rafael Thayto - Blog"
         description="Aqui você encontra vários artigos sobre tecnologia e carreira."
-        canonical="https://www.thayto.com/blog"
+        canonical="https://thayto.com/blog"
         openGraph={{
-          url: 'https://www.thayto.com/blog',
+          url: 'https://thayto.com/blog',
           title: 'Rafael Thayto - Blog',
           description: "Rafael Thayto's Blog",
           images: [

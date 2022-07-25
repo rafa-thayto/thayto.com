@@ -14,22 +14,22 @@ const PorfolioPage = () => {
       <NextSeo
         title="Rafael Thayto - Home"
         description="Software Engineer apaixonado por novas tecnologias, contruindo seu primeiro portfolio e blog <3!"
-        canonical="https://www.thayto.com/"
+        canonical="https://thayto.com/"
         openGraph={{
           type: 'article',
-          url: 'https://www.thayto.com/',
+          url: 'https://thayto.com/',
           title: 'Rafael Thayto - Home',
           description: "Rafael Thayto's Portfolio",
           images: [
             {
-              url: 'http://www.thayto.com/static/images/profile.jpeg',
+              url: 'http://thayto.com/static/images/profile.jpeg',
               width: 460,
               height: 460,
               alt: 'Rafael Thayto Profile Picture',
               type: 'image/jpeg',
             },
           ],
-          site_name: 'RafaelThayto',
+          site_name: 'Rafael_Thayto',
         }}
         twitter={{
           cardType: 'summary_large_image',
@@ -43,6 +43,7 @@ const PorfolioPage = () => {
           <div className="relative w-52 h-52 ">
             <Image
               src="/static/images/profile.jpeg"
+              alt="Thayto's profile picture"
               layout="fill"
               priority
               className="rounded-full"

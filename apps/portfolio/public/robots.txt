@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.thayto.com/sitemap.xml
+Sitemap: https://thayto.com/sitemap.xml

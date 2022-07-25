@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next'
 const Sitemap = () => null
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  const domainUrl = 'https://www.thayto.com/'
+  const domainUrl = 'https://thayto.com/'
   const sitemap = `
 <?xml version="1.0" encoding="UTF-8"?>
   <urlset
