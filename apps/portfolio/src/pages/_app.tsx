@@ -65,6 +65,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         strategy="afterInteractive"
         src="/static/js/gtag.js"
       />
+      <Script 
+        id="microsoft-clarity"
+        strategy="afterInteractive"
+        src="/static/js/clarity.js"
+      />
       <MyContext.Provider value={{ service }}>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
