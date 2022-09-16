@@ -4,7 +4,8 @@ import { useInterpret } from '@xstate/react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
-import '../../styles/globals.css'
+
+import '@src/styles/globals.css'
 
 const STORAGE_KEY = 'myPersistedState'
 
@@ -65,7 +66,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         strategy="afterInteractive"
         src="/static/js/gtag.js"
       />
-      <Script 
+      <Script
         id="microsoft-clarity"
         strategy="afterInteractive"
         src="/static/js/clarity.js"
