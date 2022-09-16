@@ -14,7 +14,7 @@ out/
 build
 
 # typescript
-.tsbuildinfo
+*.tsbuildinfo
 
 # misc
 .DS_Store
