@@ -31,7 +31,7 @@ const Blog = () => {
           src: '/static/images/como-settar-a-versao-default-do-node-usando-nvm.png',
         },
         tags: ['node', 'nvm', 'thayto'],
-        href: '/blog/como-settar-a-versao-default-do-node-usando-nvm.mdx',
+        href: '/blog/como-settar-a-versao-default-do-node-usando-nvm',
         reactionsLength: 0,
         commentsLength: 0,
       },
