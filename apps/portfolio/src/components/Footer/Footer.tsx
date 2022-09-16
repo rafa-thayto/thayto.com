@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
 export const Footer = () => (
-  <footer className="border-t mt-4 pt-4 flex justify-end">
-    <div>
+  <footer className="border-t mt-4 flex justify-end">
+    <div className="px-6 py-4">
       <h6 className="text-lg font-medium">Sitemap</h6>
       <ul>
         <li className="py-1">
