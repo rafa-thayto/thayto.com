@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://github.com/rafa-thayto/thayto.com/actions/workflows/ci.yml"><img alt="GitHub CI Status" src="https://github.com/rafa-thayto/thayto.com/actions/workflows/ci.yml/badge.svg?branch=main"></a>
+</p>
+
 # Turborepo starter
 
 This is an official Yarn v1 starter turborepo.
