@@ -1,5 +1,5 @@
-import { MyContext } from '@src/store/contexts'
-import { myMachine } from '@src/store/myMachine'
+import { MyContext } from '@infra/store/xstate/contexts'
+import { myMachine } from '@infra/store/xstate/myMachine'
 import { useInterpret } from '@xstate/react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'

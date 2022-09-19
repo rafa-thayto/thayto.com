@@ -1,5 +1,5 @@
-import { MyContext } from '@src/store/contexts'
-import { myModel } from '@src/store/myMachine'
+import { MyContext } from '@infra/store/xstate/contexts'
+import { myModel } from '@infra/store/xstate/myMachine'
 import { useActor } from '@xstate/react'
 import { useContext } from 'react'
 
@@ -13,13 +13,22 @@ export const ComponentA = () => {
       <output>
         state: <strong>{state.value}</strong>
       </output>
-      <button type="button" onClick={() => send(myModel.events.button1Clicked())}>
+      <button
+        type="button"
+        onClick={() => send(myModel.events.button1Clicked())}
+      >
         BUTTON 1
       </button>
-      <button type="button" onClick={() => send(myModel.events.button2Clicked())}>
+      <button
+        type="button"
+        onClick={() => send(myModel.events.button2Clicked())}
+      >
         BUTTON 2
       </button>
-      <button type="button" onClick={() => send(myModel.events.button3Clicked())}>
+      <button
+        type="button"
+        onClick={() => send(myModel.events.button3Clicked())}
+      >
         BUTTON 3
       </button>
     </section>

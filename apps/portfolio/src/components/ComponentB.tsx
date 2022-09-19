@@ -1,5 +1,5 @@
-import { MyContext } from '@src/store/contexts'
-import { myModel, selectIsState3 } from '@src/store/myMachine'
+import { MyContext } from '@infra/store/xstate/contexts'
+import { myModel, selectIsState3 } from '@infra/store/xstate/myMachine'
 import { useSelector } from '@xstate/react'
 import { useContext } from 'react'
 
@@ -13,7 +13,10 @@ export const ComponentB = () => {
       <output>
         isState3: <strong>{JSON.stringify(isState3)}</strong>
       </output>
-      <button type="button" onClick={() => service.send(myModel.events.button1Clicked())}>
+      <button
+        type="button"
+        onClick={() => service.send(myModel.events.button1Clicked())}
+      >
         BUTTON 1
       </button>
     </section>
