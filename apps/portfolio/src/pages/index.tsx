@@ -74,14 +74,10 @@ const PorfolioPage = () => {
         </div>
 
         <p className="mt-8">
-          Não repara na bagunça que tá esse site pq eu ainda tô contruindo blz?
-          antes de fazer o bonito tô fazendo uma arquitetura interessante pra
-          facilitar o desenvolvimento e pra ir estudando também
+          Não repara na bagunça que tá esse site pq eu ainda tô construindo blz?
         </p>
         <p>
-          Também tem o esquema que eu ainda não criei o design nem coisas do
-          tipo ainda então tenham paciência que logo menos vai ter um blog por
-          aqui, tmj!
+          Porém já tenho alguns posts no blog pra você dar uma conferida! ;)
         </p>
         {/* <div className="m-4 border p-2">
         <p className="font-mono">Testes com XState</p>
