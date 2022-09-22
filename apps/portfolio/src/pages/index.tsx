@@ -29,7 +29,7 @@ const PorfolioPage = () => {
               type: 'image/jpeg',
             },
           ],
-          site_name: 'Rafael_Thayto',
+          site_name: 'Thayto',
         }}
         twitter={{
           cardType: 'summary_large_image',
@@ -83,11 +83,6 @@ const PorfolioPage = () => {
           tipo ainda então tenham paciência que logo menos vai ter um blog por
           aqui, tmj!
         </p>
-        {/* <div className="m-4 border p-2">
-        <p className="font-mono">Testes com XState</p>
-        <ComponentA />
-        <ComponentB />
-      </div> */}
         <div className="my-6">
           <Button onBeepBoop={isBoop => setShowTecnologies(!isBoop)} />
           {showTecnologies && (

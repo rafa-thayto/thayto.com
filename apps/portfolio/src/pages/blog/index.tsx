@@ -2,107 +2,104 @@ import { Footer } from '@src/components/Footer'
 import { Header } from '@src/components/Header'
 import { IconsGroup } from '@src/components/IconsGroup'
 import { BlogCard } from '@thayto/ui'
+import fs from 'fs'
+import matter from 'gray-matter'
 import { nanoid } from 'nanoid'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { NextSeo } from 'next-seo'
-import { useMemo } from 'react'
+import path from 'path'
 
-const Blog = () => {
-  const fakeCards = useMemo(
-    () => [
-      {
-        title: 'Como configurar o deploy do Turborepo no Netlify',
-        published: 'Published: 21 de jun.',
-        description:
-          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
-        image: {
-          src: '/static/images/como-configurar-o-deploy-do-turborepo-no-netlify.png',
-        },
-        tags: ['turborepo', 'netlify', 'howTo', 'guide', 'thayto'],
-        href: '/blog/como-configurar-o-deploy-do-turborepo-no-netlify',
-        reactionsLength: 0,
-        commentsLength: 0,
-      },
-      {
-        title: "Como 'settar' a versão default do Node usando nvm",
-        published: 'Published: 19 de jun.',
-        description:
-          ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
-        image: {
-          src: '/static/images/como-settar-a-versao-default-do-node-usando-nvm.png',
-        },
-        tags: ['node', 'nvm', 'thayto'],
-        href: '/blog/como-settar-a-versao-default-do-node-usando-nvm',
-        reactionsLength: 0,
-        commentsLength: 0,
-      },
-    ],
-    [],
-  )
+const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => (
+  <>
+    <NextSeo
+      title="Rafael Thayto - Blog"
+      description="Aqui você encontra vários artigos sobre tecnologia e carreira."
+      canonical="https://thayto.com/blog"
+      openGraph={{
+        url: 'https://thayto.com/blog',
+        title: 'Rafael Thayto - Blog',
+        description: "Rafael Thayto's Blog",
+        images: [
+          {
+            url: 'http://thayto.com/static/images/profile.jpeg',
+            width: 460,
+            height: 460,
+            alt: 'Rafael Thayto Profile Picture',
+            type: 'image/jpeg',
+          },
+        ],
+        site_name: 'RafaelThayto',
+      }}
+      twitter={{
+        cardType: 'summary_large_image',
+        site: '@thayto',
+        handle: '@thayto',
+      }}
+    />
 
-  return (
-    <>
-      <NextSeo
-        title="Rafael Thayto - Blog"
-        description="Aqui você encontra vários artigos sobre tecnologia e carreira."
-        canonical="https://thayto.com/blog"
-        openGraph={{
-          url: 'https://thayto.com/blog',
-          title: 'Rafael Thayto - Blog',
-          description: "Rafael Thayto's Blog",
-          images: [
-            {
-              url: 'http://thayto.com/static/images/profile.jpeg',
-              width: 460,
-              height: 460,
-              alt: 'Rafael Thayto Profile Picture',
-              type: 'image/jpeg',
-            },
-          ],
-          site_name: 'RafaelThayto',
-        }}
-        twitter={{
-          cardType: 'summary_large_image',
-          site: '@thayto',
-          handle: '@thayto',
-        }}
-      />
+    <Header />
 
-      <Header />
+    <main className="p-2">
+      <h1 className="text-4xl text-gray-800 font-bold m-4 text-center">Blog</h1>
+      <h2 className="text-lg text-gray-800 mb-4 text-center">
+        É aqui onde você encontra tudo que gostaria de saber, o que sabe e até o
+        que nem sabia que queria saber! :D
+      </h2>
 
-      <main className="p-2">
-        <h1 className="text-4xl text-gray-800 font-bold m-4 text-center">
-          Blog
-        </h1>
-        <h2 className="text-lg text-gray-800 mb-4 text-center">
-          É aqui onde você encontra tudo que gostaria de saber, o que sabe e até
-          o que nem sabia que queria saber! :D
-        </h2>
+      <div className="flex flex-wrap justify-center">
+        {posts?.map(post => (
+          <article key={nanoid()} className="m-2 lg:max-w-md ">
+            <BlogCard
+              title={post.frontMatter.title}
+              description={post.frontMatter.description}
+              tags={post.frontMatter.tags}
+              published={post.frontMatter.published}
+              image={post.frontMatter.image}
+              href={post.frontMatter.href}
+              reactionsLength={post.frontMatter.reactionsLength}
+              commentsLength={post.frontMatter.commentsLength}
+            />
+          </article>
+        ))}
+      </div>
 
-        <div className="flex flex-wrap justify-center">
-          {fakeCards.map(card => (
-            <article key={nanoid()} className="m-2 lg:max-w-md ">
-              <BlogCard
-                title={card.title}
-                description={card.description}
-                tags={card.tags}
-                published={card.published}
-                image={card.image}
-                href={card.href}
-                reactionsLength={card.reactionsLength}
-                commentsLength={card.commentsLength}
-              />
-            </article>
-          ))}
-        </div>
+      <div className="flex justify-center my-6">
+        <IconsGroup />
+      </div>
+    </main>
 
-        <div className="flex justify-center my-6">
-          <IconsGroup />
-        </div>
-      </main>
+    <Footer />
+  </>
+)
 
-      <Footer />
-    </>
-  )
+export const getStaticProps: GetStaticProps<{
+  posts: {
+    frontMatter: {
+      [key: string]: any
+    }
+    slug: string
+  }[]
+}> = async () => {
+  const files = fs.readdirSync(path.join('posts'))
+
+  const posts = files.map(filename => {
+    const markdownWithMeta = fs.readFileSync(
+      path.join('posts', filename),
+      'utf-8',
+    )
+    const { data: frontMatter } = matter(markdownWithMeta)
+
+    return {
+      frontMatter,
+      slug: filename.split('.')[0],
+    }
+  })
+
+  return {
+    props: {
+      posts,
+    },
+  }
 }
 
 export default Blog
