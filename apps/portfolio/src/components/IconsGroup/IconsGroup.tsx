@@ -1,8 +1,11 @@
 import { ButtonLink } from '@thayto/ui'
 import { TabNews, Medium, LinkedIn, DevTo, GitHub } from '@src/components/Icons'
+import { DetailedHTMLProps, HTMLAttributes } from 'react'
 
-export const IconsGroup = () => (
-  <div className="flex">
+export const IconsGroup = ({
+  ...props
+}: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>) => (
+  <div className="flex" {...props}>
     <ButtonLink href="https://www.linkedin.com/in/thayto/">
       <LinkedIn />
     </ButtonLink>
