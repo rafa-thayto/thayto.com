@@ -28,7 +28,7 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => (
             type: 'image/jpeg',
           },
         ],
-        site_name: 'RafaelThayto',
+        site_name: 'Thayto',
       }}
       twitter={{
         cardType: 'summary_large_image',

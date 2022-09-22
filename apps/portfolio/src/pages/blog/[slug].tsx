@@ -7,13 +7,14 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import { NextSeo } from 'next-seo'
+import Image from 'next/image'
 import path from 'path'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 
 const components = { SyntaxHighlighter, MyComponent, Header, Footer }
 
 const PostPage = ({
-  frontMatter: { title, description, date, tags, publishedTime, modifiedTime },
+  frontMatter: { title, description, tags, publishedTime, modifiedTime, image },
   slug,
   mdxSource,
 }: InferGetStaticPropsType<typeof getStaticProps>) => (
@@ -50,11 +51,27 @@ const PostPage = ({
         handle: '@thayto',
       }}
     />
-    <div className="">
-      <h1>{title}</h1>
-      <h1>{date}</h1>
+    <Header />
+    <article className="container mx-auto leading-6 px-4">
+      <div className="mb-4">
+        {image && (
+          <div className="h-64 relative mb-4">
+            <Image
+              className="object-cover"
+              layout="fill"
+              src={image.src}
+              alt={image.alt || title}
+            />
+          </div>
+        )}
+        <h1 className="text-2xl text-slate-900 font-bold">{title}</h1>
+        <h2 className="text-xl text-slate-900 font-light">
+          Last modify: <time dateTime={modifiedTime}>{modifiedTime}</time>
+        </h2>
+      </div>
       <MDXRemote {...mdxSource} components={components} />
-    </div>
+    </article>
+    <Footer />
   </>
 )
 
