@@ -61,7 +61,7 @@ export const BlogCard = ({
         </div>
       </Link>
       <div className="px-6 pt-4 pb-2">
-        {tags.map(tag => (
+        {tags?.map(tag => (
           <a
             rel="noopener nofollow"
             key={tag}

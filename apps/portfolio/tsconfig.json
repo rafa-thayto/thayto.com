@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "tsBuildInfoFile": "./tsbuild_cache/project.tsbuildinfo",
     "paths": {
-      "@src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@infra/*": ["src/infra/*"]
     }
   },
   "include": [
