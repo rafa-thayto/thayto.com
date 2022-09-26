@@ -4,6 +4,7 @@ export const TabNews = () => (
     fill="none"
     strokeWidth="0"
     viewBox="0 0 24 24"
+    style={{ color: '#121212' }}
     height="24px"
     width="24px"
     xmlns="http://www.w3.org/2000/svg"
