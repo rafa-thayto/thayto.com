@@ -30,6 +30,10 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>${domainUrl}/linktree</loc>
+    <priority>1.0</priority>
+  </url>
 </urlset>
 `.trim()
 

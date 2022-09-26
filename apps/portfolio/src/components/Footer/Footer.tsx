@@ -26,6 +26,16 @@ export const Footer = () => (
           </Link>
         </li>
         <li className="py-1">
+          <Link href="/linktree" passHref>
+            <a
+              href="/linktree"
+              className="text-black underlined focus:outline-none inline-block whitespace-nowrap text-lg hover:text-black focus:text-black"
+            >
+              Linktree
+            </a>
+          </Link>
+        </li>
+        <li className="py-1">
           <a
             href="/sitemap.xml"
             className="text-secondary underlined focus:outline-none inline-block whitespace-nowrap text-lg hover:text-team-current focus:text-team-current"
