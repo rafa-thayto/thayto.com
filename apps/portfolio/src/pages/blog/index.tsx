@@ -21,7 +21,7 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => (
         description: "Rafael Thayto's Blog",
         images: [
           {
-            url: 'http://thayto.com/static/images/profile.jpeg',
+            url: 'https://thayto.com/static/images/profile.jpeg',
             width: 460,
             height: 460,
             alt: 'Rafael Thayto Profile Picture',

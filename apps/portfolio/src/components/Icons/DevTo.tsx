@@ -1,6 +1,6 @@
 export const DevTo = () => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
+    xmlns="https://www.w3.org/2000/svg"
     aria-label="dev.to"
     role="img"
     viewBox="0 0 512 512"

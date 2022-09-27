@@ -36,7 +36,7 @@ const PostPage = ({
         },
         images: [
           {
-            url: 'http://thayto.com/static/images/profile.jpeg',
+            url: 'https://thayto.com/static/images/profile.jpeg',
             width: 460,
             height: 460,
             alt: 'Rafael Thayto Profile Picture',

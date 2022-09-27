@@ -11,7 +11,7 @@ import { Footer } from '@src/components/Footer'
 import Link from 'next/link'
 
 const LinksPage = () => (
-  <div className="mx-0 mt-4 px-8">
+  <div className="mx-0 pt-4 px-8">
     <header className="mb-8 mx-auto">
       <div className="relative w-44 h-44 mb-4 mx-auto">
         <Image
