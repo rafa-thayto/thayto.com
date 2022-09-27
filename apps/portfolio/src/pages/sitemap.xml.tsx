@@ -7,6 +7,9 @@ const Sitemap = () => null
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const domainUrl = 'https://thayto.com'
   const files = fs.readdirSync(path.join('posts'))
+  const files2 = fs.readdirSync(path.join(''))
+  console.log(files)
+  console.log(files2)
 
   const postsFilenames = files.map(filename => filename.replace('.mdx', ''))
 
