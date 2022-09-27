@@ -1,12 +1,12 @@
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import ReactConfetti from 'react-confetti'
 
 export const Header = () => {
-  const [confettiWidth, setConfettiWidth] = useState(0)
-  const [confettiHeight, setConfettiHeight] = useState(0)
+  const confettiWidth = useRef(0)
+  const confettiHeight = useRef(0)
   const [showConfetti, setShowConfetti] = useState(false)
 
   const navigation = [
@@ -23,8 +23,8 @@ export const Header = () => {
 
   useEffect(() => {
     function handleResize() {
-      setConfettiWidth(window.screen.width)
-      setConfettiHeight(window.screen.height)
+      confettiWidth.current = window.screen.width
+      confettiHeight.current = window.screen.height
     }
 
     window.addEventListener('resize', handleResize)
@@ -37,8 +37,8 @@ export const Header = () => {
     <>
       {showConfetti && (
         <ReactConfetti
-          width={confettiWidth}
-          height={confettiHeight}
+          width={confettiWidth.current}
+          height={confettiHeight.current}
           recycle={false}
           numberOfPieces={800}
           tweenDuration={15000}
