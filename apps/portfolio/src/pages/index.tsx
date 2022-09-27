@@ -4,6 +4,7 @@ import { IconsGroup } from '@src/components/IconsGroup'
 import { Button } from '@thayto/ui'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import packageJson from '../../package.json'
 
@@ -79,6 +80,18 @@ const PorfolioPage = () => {
         <p>
           Porém já tenho alguns posts no blog pra você dar uma conferida! ;)
         </p>
+
+        <div className="w-36 mt-4">
+          <Link href="/blog" passHref>
+            <a
+              href="/blog"
+              className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:bg-yellow-50 py-2 mb-4"
+            >
+              Blog
+            </a>
+          </Link>
+        </div>
+
         <div className="my-6">
           <Button onBeepBoop={isBoop => setShowTecnologies(!isBoop)} />
           {showTecnologies && (
