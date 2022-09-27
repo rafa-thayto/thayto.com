@@ -22,7 +22,7 @@ const PostPage = ({
     <NextSeo
       title={`${title} - Rafael Thayto`}
       description={description}
-      canonical="https://thayto.com/blog"
+      canonical={`https://thayto.com/blog/${slug}`}
       openGraph={{
         type: 'article',
         url: `https://thayto.com/blog/${slug}`,
@@ -36,7 +36,9 @@ const PostPage = ({
         },
         images: [
           {
-            url: 'https://thayto.com/static/images/profile.jpeg',
+            url: `https://thayto.com${
+              image ? image.src : '/static/images/profile.jpeg'
+            }`,
             width: 460,
             height: 460,
             alt: 'Rafael Thayto Profile Picture',
