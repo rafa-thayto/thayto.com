@@ -1,9 +1,26 @@
+import fs from 'fs'
+import path from 'path'
 import { GetServerSideProps } from 'next'
 
 const Sitemap = () => null
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const domainUrl = 'https://thayto.com'
+  const files = fs.readdirSync(path.join('posts'))
+
+  const postsFilenames = files.map(filename => filename.replace('.mdx', ''))
+
+  const postsUrlMaps = postsFilenames.reduce(
+    (mappedUrls, filename) =>
+      `${mappedUrls}
+  <url>
+    <loc>${domainUrl}/blog/${filename}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`,
+    '  ',
+  )
+
   const sitemap = `
 <?xml version="1.0" encoding="UTF-8"?>
   <urlset
@@ -16,24 +33,14 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>${domainUrl}/blog</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${domainUrl}/blog/como-configurar-o-deploy-do-turborepo-no-netlify</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${domainUrl}/blog/como-settar-a-versao-default-do-node-usando-nvm</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>${domainUrl}/linktree</loc>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>${domainUrl}/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>${postsUrlMaps}
 </urlset>
 `.trim()
 
