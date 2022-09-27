@@ -9,18 +9,21 @@ import { useState } from 'react'
 import packageJson from '../../package.json'
 
 const PorfolioPage = () => {
+  const description =
+    'Software Engineer apaixonado por novas tecnologias, contruindo seu primeiro portfolio e blog <3!'
+
   const [showTecnologies, setShowTecnologies] = useState(false)
   return (
     <>
       <NextSeo
         title="Rafael Thayto - Home"
-        description="Software Engineer apaixonado por novas tecnologias, contruindo seu primeiro portfolio e blog <3!"
+        description={description}
         canonical="https://thayto.com/"
         openGraph={{
           type: 'article',
           url: 'https://thayto.com/',
           title: 'Rafael Thayto - Home',
-          description: "Rafael Thayto's Portfolio",
+          description,
           images: [
             {
               url: 'https://thayto.com/static/images/profile.jpeg',

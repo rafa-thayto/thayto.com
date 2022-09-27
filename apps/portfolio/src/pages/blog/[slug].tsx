@@ -26,8 +26,8 @@ const PostPage = ({
       openGraph={{
         type: 'article',
         url: `https://thayto.com/blog/${slug}`,
-        title: 'Rafael Thayto - Blog',
-        description: "Rafael Thayto's Blog",
+        title,
+        description,
         article: {
           authors: ['Rafael Thayto'],
           tags,
