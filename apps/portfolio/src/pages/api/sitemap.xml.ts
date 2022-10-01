@@ -19,7 +19,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     fs.readdirSync(path.join('..', '..')),
   )
 
-  const files = fs.readdirSync(path.join('posts'))
+  const files = fs.readdirSync(path.join('static', 'posts'))
   const postsFilenames = files.map(filename => filename.replace('.mdx', ''))
 
   const postsUrlMaps = postsFilenames.reduce(
