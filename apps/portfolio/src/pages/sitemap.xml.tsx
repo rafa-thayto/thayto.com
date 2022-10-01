@@ -12,6 +12,14 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     'fs.readdir(path.join(../..))',
     fs.readdirSync(path.join('..', '..')),
   )
+  console.error(
+    'fs.readdir(path.join(../../..))',
+    fs.readdirSync(path.join('..', '..', '..')),
+  )
+  console.error(
+    'fs.readdir(path.join(../../../..))',
+    fs.readdirSync(path.join('..', '..', '..', '..')),
+  )
   console.error('fs.readdir(path.join())', fs.readdirSync(path.join('')))
 
   const files = fs.readdirSync(path.join('blog'))
