@@ -1,4 +1,9 @@
+# *
 User-agent: *
 Allow: /
 
-Sitemap: https://thayto.com/api/sitemap.xml
+# Host
+Host: https://thayto.com
+
+# Sitemaps
+Sitemap: https://thayto.com/sitemap.xml
