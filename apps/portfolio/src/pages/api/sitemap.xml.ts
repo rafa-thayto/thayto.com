@@ -1,31 +1,11 @@
 import fs from 'fs'
+import { NextApiRequest, NextApiResponse } from 'next'
 import path from 'path'
-import { GetServerSideProps } from 'next'
 
-const Sitemap = () => null
-
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const domainUrl = 'https://thayto.com'
-  console.error('fs.readdir(path.join(..))', fs.readdirSync(path.join('..')))
-  console.error(
-    'fs.readdir(path.join(../..))',
-    fs.readdirSync(path.join('..', '..')),
-  )
-  console.error('fs.readFileSync(path.join())', fs.readFileSync(path.join('')))
-  console.error(
-    'fs.readFileSync(path.join(..))',
-    fs.readFileSync(path.join('..')),
-  )
-  console.error(
-    'fs.readFileSync(path.join(../..))',
-    fs.readFileSync(path.join('..', '..')),
-  )
 
-  const files = fs.readdirSync(path.join('blog'))
-  console.log(files)
-  const files2 = fs.readdirSync(path.join(''))
-  console.log(files2)
-
+  const files = fs.readdirSync(path.join('posts'))
   const postsFilenames = files.map(filename => filename.replace('.mdx', ''))
 
   const postsUrlMaps = postsFilenames.reduce(
@@ -66,8 +46,6 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader('Content-Length', Buffer.byteLength(sitemap))
   res.write(sitemap)
   res.end()
-
-  return { props: {} }
 }
 
-export default Sitemap
+export default handler

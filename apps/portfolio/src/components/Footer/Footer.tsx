@@ -37,7 +37,7 @@ export const Footer = () => (
         </li>
         <li className="py-1">
           <a
-            href="/sitemap.xml"
+            href="/api/sitemap.xml"
             className="text-secondary underlined focus:outline-none inline-block whitespace-nowrap text-lg hover:text-team-current focus:text-team-current"
           >
             Sitemap.xml
