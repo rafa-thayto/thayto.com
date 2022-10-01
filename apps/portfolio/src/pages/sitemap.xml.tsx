@@ -10,14 +10,14 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const domainUrl = 'https://thayto.com'
   console.log('context', context)
-  const files = fs.readdirSync(path.join('blog'))
+  const files = fs.readdirSync(path.join('apps/portolio/posts'))
   console.log(files)
   const files2 = fs.readdirSync(path.join(''))
   console.log(files2)
 
-  // const postsFilenames = files.map(filename => filename.replace('.mdx', ''))
+  const postsFilenames = files.map(filename => filename.replace('.mdx', ''))
 
-  const postsUrlMaps = files.reduce(
+  const postsUrlMaps = postsFilenames.reduce(
     (mappedUrls, filename) =>
       `${mappedUrls}
   <url>
