@@ -35,3 +35,7 @@ yarn-error.log*
 # turbo
 .turbo
 .vercel
+
+# Sitemap file
+sitemap.xml
+sitemap-0.xml
