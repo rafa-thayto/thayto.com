@@ -5,6 +5,20 @@ import path from 'path'
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const domainUrl = 'https://thayto.com'
 
+  console.error(
+    'fs.readdirSync(path.join(.next))',
+    fs.readdirSync(path.join('.next')),
+  )
+  console.error('fs.readdirSync(path.join())', fs.readdirSync(path.join('')))
+  console.error(
+    'fs.readdirSync(path.join(..))',
+    fs.readdirSync(path.join('..')),
+  )
+  console.error(
+    'fs.readdirSync(path.join(../..))',
+    fs.readdirSync(path.join('..', '..')),
+  )
+
   const files = fs.readdirSync(path.join('posts'))
   const postsFilenames = files.map(filename => filename.replace('.mdx', ''))
 
