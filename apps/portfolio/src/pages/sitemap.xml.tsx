@@ -4,16 +4,13 @@ import { GetServerSideProps } from 'next'
 
 const Sitemap = () => null
 
-export const getServerSideProps: GetServerSideProps = async ({
-  res,
-  ...context
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const domainUrl = 'https://thayto.com'
-  console.log('context', context)
-
   console.error('path.dirname()', path.dirname(''))
   console.error('path.join()', path.join(''))
   console.error('path.basename()', path.basename(''))
+  console.error('fs.readdir(path.join(/))', fs.readdirSync(path.join('/')))
+  console.error('fs.readdir(path.join(..))', fs.readdirSync(path.join('..')))
   console.error('fs.readdir(path.join())', fs.readdirSync(path.join('')))
 
   const files = fs.readdirSync(path.join('apps/portolio/posts'))
