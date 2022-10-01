@@ -4,16 +4,20 @@ import { GetServerSideProps } from 'next'
 
 const Sitemap = () => null
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  res,
+  ...context
+}) => {
   const domainUrl = 'https://thayto.com'
-  const files = fs.readdirSync(path.join('posts'))
-  const files2 = fs.readdirSync(path.join(''))
+  console.log('context', context)
+  const files = fs.readdirSync(path.join('blog'))
   console.log(files)
+  const files2 = fs.readdirSync(path.join(''))
   console.log(files2)
 
-  const postsFilenames = files.map(filename => filename.replace('.mdx', ''))
+  // const postsFilenames = files.map(filename => filename.replace('.mdx', ''))
 
-  const postsUrlMaps = postsFilenames.reduce(
+  const postsUrlMaps = files.reduce(
     (mappedUrls, filename) =>
       `${mappedUrls}
   <url>
