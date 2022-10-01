@@ -6,21 +6,20 @@ const Sitemap = () => null
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const domainUrl = 'https://thayto.com'
-  console.error('fs.readdir(path.join(/))', fs.readdirSync(path.join('/')))
   console.error('fs.readdir(path.join(..))', fs.readdirSync(path.join('..')))
   console.error(
     'fs.readdir(path.join(../..))',
     fs.readdirSync(path.join('..', '..')),
   )
+  console.error('fs.readFileSync(path.join())', fs.readFileSync(path.join('')))
   console.error(
-    'fs.readdir(path.join(../../..))',
-    fs.readdirSync(path.join('..', '..', '..')),
+    'fs.readFileSync(path.join(..))',
+    fs.readFileSync(path.join('..')),
   )
   console.error(
-    'fs.readdir(path.join(../../../..))',
-    fs.readdirSync(path.join('..', '..', '..', '..')),
+    'fs.readFileSync(path.join(../..))',
+    fs.readFileSync(path.join('..', '..')),
   )
-  console.error('fs.readdir(path.join())', fs.readdirSync(path.join('')))
 
   const files = fs.readdirSync(path.join('blog'))
   console.log(files)
