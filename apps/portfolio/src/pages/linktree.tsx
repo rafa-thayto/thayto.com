@@ -60,6 +60,14 @@ const LinksPage = () => {
           </h1>
         </header>
         <main className="lg:mx-72 xl:mx-96 mb-10">
+          <Link href="/blog" passHref>
+            <a
+              href="/blog"
+              className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:bg-yellow-50 px-10 py-4 mb-4"
+            >
+              Blog
+            </a>
+          </Link>
           <a
             href="https://www.linkedin.com/in/thayto/"
             className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:bg-yellow-50 px-10 py-4 mb-4"
@@ -78,14 +86,6 @@ const LinksPage = () => {
               <Twitter />
             </span>
           </a>
-          <Link href="/blog" passHref>
-            <a
-              href="/blog"
-              className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:bg-yellow-50 px-10 py-4 mb-4"
-            >
-              Blog
-            </a>
-          </Link>
           <a
             href="https://github.com/rafa-thayto"
             className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:bg-yellow-50 px-10 py-4 mb-4"
