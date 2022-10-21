@@ -1,5 +1,4 @@
-import { Footer } from '@src/components/Footer'
-import { Header } from '@src/components/Header'
+import { Footer, Header } from '@src/components'
 
 const NewPostPage = () => (
   <>

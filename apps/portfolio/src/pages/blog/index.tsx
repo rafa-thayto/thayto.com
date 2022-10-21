@@ -1,5 +1,4 @@
-import { Footer } from '@src/components/Footer'
-import { Header } from '@src/components/Header'
+import { Footer, Header } from '@src/components'
 import { IconsGroup } from '@src/components/IconsGroup'
 import { BlogCard } from '@thayto/ui'
 import fs from 'fs'

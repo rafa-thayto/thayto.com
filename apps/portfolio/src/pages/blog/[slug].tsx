@@ -1,6 +1,4 @@
-import { Footer } from '@src/components/Footer'
-import { Header } from '@src/components/Header'
-import { MyComponent } from '@src/components/MyComponent'
+import { Footer, Header } from '@src/components'
 import fs from 'fs'
 import matter from 'gray-matter'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
@@ -11,7 +9,7 @@ import Image from 'next/image'
 import path from 'path'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 
-const components = { SyntaxHighlighter, MyComponent, Header, Footer }
+const components = { SyntaxHighlighter, Header, Footer }
 
 const PostPage = ({
   frontMatter: { title, description, tags, publishedTime, modifiedTime, image },
@@ -41,7 +39,7 @@ const PostPage = ({
             }`,
             width: 460,
             height: 460,
-            alt: 'Rafael Thayto Profile Picture',
+            alt: 'blog hero',
             type: 'image/jpeg',
           },
         ],

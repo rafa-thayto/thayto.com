@@ -1,6 +1,4 @@
-import { Footer } from '@src/components/Footer'
-import { Header } from '@src/components/Header'
-import { IconsGroup } from '@src/components/IconsGroup'
+import { Footer, Header, IconsGroup } from '@src/components'
 import { Button } from '@thayto/ui'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
