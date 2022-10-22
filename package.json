@@ -1,47 +1,98 @@
 {
-  "name": "@thayto/core",
+  "name": "thayto.com",
   "version": "0.0.0",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "license": "MIT",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
-    "typescript": "turbo run typescript",
-    "lint-staged": "lint-staged",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "start": "nx serve",
+    "build": "nx build",
+    "build:app": "nx build app",
+    "test": "nx test",
+    "lint": "nx lint",
     "prepare": "husky install"
   },
+  "private": true,
+  "dependencies": {
+    "@headlessui/react": "^1.7.3",
+    "@heroicons/react": "^2.0.12",
+    "@mdx-js/loader": "^2.1.5",
+    "@mdx-js/react": "^2.1.5",
+    "@next/mdx": "^12.3.1",
+    "@nrwl/next": "15.0.1",
+    "autoprefixer": "^10.4.12",
+    "clsx": "^1.2.1",
+    "core-js": "^3.6.5",
+    "gray-matter": "^4.0.3",
+    "marked": "^4.1.1",
+    "nanoid": "^4.0.0",
+    "next": "12.3.1",
+    "next-mdx-remote": "^4.1.0",
+    "next-seo": "^5.8.0",
+    "next-sitemap": "^3.1.29",
+    "postcss": "^8.4.18",
+    "react": "18.2.0",
+    "react-confetti": "^6.1.0",
+    "react-dom": "18.2.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "regenerator-runtime": "0.13.7",
+    "tailwindcss": "^3.2.1",
+    "ts-toolbelt": "^9.6.0",
+    "tslib": "^2.3.0"
+  },
   "devDependencies": {
-    "esbuild": "^0.14.47",
-    "esbuild-jest": "^0.5.0",
-    "@thayto/configs": "*",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@commitlint/config-nx-scopes": "^17.0.0",
+    "@commitlint/prompt-cli": "^17.1.2",
+    "@nrwl/cli": "15.0.1",
+    "@nrwl/cypress": "15.0.1",
+    "@nrwl/eslint-plugin-nx": "15.0.1",
+    "@nrwl/jest": "15.0.1",
+    "@nrwl/linter": "15.0.1",
+    "@nrwl/nx-cloud": "latest",
+    "@nrwl/react": "15.0.1",
+    "@nrwl/web": "15.0.1",
+    "@nrwl/workspace": "15.0.1",
+    "@swc-node/register": "^1.4.2",
+    "@swc/core": "^1.2.173",
+    "@testing-library/react": "13.4.0",
+    "@types/jest": "28.1.1",
+    "@types/node": "16.11.7",
+    "@types/react": "18.0.20",
+    "@types/react-dom": "18.0.6",
+    "@types/react-syntax-highlighter": "^15.5.5",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "babel-jest": "28.1.1",
+    "cypress": "^10.7.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "~8.15.0",
+    "eslint-config-next": "12.3.1",
+    "eslint-config-prettier": "8.1.0",
+    "eslint-plugin-cypress": "^2.10.3",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsx-a11y": "6.6.1",
+    "eslint-plugin-react": "7.31.8",
+    "eslint-plugin-react-hooks": "4.6.0",
     "husky": "^8.0.1",
+    "jest": "28.1.1",
+    "jest-environment-jsdom": "28.1.1",
     "lint-staged": "^13.0.3",
-    "prettier": "latest",
-    "turbo": "latest"
+    "nx": "15.0.1",
+    "prettier": "^2.6.2",
+    "react-test-renderer": "18.2.0",
+    "ts-jest": "28.0.5",
+    "ts-node": "10.9.1",
+    "typescript": "~4.8.2"
   },
-  "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   },
-  "dependencies": {},
-  "packageManager": "yarn@1.22.19",
   "lint-staged": {
-    "apps/**/*.{js,ts,jsx,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "packages/ui/**/*.{js,ts,jsx,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.json": [
-      "prettier --write"
+    "*": [
+      "nx affected:lint --fix --files",
+      "nx format:write --files"
     ]
   }
 }
