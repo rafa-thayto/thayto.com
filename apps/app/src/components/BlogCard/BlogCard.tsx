@@ -39,14 +39,10 @@ export const BlogCard = ({
 
   return (
     <div className="rounded overflow-hidden shadow-lg border-gray-400 hover:border-orange-300 border">
-      <Link href={href} passHref>
-        <>
-          {image && (
-            <a
-              rel="noopener follow"
-              className="cursor-pointer"
-              aria-label="Post Preview Image"
-            >
+      <>
+        {image && (
+          <Link href={href} passHref>
+            <a className="cursor-pointer" aria-label="Post Preview Image">
               <div className="h-64 relative">
                 <Image
                   className="object-cover"
@@ -56,20 +52,18 @@ export const BlogCard = ({
                 />
               </div>
             </a>
-          )}
-          <div className="px-6 py-4 ">
-            <a
-              rel="noopener"
-              className="cursor-pointer"
-              aria-label="Post Preview Title"
-            >
+          </Link>
+        )}
+        <div className="px-6 py-4 ">
+          <Link href={href} passHref>
+            <a className="cursor-pointer" aria-label="Post Preview Title">
               <h1 className="font-bold text-xl mb-2">{title}</h1>
             </a>
-            <p className="text-gray-400 text-sm mb-2">{published}</p>
-            <p className="text-gray-700 text-base">{description}</p>
-          </div>
-        </>
-      </Link>
+          </Link>
+          <p className="text-gray-400 text-sm mb-2">{published}</p>
+          <p className="text-gray-700 text-base">{description}</p>
+        </div>
+      </>
       <div className="px-6 pt-4 pb-2">
         {tags?.map((tag) => (
           <a
