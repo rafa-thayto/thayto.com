@@ -1,0 +1,37 @@
+---
+title: "Como 'settar' a versão default do Node usando nvm"
+published: 'Published: 19 de jun.'
+publishedTime: '2022-06-19T18:52:06Z'
+modifiedTime: '2022-06-19T18:52:06Z'
+description: "Como 'settar' a versão default do Node usando nvm"
+image:
+  { src: '/static/images/como-settar-a-versao-default-do-node-usando-nvm.png' }
+tags: ['node', 'nvm', 'tutorial', 'thayto']
+href: '/blog/como-settar-a-versao-default-do-node-usando-nvm'
+reactionsLength: 0
+commentsLength: 0
+---
+
+Hello, hello devs e divas! 😎
+
+Pra quem ainda não conhece `nvm` é um excelente utilitário pra quando estamos querendo trocar a versão do node com agilidade sem precisar desinstalar a atual e instalar a desejada.
+
+Por um bom tempo eu utilizei o comando:
+
+<SyntaxHighlighter language="bash">
+  {`
+    nvm use <VERSÃO_DESEJADA>
+  `}
+</SyntaxHighlighter>
+
+Para alternar a versão do node pra uma mais recente, até que uns dias atrás descobri como alterar de forma bem simples a versão default do nvm.
+
+Basta utilizar o seguinte comando alterando o trecho `<VERSÃO_DESEJADA>` pela versão que você deseja manter como a padrão, por ex `16.5.0`:
+
+<SyntaxHighlighter language="bash">
+  {`
+    nvm alias default <VERSÃO_DESEJADA>
+  `}
+</SyntaxHighlighter>
+
+E pronto, agora você vai estar sempre utilizando essa versão do nvm em qualquer momento ou terminal que você abrir 😁.
