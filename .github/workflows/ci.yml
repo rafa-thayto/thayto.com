@@ -20,6 +20,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+      
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.13.5
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
