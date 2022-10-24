@@ -1,4 +1,5 @@
-import { Footer, Header } from '@src/components'
+import rehypePrism from '@mapbox/rehype-prism'
+import { CustomLink, Footer, Header } from '@src/components'
 import { POSTS_PATH } from '@src/constants'
 import fs from 'fs'
 import matter from 'gray-matter'
@@ -9,8 +10,11 @@ import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import path from 'path'
 import SyntaxHighlighter from 'react-syntax-highlighter'
+import remarkGfm from 'remark-gfm'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
 
-const components = { SyntaxHighlighter, Header, Footer }
+const components = { SyntaxHighlighter, Header, Footer, a: CustomLink }
 
 const PostPage = ({
   frontMatter: { title, description, tags, publishedTime, modifiedTime, image },
@@ -53,8 +57,8 @@ const PostPage = ({
       }}
     />
     <Header />
-    <div className="container">
-      <article className="leading-6 px-4">
+    <div className="container max-w-4xl">
+      <article className="leading-6 px-4 ">
         <div className="mb-4">
           {image && (
             <div className="h-64 relative mb-4">
@@ -110,7 +114,13 @@ export const getStaticProps: GetStaticProps<
   )
 
   const { data: frontMatter, content } = matter(markdownWithMeta)
-  const mdxSource = await serialize(content)
+  const mdxSource = await serialize(content, {
+    mdxOptions: {
+      remarkPlugins: [remarkGfm, remarkParse, remarkRehype],
+      rehypePlugins: [rehypePrism],
+    },
+    scope: frontMatter,
+  })
 
   return {
     props: {
