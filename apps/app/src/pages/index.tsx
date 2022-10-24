@@ -36,7 +36,7 @@ const IndexPage = () => {
         }}
       />
       <Header />
-      <main className="container mx-auto mt-6 px-4 pb-4">
+      <main className="container mx-auto mt-6 px-4 pb-4 max-w-5xl">
         <div className="flex mt-2 items-center justify-items-center justify-center flex-col sm:flex-row">
           <div className="relative w-52 h-52 ">
             <Image
@@ -58,10 +58,18 @@ const IndexPage = () => {
         </div>
         <div className="mt-6">
           <p className="text-base font-serif text-slate-800">
-            Thayto is a developer, passionate about learning new technologies
-            and good development practices, despite his young age he has already
-            gone through several projects where he gave his best and managed to
-            make all deliveries.
+            Thayto é um desenvolvedor com mais de 3 anos de experiência,
+            apaixonado em aprender novas tecnologia e boas práticas para
+            desenvolvimento, apesar da pouca idade ele já passou por diversos
+            projetos onde deu seu melhor e conseguiu efetuar todas as entregas.
+            Ele não pode ver um framework novo ou lib nova que já quer
+            implementar, porém sempre e avalia os riscos antes de tal
+            implementação.
+          </p>
+          <p className="text-base font-serif text-slate-800 mt-2">
+            Ele gosta bastante de jogar, conhecer pessoas e lugares novos. Posso
+            ter certeza que se conversar com ele, em poucos minutos já terão
+            criado um conexão.
           </p>
         </div>
         <h2 className="text-lg text-slate-900 font-bold mt-4">
