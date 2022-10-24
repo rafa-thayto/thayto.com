@@ -26,8 +26,7 @@ E para adicionar os aliases é bem simples basta acessar a pasta onde estão os 
 
 Depois você vai procurar o arquivo `aliases.sh` e abrir no seu editor de texto preferido (pode até ser o notepad) e adicionar as seguintes linhas:
 
-<SyntaxHighlighter language="bash">
-  {`
+```bash
 alias g=git
 alias ga='git add'
 alias gaa='git add --all'
@@ -202,7 +201,6 @@ alias gupomi='git pull --rebase=interactive origin $(git_main_branch)'
 alias gupv='git pull --rebase -v'
 alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"'
-  `}
-</SyntaxHighlighter>
+```
 
 Pronto! Agora você pode ser mais feliz utilizando o git de forma mais ágil e escrevendo bem menos com esses aliases! :D
