@@ -4,6 +4,7 @@ import Script from 'next/script'
 
 import '@src/styles/styles.css'
 import '@src/styles/globals.css'
+import '@src/styles/blog.css'
 
 const CustomApp = ({ Component, pageProps }: AppProps) => (
   <>
