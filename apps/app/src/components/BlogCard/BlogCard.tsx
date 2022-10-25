@@ -38,7 +38,7 @@ export const BlogCard = ({
   }, [])
 
   return (
-    <div className="rounded overflow-hidden shadow-lg border-gray-400 hover:border-orange-300 border">
+    <div className="rounded overflow-hidden shadow-lg border-gray-400 hover:border-orange-300 border bg-slate-50">
       <>
         {image && (
           <Link href={href} passHref>

@@ -10,7 +10,7 @@ export const ButtonLink = ({
   ...props
 }: PropsWithChildren<ButtonLinkProps>) => (
   <a
-    className="p-2 ml-4 rounded border border-slate-900 hover:bg-yellow-50"
+    className="p-2 ml-4 rounded border border-slate-900 hover:bg-yellow-50 bg-slate-50"
     {...props}
   >
     {children}

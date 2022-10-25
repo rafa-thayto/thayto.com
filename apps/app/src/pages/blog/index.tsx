@@ -6,12 +6,13 @@ import { nanoid } from 'nanoid'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { NextSeo } from 'next-seo'
 import path from 'path'
+import { getPosts } from 'utils/mdx'
 
 const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const description =
     'Aqui você encontra vários artigos sobre tecnologia e carreira.'
   return (
-    <>
+    <div className="bg-gray-100">
       <NextSeo
         title="Rafael Thayto - Blog"
         description={description}
@@ -53,14 +54,14 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
           {posts?.map((post) => (
             <article key={nanoid()} className="m-2 lg:max-w-md ">
               <BlogCard
-                title={post.frontMatter.title}
-                description={post.frontMatter.description}
-                tags={post.frontMatter.tags}
-                published={post.frontMatter.published}
-                image={post.frontMatter.image}
-                href={post.frontMatter.href}
-                reactionsLength={post.frontMatter.reactionsLength}
-                commentsLength={post.frontMatter.commentsLength}
+                title={post.data.title}
+                description={post.data.description}
+                tags={post.data.tags}
+                published={post.data.published}
+                image={post.data.image}
+                href={post.data.href}
+                reactionsLength={post.data.reactionsLength}
+                commentsLength={post.data.commentsLength}
               />
             </article>
           ))}
@@ -72,32 +73,20 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
       </main>
 
       <Footer />
-    </>
+    </div>
   )
 }
 
 export const getStaticProps: GetStaticProps<{
   posts: {
-    frontMatter: {
+    content: string
+    data: {
       [key: string]: any
     }
-    slug: string
+    filePath: string
   }[]
 }> = async () => {
-  const files = fs.readdirSync(path.join(POSTS_PATH))
-
-  const posts = files.map((filename) => {
-    const markdownWithMeta = fs.readFileSync(
-      path.join(POSTS_PATH, filename),
-      'utf-8',
-    )
-    const { data: frontMatter } = matter(markdownWithMeta)
-
-    return {
-      frontMatter,
-      slug: filename.split('.')[0],
-    }
-  })
+  const posts = getPosts()
 
   return {
     props: {
