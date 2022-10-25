@@ -74,21 +74,16 @@ const IndexPage = () => {
           <p className="text-base font-serif text-slate-800 mt-2">
             Ele gosta bastante de jogar, conhecer pessoas e lugares novos. Posso
             ter certeza que se conversar com ele, em poucos minutos já terão
-            criado um conexão.
+            criado uma conexão.
           </p>
-        </div>
-        <h2 className="text-lg text-slate-900 font-bold mt-4">
-          Alguns links úteis
-        </h2>
-        <div className="flex mt-4">
-          <IconsGroup />
         </div>
 
         <p className="mt-8">
           Não repara na bagunça que tá esse site pq eu ainda tô construindo blz?
         </p>
-        <p>
-          Porém já tenho alguns posts no blog pra você dar uma conferida! ;)
+        <p className="font-mono font-semibold text-slate-800">
+          Vem dar uma olhada no blog que já tenho alguns posts pra você dar uma
+          conferida! ;)
         </p>
 
         <div className="w-36 mt-4">
@@ -100,6 +95,13 @@ const IndexPage = () => {
               Blog <ArrowRightIcon className="ml-2 h-4 w-4" />
             </a>
           </Link>
+        </div>
+
+        <h2 className="text-lg text-slate-900 font-bold mt-4">
+          Alguns links úteis
+        </h2>
+        <div className="flex mt-4">
+          <IconsGroup />
         </div>
       </main>
       <Footer />
