@@ -20,6 +20,7 @@ import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import { getNextPostBySlug, getPreviousPostBySlug } from 'utils/mdx'
+import { h } from 'hastscript'
 
 const components = { SyntaxHighlighter, Header, Footer, a: CustomLink }
 
@@ -164,13 +165,24 @@ export const getStaticProps: GetStaticProps<
   )
 
   const { data: frontMatter, content } = matter(markdownWithMeta)
+  const a = () => <span>#</span>
   const mdxSource = await serialize(content, {
     mdxOptions: {
       remarkPlugins: [remarkGfm, remarkA11yEmoji, remarkParse, remarkRehype],
       rehypePlugins: [
         rehypeSlug,
         rehypePrism,
-        rehypeAutolinkHeadings,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'prepend',
+            properties: {
+              ariaLabel: 'Link to this section',
+              classname: ['no-underline'],
+            },
+            content: h('span.text-indigo-500', '# '),
+          },
+        ],
         rehypeStringify,
       ],
     },

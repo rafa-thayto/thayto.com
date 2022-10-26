@@ -49,6 +49,7 @@ specifiers:
   eslint-plugin-react-hooks: 4.6.0
   fp-ts: ^2.13.1
   gray-matter: ^4.0.3
+  hastscript: ^7.1.0
   husky: ^8.0.1
   jest: 28.1.1
   jest-environment-jsdom: 28.1.1
@@ -95,6 +96,7 @@ dependencies:
   core-js: 3.25.5
   fp-ts: 2.13.1
   gray-matter: 4.0.3
+  hastscript: 7.1.0
   marked: 4.1.1
   nanoid: 4.0.0
   next: 12.3.1_qtpcxnaaarbm4ws7ughq6oxfve
@@ -9909,6 +9911,15 @@ packages:
       }
     dev: false
 
+  /hast-util-parse-selector/3.1.0:
+    resolution:
+      {
+        integrity: sha512-AyjlI2pTAZEOeu7GeBPZhROx0RHBnydkQIXlhnFzDi0qfXTmGUWoCYZtomHbrdrheV4VFUlPcfJ6LMF5T6sQzg==,
+      }
+    dependencies:
+      '@types/hast': 2.3.4
+    dev: false
+
   /hast-util-to-estree/2.1.0:
     resolution:
       {
@@ -9986,6 +9997,19 @@ packages:
       hast-util-parse-selector: 2.2.5
       property-information: 5.6.0
       space-separated-tokens: 1.1.5
+    dev: false
+
+  /hastscript/7.1.0:
+    resolution:
+      {
+        integrity: sha512-uBjaTTLN0MkCZxY/R2fWUOcu7FRtUVzKRO5P/RAfgsu3yFiMB1JWCO4AjeVkgHxAira1f2UecHK5WfS9QurlWA==,
+      }
+    dependencies:
+      '@types/hast': 2.3.4
+      comma-separated-tokens: 2.0.2
+      hast-util-parse-selector: 3.1.0
+      property-information: 6.1.1
+      space-separated-tokens: 2.0.1
     dev: false
 
   /he/1.2.0:
