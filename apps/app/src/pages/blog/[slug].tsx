@@ -1,3 +1,4 @@
+import remarkA11yEmoji from '@fec/remark-a11y-emoji'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
 import rehypePrism from '@mapbox/rehype-prism'
 import { CustomLink, Footer, Header } from '@src/components'
@@ -12,6 +13,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import path from 'path'
 import SyntaxHighlighter from 'react-syntax-highlighter'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeSlug from 'rehype-slug'
+import rehypeStringify from 'rehype-stringify'
 import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
@@ -82,8 +86,13 @@ const PostPage = ({
           )}
           <div className="px-4 sm:px-12 mt-6">
             <h1 className="text-2xl text-slate-900 font-bold">{title}</h1>
-            <h2 className="text-xl text-slate-900 font-light">
-              Last modify: <time dateTime={modifiedTime}>{modifiedTime}</time>
+            <h2 className="text-xl text-slate-600 font-light mt-2">
+              <time dateTime={publishedTime}>
+                {new Intl.DateTimeFormat('pt-BR', {
+                  dateStyle: 'long',
+                  timeStyle: 'long',
+                }).format(new Date(publishedTime))}
+              </time>
             </h2>
           </div>
         </header>
@@ -157,8 +166,13 @@ export const getStaticProps: GetStaticProps<
   const { data: frontMatter, content } = matter(markdownWithMeta)
   const mdxSource = await serialize(content, {
     mdxOptions: {
-      remarkPlugins: [remarkGfm, remarkParse, remarkRehype],
-      rehypePlugins: [rehypePrism],
+      remarkPlugins: [remarkGfm, remarkA11yEmoji, remarkParse, remarkRehype],
+      rehypePlugins: [
+        rehypeSlug,
+        rehypePrism,
+        rehypeAutolinkHeadings,
+        rehypeStringify,
+      ],
     },
     scope: frontMatter,
   })

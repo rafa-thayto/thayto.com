@@ -35,7 +35,7 @@ const AboutPage = () => {
       />
       <Header />
 
-      <main className="container max-w-6xl border bg-slate-50 py-6 px-12 mt-6">
+      <main className="container max-w-6xl border bg-slate-50 py-6 px-4 sm:px-12 mt-6">
         <h1 className="text-xl text-slate-900 font-bold mt-4">Sobre mim</h1>
         <div className="mt-6">
           <p className="text-base font-serif text-slate-800">

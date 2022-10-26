@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { PropsWithChildren } from 'react'
 
 type ButtonLinkProps = React.DetailedHTMLProps<
@@ -7,10 +8,14 @@ type ButtonLinkProps = React.DetailedHTMLProps<
 
 export const ButtonLink = ({
   children,
+  className,
   ...props
 }: PropsWithChildren<ButtonLinkProps>) => (
   <a
-    className="p-2 ml-4 rounded border border-slate-900 hover:bg-yellow-50 bg-slate-50"
+    className={clsx(
+      'p-2 rounded border border-slate-900 hover:bg-yellow-50 bg-slate-50',
+      className,
+    )}
     {...props}
   >
     {children}

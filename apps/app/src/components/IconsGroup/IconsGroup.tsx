@@ -9,16 +9,16 @@ export const IconsGroup = ({
     <ButtonLink href="https://www.linkedin.com/in/thayto/">
       <LinkedIn />
     </ButtonLink>
-    <ButtonLink href="https://github.com/rafa-thayto">
+    <ButtonLink className="ml-4" href="https://github.com/rafa-thayto">
       <GitHub />
     </ButtonLink>
-    <ButtonLink href="https://dev.to/thayto/">
+    <ButtonLink className="ml-4" href="https://dev.to/thayto/">
       <DevTo />
     </ButtonLink>
-    <ButtonLink href="https://www.tabnews.com.br/thayto">
+    <ButtonLink className="ml-4" href="https://www.tabnews.com.br/thayto">
       <TabNews />
     </ButtonLink>
-    <ButtonLink href="https://medium.com/@thayto">
+    <ButtonLink className="ml-4" href="https://medium.com/@thayto">
       <Medium />
     </ButtonLink>
   </div>

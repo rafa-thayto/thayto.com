@@ -41,23 +41,25 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
       <Header />
 
-      <main className="p-2">
-        <h1 className="text-4xl text-gray-800 font-bold m-4 text-center">
-          Blog
-        </h1>
-        <h2 className="text-lg text-gray-800 mb-4 text-center">
-          É aqui onde você encontra tudo que gostaria de saber, o que sabe e até
-          o que nem sabia que queria saber! :D
-        </h2>
+      <main className="sm:px-2">
+        <div className="px-4 sm:px-2">
+          <h1 className="text-4xl text-gray-800 font-bold m-4 text-center">
+            Blog
+          </h1>
+          <h2 className="text-lg text-gray-800 mb-4 text-center">
+            É aqui onde você encontra tudo que gostaria de saber, o que sabe e
+            até o que nem sabia que queria saber! :D
+          </h2>
+        </div>
 
         <div className="flex flex-wrap justify-center">
           {posts?.map((post) => (
-            <article key={nanoid()} className="m-2 lg:max-w-md ">
+            <article key={nanoid()} className="my-2 sm:m-2 lg:max-w-md ">
               <BlogCard
                 title={post.data.title}
                 description={post.data.description}
                 tags={post.data.tags}
-                published={post.data.published}
+                publishedTime={post.data.publishedTime}
                 image={post.data.image}
                 href={post.data.href}
                 reactionsLength={post.data.reactionsLength}

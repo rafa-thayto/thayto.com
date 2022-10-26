@@ -14,7 +14,7 @@ interface BlogCardProps {
     alt?: string
   }
   description: string
-  published: string
+  publishedTime: Date
   tags: string[]
   href: string
   reactionsLength: number
@@ -25,7 +25,7 @@ export const BlogCard = ({
   title,
   description,
   tags,
-  published,
+  publishedTime,
   href,
   image,
   reactionsLength,
@@ -60,7 +60,11 @@ export const BlogCard = ({
               <h1 className="font-bold text-xl mb-2">{title}</h1>
             </a>
           </Link>
-          <p className="text-gray-400 text-sm mb-2">{published}</p>
+          <p className="text-gray-400 text-sm mb-2">
+            {new Intl.DateTimeFormat('pt-BR', {
+              dateStyle: 'long',
+            }).format(new Date(publishedTime))}
+          </p>
           <p className="text-gray-700 text-base">{description}</p>
         </div>
       </>

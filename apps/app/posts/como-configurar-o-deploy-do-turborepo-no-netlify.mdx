@@ -2,8 +2,8 @@
 title: 'Como configurar o deploy do Turborepo no Netlify'
 published: 'Published: 21 de jun.'
 publishedTime: '2022-06-21T15:14:48Z'
-modifiedTime: '2022-06-21T15:14:48Z'
-description: 'Como configurar o deploy do Turborepo no Netlify.'
+modifiedTime: '2022-10-25T23:50:06Z'
+description: 'Um dia desses passei por uma dificuldade que foi fazer o deploy de uma aplicação minha utilizando Turborepo com Next.js e como acredito que mais pessoas possam ter esse problema, resolvi fazer um guia de como fazer as configurações iniciais, bora lá?'
 image:
   { src: '/static/images/como-configurar-o-deploy-do-turborepo-no-netlify.png' }
 tags: ['turborepo', 'netlify', 'tutorial', 'thayto']
@@ -11,8 +11,6 @@ href: '/blog/como-configurar-o-deploy-do-turborepo-no-netlify'
 reactionsLength: 0
 commentsLength: 0
 ---
-
-Hello, hello devs e divas! 😎
 
 Um dia desses passei por uma dificuldade que foi fazer o deploy de uma aplicação minha utilizando Turborepo com Next.js e como acredito que mais pessoas possam ter esse problema, resolvi fazer um guia de como fazer as configurações iniciais, bora lá?
 
@@ -102,6 +100,7 @@ Tá, mas pra que isso?
 Bom, isso é basicamente o arquivo de configuração que o Netlify olha antes de fazer o deployment.
 
 O `[build]` é a etapa que o Netlify olha para saber como vai fazer o build
+
 O `[[plugins]]` é a etapa que antes de fazer o build ele instala alguns plugins que vão facilitar o deployment internamente. No nosso caso é de extrema importância adicionar o plugin do `Next.js` para não termos nenhuma complicação na hora dele criar o cache interno e utilizar o `SSR` e `Edge Functions` do Next.
 
 Após isso configurado a gente vai fazer um commit no nosso repo para que a gente possa subir em um repo no GitHub e fazer o deploy em si. Nesse commit abaixo reparem que estou utilizando uma convenção famosa para commits que é o [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#specification) coloquem um comentário caso queiram que eu traga algo relacionado a padrões de commit :)
@@ -155,6 +154,7 @@ Depois coloquem essas configurações no **Basic build settings**
 .next](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/72w3i8z16opeu4tt3mgr.png)
 
 Aí é só clicar em deploy e aguardar 😎...
+
 Após alguns minutos o site de vocês já vai estar deployado no Netlify lindamente 😁🎆.
 
 Porém ele vai ter essa cara feia aqui, masssssss... aí pra alterar isso é por conta de vocês!
@@ -162,4 +162,5 @@ Porém ele vai ter essa cara feia aqui, masssssss... aí pra alterar isso é por
 ![Imagem mostrando como ficou o site](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4sl83phei0mqe45rywhu.png)
 
 Link do deploy: https://thayto-netlify-turborepo-post.netlify.app/
+
 Link do repositório no GitHub: https://github.com/rafa-thayto/netlify-turborepo-post
