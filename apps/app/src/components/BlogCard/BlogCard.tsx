@@ -38,50 +38,58 @@ export const BlogCard = ({
   }, [])
 
   return (
-    <div className="rounded overflow-hidden shadow-lg border-gray-400 hover:border-orange-300 border bg-slate-50">
-      <>
-        {image && (
-          <Link href={href} passHref>
-            <a className="cursor-pointer" aria-label="Post Preview Image">
-              <div className="h-64 relative">
-                <Image
-                  className="object-cover"
-                  layout="fill"
-                  src={image.src}
-                  alt={image.alt || title}
-                />
-              </div>
-            </a>
-          </Link>
-        )}
-        <div className="px-6 py-4 ">
-          <Link href={href} passHref>
-            <a className="cursor-pointer" aria-label="Post Preview Title">
-              <h1 className="font-bold text-xl mb-2">{title}</h1>
-            </a>
-          </Link>
-          <p className="text-gray-400 text-sm mb-2">
-            {new Intl.DateTimeFormat('pt-BR', {
-              dateStyle: 'long',
-            }).format(new Date(publishedTime))}
-          </p>
-          <p className="text-gray-700 text-base">{description}</p>
-        </div>
-      </>
+    <div className="rounded-lg overflow-hidden shadow-lg transition border-gray-400 dark:border-black hover:border-indigo-300 hover:border border bg-slate-50 dark:bg-gray-800">
+      <Link href={href} passHref>
+        <a>
+          {image && (
+            <Link href={href} passHref>
+              <a className="cursor-pointer" aria-label="Post Preview Image">
+                <div className="h-64 relative">
+                  <Image
+                    className="object-cover"
+                    layout="fill"
+                    src={image.src}
+                    alt={image.alt || title}
+                  />
+                </div>
+              </a>
+            </Link>
+          )}
+          <div className="px-6 py-4 ">
+            <Link href={href} passHref>
+              <a className="cursor-pointer" aria-label="Post Preview Title">
+                <h1 className="font-bold text-slate-900 dark:text-white text-xl mb-2">
+                  {title}
+                </h1>
+              </a>
+            </Link>
+            <p className="text-gray-400 text-sm mb-2">
+              {new Intl.DateTimeFormat('pt-BR', {
+                dateStyle: 'long',
+              }).format(new Date(publishedTime))}
+            </p>
+            <p className="text-gray-700 dark:text-slate-300 text-base">
+              {description}
+            </p>
+          </div>
+        </a>
+      </Link>
+
       <div className="px-6 pt-4 pb-2">
         {tags?.map((tag) => (
-          <a
-            rel="noopener nofollow"
-            key={tag}
-            className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-          >
-            #{tag}
-          </a>
+          <Link key={tag} href={`/blog?tag=${tag}`} passHref>
+            <a
+              rel="noopener nofollow"
+              className="inline-block bg-gray-200 dark:bg-slate-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-800 mr-2 mb-2"
+            >
+              #{tag}
+            </a>
+          </Link>
         ))}
       </div>
-      <div className="px-6 pt-4 pb-4 flex">
-        {/* <Link href={href} passHref> */}
-        <a className="flex">
+
+      <div className="px-6 py-4 flex">
+        <div className="flex">
           {hasLike && (
             <HeartIconSolid
               height={24}
@@ -98,19 +106,28 @@ export const BlogCard = ({
               onClick={handleLikeClick}
             />
           )}
-          <span title="Number of reactions" className="ml-1">
+          <span
+            title="Number of reactions"
+            className="ml-1 text-slate-800 dark:text-slate-100"
+          >
             {reactionsLength + (hasLike ? 1 : 0)}
             <span>&nbsp;Reactions</span>
           </span>
-        </a>
-        {/* </Link> */}
+        </div>
+
         <Link href={`${href}#comments`} passHref>
           <a
             aria-label={`Comments for post ${title} (${commentsLength})`}
             className="ml-4 flex"
           >
-            <ChatBubbleLeftEllipsisIcon height={24} />
-            <span title="Number of comments" className="ml-1">
+            <ChatBubbleLeftEllipsisIcon
+              height={24}
+              className="text-slate-800 dark:text-slate-100"
+            />
+            <span
+              title="Number of comments"
+              className="ml-1 text-slate-800 dark:text-slate-100"
+            >
               {commentsLength}
               <span>&nbsp;Comments</span>
             </span>

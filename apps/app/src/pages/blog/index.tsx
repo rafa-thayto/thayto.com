@@ -1,18 +1,14 @@
-import { BlogCard, Footer, Header, IconsGroup } from '@src/components'
-import { POSTS_PATH } from '@src/constants'
-import fs from 'fs'
-import matter from 'gray-matter'
+import { BlogCard, Footer, Header, IconsGroup, Layout } from '@src/components'
 import { nanoid } from 'nanoid'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { NextSeo } from 'next-seo'
-import path from 'path'
 import { getPosts } from 'utils/mdx'
 
 const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const description =
     'Aqui você encontra vários artigos sobre tecnologia e carreira.'
   return (
-    <div className="bg-gray-100">
+    <Layout>
       <NextSeo
         title="Rafael Thayto - Blog"
         description={description}
@@ -41,12 +37,12 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
       <Header />
 
-      <main className="sm:px-2">
+      <main className="sm:px-2 mt-8">
         <div className="px-4 sm:px-2">
-          <h1 className="text-4xl text-gray-800 font-bold m-4 text-center">
+          <h1 className="text-4xl text-slate-900 dark:text-white font-bold m-4 text-center">
             Blog
           </h1>
-          <h2 className="text-lg text-gray-800 mb-4 text-center">
+          <h2 className="text-lg text-slate-900 dark:text-slate-400 mb-4 text-center">
             É aqui onde você encontra tudo que gostaria de saber, o que sabe e
             até o que nem sabia que queria saber! :D
           </h2>
@@ -75,7 +71,7 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
       </main>
 
       <Footer />
-    </div>
+    </Layout>
   )
 }
 

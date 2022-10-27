@@ -1,5 +1,5 @@
 import { ButtonLink } from '@src/components'
-import { TabNews, Medium, LinkedIn, DevTo, GitHub } from '@src/components/Icons'
+import { DevTo, GitHub, LinkedIn, Medium, TabNews } from '@src/components/Icons'
 import { DetailedHTMLProps, HTMLAttributes } from 'react'
 
 export const IconsGroup = ({

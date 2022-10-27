@@ -107,7 +107,7 @@ const LinksPage = () => {
         <main className="lg:mx-72 xl:mx-96 mb-10">
           {links.map(({ Icon, href, text }) => (
             <Link key={text} href={href} passHref>
-              <a className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:bg-yellow-50 px-10 py-4 mb-4">
+              <a className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:hover:bg-indigo-300 px-10 py-4 mb-4">
                 {text}
                 {Icon && (
                   <span className="ml-4">

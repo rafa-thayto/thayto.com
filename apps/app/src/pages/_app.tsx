@@ -2,9 +2,9 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
 
-import '@src/styles/styles.css'
-import '@src/styles/globals.css'
 import '@src/styles/blog.css'
+import '@src/styles/globals.css'
+import '@src/styles/styles.css'
 
 const CustomApp = ({ Component, pageProps }: AppProps) => (
   <>
