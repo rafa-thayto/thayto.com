@@ -38,7 +38,7 @@ const IndexPage = () => {
       />
       <Header />
 
-      <main className="container mx-auto mt-6 max-w-6xl border dark:border-black bg-slate-50 dark:bg-gray-800 py-6 px-4 sm:px-12">
+      <main className="max-w-6xl mx-auto mt-6 border dark:border-black bg-slate-50 dark:bg-gray-800 py-6 px-4 sm:px-12">
         <div className="flex mt-2 items-center justify-items-center justify-center flex-col sm:flex-row">
           <div className="relative w-52 h-52 ">
             <Image

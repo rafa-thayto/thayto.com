@@ -50,7 +50,7 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
         <div className="flex flex-wrap justify-center">
           {posts?.map((post) => (
-            <article key={nanoid()} className="my-2 sm:m-2 lg:max-w-md ">
+            <article key={post.data.title} className="my-2 sm:m-2 lg:max-w-md ">
               <BlogCard
                 title={post.data.title}
                 description={post.data.description}

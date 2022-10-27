@@ -3,6 +3,7 @@ import {
   HeartIcon as HeartIconOutline,
 } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid'
+import { nanoid } from 'nanoid'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
@@ -31,6 +32,7 @@ export const BlogCard = ({
   reactionsLength,
   commentsLength,
 }: BlogCardProps) => {
+  const tagNanoId = nanoid()
   const [hasLike, setHasLike] = useState(false)
 
   const handleLikeClick = useCallback(() => {
@@ -77,7 +79,7 @@ export const BlogCard = ({
 
       <div className="px-6 pt-4 pb-2">
         {tags?.map((tag) => (
-          <Link key={tag} href={`/blog?tag=${tag}`} passHref>
+          <Link key={`${tag}-${tagNanoId}`} href={`/blog?tag=${tag}`} passHref>
             <a
               rel="noopener nofollow"
               className="inline-block bg-gray-200 dark:bg-slate-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-800 mr-2 mb-2"

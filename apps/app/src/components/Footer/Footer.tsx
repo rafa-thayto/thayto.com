@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid'
 import Link from 'next/link'
 import { useMemo } from 'react'
 
@@ -86,6 +87,7 @@ type Link = {
 }
 
 export const Footer = () => {
+  const linkNanoId = nanoid()
   const sitemapLinks = useMemo<Link[]>(
     () => [
       {
@@ -120,7 +122,7 @@ export const Footer = () => {
           </h6>
           <ul className="mt-4">
             {sitemapLinks.map((link) => (
-              <li key={link.name} className="py-1">
+              <li key={`${link.name}-${linkNanoId}`} className="py-1">
                 <Link href={link.href} passHref>
                   <a className="text-gray-500 dark:text-slate-500 underlined focus:outline-none inline-block whitespace-nowrap text-lg hover:text-gray-500 dark:hover:text-slate-500 focus:text-gray-500 dark:focus:text-slate-500">
                     {link.name}

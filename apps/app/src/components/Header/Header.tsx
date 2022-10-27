@@ -1,10 +1,14 @@
 import { Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { nanoid } from 'nanoid'
 import Link from 'next/link'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import ReactConfetti from 'react-confetti'
 
 export const Header = () => {
+  const navbarId = nanoid()
+  const menuId = nanoid()
+
   const confettiWidth = useRef(0)
   const confettiHeight = useRef(0)
   const [showConfetti, setShowConfetti] = useState(false)
@@ -67,7 +71,11 @@ export const Header = () => {
             </div>
             <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
               {navigation.map((item) => (
-                <Link key={item.name} href={item.href} passHref>
+                <Link
+                  key={`${item.name}-${navbarId}`}
+                  href={item.href}
+                  passHref
+                >
                   <a
                     onClick={item.onClick}
                     className="font-medium text-lg text-gray-500 dark:text-slate-500 underlined hover:text-gray-500 dark:hover:text-slate-500 focus:text-gray-500 dark:focus:text-slate-500 px-5 py-2"
@@ -106,7 +114,11 @@ export const Header = () => {
 
               <div className="px-2 pt-2 pb-3 space-y-1">
                 {navigation.map((item) => (
-                  <Link key={item.name} href={item.href} passHref>
+                  <Link
+                    key={`${item.name}-${menuId}`}
+                    href={item.href}
+                    passHref
+                  >
                     <a
                       onClick={item.onClick}
                       className="block px-3 py-2 rounded-md text-base font-medium text-black dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800"
