@@ -74,14 +74,10 @@ export const Header = () => {
                 <Link
                   key={`${item.name}-${navbarId}`}
                   href={item.href}
-                  passHref
+                  onClick={item.onClick}
+                  className="font-medium text-lg text-gray-500 dark:text-slate-500 underlined hover:text-gray-500 dark:hover:text-slate-500 focus:text-gray-500 dark:focus:text-slate-500 px-5 py-2"
                 >
-                  <a
-                    onClick={item.onClick}
-                    className="font-medium text-lg text-gray-500 dark:text-slate-500 underlined hover:text-gray-500 dark:hover:text-slate-500 focus:text-gray-500 dark:focus:text-slate-500 px-5 py-2"
-                  >
-                    {item.name}
-                  </a>
+                  {item.name}
                 </Link>
               ))}
             </div>
@@ -117,14 +113,10 @@ export const Header = () => {
                   <Link
                     key={`${item.name}-${menuId}`}
                     href={item.href}
-                    passHref
+                    onClick={item.onClick}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-black dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800"
                   >
-                    <a
-                      onClick={item.onClick}
-                      className="block px-3 py-2 rounded-md text-base font-medium text-black dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800"
-                    >
-                      {item.name}
-                    </a>
+                    {item.name}
                   </Link>
                 ))}
               </div>
