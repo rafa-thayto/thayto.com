@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Footer, Header, IconsGroup, Layout } from '@src/components'
 import { NextSeo } from 'next-seo'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Link from 'next/link'
 
 const IndexPage = () => {
@@ -85,13 +85,11 @@ const IndexPage = () => {
         </p>
 
         <div className="w-36 mt-4">
-          <Link href="/blog" passHref>
-            <a
-              href="/blog"
-              className="flex justify-center items-center  cursor-pointer border rounded-full font-medium text-slate-900 border-slate-900 hover:bg-indigo-300 dark:hover:bg-indigo-500 bg-slate-50 dark:bg-slate-100 py-2 mb-4 transition"
-            >
-              Blog <ArrowRightIcon className="ml-2 h-4 w-4" />
-            </a>
+          <Link
+            href="/blog"
+            className="flex justify-center items-center  cursor-pointer border rounded-full font-medium text-slate-900 border-slate-900 hover:bg-indigo-300 dark:hover:bg-indigo-500 bg-slate-50 dark:bg-slate-100 py-2 mb-4 transition"
+          >
+            Blog <ArrowRightIcon className="ml-2 h-4 w-4" />
           </Link>
         </div>
 

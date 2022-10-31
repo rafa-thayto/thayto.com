@@ -4,7 +4,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid'
 import { nanoid } from 'nanoid'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
 
@@ -41,51 +41,53 @@ export const BlogCard = ({
 
   return (
     <div className="rounded-lg overflow-hidden shadow-lg transition border-gray-400 dark:border-black hover:border-indigo-300 hover:border border bg-slate-50 dark:bg-gray-800">
-      <Link href={href} passHref>
-        <a>
-          {image && (
-            <Link href={href} passHref>
-              <a className="cursor-pointer" aria-label="Post Preview Image">
-                <div className="h-64 relative">
-                  <Image
-                    className="object-cover"
-                    layout="fill"
-                    src={image.src}
-                    alt={image.alt || title}
-                  />
-                </div>
-              </a>
-            </Link>
-          )}
-          <div className="px-6 py-4 ">
-            <Link href={href} passHref>
-              <a className="cursor-pointer" aria-label="Post Preview Title">
-                <h1 className="font-bold text-slate-900 dark:text-white text-xl mb-2">
-                  {title}
-                </h1>
-              </a>
-            </Link>
-            <p className="text-gray-400 text-sm mb-2">
-              {new Intl.DateTimeFormat('pt-BR', {
-                dateStyle: 'long',
-              }).format(new Date(publishedTime))}
-            </p>
-            <p className="text-gray-700 dark:text-slate-300 text-base">
-              {description}
-            </p>
-          </div>
-        </a>
+      <Link href={href}>
+        {image && (
+          <Link
+            href={href}
+            className="cursor-pointer"
+            aria-label="Post Preview Image"
+          >
+            <div className="h-64 relative">
+              <Image
+                className="object-cover"
+                layout="fill"
+                src={image.src}
+                alt={image.alt || title}
+              />
+            </div>
+          </Link>
+        )}
+        <div className="px-6 py-4 ">
+          <Link
+            href={href}
+            className="cursor-pointer"
+            aria-label="Post Preview Title"
+          >
+            <h1 className="font-bold text-slate-900 dark:text-white text-xl mb-2">
+              {title}
+            </h1>
+          </Link>
+          <p className="text-gray-400 text-sm mb-2">
+            {new Intl.DateTimeFormat('pt-BR', {
+              dateStyle: 'long',
+            }).format(new Date(publishedTime))}
+          </p>
+          <p className="text-gray-700 dark:text-slate-300 text-base">
+            {description}
+          </p>
+        </div>
       </Link>
 
       <div className="px-6 pt-4 pb-2">
         {tags?.map((tag) => (
-          <Link key={`${tag}-${tagNanoId}`} href={`/blog?tag=${tag}`} passHref>
-            <a
-              rel="noopener nofollow"
-              className="inline-block bg-gray-200 dark:bg-slate-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-800 mr-2 mb-2"
-            >
-              #{tag}
-            </a>
+          <Link
+            key={`${tag}-${tagNanoId}`}
+            href={`/blog?tag=${tag}`}
+            rel="noopener nofollow"
+            className="inline-block bg-gray-200 dark:bg-slate-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-800 mr-2 mb-2"
+          >
+            #{tag}
           </Link>
         ))}
       </div>
@@ -117,23 +119,22 @@ export const BlogCard = ({
           </span>
         </div>
 
-        <Link href={`${href}#comments`} passHref>
-          <a
-            aria-label={`Comments for post ${title} (${commentsLength})`}
-            className="ml-4 flex"
+        <Link
+          href={`${href}#comments`}
+          aria-label={`Comments for post ${title} (${commentsLength})`}
+          className="ml-4 flex"
+        >
+          <ChatBubbleLeftEllipsisIcon
+            height={24}
+            className="text-slate-800 dark:text-slate-100"
+          />
+          <span
+            title="Number of comments"
+            className="ml-1 text-slate-800 dark:text-slate-100"
           >
-            <ChatBubbleLeftEllipsisIcon
-              height={24}
-              className="text-slate-800 dark:text-slate-100"
-            />
-            <span
-              title="Number of comments"
-              className="ml-1 text-slate-800 dark:text-slate-100"
-            >
-              {commentsLength}
-              <span>&nbsp;Comments</span>
-            </span>
-          </a>
+            {commentsLength}
+            <span>&nbsp;Comments</span>
+          </span>
         </Link>
       </div>
     </div>

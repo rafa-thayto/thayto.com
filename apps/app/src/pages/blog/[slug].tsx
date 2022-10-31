@@ -10,7 +10,7 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import { NextSeo } from 'next-seo'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Link from 'next/link'
 import path from 'path'
 import SyntaxHighlighter from 'react-syntax-highlighter'
@@ -109,29 +109,31 @@ const PostPage = ({
 
       <div className="grid md:grid-cols-2 lg:-mx-24 mt-6">
         {prevPost && (
-          <Link href={`/blog/${prevPost.slug}`}>
-            <a className="py-8 px-10 text-center md:text-right first:rounded-t-lg md:first:rounded-tr-none md:first:rounded-l-lg last:rounded-r-lg first last:rounded-b-lg backdrop-blur-lg bg-slate-50 bg-opacity-100 dark:bg-opacity-10 hover:bg-opacity-30 dark:hover:bg-opacity-20 transition border border-gray-800 border-opacity-10 last:border-t md:border-r-0 md:last:border-r md:last:rounded-r-none flex flex-col">
-              <p className="uppercase text-gray-500 dark:text-white mb-4">
-                Anterior
-              </p>
-              <h4 className="text-2xl text-gray-700 dark:text-gray-200 mb-6">
-                {prevPost.title}
-              </h4>
-              <ArrowLeftIcon className="h-6 w-6 text-indigo-500 mx-auto md:mr-0 mt-auto" />
-            </a>
+          <Link
+            href={`/blog/${prevPost.slug}`}
+            className="py-8 px-10 text-center md:text-right first:rounded-t-lg md:first:rounded-tr-none md:first:rounded-l-lg last:rounded-r-lg first last:rounded-b-lg backdrop-blur-lg bg-slate-50 bg-opacity-100 dark:bg-opacity-10 hover:bg-opacity-30 dark:hover:bg-opacity-20 transition border border-gray-800 border-opacity-10 last:border-t md:border-r-0 md:last:border-r md:last:rounded-r-none flex flex-col"
+          >
+            <p className="uppercase text-gray-500 dark:text-white mb-4">
+              Anterior
+            </p>
+            <h4 className="text-2xl text-gray-700 dark:text-gray-200 mb-6">
+              {prevPost.title}
+            </h4>
+            <ArrowLeftIcon className="h-6 w-6 text-indigo-500 mx-auto md:mr-0 mt-auto" />
           </Link>
         )}
         {nextPost && (
-          <Link href={`/blog/${nextPost.slug}`}>
-            <a className="py-8 px-10 text-center md:text-left md:first:rounded-t-lg last:rounded-b-lg first:rounded-l-lg md:last:rounded-bl-none md:last:rounded-r-lg backdrop-blur-lg bg-slate-50  bg-opacity-100 dark:bg-opacity-10 hover:bg-opacity-30 dark:hover:bg-opacity-20 transition border border-gray-800 border-opacity-10 border-t-0 first:border-t first:rounded-t-lg md:border-t border-b-0 last:border-b flex flex-col">
-              <p className="uppercase text-gray-500 dark:text-white mb-4">
-                Próximo
-              </p>
-              <h4 className="text-2xl text-gray-700 dark:text-gray-200 mb-6">
-                {nextPost.title}
-              </h4>
-              <ArrowRightIcon className="h-6 w-6 text-indigo-500 mt-auto mx-auto md:ml-0" />
-            </a>
+          <Link
+            href={`/blog/${nextPost.slug}`}
+            className="py-8 px-10 text-center md:text-left md:first:rounded-t-lg last:rounded-b-lg first:rounded-l-lg md:last:rounded-bl-none md:last:rounded-r-lg backdrop-blur-lg bg-slate-50  bg-opacity-100 dark:bg-opacity-10 hover:bg-opacity-30 dark:hover:bg-opacity-20 transition border border-gray-800 border-opacity-10 border-t-0 first:border-t first:rounded-t-lg md:border-t border-b-0 last:border-b flex flex-col"
+          >
+            <p className="uppercase text-gray-500 dark:text-white mb-4">
+              Próximo
+            </p>
+            <h4 className="text-2xl text-gray-700 dark:text-gray-200 mb-6">
+              {nextPost.title}
+            </h4>
+            <ArrowRightIcon className="h-6 w-6 text-indigo-500 mt-auto mx-auto md:ml-0" />
           </Link>
         )}
       </div>

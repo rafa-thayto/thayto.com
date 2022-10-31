@@ -123,10 +123,11 @@ export const Footer = () => {
           <ul className="mt-4">
             {sitemapLinks.map((link) => (
               <li key={`${link.name}-${linkNanoId}`} className="py-1">
-                <Link href={link.href} passHref>
-                  <a className="text-gray-500 dark:text-slate-500 underlined focus:outline-none inline-block whitespace-nowrap text-lg hover:text-gray-500 dark:hover:text-slate-500 focus:text-gray-500 dark:focus:text-slate-500">
-                    {link.name}
-                  </a>
+                <Link
+                  href={link.href}
+                  className="text-gray-500 dark:text-slate-500 underlined focus:outline-none inline-block whitespace-nowrap text-lg hover:text-gray-500 dark:hover:text-slate-500 focus:text-gray-500 dark:focus:text-slate-500"
+                >
+                  {link.name}
                 </Link>
               </li>
             ))}

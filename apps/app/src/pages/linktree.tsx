@@ -8,7 +8,7 @@ import {
   Twitter,
 } from '@src/components'
 import { NextSeo } from 'next-seo'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Link from 'next/link'
 
 const LinksPage = () => {
@@ -106,15 +106,17 @@ const LinksPage = () => {
         </header>
         <main className="lg:mx-72 xl:mx-96 mb-10">
           {links.map(({ Icon, href, text }) => (
-            <Link key={text} href={href} passHref>
-              <a className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:hover:bg-indigo-300 px-10 py-4 mb-4">
-                {text}
-                {Icon && (
-                  <span className="ml-4">
-                    <Icon />
-                  </span>
-                )}
-              </a>
+            <Link
+              key={text}
+              href={href}
+              className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:hover:bg-indigo-300 px-10 py-4 mb-4"
+            >
+              {text}
+              {Icon && (
+                <span className="ml-4">
+                  <Icon />
+                </span>
+              )}
             </Link>
           ))}
         </main>
