@@ -1,0 +1,79 @@
+---
+title: 'Diferença entre operadores ?, ?? e || no JavaScript / TypeScript'
+publishedTime: '2022-10-31T19:34:48Z'
+modifiedTime: '2022-10-31T19:34:48Z'
+description: '? -> Optional Chaining Operator. Permite a leitura do valor de uma propriedade localizada internamente em uma cadeia de objetos conectados, sem que a validação de cada referência da cadeia seja expressivamente realizada.'
+image: { src: '/static/images/diferenca-entre-operadores-js-ts.png' }
+tags: ['javascript', 'typescript']
+href: '/blog/diferenca-entre-operadores-js-ts'
+reactionsLength: 0
+commentsLength: 0
+---
+
+## ?
+
+`?` -> **Optional Chaining Operator**.
+Permite a leitura do valor de uma propriedade localizada internamente em uma cadeia de objetos conectados, sem que a validação de cada referência da cadeia seja expressivamente realizada.
+
+O operador `?.` funciona de maneira similar ao operador `.` de encadeamento, exceto que, ao invés de causar um erro se a referência é [nullish](https://developer.mozilla.org/en-US/docs/Glossary/Nullish) (`null` ou `undefined`), a expressão sofre um "curto-circuito" e retorna com um valor de `undefined`. Quando utilizado com uma chamada de função, retorna `undefined` se a função executada não existir.
+
+Isso resulta em expressões mais curtas e simples ao acessar propriedades encadeadas quando a possibilidade de uma referência ser inexistente. Isso também pode auxiliar ao explorar o conteúdo de um objeto quando não existe garantia da existência de determinadas propriedades obrigatórias.
+
+**Exemplo**
+
+```js
+const user = {
+  id: 13,
+  name: 'Thayto',
+}
+
+console.log(user?.name) // John
+console.log(user?.fullName) // undefined, aplicação não vai quebrar.
+console.log(user.fullName) // TypeError: Cannot read property ‘fullName’ of undefined, aplicação quebra.
+```
+
+## ??
+
+`??` -> **Nullish Coalescing Operator**.
+É um operador lógico que retorna o seu operando do lado direito quando o seu operador do lado esquerdo é `null` ou `undefined`. Caso contrário, ele retorna o seu operando do lado esquerdo.
+
+**Exemplo**
+
+```js
+console.log(13 ?? 'não encontrado') // 13
+console.log(0 ?? 'não encontrado') // 0
+
+console.log('Dri' ?? 'não encontrado') // "Dri"
+console.log('' ?? 'não encontrado') // ""
+
+console.log(true ?? 'não encontrado') // true
+console.log(false ?? 'não encontrado') // false
+
+console.log(undefined ?? 'não encontrado') // "não encontrado"
+console.log(null ?? 'não encontrado') // "não encontrado"
+```
+
+## ||
+
+`||` é o **Logical OR Operator**
+A expressão Logical OR é avaliada da esquerda para a direita, é testada para possível avaliação de "curto-circuito" usando a seguinte regra:
+
+`(alguma truthy expression) || expr` é avaliado em curto-circuito para a expressão verdadeira.
+
+Curto-circuito significa que a parte `expr` acima não é avaliada, portanto, quaisquer efeitos colaterais de fazê-lo não têm efeito (por exemplo, se `expr` é uma chamada de função, a chamada nunca ocorre). Isso acontece porque o valor do operador já é determinado após a avaliação do primeiro operando.
+
+**Exemplo**
+
+```js
+console.log(13 || 'não encontrado') // 13
+console.log(0 || 'não encontrado') // "não encontrado"
+
+console.log('Dri' || 'não encontrado') // "Dri"
+console.log('' || 'não encontrado') // "não encontrado"
+
+console.log(true || 'não encontrado') // true
+console.log(false || 'não encontrado') // "não encontrado"
+
+console.log(undefined || 'não encontrado') // "não encontrado"
+console.log(null || 'não encontrado') // "não encontrado"
+```
