@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
@@ -52,6 +53,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
       src="/static/js/clarity.js"
     />
     <Component {...pageProps} />
+    <Analytics />
   </>
 )
 
