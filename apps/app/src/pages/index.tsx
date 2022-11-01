@@ -89,7 +89,9 @@ const IndexPage = () => {
             href="/blog"
             className="flex justify-center items-center  cursor-pointer border rounded-full font-medium text-slate-900 border-slate-900 hover:bg-indigo-300 dark:hover:bg-indigo-500 bg-slate-50 dark:bg-slate-100 py-2 mb-4 transition"
           >
-            Blog <ArrowRightIcon className="ml-2 h-4 w-4" />
+            <>
+              Blog <ArrowRightIcon className="ml-2 h-4 w-4" />
+            </>
           </Link>
         </div>
 
