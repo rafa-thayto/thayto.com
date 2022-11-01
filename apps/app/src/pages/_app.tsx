@@ -10,7 +10,7 @@ import '@src/styles/styles.css'
 const CustomApp = ({ Component, pageProps }: AppProps) => (
   <>
     <Head>
-      <meta name="color-scheme" content="dark light" />
+      <meta name="color-scheme" content="light dark" />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
