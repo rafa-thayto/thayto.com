@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-      
+
       - uses: pnpm/action-setup@v2
         with:
           version: 7.13.5
@@ -37,8 +37,8 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      - name: Build
-        run: pnpm build
-
       - name: Test
         run: pnpm test
+
+      - name: Build
+        run: pnpm build
