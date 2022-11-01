@@ -1,4 +1,4 @@
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
@@ -10,6 +10,7 @@ import '@src/styles/styles.css'
 const CustomApp = ({ Component, pageProps }: AppProps) => (
   <>
     <Head>
+      <meta name="color-scheme" content="dark light" />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
