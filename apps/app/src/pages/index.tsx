@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { IconsGroup, Layout } from '@src/components'
 import { NextSeo } from 'next-seo'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import Link from 'next/link'
 
 const IndexPage = () => {
@@ -43,7 +43,7 @@ const IndexPage = () => {
             <Image
               src="/static/images/profile.jpeg"
               alt="Thayto's profile picture"
-              layout="fill"
+              fill
               priority
               className="rounded-full"
             />
