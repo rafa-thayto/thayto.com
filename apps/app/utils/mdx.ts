@@ -1,7 +1,20 @@
-import fs from 'fs'
+import remarkA11yEmoji from '@fec/remark-a11y-emoji'
+import rehypePrism from '@mapbox/rehype-prism'
 import { POSTS_PATH } from '@src/constants'
-import path from 'path'
+import * as A from 'fp-ts/lib/Array'
+import { pipe } from 'fp-ts/lib/function'
+import * as O from 'fp-ts/lib/Option'
+import fs from 'fs'
 import matter from 'gray-matter'
+import { h } from 'hastscript'
+import { serialize } from 'next-mdx-remote/serialize'
+import path from 'path'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeSlug from 'rehype-slug'
+import rehypeStringify from 'rehype-stringify'
+import remarkGfm from 'remark-gfm'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
 
 export const postFilePaths = fs
   .readdirSync(POSTS_PATH)
@@ -33,38 +46,67 @@ export const getPosts = () => {
   return posts
 }
 
-export const getPreviousPostBySlug = (slug) => {
-  const posts = getPosts()
-  const currentFileName = `${slug}.mdx`
-  const currentPost = posts.find((post) => post.filePath === currentFileName)
-  const currentPostIndex = posts.indexOf(currentPost)
+export const getMdxSerializedPost = async (slug: string) => {
+  const markdownWithMeta = fs.readFileSync(
+    path.join(POSTS_PATH, `${slug}.mdx`),
+    'utf-8',
+  )
 
-  const post = posts[currentPostIndex + 1]
-  // no prev post found
-  if (!post) return null
+  const { data: frontMatter, content } = matter(markdownWithMeta)
 
-  const previousPostSlug = post?.filePath.replace(/\.mdx?$/, '')
+  const mdxSource = await serialize(content, {
+    mdxOptions: {
+      remarkPlugins: [remarkGfm, remarkA11yEmoji, remarkParse, remarkRehype],
+      rehypePlugins: [
+        rehypeSlug,
+        rehypePrism,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'prepend',
+            properties: {
+              ariaLabel: 'Link to this section',
+              classname: ['no-underline'],
+            },
+            content: h('span.text-indigo-500', '# '),
+          },
+        ],
+        rehypeStringify,
+      ],
+    },
+    scope: frontMatter,
+  })
 
   return {
-    title: post.data.title,
-    slug: previousPostSlug,
+    frontMatter,
+    mdxSource,
   }
 }
 
-export const getNextPostBySlug = (slug) => {
+type NextPreviousType = 'previous' | 'next'
+
+export const getPreviousOrNextPostBySlug = (
+  slug: string,
+  type: NextPreviousType,
+) => {
   const posts = getPosts()
   const currentFileName = `${slug}.mdx`
-  const currentPost = posts.find((post) => post.filePath === currentFileName)
-  const currentPostIndex = posts.indexOf(currentPost)
+  const currentPostIndex = pipe(
+    getPosts(),
+    A.findIndex((post) => post.filePath === currentFileName),
+    O.getOrElse(() => -1),
+  )
 
-  const post = posts[currentPostIndex - 1]
-  // no prev post found
+  const counter = type === 'previous' ? 1 : -1
+
+  const post = posts[currentPostIndex + counter]
+
   if (!post) return null
 
-  const nextPostSlug = post?.filePath.replace(/\.mdx?$/, '')
+  const postSlug = post?.filePath.replace(/\.mdx?$/, '')
 
   return {
     title: post.data.title,
-    slug: nextPostSlug,
+    slug: postSlug,
   }
 }

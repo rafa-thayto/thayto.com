@@ -1,4 +1,5 @@
 import { PropsWithChildren, useEffect } from 'react'
+import { Footer, Header } from '../'
 
 export const Layout = ({ children }: PropsWithChildren) => {
   const setAppTheme = () => {
@@ -30,5 +31,11 @@ export const Layout = ({ children }: PropsWithChildren) => {
     handleSystemThemeChange()
   }, [])
 
-  return <div className="bg-gray-100 dark:bg-gray-900">{children}</div>
+  return (
+    <div className="bg-gray-100 dark:bg-gray-900">
+      <Header />
+      {children}
+      <Footer />
+    </div>
+  )
 }

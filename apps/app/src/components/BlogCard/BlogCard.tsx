@@ -4,9 +4,10 @@ import {
 } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid'
 import { nanoid } from 'nanoid'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
+import { rgbDataURL } from 'utils/blur'
 
 interface BlogCardProps {
   title: string
@@ -43,31 +44,21 @@ export const BlogCard = ({
     <div className="rounded-lg overflow-hidden shadow-lg transition border-gray-400 dark:border-black hover:border-indigo-300 hover:border border bg-slate-50 dark:bg-gray-800">
       <Link href={href}>
         {image && (
-          <Link
-            href={href}
-            className="cursor-pointer"
-            aria-label="Post Preview Image"
-          >
-            <div className="h-64 relative">
-              <Image
-                className="object-cover"
-                layout="fill"
-                src={image.src}
-                alt={image.alt || title}
-              />
-            </div>
-          </Link>
+          <div className="h-64 relative">
+            <Image
+              className="object-cover"
+              fill
+              placeholder="blur"
+              blurDataURL={rgbDataURL(131, 72, 250)}
+              src={image.src}
+              alt={image.alt || title}
+            />
+          </div>
         )}
         <div className="px-6 py-4 ">
-          <Link
-            href={href}
-            className="cursor-pointer"
-            aria-label="Post Preview Title"
-          >
-            <h1 className="font-bold text-slate-900 dark:text-white text-xl mb-2">
-              {title}
-            </h1>
-          </Link>
+          <h2 className="font-bold text-slate-900 dark:text-white text-xl mb-2">
+            {title}
+          </h2>
           <p className="text-gray-400 text-sm mb-2">
             {new Intl.DateTimeFormat('pt-BR', {
               dateStyle: 'long',
@@ -124,17 +115,19 @@ export const BlogCard = ({
           aria-label={`Comments for post ${title} (${commentsLength})`}
           className="ml-4 flex"
         >
-          <ChatBubbleLeftEllipsisIcon
-            height={24}
-            className="text-slate-800 dark:text-slate-100"
-          />
-          <span
-            title="Number of comments"
-            className="ml-1 text-slate-800 dark:text-slate-100"
-          >
-            {commentsLength}
-            <span>&nbsp;Comments</span>
-          </span>
+          <div>
+            <ChatBubbleLeftEllipsisIcon
+              height={24}
+              className="text-slate-800 dark:text-slate-100"
+            />
+            <span
+              title="Number of comments"
+              className="ml-1 text-slate-800 dark:text-slate-100"
+            >
+              {commentsLength}
+              <span>&nbsp;Comments</span>
+            </span>
+          </div>
         </Link>
       </div>
     </div>

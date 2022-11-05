@@ -1,26 +1,16 @@
-import remarkA11yEmoji from '@fec/remark-a11y-emoji'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
-import rehypePrism from '@mapbox/rehype-prism'
 import { CustomLink, Footer, Header, Layout } from '@src/components'
 import { POSTS_PATH } from '@src/constants'
 import fs from 'fs'
-import matter from 'gray-matter'
-import { h } from 'hastscript'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
-import { serialize } from 'next-mdx-remote/serialize'
 import { NextSeo } from 'next-seo'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import path from 'path'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypeSlug from 'rehype-slug'
-import rehypeStringify from 'rehype-stringify'
-import remarkGfm from 'remark-gfm'
-import remarkParse from 'remark-parse'
-import remarkRehype from 'remark-rehype'
-import { getNextPostBySlug, getPreviousPostBySlug } from 'utils/mdx'
+import { rgbDataURL } from 'utils/blur'
+import { getMdxSerializedPost, getPreviousOrNextPostBySlug } from 'utils/mdx'
 
 const components = { SyntaxHighlighter, Header, Footer, a: CustomLink }
 
@@ -66,7 +56,6 @@ const PostPage = ({
         handle: '@thayto',
       }}
     />
-    <Header />
 
     <div className="mx-auto max-w-5xl">
       <article className="leading-6 pb-12 border mt-4 bg-slate-50 dark:bg-gray-800">
@@ -75,9 +64,10 @@ const PostPage = ({
             <div className="mb-4">
               <Image
                 className="object-cover"
-                layout="responsive"
                 width={1000}
                 height={420}
+                blurDataURL={rgbDataURL(131, 72, 250)}
+                placeholder="blur"
                 style={{ height: 'auto', width: '100%' }}
                 sizes="100vw"
                 src={image.src}
@@ -137,6 +127,7 @@ const PostPage = ({
           </Link>
         )}
       </div>
+
       <section id="comments" className="px-4 sm:px-12 border-t mt-6 pt-4">
         <h2 className="text-2xl text-slate-900 dark:text-white font-bold">
           Comentários
@@ -146,7 +137,6 @@ const PostPage = ({
         </p>
       </section>
     </div>
-    <Footer />
   </Layout>
 )
 
@@ -175,38 +165,9 @@ export const getStaticProps: GetStaticProps<
   },
   { slug?: string }
 > = async ({ params }) => {
-  const markdownWithMeta = fs.readFileSync(
-    path.join(POSTS_PATH, `${params?.slug}.mdx`),
-    'utf-8',
-  )
-
-  const { data: frontMatter, content } = matter(markdownWithMeta)
-
-  const mdxSource = await serialize(content, {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm, remarkA11yEmoji, remarkParse, remarkRehype],
-      rehypePlugins: [
-        rehypeSlug,
-        rehypePrism,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: 'prepend',
-            properties: {
-              ariaLabel: 'Link to this section',
-              classname: ['no-underline'],
-            },
-            content: h('span.text-indigo-500', '# '),
-          },
-        ],
-        rehypeStringify,
-      ],
-    },
-    scope: frontMatter,
-  })
-
-  const prevPost = getPreviousPostBySlug(params?.slug)
-  const nextPost = getNextPostBySlug(params?.slug)
+  const { frontMatter, mdxSource } = await getMdxSerializedPost(params?.slug)
+  const prevPost = getPreviousOrNextPostBySlug(params?.slug, 'previous')
+  const nextPost = getPreviousOrNextPostBySlug(params?.slug, 'next')
 
   return {
     props: {

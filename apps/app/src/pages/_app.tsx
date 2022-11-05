@@ -20,6 +20,13 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
         media="(prefers-color-scheme: dark)"
         content="black"
       />
+      <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="robots" content="index follow" />
+      <meta
+        name="google-site-verification"
+        content="sROMY6Ll7LXNivDpdIlLDY1OJGm5C1lQwA8DHhtabLo"
+      />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -38,13 +45,6 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
         href="/favicon-16x16.png"
       />
       <link rel="manifest" href="/site.webmanifest" />
-      <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
-      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="robots" content="index follow" />
-      <meta
-        name="google-site-verification"
-        content="sROMY6Ll7LXNivDpdIlLDY1OJGm5C1lQwA8DHhtabLo"
-      />
     </Head>
     <Script
       id="google-tagmanager"

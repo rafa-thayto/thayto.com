@@ -131,7 +131,7 @@ devDependencies:
   '@nrwl/eslint-plugin-nx': 15.0.1_u6foiwi7bxvj4p3hf6f67ol75m
   '@nrwl/jest': 15.0.1_r722oxxvou2muepprpct2kgbla
   '@nrwl/linter': 15.0.1_lp5at65mtes3xyjl2nj7sfglii
-  '@nrwl/nx-cloud': 15.0.0
+  '@nrwl/nx-cloud': 15.0.2
   '@nrwl/react': 15.0.1_f2mmbezza3vg7ehf2xtylx2fdu
   '@nrwl/web': 15.0.1_f2mmbezza3vg7ehf2xtylx2fdu
   '@nrwl/workspace': 15.0.1_imdhtk4uic33xrzs3a4au2vjtm
@@ -3108,10 +3108,10 @@ packages:
       - webpack-plugin-serve
     dev: false
 
-  /@nrwl/nx-cloud/15.0.0:
+  /@nrwl/nx-cloud/15.0.2:
     resolution:
       {
-        integrity: sha512-KAYmbx8M4we9gUn14rDnt5vMz+yYwIa4xJNsByWf7mjzC4lvBVZKqFzFGaklWzp/gJN/xyNleZt/Fg64k/kF+A==,
+        integrity: sha512-DaTASuXmGyQHMxJuK6y3f7fs+Q0qQCfYDIDVGK9muNwN/QItLeWdRNltLQxbrBeS112kQTu2FPsr0DmRD60+0A==,
       }
     hasBin: true
     dependencies:

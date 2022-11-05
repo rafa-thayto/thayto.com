@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
-import { Footer, Header, IconsGroup, Layout } from '@src/components'
+import { IconsGroup, Layout } from '@src/components'
 import { NextSeo } from 'next-seo'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import Link from 'next/link'
 
 const IndexPage = () => {
@@ -36,7 +36,6 @@ const IndexPage = () => {
           handle: '@thayto',
         }}
       />
-      <Header />
 
       <main className="max-w-6xl mx-auto mt-6 border dark:border-black bg-slate-50 dark:bg-gray-800 py-6 px-4 sm:px-12">
         <div className="flex mt-2 items-center justify-items-center justify-center flex-col sm:flex-row">
@@ -44,7 +43,7 @@ const IndexPage = () => {
             <Image
               src="/static/images/profile.jpeg"
               alt="Thayto's profile picture"
-              layout="fill"
+              fill
               priority
               className="rounded-full"
             />
@@ -102,7 +101,6 @@ const IndexPage = () => {
           <IconsGroup />
         </div>
       </main>
-      <Footer />
     </Layout>
   )
 }
