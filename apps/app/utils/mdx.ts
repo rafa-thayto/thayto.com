@@ -1,10 +1,20 @@
+import remarkA11yEmoji from '@fec/remark-a11y-emoji'
+import rehypePrism from '@mapbox/rehype-prism'
 import { POSTS_PATH } from '@src/constants'
 import * as A from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/lib/Option'
 import fs from 'fs'
 import matter from 'gray-matter'
+import { h } from 'hastscript'
+import { serialize } from 'next-mdx-remote/serialize'
 import path from 'path'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeSlug from 'rehype-slug'
+import rehypeStringify from 'rehype-stringify'
+import remarkGfm from 'remark-gfm'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
 
 export const postFilePaths = fs
   .readdirSync(POSTS_PATH)
@@ -34,6 +44,43 @@ export const getPosts = () => {
   posts = sortPostsByDate(posts)
 
   return posts
+}
+
+export const getMdxSerializedPost = async (slug: string) => {
+  const markdownWithMeta = fs.readFileSync(
+    path.join(POSTS_PATH, `${slug}.mdx`),
+    'utf-8',
+  )
+
+  const { data: frontMatter, content } = matter(markdownWithMeta)
+
+  const mdxSource = await serialize(content, {
+    mdxOptions: {
+      remarkPlugins: [remarkGfm, remarkA11yEmoji, remarkParse, remarkRehype],
+      rehypePlugins: [
+        rehypeSlug,
+        rehypePrism,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'prepend',
+            properties: {
+              ariaLabel: 'Link to this section',
+              classname: ['no-underline'],
+            },
+            content: h('span.text-indigo-500', '# '),
+          },
+        ],
+        rehypeStringify,
+      ],
+    },
+    scope: frontMatter,
+  })
+
+  return {
+    frontMatter,
+    mdxSource,
+  }
 }
 
 type NextPreviousType = 'previous' | 'next'
