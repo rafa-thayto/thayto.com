@@ -8,7 +8,7 @@ import {
   Twitter,
 } from '@src/components'
 import { NextSeo } from 'next-seo'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import Link from 'next/link'
 
 const LinksPage = () => {
@@ -89,18 +89,18 @@ const LinksPage = () => {
           handle: '@thayto',
         }}
       />
-      <div className="mx-0 pt-4 px-8 bg-white">
+      <div className="mx-0 pt-4 px-8 bg-gray-100 dark:bg-gray-900">
         <header className="mb-8 mx-auto">
           <div className="relative w-44 h-44 mb-4 mx-auto">
             <Image
               src="/static/images/profile.jpeg"
               alt="Thayto's profile picture"
-              layout="fill"
+              fill
               priority
               className="rounded-full"
             />
           </div>
-          <h1 className="text-2xl text-slate-900 font-bold text-center">
+          <h1 className="text-2xl text-slate-900 dark:text-white font-bold text-center">
             Rafael Thayto Tani
           </h1>
         </header>
@@ -109,7 +109,7 @@ const LinksPage = () => {
             <Link
               key={text}
               href={href}
-              className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:hover:bg-indigo-300 px-10 py-4 mb-4"
+              className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:hover:bg-indigo-300 dark:hover:hover:bg-indigo-500 px-10 py-4 mb-4 text-slate-900 dark:text-gray-300 bg-white dark:bg-gray-600"
             >
               {text}
               {Icon && (
