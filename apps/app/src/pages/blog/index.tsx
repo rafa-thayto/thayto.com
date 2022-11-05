@@ -1,5 +1,4 @@
-import { BlogCard, Footer, Header, IconsGroup, Layout } from '@src/components'
-import { nanoid } from 'nanoid'
+import { BlogCard, IconsGroup, Layout } from '@src/components'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { NextSeo } from 'next-seo'
 import { getPosts } from 'utils/mdx'
@@ -35,8 +34,6 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
         }}
       />
 
-      <Header />
-
       <main className="sm:px-2 mt-8">
         <div className="px-4 sm:px-2">
           <h1 className="text-4xl text-slate-900 dark:text-white font-bold m-4 text-center">
@@ -69,8 +66,6 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
           <IconsGroup />
         </div>
       </main>
-
-      <Footer />
     </Layout>
   )
 }

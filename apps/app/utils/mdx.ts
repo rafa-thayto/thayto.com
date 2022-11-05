@@ -1,7 +1,10 @@
-import fs from 'fs'
 import { POSTS_PATH } from '@src/constants'
-import path from 'path'
+import * as A from 'fp-ts/lib/Array'
+import { pipe } from 'fp-ts/lib/function'
+import * as O from 'fp-ts/lib/Option'
+import fs from 'fs'
 import matter from 'gray-matter'
+import path from 'path'
 
 export const postFilePaths = fs
   .readdirSync(POSTS_PATH)
@@ -33,38 +36,30 @@ export const getPosts = () => {
   return posts
 }
 
-export const getPreviousPostBySlug = (slug) => {
+type NextPreviousType = 'previous' | 'next'
+
+export const getPreviousOrNextPostBySlug = (
+  slug: string,
+  type: NextPreviousType,
+) => {
   const posts = getPosts()
   const currentFileName = `${slug}.mdx`
-  const currentPost = posts.find((post) => post.filePath === currentFileName)
-  const currentPostIndex = posts.indexOf(currentPost)
+  const currentPostIndex = pipe(
+    getPosts(),
+    A.findIndex((post) => post.filePath === currentFileName),
+    O.getOrElse(() => -1),
+  )
 
-  const post = posts[currentPostIndex + 1]
-  // no prev post found
+  const counter = type === 'previous' ? 1 : -1
+
+  const post = posts[currentPostIndex + counter]
+
   if (!post) return null
 
-  const previousPostSlug = post?.filePath.replace(/\.mdx?$/, '')
+  const postSlug = post?.filePath.replace(/\.mdx?$/, '')
 
   return {
     title: post.data.title,
-    slug: previousPostSlug,
-  }
-}
-
-export const getNextPostBySlug = (slug) => {
-  const posts = getPosts()
-  const currentFileName = `${slug}.mdx`
-  const currentPost = posts.find((post) => post.filePath === currentFileName)
-  const currentPostIndex = posts.indexOf(currentPost)
-
-  const post = posts[currentPostIndex - 1]
-  // no prev post found
-  if (!post) return null
-
-  const nextPostSlug = post?.filePath.replace(/\.mdx?$/, '')
-
-  return {
-    title: post.data.title,
-    slug: nextPostSlug,
+    slug: postSlug,
   }
 }

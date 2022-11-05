@@ -20,7 +20,11 @@ import rehypeStringify from 'rehype-stringify'
 import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
-import { getNextPostBySlug, getPreviousPostBySlug } from 'utils/mdx'
+import {
+  getNextPostBySlug,
+  getPreviousOrNextPostBySlug,
+  getPreviousPostBySlug,
+} from 'utils/mdx'
 
 const components = { SyntaxHighlighter, Header, Footer, a: CustomLink }
 
@@ -66,7 +70,6 @@ const PostPage = ({
         handle: '@thayto',
       }}
     />
-    <Header />
 
     <div className="mx-auto max-w-5xl">
       <article className="leading-6 pb-12 border mt-4 bg-slate-50 dark:bg-gray-800">
@@ -137,6 +140,7 @@ const PostPage = ({
           </Link>
         )}
       </div>
+
       <section id="comments" className="px-4 sm:px-12 border-t mt-6 pt-4">
         <h2 className="text-2xl text-slate-900 dark:text-white font-bold">
           Comentários
@@ -146,7 +150,6 @@ const PostPage = ({
         </p>
       </section>
     </div>
-    <Footer />
   </Layout>
 )
 
@@ -205,8 +208,8 @@ export const getStaticProps: GetStaticProps<
     scope: frontMatter,
   })
 
-  const prevPost = getPreviousPostBySlug(params?.slug)
-  const nextPost = getNextPostBySlug(params?.slug)
+  const prevPost = getPreviousOrNextPostBySlug(params?.slug, 'previous')
+  const nextPost = getPreviousOrNextPostBySlug(params?.slug, 'next')
 
   return {
     props: {
