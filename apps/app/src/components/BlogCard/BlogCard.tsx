@@ -56,9 +56,9 @@ export const BlogCard = ({
           </div>
         )}
         <div className="px-6 py-4 ">
-          <h1 className="font-bold text-slate-900 dark:text-white text-xl mb-2">
+          <h2 className="font-bold text-slate-900 dark:text-white text-xl mb-2">
             {title}
-          </h1>
+          </h2>
           <p className="text-gray-400 text-sm mb-2">
             {new Intl.DateTimeFormat('pt-BR', {
               dateStyle: 'long',
