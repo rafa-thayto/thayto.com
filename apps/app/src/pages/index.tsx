@@ -21,11 +21,11 @@ const IndexPage = () => {
           description,
           images: [
             {
-              url: 'https://thayto.com/static/images/profile.jpeg',
+              url: 'https://thayto.com/static/images/profile.webp',
               width: 460,
               height: 460,
               alt: 'Rafael Thayto Profile Picture',
-              type: 'image/jpeg',
+              type: 'image/webp',
             },
           ],
           site_name: 'Thayto',
