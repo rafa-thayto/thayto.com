@@ -21,11 +21,11 @@ const IndexPage = () => {
           description,
           images: [
             {
-              url: 'https://thayto.com/static/images/profile.webp',
+              url: 'https://thayto.com/static/images/profile.jpg',
               width: 460,
               height: 460,
               alt: 'Rafael Thayto Profile Picture',
-              type: 'image/webp',
+              type: 'image/jpeg',
             },
           ],
           site_name: 'Thayto',
@@ -41,7 +41,7 @@ const IndexPage = () => {
         <div className="flex mt-2 items-center justify-items-center justify-center flex-col sm:flex-row">
           <div className="relative w-52 h-52 ">
             <Image
-              src="/static/images/profile.webp"
+              src="/static/images/profile.jpg"
               alt="Thayto's profile picture"
               fill
               priority

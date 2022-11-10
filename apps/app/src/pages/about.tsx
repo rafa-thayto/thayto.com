@@ -18,11 +18,11 @@ const AboutPage = () => {
           description,
           images: [
             {
-              url: 'https://thayto.com/static/images/profile.webp',
+              url: 'https://thayto.com/static/images/profile.jpg',
               width: 460,
               height: 460,
               alt: 'Rafael Thayto Profile Picture',
-              type: 'image/webp',
+              type: 'image/jpeg',
             },
           ],
           site_name: 'Thayto',

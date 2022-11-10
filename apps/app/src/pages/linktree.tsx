@@ -74,11 +74,11 @@ const LinksPage = () => {
           },
           images: [
             {
-              url: 'https://thayto.com/static/images/profile.webp',
+              url: 'https://thayto.com/static/images/profile.jpg',
               width: 460,
               height: 460,
               alt: 'Rafael Thayto Profile Picture',
-              type: 'image/webp',
+              type: 'image/jpeg',
             },
           ],
           site_name: 'Thayto',
@@ -94,7 +94,7 @@ const LinksPage = () => {
           <header className="mb-8 mx-auto">
             <div className="relative w-44 h-44 mb-4 mx-auto">
               <Image
-                src="/static/images/profile.webp"
+                src="/static/images/profile.jpg"
                 alt="Thayto's profile picture"
                 fill
                 priority
