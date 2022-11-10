@@ -115,7 +115,7 @@ export const BlogCard = ({
           aria-label={`Comments for post ${title} (${commentsLength})`}
           className="ml-4 flex"
         >
-          <div>
+          <>
             <ChatBubbleLeftEllipsisIcon
               height={24}
               className="text-slate-800 dark:text-slate-100"
@@ -127,7 +127,7 @@ export const BlogCard = ({
               {commentsLength}
               <span>&nbsp;Comments</span>
             </span>
-          </div>
+          </>
         </Link>
       </div>
     </div>
