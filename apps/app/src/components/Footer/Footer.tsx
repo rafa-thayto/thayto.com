@@ -53,7 +53,7 @@ const moonIcon = (
 
 const ThemeSwitcher = () => {
   return (
-    <div className="flex mt-6 bg-white justify-center dark:bg-gray-800 rounded-3xl p-1">
+    <div className="flex mt-6 bg-white justify-center dark:bg-gray-800 rounded-3xl p-1 shadow">
       <button
         type="button"
         aria-label="Use Dark Mode"
@@ -61,7 +61,7 @@ const ThemeSwitcher = () => {
           document.documentElement.classList.add('dark')
           localStorage.setItem('theme', 'dark')
         }}
-        className="flex items-center h-full pr-2 dark:bg-indigo-500 rounded-3xl flex justify-center align-center p-2 w-24 h-10 transition"
+        className="flex items-center h-full pr-2 dark:bg-indigo-500 rounded-3xl justify-center align-center p-2 w-24 transition"
       >
         {moonIcon}
       </button>
@@ -73,7 +73,7 @@ const ThemeSwitcher = () => {
           document.documentElement.classList.remove('dark')
           localStorage.setItem('theme', 'light')
         }}
-        className="flex items-center h-full pr-2 bg-indigo-500 dark:bg-transparent rounded-3xl flex justify-center align-center p-2 w-24 h-10 transition"
+        className="flex items-center h-full pr-2 bg-indigo-500 dark:bg-transparent rounded-3xl justify-center align-center p-2 w-24 transition"
       >
         {sunIcon}
       </button>
