@@ -89,37 +89,39 @@ const LinksPage = () => {
           handle: '@thayto',
         }}
       />
-      <div className="mx-0 pt-4 px-8 bg-gray-100 dark:bg-gray-900">
-        <header className="mb-8 mx-auto">
-          <div className="relative w-44 h-44 mb-4 mx-auto">
-            <Image
-              src="/static/images/profile.jpeg"
-              alt="Thayto's profile picture"
-              fill
-              priority
-              className="rounded-full"
-            />
-          </div>
-          <h1 className="text-2xl text-slate-900 dark:text-white font-bold text-center">
-            Rafael Thayto Tani
-          </h1>
-        </header>
-        <main className="lg:mx-72 xl:mx-96 mb-10">
-          {links.map(({ Icon, href, text }) => (
-            <Link
-              key={text}
-              href={href}
-              className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:hover:bg-indigo-300 dark:hover:hover:bg-indigo-500 px-10 py-4 mb-4 text-slate-900 dark:text-gray-300 bg-white dark:bg-gray-600"
-            >
-              {text}
-              {Icon && (
-                <span className="ml-4">
-                  <Icon />
-                </span>
-              )}
-            </Link>
-          ))}
-        </main>
+      <div className="mx-0 pt-4 bg-slate-50 dark:bg-gray-900">
+        <div className="px-8">
+          <header className="mb-8 mx-auto">
+            <div className="relative w-44 h-44 mb-4 mx-auto">
+              <Image
+                src="/static/images/profile.jpeg"
+                alt="Thayto's profile picture"
+                fill
+                priority
+                className="rounded-full"
+              />
+            </div>
+            <h1 className="text-2xl text-slate-900 dark:text-white font-bold text-center">
+              Rafael Thayto Tani
+            </h1>
+          </header>
+          <main className="lg:mx-72 xl:mx-96 mb-10">
+            {links.map(({ Icon, href, text }) => (
+              <Link
+                key={text}
+                href={href}
+                className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:hover:bg-indigo-300 dark:hover:hover:bg-indigo-500 px-10 py-4 mb-4 text-slate-900 dark:text-gray-300 bg-white dark:bg-gray-600"
+              >
+                {text}
+                {Icon && (
+                  <span className="ml-4">
+                    <Icon />
+                  </span>
+                )}
+              </Link>
+            ))}
+          </main>
+        </div>
         <Footer />
       </div>
     </>
