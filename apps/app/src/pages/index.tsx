@@ -41,7 +41,7 @@ const IndexPage = () => {
         <div className="flex mt-2 items-center justify-items-center justify-center flex-col sm:flex-row">
           <div className="relative w-52 h-52 ">
             <Image
-              src="/static/images/profile.jpeg"
+              src="/static/images/profile.webp"
               alt="Thayto's profile picture"
               fill
               priority
