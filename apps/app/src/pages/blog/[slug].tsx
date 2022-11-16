@@ -45,7 +45,7 @@ const PostPage = ({
             width: 460,
             height: 460,
             alt: 'blog hero',
-            type: 'image/webp',
+            type: 'image/jpeg',
           },
         ],
         site_name: 'Thayto',
