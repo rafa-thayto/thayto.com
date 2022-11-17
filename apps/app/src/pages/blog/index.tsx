@@ -53,7 +53,10 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 description={post.data.description}
                 tags={post.data.tags}
                 publishedTime={post.data.publishedTime}
-                image={post.data.image}
+                image={{
+                  src: `/static/images/${post.data.image.src}`,
+                  alt: post.data.image.alt || 'Card Hero',
+                }}
                 href={post.data.href}
                 reactionsLength={post.data.reactionsLength}
                 commentsLength={post.data.commentsLength}

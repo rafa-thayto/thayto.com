@@ -44,7 +44,7 @@ const PostPage = ({
             }`,
             width: 460,
             height: 460,
-            alt: 'blog hero',
+            alt: 'Blog Hero',
             type: image.type || 'image/jpeg',
           },
         ],
@@ -70,7 +70,7 @@ const PostPage = ({
                 placeholder="blur"
                 style={{ height: 'auto', width: '100%' }}
                 sizes="100vw"
-                src={image.src}
+                src={`/static/images/${image.src}`}
                 alt={image.alt || title}
               />
             </div>
