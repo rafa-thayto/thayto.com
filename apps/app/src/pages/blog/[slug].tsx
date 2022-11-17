@@ -39,13 +39,13 @@ const PostPage = ({
         },
         images: [
           {
-            url: `https://thayto.com${
-              image ? image.src : '/static/images/profile.jpg'
+            url: `https://thayto.com/static/images/${
+              image.src || 'profile.jpg'
             }`,
             width: 460,
             height: 460,
             alt: 'blog hero',
-            type: 'image/jpeg',
+            type: image.type || 'image/jpeg',
           },
         ],
         site_name: 'Thayto',
