@@ -51,6 +51,19 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
       <link rel="manifest" href="/site.webmanifest" />
     </Head>
     <Script
+      id="microsoft-clarity"
+      strategy="afterInteractive"
+      dangerouslySetInnerHTML={{
+        __html: `
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "${MS_CLARITY_ID}");
+        `,
+      }}
+    />
+    <Script
       id="google-tagmanager"
       strategy="afterInteractive"
       src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
@@ -80,19 +93,6 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','${gtm.GTM_ID}')
-        `,
-      }}
-    />
-    <Script
-      id="microsoft-clarity"
-      strategy="afterInteractive"
-      dangerouslySetInnerHTML={{
-        __html: `
-        (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "${MS_CLARITY_ID}");
         `,
       }}
     />
