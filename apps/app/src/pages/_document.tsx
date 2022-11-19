@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import { Head, Html, Main, NextScript } from 'next/document'
+import { GTM_ID } from '@src/lib/gtm'
 
 const CustomDocument = () => (
   <Html lang="pt-BR" className="dark">
@@ -15,7 +16,7 @@ const CustomDocument = () => (
       {/* <!-- Google Tag Manager (noscript) --> */}
       <noscript>
         <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-M9HX8G3"
+          src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
           height="0"
           width="0"
           style={{ display: 'none', visibility: 'hidden' }}
