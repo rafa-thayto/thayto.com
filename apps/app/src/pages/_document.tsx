@@ -12,6 +12,16 @@ const CustomDocument = () => (
       />
     </Head>
     <body>
+      {/* <!-- Google Tag Manager (noscript) --> */}
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-M9HX8G3"
+          height="0"
+          width="0"
+          style={{ display: 'none', visibility: 'hidden' }}
+        />
+      </noscript>
+      {/* <!-- End Google Tag Manager (noscript) --> */}
       <Main />
       <NextScript />
     </body>
