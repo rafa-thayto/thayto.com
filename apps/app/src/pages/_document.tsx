@@ -2,7 +2,7 @@
 import { Head, Html, Main, NextScript } from 'next/document'
 
 const CustomDocument = () => (
-  <Html lang="pt-BR">
+  <Html lang="pt-BR" className="dark">
     <Head>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
