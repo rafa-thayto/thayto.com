@@ -17,7 +17,7 @@
     "isolatedModules": true,
     "incremental": true,
     "types": ["jest", "node"],
-    "typeRoots": ["types"]
+    "typeRoots": ["@types"]
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
   "exclude": ["node_modules", "jest.config.ts"]
