@@ -5,6 +5,7 @@ import fs from 'fs'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { NextSeo } from 'next-seo'
+import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import path from 'path'
@@ -22,6 +23,9 @@ const PostPage = ({
   nextPost,
 }: InferGetStaticPropsType<typeof getStaticProps>) => (
   <Layout>
+    <Head>
+      <meta name="keywords" content={tags?.join(', ')} />
+    </Head>
     <NextSeo
       title={`${title} - Rafael Thayto`}
       description={description}
