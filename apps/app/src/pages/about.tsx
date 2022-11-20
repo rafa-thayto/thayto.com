@@ -34,7 +34,7 @@ const AboutPage = () => {
         }}
       />
 
-      <main className="max-w-6xl mx-auto border dark:border-black bg-slate-50 dark:bg-gray-800  py-6 px-4 sm:px-12 mt-6">
+      <main className="max-w-6xl mx-auto shadow bg-slate-50 dark:bg-gray-800  py-6 px-4 sm:px-12 mt-6">
         <h1 className="text-xl text-slate-900 dark:text-white font-bold mt-4">
           Sobre mim
         </h1>

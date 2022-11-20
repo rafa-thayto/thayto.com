@@ -115,7 +115,7 @@ export const Footer = () => {
       <div className="flex flex-col items-center">
         <ThemeSwitcher />
       </div>
-      <footer className="border-t bg-slate-50 dark:bg-gray-900 dark:border-black mt-10 flex justify-end">
+      <footer className="border-t border-gray-200 bg-slate-50 dark:bg-gray-900 dark:border-black mt-10 flex justify-end">
         <div className="px-20 py-14 md:px-32">
           <h6 className="text-lg font-medium text-black dark:text-white">
             Sitemap

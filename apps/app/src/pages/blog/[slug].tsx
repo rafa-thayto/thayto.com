@@ -5,6 +5,7 @@ import fs from 'fs'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { NextSeo } from 'next-seo'
+import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import path from 'path'
@@ -22,6 +23,9 @@ const PostPage = ({
   nextPost,
 }: InferGetStaticPropsType<typeof getStaticProps>) => (
   <Layout>
+    <Head>
+      <meta name="keywords" content={tags?.join(', ')} />
+    </Head>
     <NextSeo
       title={`${title} - Rafael Thayto`}
       description={description}
@@ -58,8 +62,29 @@ const PostPage = ({
     />
 
     <div className="mx-auto max-w-5xl">
-      <article className="leading-6 pb-12 border mt-4 bg-slate-50 dark:bg-gray-800">
+      <div className="p-10">
+        <Link href="/blog" className="flex justify-start">
+          <ArrowLeftIcon className="h-6 w-6 text-black dark:text-white" />
+          <span className="ml-2 font-medium text-black dark:text-white">
+            Voltar para overview
+          </span>
+        </Link>
+      </div>
+      <article className="leading-6 pb-12 shadow bg-slate-50 dark:bg-gray-800">
         <header className="mb-4">
+          <div className="px-4 sm:px-12 py-10">
+            <h1 className="text-2xl text-slate-900 dark:text-white font-bold">
+              {title}
+            </h1>
+            <h2 className="text-xl text-slate-600 dark:text-slate-400 font-semibold mt-2">
+              <time dateTime={publishedTime}>
+                {new Intl.DateTimeFormat('pt-BR', {
+                  dateStyle: 'long',
+                  timeStyle: 'long',
+                }).format(new Date(publishedTime))}
+              </time>
+            </h2>
+          </div>
           {image && (
             <div className="mb-4">
               <Image
@@ -75,19 +100,6 @@ const PostPage = ({
               />
             </div>
           )}
-          <div className="px-4 sm:px-12 mt-6">
-            <h1 className="text-2xl text-slate-900 dark:text-white font-bold">
-              {title}
-            </h1>
-            <h2 className="text-xl text-slate-600 dark:text-slate-400 font-light mt-2">
-              <time dateTime={publishedTime}>
-                {new Intl.DateTimeFormat('pt-BR', {
-                  dateStyle: 'long',
-                  timeStyle: 'long',
-                }).format(new Date(publishedTime))}
-              </time>
-            </h2>
-          </div>
         </header>
 
         <main className="px-4 sm:px-12">
