@@ -25,6 +25,12 @@ const PostPage = ({
   <Layout>
     <Head>
       <meta name="keywords" content={tags?.join(', ')} />
+      <meta
+        name="twitter:image"
+        content={`https://thayto.com/static/images/${
+          image?.src || 'profile.jpg'
+        }`}
+      />
     </Head>
     <NextSeo
       title={`${title} - Rafael Thayto`}
