@@ -111,7 +111,7 @@ const PostPage = ({
 
         <main className="px-4 sm:px-12">
           <article className="prose dark:prose-invert max-w-4xl">
-            <MDXRemote {...mdxSource} components={components} />
+            <MDXRemote {...mdxSource} />
           </article>
         </main>
       </article>
@@ -177,14 +177,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<
   {
     frontMatter: Record<string, any>
-    slug?: string
+    slug?: any
     mdxSource: MDXRemoteSerializeResult
     prevPost: any
     nextPost: any
   },
-  { slug?: string }
+  { slug?: any }
 > = async ({ params }) => {
-  console.log('slug', slug)
   const { frontMatter, mdxSource } = await getMdxSerializedPost(params?.slug)
   const prevPost = getPreviousOrNextPostBySlug(params?.slug, 'previous')
   const nextPost = getPreviousOrNextPostBySlug(params?.slug, 'next')

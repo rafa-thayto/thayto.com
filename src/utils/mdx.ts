@@ -21,8 +21,8 @@ export const postFilePaths = fs
   // Only include md(x) files
   .filter((path) => /\.mdx?$/.test(path))
 
-export const sortPostsByDate = (posts) => {
-  return posts.sort((a, b) => {
+export const sortPostsByDate = (posts: any) => {
+  return posts.sort((a: any, b: any) => {
     const aDate = new Date(a.data.publishedTime).getTime()
     const bDate = new Date(b.data.publishedTime).getTime()
     return bDate - aDate

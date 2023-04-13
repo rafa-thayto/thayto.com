@@ -84,6 +84,8 @@
     "lint-staged": "^13.0.3",
     "prettier": "^2.6.2",
     "react-test-renderer": "18.2.0",
+    "rehype-prism": "link:@types/@mapbox/rehype-prism",
+    "remark-a11y-emoji": "link:@types/@fec/remark-a11y-emoji",
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "4.9.3"

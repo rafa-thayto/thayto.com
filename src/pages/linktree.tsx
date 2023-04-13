@@ -16,7 +16,7 @@ const LinksPage = () => {
 
   type ButtonLink = {
     href: string
-    Icon?: () => JSX.Element
+    Icon?: (() => JSX.Element) | null
     text: string
   }
 

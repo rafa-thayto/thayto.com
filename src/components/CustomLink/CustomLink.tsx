@@ -1,13 +1,8 @@
 import Link from 'next/link'
-import { UrlObject } from 'url'
-
-type Url = string | UrlObject
 
 type NextLinkProps = React.ComponentPropsWithRef<typeof Link>
 
-interface CustomLinkProps extends NextLinkProps {
-  as?: Url
-}
+interface CustomLinkProps extends NextLinkProps { }
 
 export const CustomLink = ({
   as,
