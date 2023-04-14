@@ -37,6 +37,11 @@ const LinksPage = () => {
       text: 'Twitter',
     },
     {
+      href: 'https://twitch.tv/thayto_dev',
+      Icon: null,
+      text: 'Twitch',
+    },
+    {
       href: 'https://github.com/rafa-thayto',
       Icon: GitHub,
       text: 'GitHub',
