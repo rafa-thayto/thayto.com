@@ -61,6 +61,11 @@ const LinksPage = () => {
       Icon: Medium,
       text: 'Medium',
     },
+    {
+      href: 'https://www.amazon.com.br/dp/8575226932?&_encoding=UTF8&tag=thayto-20&linkCode=ur2&linkId=a8887fab2c901ae25fb1855a72f0bc61&camp=1789&creative=9325',
+      Icon: null,
+      text: 'Estrutura de dados e algoritmos com JavaScript - Loiane',
+    },
   ]
 
   return (
