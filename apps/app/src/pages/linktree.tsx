@@ -22,6 +22,11 @@ const LinksPage = () => {
 
   const links: ButtonLink[] = [
     {
+      href: 'https://go.hotmart.com/F82319240O?ap=db2d',
+      Icon: null,
+      text: 'CRUD com qualidade - Curso DevSoutinho',
+    },
+    {
       href: '/blog',
       Icon: null,
       text: 'Blog',
