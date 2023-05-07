@@ -22,7 +22,7 @@ const LinksPage = () => {
 
   const links: ButtonLink[] = [
     {
-      href: 'https://go.hotmart.com/F82319240O?ap=db2d',
+      href: 'bit.ly/3nLnPQZ',
       Icon: null,
       text: 'CRUD com qualidade - Curso DevSoutinho',
     },
