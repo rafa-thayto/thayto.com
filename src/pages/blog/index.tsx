@@ -87,12 +87,10 @@ export const getStaticProps: GetStaticProps<{
   }[]
 }> = async () => {
   const posts = getPosts()
-  console.log('glob', glob.sync('*/'))
   const imagePaths = getAllImagePaths()
   imagePaths.push('')
-  const images = await Promise.all(
+  await Promise.all(
     imagePaths.map(async (src) => {
-      console.log('src', src)
       const { base64, blurhash, img } = await getPlaiceholder(
         `/static/images/como-abrir-o-vscode-direto-do-github.png`,
       )
@@ -105,8 +103,7 @@ export const getStaticProps: GetStaticProps<{
       }
     }),
   )
-  console.log('imagePaths', imagePaths)
-  console.log('images', images)
+
   // const newPosts = await Promise.all(
   //   posts.map(async (post) => {
   //     try {
@@ -133,8 +130,6 @@ export const getStaticProps: GetStaticProps<{
   //     }
   //   }),
   // )
-
-  // console.log(newPosts)
 
   return {
     props: {
