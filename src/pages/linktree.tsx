@@ -37,7 +37,7 @@ const LinksPage = () => {
       text: 'LinkedIn',
     },
     {
-      href: 'https://twitter.com/_thayto',
+      href: 'https://twitter.com/thayto_dev',
       Icon: Twitter,
       text: 'Twitter',
     },
