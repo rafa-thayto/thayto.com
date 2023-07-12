@@ -1,6 +1,6 @@
 //@ts-check
 
-// eslint-disable-next-line 
+// eslint-disable-next-line
 // @typescript-eslint/no-var-requires
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
@@ -20,6 +20,15 @@ const nextConfig = {
   swcMinify: true,
   reactStrictMode: true,
 
+  async redirects() {
+    return [
+      {
+        source: '/links',
+        destination: '/linktree',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     // Security Headers based on: https://nextjs.org/docs/advanced-features/security-headers
     // TODO: implement "Content-Security-Policy" section
