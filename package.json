@@ -97,16 +97,11 @@
     }
   },
   "lint-staged": {
-    "*.tsx": [
-      "eslint --fix"
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
     ],
-    "*.ts": [
-      "eslint --fix"
-    ],
-    "*.js": [
-      "eslint --fix"
-    ],
-    "*": [
+    "*.{json,md,mdx}": [
       "prettier --write"
     ]
   }
