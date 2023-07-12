@@ -9,7 +9,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@fec/remark-a11y-emoji": "^3.1.0",
