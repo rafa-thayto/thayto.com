@@ -22,6 +22,11 @@ const LinksPage = () => {
 
   const links: ButtonLink[] = [
     {
+      href: 'bit.ly/3nLnPQZ',
+      Icon: null,
+      text: 'CRUD com qualidade - Curso DevSoutinho',
+    },
+    {
       href: '/blog',
       Icon: null,
       text: 'Blog',
