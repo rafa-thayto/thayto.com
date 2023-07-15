@@ -4,7 +4,6 @@ import { NextSeo } from 'next-seo'
 import { getPosts } from '@src/utils/mdx'
 import { getPlaiceholder } from 'plaiceholder'
 import { getAllImagePaths } from '@src/utils/images'
-import glob from 'glob'
 
 const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const description =
@@ -60,7 +59,9 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
                   post.data.image && {
                     src: `/static/images/${post.data.image.src}`,
                     alt: post.data.image.alt || 'Card Hero',
-                    blurDataURL: post.data.image.base64,
+                    blurDataURL: post.data.image.placeholder
+                      ? `/static/images/${post.data.image.placeholder}`
+                      : post.data.image.base64,
                   }
                 }
                 href={post.data.href}

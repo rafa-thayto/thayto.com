@@ -32,3 +32,61 @@
   background-color: currentColor;
   transform: scaleX(1);
 }
+
+/* BlogCard */
+.blurred-img {
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(20px);
+}
+
+.blurred-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: pulse 2.5s infinite;
+  background-color: var(--text-color);
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.blurred-img.loaded::before {
+  animation: none;
+  content: none;
+}
+
+.blurred-img img {
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+}
+
+.blurred-img.loaded img {
+  opacity: 1;
+}
+
+.blurred-img.not-blur {
+  animation: blur 0.25s forwards;
+}
+
+@keyframes blur {
+  0% {
+    filter: blur(20px);
+  }
+  50% {
+    filter: blur(15px);
+  }
+  100% {
+    filter: blur(0px);
+  }
+}

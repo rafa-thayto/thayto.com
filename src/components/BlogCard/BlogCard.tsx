@@ -6,8 +6,7 @@ import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid'
 import { nanoid } from 'nanoid'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useCallback, useState } from 'react'
-import { rgbDataURL } from '@src/utils/blur'
+import { useCallback, useRef, useState } from 'react'
 
 interface BlogCardProps {
   title: string
@@ -36,25 +35,48 @@ export const BlogCard = ({
 }: BlogCardProps) => {
   const tagNanoId = nanoid()
   const [hasLike, setHasLike] = useState(false)
+  const cardImageId = `card-image-${tagNanoId}`
+  const cardImageElementRef = useRef<HTMLDivElement>(null)
 
   const handleLikeClick = useCallback(() => {
     setHasLike((oldState) => !oldState)
+  }, [])
+
+  const handleImageOnLoad = useCallback(() => {
+    const div = cardImageElementRef.current
+    if (div) {
+      div.className = `${div?.className} loaded not-blur`
+    }
   }, [])
 
   return (
     <div className="rounded-lg overflow-hidden shadow-lg transition border-gray-400 dark:border-black hover:border-indigo-300 hover:border border bg-slate-50 dark:bg-gray-800">
       <Link href={href}>
         {image && (
-          <div className="h-64 relative">
-            <Image
-              className="object-cover"
-              fill
-              placeholder="blur"
-              blurDataURL={image.blurDataURL || rgbDataURL(131, 72, 250)}
-              src={image.src}
-              alt={image.alt || title}
-            />
-          </div>
+          <>
+            <div
+              id={cardImageId}
+              ref={cardImageElementRef}
+              className="h-64 relative blurred-img"
+              style={
+                (image?.blurDataURL && {
+                  backgroundImage: `url(${image?.blurDataURL})`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover',
+                }) ||
+                {}
+              }
+            >
+              <Image
+                className="object-cover"
+                fill
+                loading="lazy"
+                onLoad={handleImageOnLoad}
+                src={image.src}
+                alt={image.alt || title}
+              />
+            </div>
+          </>
         )}
         <div className="px-6 py-4 ">
           <h2 className="font-bold text-slate-900 dark:text-white text-xl mb-2">
