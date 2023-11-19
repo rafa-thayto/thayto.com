@@ -60,7 +60,7 @@ const IndexPage = () => {
 
         <div className="mt-6">
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
-            Thayto é um desenvolvedor com mais de 3 anos de experiência,
+            Thayto é um desenvolvedor com mais de 5 anos de experiência,
             apaixonado em aprender novas tecnologia e boas práticas para
             desenvolvimento. Apesar da pouca idade ele já passou por diversos
             projetos onde deu seu melhor e conseguiu efetuar todas as entregas.
