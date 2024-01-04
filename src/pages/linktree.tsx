@@ -22,6 +22,11 @@ const LinksPage = () => {
 
   const links: ButtonLink[] = [
     {
+      href: 'https://podcasters.spotify.com/pod/show/devseniorscast',
+      Icon: null,
+      text: '🎙️ DevSenior Cast',
+    },
+    {
       href: 'https://bit.ly/3nLnPQZ',
       Icon: null,
       text: 'CRUD com qualidade - Curso DevSoutinho',
