@@ -84,6 +84,12 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
       }}
     />
     <Script
+      id="simplytics"
+      strategy="afterInteractive"
+      src="https://simplytics.vercel.app/script.js"
+      data-website-id="54d51e9d-0bdb-4f58-9444-8d6439c59ddc"
+    />
+    <Script
       id="gtag-base"
       strategy="afterInteractive"
       dangerouslySetInnerHTML={{
