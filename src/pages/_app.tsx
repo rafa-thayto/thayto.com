@@ -84,7 +84,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
       }}
     />
     <Script
-      id="simplytics"
+      id="simplytics-cloud"
       strategy="afterInteractive"
       src="https://app.simplytics.cloud/script.js"
       data-website-id="54d51e9d-0bdb-4f58-9444-8d6439c59ddc"
