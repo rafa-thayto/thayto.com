@@ -54,7 +54,9 @@ export const BlogCard = ({
       <Link
         href={href}
         onClick={() => {
-          window.simplytics.track('blog-card-clicked', { href, title })
+          window.simplytics.track('blog-card-clicked', {
+            data: { href, title },
+          })
         }}
       >
         {image && (

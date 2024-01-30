@@ -125,8 +125,10 @@ const PostPage = ({
             className="py-8 px-10 text-center md:text-right first:rounded-t-lg md:first:rounded-tr-none md:first:rounded-l-lg last:rounded-r-lg first last:rounded-b-lg backdrop-blur-lg bg-slate-50 bg-opacity-100 dark:bg-opacity-10 hover:bg-opacity-30 dark:hover:bg-opacity-20 transition border border-gray-800 border-opacity-10 last:border-t md:border-r-0 md:last:border-r md:last:rounded-r-none flex flex-col"
             onClick={() => {
               window.simplytics.track('change-post-btn', {
-                href: `/blog/${prevPost.slug}`,
-                title: prevPost.title,
+                data: {
+                  href: `/blog/${prevPost.slug}`,
+                  title: prevPost.title,
+                },
               })
             }}
           >
@@ -145,8 +147,10 @@ const PostPage = ({
             className="py-8 px-10 text-center md:text-left md:first:rounded-t-lg last:rounded-b-lg first:rounded-l-lg md:last:rounded-bl-none md:last:rounded-r-lg backdrop-blur-lg bg-slate-50  bg-opacity-100 dark:bg-opacity-10 hover:bg-opacity-30 dark:hover:bg-opacity-20 transition border border-gray-800 border-opacity-10 border-t-0 first:border-t first:rounded-t-lg md:border-t border-b-0 last:border-b flex flex-col"
             onClick={() => {
               window.simplytics.track('change-post-btn', {
-                href: `/blog/${nextPost.slug}`,
-                title: nextPost.title,
+                data: {
+                  href: `/blog/${nextPost.slug}`,
+                  title: nextPost.title,
+                },
               })
             }}
           >
