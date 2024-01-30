@@ -55,6 +55,7 @@ export const BlogCard = ({
         href={href}
         onClick={() => {
           window.simplytics.track('blog-card-clicked', {
+            name: 'blog-post-back-btn',
             data: { href, title },
           })
         }}
