@@ -51,7 +51,12 @@ export const BlogCard = ({
 
   return (
     <div className="rounded-lg overflow-hidden shadow-lg transition border-gray-400 dark:border-black hover:border-indigo-300 hover:border border bg-slate-50 dark:bg-gray-800">
-      <Link href={href}>
+      <Link
+        href={href}
+        onClick={() => {
+          window.simplytics.track('blog-card-clicked', { href, title })
+        }}
+      >
         {image && (
           <>
             <div
