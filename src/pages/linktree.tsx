@@ -136,6 +136,15 @@ const LinksPage = () => {
                 key={text}
                 href={href}
                 className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:hover:bg-indigo-300 dark:hover:hover:bg-indigo-500 px-10 py-4 mb-4 text-slate-900 dark:text-gray-300 bg-white dark:bg-gray-600"
+                onClick={() => {
+                  window.simplytics.track('linktree-button-clicked', {
+                    name: 'linktree-button-clicked',
+                    data: {
+                      href,
+                      title: text,
+                    },
+                  })
+                }}
               >
                 {text}
                 {Icon && (
