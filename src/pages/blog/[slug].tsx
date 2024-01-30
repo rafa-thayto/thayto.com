@@ -72,7 +72,17 @@ const PostPage = ({
 
     <div className="mx-auto max-w-5xl">
       <div className="p-10">
-        <Link href="/blog" className="flex justify-start">
+        <Link
+          href="/blog"
+          onClick={() => {
+            window.simplytics.track('blog-post-back-btn', {
+              data: {
+                title: prevPost.title,
+              },
+            })
+          }}
+          className="flex justify-start"
+        >
           <ArrowLeftIcon className="h-6 w-6 text-black dark:text-white" />
           <span className="ml-2 font-medium text-black dark:text-white">
             Voltar para overview
