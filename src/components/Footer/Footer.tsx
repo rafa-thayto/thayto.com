@@ -58,6 +58,9 @@ const ThemeSwitcher = () => {
         type="button"
         aria-label="Use Dark Mode"
         onClick={() => {
+          window.umami.track('switch-theme', {
+            from: 'dark-to-light',
+          })
           document.documentElement.classList.add('dark')
           localStorage.setItem('theme', 'dark')
         }}
@@ -70,6 +73,9 @@ const ThemeSwitcher = () => {
         type="button"
         aria-label="Use Light Mode"
         onClick={() => {
+          window.umami.track('switch-theme', {
+            from: 'light-to-dark',
+          })
           document.documentElement.classList.remove('dark')
           localStorage.setItem('theme', 'light')
         }}

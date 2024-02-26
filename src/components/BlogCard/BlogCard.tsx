@@ -55,8 +55,8 @@ export const BlogCard = ({
         href={href}
         onClick={() => {
           window.umami.track('blog-card-clicked', {
-            name: 'blog-post-back-btn',
-            data: { href, title },
+            href,
+            title,
           })
         }}
       >
