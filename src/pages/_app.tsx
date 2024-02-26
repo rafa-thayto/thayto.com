@@ -95,6 +95,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
       strategy="afterInteractive"
       src="https://us.umami.is/script.js"
       data-website-id="c21117b1-6b93-4d4e-8ad8-fdc209cfddba"
+      data-domains="thayto.com"
     />
 
     {/* <Script */}
