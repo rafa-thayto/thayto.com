@@ -157,5 +157,6 @@ export type SimplyticsTracker = {
 declare global {
   interface Window {
     simplytics: SimplyticsTracker
+    umami: SimplyticsTracker
   }
 }

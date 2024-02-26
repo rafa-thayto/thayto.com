@@ -54,7 +54,7 @@ export const BlogCard = ({
       <Link
         href={href}
         onClick={() => {
-          window.simplytics.track('blog-card-clicked', {
+          window.umami.track('blog-card-clicked', {
             name: 'blog-post-back-btn',
             data: { href, title },
           })
