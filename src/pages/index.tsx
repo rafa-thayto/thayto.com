@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const IndexPage = () => {
   const description =
-    'Software Engineer apaixonado por novas tecnologias, contruindo seu primeiro portfolio e blog <3!'
+    'Rafael Thayto, Senior Software Engineer apaixonado por novas tecnologias, bem vindo ao meu blog <3!'
 
   return (
     <Layout>
@@ -60,13 +60,11 @@ const IndexPage = () => {
 
         <div className="mt-6">
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
-            Thayto é um desenvolvedor com mais de 5 anos de experiência,
-            apaixonado em aprender novas tecnologia e boas práticas para
-            desenvolvimento. Apesar da pouca idade ele já passou por diversos
-            projetos onde deu seu melhor e conseguiu efetuar todas as entregas.
-            Ele não pode ver um framework novo ou lib nova que já quer
-            implementar, porém sempre e avalia os riscos antes de tal
-            implementação.
+            Rafael Thayto é um desenvolvedor com mais de 5 anos de experiência,
+            apaixonado por resolver problemas e aprender novas tecnologias e
+            boas práticas de desenvolvimento. Atuei em diversos projetos, sempre
+            me dedicando ao máximo para garantir a entrega de soluções
+            eficientes e de alta qualidade.
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-slate-200 mt-2">
             Ele gosta bastante de jogar, conhecer pessoas e lugares novos. Posso

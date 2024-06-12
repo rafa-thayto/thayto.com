@@ -2,7 +2,7 @@ import { Layout } from '@src/components'
 import { NextSeo } from 'next-seo'
 
 const AboutPage = () => {
-  const description = `Thayto é um desenvolvedor com mais de 3 anos de experiência, apaixonado em aprender novas tecnologia e boas práticas para desenvolvimento, apesar da pouca idade ele já passou por diversos projetos onde deu seu melhor e conseguiu efetuar todas as entregas. Ele não pode ver um framework novo ou lib nova que já quer implementar, porém hoje em dia tem muito mais pé no chão e avalia os riscos de tal implementação.
+  const description = `Desenvolvedor com mais de 5 anos de experiência, apaixonado por resolver problemas e aprender novas tecnologias e boas práticas de desenvolvimento. Atuei em diversos projetos, sempre me dedicando ao máximo para garantir a entrega de soluções eficientes e de alta qualidade.
 
   Ele gosta bastante de jogar, conhecer pessoas e lugares novos. Posso ter certeza que se conversar com ele, em poucos minutos já terão criado um conexão.`
   return (
@@ -41,13 +41,11 @@ const AboutPage = () => {
 
         <div className="mt-6">
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
-            Thayto é um desenvolvedor com mais de 3 anos de experiência,
-            apaixonado em aprender novas tecnologia e boas práticas para
-            desenvolvimento, apesar da pouca idade ele já passou por diversos
-            projetos onde deu seu melhor e conseguiu efetuar todas as entregas.
-            Ele não pode ver um framework novo ou lib nova que já quer
-            implementar, porém sempre e avalia os riscos antes de tal
-            implementação.
+            Rafael Thayto é um desenvolvedor com mais de 5 anos de experiência,
+            apaixonado por resolver problemas e aprender novas tecnologias e
+            boas práticas de desenvolvimento. Atuei em diversos projetos, sempre
+            me dedicando ao máximo para garantir a entrega de soluções
+            eficientes e de alta qualidade.
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-slate-200 mt-2">
             Ele gosta bastante de jogar, conhecer pessoas e lugares novos. Posso
