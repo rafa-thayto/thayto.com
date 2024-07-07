@@ -1,0 +1,80 @@
+---
+title: 'Expondo seu localhost com Ngrok (muito útil para testar webhooks)'
+publishedTime: '2024-07-06T15:58:51Z'
+modifiedTime: '2024-07-06T15:58:51Z'
+description: 'Estava precisando fazer alguns testes de webhooks, porém só conhecia uma maneira que seria deployar a app e só assim conseguir testar os webhooks. Esse método funciona e é muito utilizado por devs. Mas ele tem um problema... todo teste você vai precisar deployar novamente sua aplicação e isso leva bastante tempo.'
+image:
+  {
+    src: 'expondo-seu-localhost-com-ngrok.jpg',
+    placeholder: 'expondo-seu-localhost-com-ngrok-small.jpg',
+    type: 'image/jpeg',
+  }
+tags: ['ngrok', 'webhooks', 'tutorial']
+href: '/blog/expondo-seu-localhost-com-ngrok'
+reactionsLength: 0
+commentsLength: 0
+---
+
+> Os problemas de "na minha máquina funciona" acabaram!
+
+## Problema
+
+Estava precisando fazer alguns testes de webhooks, porém só conhecia uma maneira que seria deployar a app e só assim conseguir testar os webhooks. Esse método funciona e é muito utilizado por devs. Mas ele tem um problema... todo teste você vai precisar deployar novamente sua aplicação e isso leva bastante tempo.
+
+Pesquisando por aí encontrei o [Ngrok](https://ngrok.com/) e com ele conseguimos expor nosso localhost de forma bem simples.
+
+## Instalação
+
+> você pode seguir a [Documentação Oficial](https://ngrok.com/docs/guides/getting-started/#step-2-install-the-ngrok-agent) também.
+
+### Mac
+
+Use o [Homebrew](https://brew.sh/):
+
+```bash
+brew install ngrok/ngrok/ngrok
+```
+
+### Linux
+
+Use o apt
+
+```bash
+curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | \
+  sudo gpg --dearmor -o /etc/apt/keyrings/ngrok.gpg && \
+  echo "deb [signed-by=/etc/apt/keyrings/ngrok.gpg] https://ngrok-agent.s3.amazonaws.com buster main" | \
+  sudo tee /etc/apt/sources.list.d/ngrok.list && \
+  sudo apt update && sudo apt install ngrok
+```
+
+### Windows
+
+Use o [Chocolatey](https://chocolatey.org/install)
+
+```bash
+choco install ngrok
+```
+
+## Conecte o seu agent à sua conta do ngrok
+
+Pra isso é necessário que você faça o [log in ou sign up](https://dashboard.ngrok.com/) no Ngrok e pegue seu Authtoken.
+
+Copie o token e adicione no seu terminal
+
+```bash
+ngrok config add-authtoken <TOKEN>
+```
+
+## Rode o Ngrok
+
+Starte o Ngrok rodando o comando abaixo (você pode escolher a porta que preferir, mas no exemplo utilizei a porta `8000`):
+
+```bash
+ngrok http 8000
+```
+
+Obrigado por ler até aqui! Espero que esse post te ajude :)
+
+Confira mais em https://thayto.com/links
+
+_Cover Image: Photo by <a href="https://unsplash.com/@incrprl?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Stepan Kalinin</a> on <a href="https://unsplash.com/photos/a-woman-standing-on-a-platform-waiting-for-a-train-JzjLO92in88?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>_
