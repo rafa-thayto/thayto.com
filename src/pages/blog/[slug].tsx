@@ -16,8 +16,6 @@ import {
   getPreviousOrNextPostBySlug,
 } from '@src/utils/mdx'
 
-const components = { SyntaxHighlighter, Header, Footer, a: CustomLink }
-
 const PostPage = ({
   frontMatter: { title, description, tags, publishedTime, modifiedTime, image },
   slug,
@@ -105,7 +103,7 @@ const PostPage = ({
           {image && (
             <div className="mb-4">
               <Image
-                className="object-cover"
+                className="object-cover max-h-96"
                 width={1000}
                 height={420}
                 blurDataURL={rgbDataURL(131, 72, 250)}
