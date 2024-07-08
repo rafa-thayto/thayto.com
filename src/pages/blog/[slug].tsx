@@ -91,7 +91,7 @@ const PostPage = ({
             <h1 className="text-2xl text-slate-900 dark:text-white font-bold">
               {title}
             </h1>
-            <h2 className="text-xl text-slate-600 dark:text-slate-400 font-semibold mt-2">
+            <h2 className="text-base text-slate-600 dark:text-slate-400 font-semibold mt-2">
               <time dateTime={publishedTime}>
                 {new Intl.DateTimeFormat('pt-BR', {
                   dateStyle: 'long',
