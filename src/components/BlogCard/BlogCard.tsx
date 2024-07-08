@@ -6,6 +6,7 @@ import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
+import posthog from 'posthog-js'
 import { useCallback, useRef, useState } from 'react'
 
 interface BlogCardProps {
@@ -68,6 +69,10 @@ export const BlogCard = ({
       <Link
         href={href}
         onClick={() => {
+          posthog.capture('blog-card-clicked', {
+            href,
+            title,
+          })
           window.umami.track('blog-card-clicked', {
             href,
             title,

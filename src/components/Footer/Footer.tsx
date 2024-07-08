@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid'
 import Link from 'next/link'
+import posthog from 'posthog-js'
 import { useMemo } from 'react'
 
 const sunIcon = (
@@ -58,6 +59,9 @@ const ThemeSwitcher = () => {
         type="button"
         aria-label="Use Dark Mode"
         onClick={() => {
+          posthog.capture('switch-theme', {
+            from: 'dark-to-light',
+          })
           window.umami.track('switch-theme', {
             from: 'dark-to-light',
           })
@@ -73,6 +77,9 @@ const ThemeSwitcher = () => {
         type="button"
         aria-label="Use Light Mode"
         onClick={() => {
+          posthog.capture('switch-theme', {
+            from: 'light-to-dark',
+          })
           window.umami.track('switch-theme', {
             from: 'light-to-dark',
           })

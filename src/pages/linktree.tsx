@@ -10,6 +10,7 @@ import {
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import Link from 'next/link'
+import posthog from 'posthog-js'
 
 const LinksPage = () => {
   const description = 'Minha árvore de links'
@@ -137,6 +138,10 @@ const LinksPage = () => {
                 href={href}
                 className="flex justify-center font-medium cursor-pointer rounded-full border border-slate-900 hover:hover:bg-indigo-300 dark:hover:hover:bg-indigo-500 px-10 py-4 mb-4 text-slate-900 dark:text-gray-300 bg-white dark:bg-gray-600"
                 onClick={() => {
+                  posthog.capture('linktree-button-clicked', {
+                    href,
+                    title: text,
+                  })
                   window.umami.track('linktree-button-clicked', {
                     href,
                     title: text,
