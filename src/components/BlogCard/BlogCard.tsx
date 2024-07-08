@@ -50,7 +50,7 @@ export const BlogCard = ({
   }, [])
 
   return (
-    <div className="rounded-lg overflow-hidden shadow-lg transition border-gray-400 dark:border-black hover:border-indigo-300 hover:border border bg-slate-50 dark:bg-gray-800">
+    <div className="rounded-lg hover:bg-slate-100 dark:hover:bg-gray-700 overflow-hidden shadow-lg transition border-gray-400 dark:border-black hover:border-indigo-300 hover:border border bg-slate-50 dark:bg-gray-800">
       <Link
         href={href}
         onClick={() => {
@@ -86,7 +86,7 @@ export const BlogCard = ({
             </div>
           </>
         )}
-        <div className="px-6 py-4 ">
+        <div className="px-6 py-4">
           <h2 className="font-bold text-slate-900 dark:text-white text-xl mb-2">
             {title}
           </h2>
