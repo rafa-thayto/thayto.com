@@ -15,6 +15,30 @@ import rehypeStringify from 'rehype-stringify'
 import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
+import { nanoid } from 'nanoid'
+
+export type Post = {
+  content: string
+  data: {
+    id: string
+    title: string
+    publishedTime: Date
+    modifiedTime: Date
+    description: string
+    image: {
+      src: string
+      placeholder?: string
+      type: string
+      alt?: string
+      base64?: string
+    }
+    tags: string[]
+    href: string
+    reactionsLength: number
+    commentsLength: number
+  }
+  filePath: string
+}
 
 export const postFilePaths = fs
   .readdirSync(POSTS_PATH)
@@ -29,10 +53,11 @@ export const sortPostsByDate = (posts: any) => {
   })
 }
 
-export const getPosts = () => {
-  let posts = postFilePaths.map((filePath) => {
+export const getPosts = (): Post[] => {
+  const files = postFilePaths.map((filePath) => {
     const source = fs.readFileSync(path.join(POSTS_PATH, filePath), 'utf-8')
     const { content, data } = matter(source)
+    data.id = nanoid()
 
     return {
       content,
@@ -41,7 +66,7 @@ export const getPosts = () => {
     }
   })
 
-  posts = sortPostsByDate(posts)
+  const posts = sortPostsByDate(files) as Post[]
 
   return posts
 }
