@@ -2,14 +2,14 @@ import { Analytics } from '@vercel/analytics/react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Script from 'next/script'
-import * as gtag from '@src/lib/gtag'
-import * as gtm from '@src/lib/gtm'
-import { MS_CLARITY_ID } from '@src/lib/clarity'
-import { GOOGLE_SITE_VERIFICATION } from '@src/lib/google-site-verification'
+import * as gtag from '@/lib/gtag'
+import * as gtm from '@/lib/gtm'
+import { MS_CLARITY_ID } from '@/lib/clarity'
+import { GOOGLE_SITE_VERIFICATION } from '@/lib/google-site-verification'
 
-import '@src/styles/blog.css'
-import '@src/styles/globals.css'
-import '@src/styles/styles.css'
+import '@/styles/blog.css'
+import '@/styles/globals.css'
+import '@/styles/styles.css'
 
 const CustomApp = ({ Component, pageProps }: AppProps) => (
   <>

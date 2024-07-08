@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
-import { CustomLink, Footer, Header, Layout } from '@src/components'
-import { POSTS_PATH } from '@src/constants'
+import { Layout } from '@/components'
+import { POSTS_PATH } from '@/constants'
 import fs from 'fs'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
@@ -9,12 +9,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import path from 'path'
-import SyntaxHighlighter from 'react-syntax-highlighter'
-import { rgbDataURL } from '@src/utils/blur'
-import {
-  getMdxSerializedPost,
-  getPreviousOrNextPostBySlug,
-} from '@src/utils/mdx'
+import { rgbDataURL } from '@/utils/blur'
+import { getMdxSerializedPost, getPreviousOrNextPostBySlug } from '@/utils/mdx'
 
 const PostPage = ({
   frontMatter: { title, description, tags, publishedTime, modifiedTime, image },

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import { Head, Html, Main, NextScript } from 'next/document'
-import { GTM_ID } from '@src/lib/gtm'
+import { GTM_ID } from '@/lib/gtm'
 
 const CustomDocument = () => (
   <Html lang="pt-BR" className="dark">

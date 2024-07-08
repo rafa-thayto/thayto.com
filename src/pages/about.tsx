@@ -1,4 +1,4 @@
-import { Layout } from '@src/components'
+import { Layout } from '@/components'
 import { NextSeo } from 'next-seo'
 
 const AboutPage = () => {

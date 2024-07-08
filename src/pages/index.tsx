@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
-import { IconsGroup, Layout } from '@src/components'
+import { IconsGroup, Layout } from '@/components'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import Link from 'next/link'

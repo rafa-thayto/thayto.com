@@ -1,9 +1,9 @@
-import { BlogCard, IconsGroup, Layout } from '@src/components'
+import { BlogCard, IconsGroup, Layout } from '@/components'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { NextSeo } from 'next-seo'
-import { getPosts } from '@src/utils/mdx'
+import { getPosts } from '@/utils/mdx'
 import { getPlaiceholder } from 'plaiceholder'
-import { getAllImagePaths } from '@src/utils/images'
+import { getAllImagePaths } from '@/utils/images'
 
 const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const description =

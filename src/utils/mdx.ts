@@ -1,6 +1,6 @@
 import remarkA11yEmoji from '@fec/remark-a11y-emoji'
 import rehypePrism from '@mapbox/rehype-prism'
-import { POSTS_PATH } from '@src/constants'
+import { POSTS_PATH } from '@/constants'
 import * as A from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/lib/Option'
