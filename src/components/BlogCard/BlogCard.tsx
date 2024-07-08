@@ -3,12 +3,13 @@ import {
   HeartIcon as HeartIconOutline,
 } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid'
-import { nanoid } from 'nanoid'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useCallback, useRef, useState } from 'react'
 
 interface BlogCardProps {
+  id: string
   title: string
   image?: {
     src: string
@@ -24,6 +25,7 @@ interface BlogCardProps {
 }
 
 export const BlogCard = ({
+  id,
   title,
   description,
   tags,
@@ -33,10 +35,22 @@ export const BlogCard = ({
   reactionsLength,
   commentsLength,
 }: BlogCardProps) => {
-  const tagNanoId = nanoid()
-  const [hasLike, setHasLike] = useState(false)
-  const cardImageId = `card-image-${tagNanoId}`
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const cardImageId = `card-image-${id}`
   const cardImageElementRef = useRef<HTMLDivElement>(null)
+
+  const [hasLike, setHasLike] = useState(false)
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+
+      return params.toString()
+    },
+    [searchParams],
+  )
 
   const handleLikeClick = useCallback(() => {
     setHasLike((oldState) => !oldState)
@@ -104,8 +118,8 @@ export const BlogCard = ({
       <div className="px-6 pt-4 pb-2">
         {tags?.map((tag) => (
           <Link
-            key={`${tag}-${tagNanoId}`}
-            href={`/blog?tag=${tag}`}
+            key={`tag-${tag}-${id}`}
+            href={pathname + '?' + createQueryString('tag', tag)}
             rel="noopener nofollow"
             className="inline-block bg-gray-200 dark:bg-slate-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-800 mr-2 mb-2"
           >

@@ -1,13 +1,19 @@
 import { BlogCard, IconsGroup, Layout } from '@/components'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { NextSeo } from 'next-seo'
-import { getPosts } from '@/utils/mdx'
-import { getPlaiceholder } from 'plaiceholder'
-import { getAllImagePaths } from '@/utils/images'
+import { getPosts, Post } from '@/utils/mdx'
+import { useSearchParams } from 'next/navigation'
 
-const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const searchParams = useSearchParams()
+  const search = searchParams.get('tags') || searchParams.get('tag')
+  const tags = search?.split(',')
+  const posts = p.filter((post) =>
+    !tags?.length ? true : post.data.tags.some((t) => tags.includes(t)),
+  )
   const description =
     'Aqui você encontra vários artigos sobre tecnologia e carreira.'
+
   return (
     <Layout>
       <NextSeo
@@ -51,6 +57,7 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
           {posts?.map((post) => (
             <article key={post.data.title} className="my-2 sm:m-2 lg:max-w-md ">
               <BlogCard
+                id={post.data.id}
                 title={post.data.title}
                 description={post.data.description}
                 tags={post.data.tags}
@@ -81,56 +88,9 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 }
 
 export const getStaticProps: GetStaticProps<{
-  posts: {
-    content: string
-    data: Record<string, any>
-    filePath: string
-  }[]
+  posts: Post[]
 }> = async () => {
   const posts = getPosts()
-  const imagePaths = getAllImagePaths()
-  imagePaths.push('')
-  await Promise.all(
-    imagePaths.map(async (src) => {
-      const { base64, blurhash, img } = await getPlaiceholder(
-        `/static/images/como-abrir-o-vscode-direto-do-github.png`,
-      )
-      return {
-        ...img,
-        alt: 'Paint Splashes',
-        title: 'Photo from Unsplash',
-        blurhash,
-        base64,
-      }
-    }),
-  )
-
-  // const newPosts = await Promise.all(
-  //   posts.map(async (post) => {
-  //     try {
-  //       console.warn('post.data.image', post.data.image)
-  //       // const { base64 } = await getPlaiceholder(
-  //       //   `/static/images/${post.data.image.src}`,
-  //       //   { size: 10 },
-  //       // )
-  //       // console.log('base64', base64)
-
-  //       return {
-  //         content: post.content,
-  //         filePath: post.filePath,
-  //         data: {
-  //           ...post.data,
-  //           image: {
-  //             ...post.data.image,
-  //             // base64,
-  //           },
-  //         },
-  //       }
-  //     } catch (error) {
-  //       console.error('error', error)
-  //     }
-  //   }),
-  // )
 
   return {
     props: {
