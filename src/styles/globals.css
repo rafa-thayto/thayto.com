@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .mx-10vw {
+    margin-left: 10vw;
+    margin-right: 10vw;
+  }
+}
+
 .underlined {
   position: relative;
   text-decoration: none !important;

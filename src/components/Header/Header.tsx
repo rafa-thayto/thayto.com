@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 import Link from 'next/link'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import ReactConfetti from 'react-confetti'
+import { ThemeSwitcher } from '../theme-switcher/theme-switcher'
 
 export const Header = () => {
   const navbarId = nanoid()
@@ -54,7 +55,8 @@ export const Header = () => {
         />
       )}
       <Popover>
-        <div className="relative px-4 sm:px-6 lg:px-8 py-4 lg:py-6 bg-slate-50 dark:bg-gray-900 shadow dark:shadow-black dark:border-black">
+        <div className="relative px-4 sm:px-6 lg:px-40 py-4 lg:py-6 bg-slate-50 dark:bg-gray-900 flex justify-between align-center">
+          <div className="w-28 hidden md:block" />
           <nav
             className="relative flex items-center justify-between sm:h-10 lg:justify-center"
             aria-label="Global"
@@ -82,6 +84,10 @@ export const Header = () => {
               ))}
             </div>
           </nav>
+
+          <div className="w-28">
+            <ThemeSwitcher />
+          </div>
         </div>
 
         <Transition
@@ -97,9 +103,8 @@ export const Header = () => {
             focus
             className="absolute z-10 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
           >
-            <div className="rounded-lg shadow-md bg-white dark:bg-gray-900 ring-1 ring-black ring-opacity-5 overflow-hidden">
-              <div className="px-5 pt-4 flex items-center justify-between">
-                <div />
+            <div className="rounded-lg bg-white dark:bg-gray-900 ring-1 ring-black ring-opacity-5 overflow-hidden">
+              <div className="px-5 pt-4 flex items-center justify-end">
                 <div className="-mr-2">
                   <Popover.Button className="bg-white dark:bg-gray-900 rounded-md p-2 inline-flex items-center justify-center text-gray-400  hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                     <span className="sr-only">Close main menu</span>
