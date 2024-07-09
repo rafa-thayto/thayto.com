@@ -64,7 +64,7 @@ export const Footer = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mt-10">
         <ThemeSwitcher />
       </div>
       <footer className="border-t border-gray-200 bg-slate-50 dark:bg-gray-900 dark:border-black mt-10">
