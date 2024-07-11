@@ -33,6 +33,11 @@ const LinksPage = () => {
       text: 'CRUD com qualidade - Curso DevSoutinho',
     },
     {
+      href: 'https://github.com/rafa-thayto/lazy-thayto-vim',
+      Icon: null,
+      text: '❤️ Neovim Configs',
+    },
+    {
       href: '/blog',
       Icon: null,
       text: 'Blog',
@@ -41,16 +46,6 @@ const LinksPage = () => {
       href: 'https://www.linkedin.com/in/thayto/',
       Icon: LinkedIn,
       text: 'LinkedIn',
-    },
-    {
-      href: 'https://twitter.com/thayto_dev',
-      Icon: Twitter,
-      text: 'Twitter',
-    },
-    {
-      href: 'https://twitch.tv/thayto_dev',
-      Icon: null,
-      text: 'Twitch',
     },
     {
       href: 'https://www.youtube.com/@thayto_dev',
@@ -63,6 +58,21 @@ const LinksPage = () => {
       text: 'GitHub',
     },
     {
+      href: 'https://twitter.com/thayto_dev',
+      Icon: Twitter,
+      text: 'Twitter',
+    },
+    {
+      href: 'https://twitch.tv/thayto_dev',
+      Icon: null,
+      text: 'Twitch',
+    },
+    {
+      href: 'https://www.amazon.com.br/dp/8575226932?&_encoding=UTF8&tag=thayto-20&linkCode=ur2&linkId=a8887fab2c901ae25fb1855a72f0bc61&camp=1789&creative=9325',
+      Icon: null,
+      text: 'Estrutura de dados e algoritmos com JavaScript - Loiane',
+    },
+    {
       href: 'https://dev.to/thayto/',
       Icon: DevTo,
       text: 'Dev.to',
@@ -71,16 +81,6 @@ const LinksPage = () => {
       href: 'https://www.tabnews.com.br/thayto',
       Icon: TabNews,
       text: 'TabNews',
-    },
-    {
-      href: 'https://medium.com/@thayto',
-      Icon: Medium,
-      text: 'Medium',
-    },
-    {
-      href: 'https://www.amazon.com.br/dp/8575226932?&_encoding=UTF8&tag=thayto-20&linkCode=ur2&linkId=a8887fab2c901ae25fb1855a72f0bc61&camp=1789&creative=9325',
-      Icon: null,
-      text: 'Estrutura de dados e algoritmos com JavaScript - Loiane',
     },
   ]
 
