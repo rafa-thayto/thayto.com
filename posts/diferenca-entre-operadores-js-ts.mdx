@@ -1,7 +1,7 @@
 ---
 title: 'Diferença entre os operadores ?, ?? e || no JavaScript / TypeScript'
 publishedTime: '2022-10-31T19:34:48Z'
-modifiedTime: '2022-10-31T19:34:48Z'
+modifiedTime: '2024-07-11T19:34:53Z'
 description: '? -> Optional Chaining Operator. Permite a leitura do valor de uma propriedade localizada internamente em uma cadeia de objetos conectados, sem que a validação de cada referência da cadeia seja expressivamente realizada.'
 image:
   {
@@ -15,7 +15,11 @@ reactionsLength: 0
 commentsLength: 0
 ---
 
-## ?
+# Contexto
+
+Acredito que todo dev já ficou em dúvida sobre as diferenças entre alguns operadores do JavaScript/TypeScript. Por isso fiz esse post simples e rápido sobre as diferenças entre os operadores ?, ?? e ||. Confira logo abaixo
+
+## ? - Optional Chaining
 
 `?` -> **Optional Chaining Operator**.
 Permite a leitura do valor de uma propriedade localizada internamente em uma cadeia de objetos conectados, sem que a validação de cada referência da cadeia seja expressivamente realizada.
@@ -37,7 +41,7 @@ console.log(user?.fullName) // undefined, aplicação não vai quebrar.
 console.log(user.fullName) // TypeError: Cannot read property ‘fullName’ of undefined, aplicação quebra.
 ```
 
-## ??
+## ?? - Nullish Coalesing
 
 `??` -> **Nullish Coalescing Operator**.
 É um operador lógico que retorna o seu operando do lado direito quando o seu operador do lado esquerdo é `null` ou `undefined`. Caso contrário, ele retorna o seu operando do lado esquerdo.
@@ -58,7 +62,7 @@ console.log(undefined ?? 'não encontrado') // "não encontrado"
 console.log(null ?? 'não encontrado') // "não encontrado"
 ```
 
-## ||
+## || - Logical OR
 
 `||` é o **Logical OR Operator**
 A expressão Logical OR é avaliada da esquerda para a direita, é testada para possível avaliação de "curto-circuito" usando a seguinte regra:
