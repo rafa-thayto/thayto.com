@@ -9,7 +9,12 @@ type Link = {
 }
 
 const linkNanoId = nanoid()
-export const Footer = () => {
+
+export const Footer = ({
+  onThemeChange,
+}: {
+  onThemeChange?: (theme: 'dark' | 'light') => void
+}) => {
   const sitemapLinks = useMemo<Link[]>(
     () => [
       {
@@ -65,7 +70,7 @@ export const Footer = () => {
   return (
     <>
       <div className="flex flex-col items-center mt-10">
-        <ThemeSwitcher />
+        <ThemeSwitcher onThemeChange={onThemeChange} />
       </div>
       <footer className="border-t border-gray-200 bg-slate-50 dark:bg-gray-900 dark:border-black mt-10">
         <div className="flex justify-end gap-20 mx-10vw">

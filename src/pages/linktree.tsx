@@ -1,88 +1,96 @@
-import {
-  DevTo,
-  Footer,
-  GitHub,
-  LinkedIn,
-  Medium,
-  TabNews,
-  Twitter,
-} from '@/components'
+import { DevTo, Footer, GitHub, LinkedIn, TabNews, Twitter } from '@/components'
+import { Bsky } from '@/components/Icons/Bsky'
+import { Twitch } from '@/components/Icons/Twitch'
+import { IconProps } from '@/components/Icons/types'
+import { YouTube } from '@/components/Icons/YouTube'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import Link from 'next/link'
 import posthog from 'posthog-js'
+import { useState } from 'react'
+
+type ButtonLink = {
+  href: string
+  Icon?: (({ color }: IconProps) => JSX.Element) | null
+  text: string
+}
+
+const links: ButtonLink[] = [
+  {
+    href: 'https://podcasters.spotify.com/pod/show/devseniorscast',
+    Icon: null,
+    text: '🎙️ DevSenior Cast',
+  },
+  {
+    href: 'https://bit.ly/3nLnPQZ',
+    Icon: null,
+    text: 'CRUD com qualidade - Curso DevSoutinho',
+  },
+  {
+    href: 'https://github.com/rafa-thayto/lazy-thayto-vim',
+    Icon: null,
+    text: '❤️ Neovim Configs',
+  },
+  {
+    href: '/blog',
+    Icon: null,
+    text: 'Blog',
+  },
+  {
+    href: 'https://www.linkedin.com/in/thayto/',
+    Icon: LinkedIn,
+    text: 'LinkedIn',
+  },
+  {
+    href: 'https://www.youtube.com/@thayto_dev',
+    Icon: YouTube,
+    text: 'Youtube',
+  },
+  {
+    href: 'https://github.com/rafa-thayto',
+    Icon: GitHub,
+    text: 'GitHub',
+  },
+  {
+    href: 'https://bsky.app/profile/thayto.dev',
+    Icon: Bsky,
+    text: 'Bluesky',
+  },
+  {
+    href: 'https://twitch.tv/thayto_dev',
+    Icon: Twitch,
+    text: 'Twitch',
+  },
+  {
+    href: 'https://www.amazon.com.br/dp/8575226932?&_encoding=UTF8&tag=thayto-20&linkCode=ur2&linkId=a8887fab2c901ae25fb1855a72f0bc61&camp=1789&creative=9325',
+    Icon: null,
+    text: 'Estrutura de dados e algoritmos com JavaScript - Loiane',
+  },
+  {
+    href: 'https://dev.to/thayto/',
+    Icon: DevTo,
+    text: 'Dev.to',
+  },
+  {
+    href: 'https://www.tabnews.com.br/thayto',
+    Icon: TabNews,
+    text: 'TabNews',
+  },
+  {
+    href: 'https://twitter.com/thayto_dev',
+    Icon: Twitter,
+    text: 'Twitter',
+  },
+]
+
+const description = 'Minha árvore de links'
 
 const LinksPage = () => {
-  const description = 'Minha árvore de links'
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
 
-  type ButtonLink = {
-    href: string
-    Icon?: (() => JSX.Element) | null
-    text: string
+  const handleThemeChange = (theme: 'dark' | 'light') => {
+    setTheme(theme)
   }
-
-  const links: ButtonLink[] = [
-    {
-      href: 'https://podcasters.spotify.com/pod/show/devseniorscast',
-      Icon: null,
-      text: '🎙️ DevSenior Cast',
-    },
-    {
-      href: 'https://bit.ly/3nLnPQZ',
-      Icon: null,
-      text: 'CRUD com qualidade - Curso DevSoutinho',
-    },
-    {
-      href: 'https://github.com/rafa-thayto/lazy-thayto-vim',
-      Icon: null,
-      text: '❤️ Neovim Configs',
-    },
-    {
-      href: '/blog',
-      Icon: null,
-      text: 'Blog',
-    },
-    {
-      href: 'https://www.linkedin.com/in/thayto/',
-      Icon: LinkedIn,
-      text: 'LinkedIn',
-    },
-    {
-      href: 'https://www.youtube.com/@thayto_dev',
-      Icon: null,
-      text: 'Youtube',
-    },
-    {
-      href: 'https://github.com/rafa-thayto',
-      Icon: GitHub,
-      text: 'GitHub',
-    },
-    {
-      href: 'https://twitter.com/thayto_dev',
-      Icon: Twitter,
-      text: 'Twitter',
-    },
-    {
-      href: 'https://twitch.tv/thayto_dev',
-      Icon: null,
-      text: 'Twitch',
-    },
-    {
-      href: 'https://www.amazon.com.br/dp/8575226932?&_encoding=UTF8&tag=thayto-20&linkCode=ur2&linkId=a8887fab2c901ae25fb1855a72f0bc61&camp=1789&creative=9325',
-      Icon: null,
-      text: 'Estrutura de dados e algoritmos com JavaScript - Loiane',
-    },
-    {
-      href: 'https://dev.to/thayto/',
-      Icon: DevTo,
-      text: 'Dev.to',
-    },
-    {
-      href: 'https://www.tabnews.com.br/thayto',
-      Icon: TabNews,
-      text: 'TabNews',
-    },
-  ]
 
   return (
     <>
@@ -148,17 +156,17 @@ const LinksPage = () => {
                   })
                 }}
               >
-                {text}
                 {Icon && (
-                  <span className="ml-4">
-                    <Icon />
+                  <span className="mr-4">
+                    <Icon color={theme === 'dark' ? '#fff' : '#121212'} />
                   </span>
                 )}
+                {text}
               </Link>
             ))}
           </main>
         </div>
-        <Footer />
+        <Footer onThemeChange={handleThemeChange} />
       </div>
     </>
   )

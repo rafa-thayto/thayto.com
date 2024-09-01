@@ -1,4 +1,6 @@
-export const DevTo = () => (
+import { IconProps } from './types'
+
+export const DevTo = ({}: IconProps) => (
   <svg
     xmlns="https://www.w3.org/2000/svg"
     aria-label="dev.to"

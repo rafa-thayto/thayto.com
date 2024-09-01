@@ -49,7 +49,11 @@ const moonIcon = (
   </svg>
 )
 
-export const ThemeSwitcher = () => {
+type ThemeSwitcherProps = {
+  onThemeChange?: (theme: 'dark' | 'light') => void
+}
+
+export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
   return (
     <div className="flex bg-white justify-center dark:bg-gray-800 rounded-3xl p-1 shadow items-center">
       <button
@@ -64,6 +68,7 @@ export const ThemeSwitcher = () => {
           })
           document.documentElement.classList.add('dark')
           localStorage.setItem('theme', 'dark')
+          onThemeChange?.('dark')
         }}
         className="flex items-center h-full pr-2 dark:bg-indigo-500 rounded-3xl justify-center align-center p-2 w-24 transition"
       >
@@ -82,6 +87,7 @@ export const ThemeSwitcher = () => {
           })
           document.documentElement.classList.remove('dark')
           localStorage.setItem('theme', 'light')
+          onThemeChange?.('light')
         }}
         className="flex items-center h-full pr-2 bg-indigo-500 dark:bg-transparent rounded-3xl justify-center align-center p-2 w-24 transition"
       >

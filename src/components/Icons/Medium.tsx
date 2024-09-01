@@ -1,10 +1,12 @@
-export const Medium = () => (
+import { IconProps } from './types'
+
+export const Medium = ({ color }: IconProps) => (
   <svg
     stroke="currentColor"
     fill="currentColor"
     strokeWidth="0"
     viewBox="0 0 512 512"
-    style={{ color: '#121212' }}
+    style={{ color: color || '#121212' }}
     height="24px"
     width="24px"
     xmlns="https://www.w3.org/2000/svg"

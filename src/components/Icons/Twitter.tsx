@@ -1,10 +1,12 @@
-export const Twitter = () => (
+import { IconProps } from './types'
+
+export const Twitter = ({ color }: IconProps) => (
   <svg
     stroke="currentColor"
     fill="currentColor"
     strokeWidth="0"
     viewBox="0 0 30 30"
-    style={{ color: '#121212' }}
+    style={{ color: color || '#121212' }}
     height="24px"
     width="24px"
     xmlns="https://www.w3.org/2000/svg"
