@@ -23,11 +23,11 @@ First, you must have a Linux VPS (I'll use Ubuntu 22 in this tutorial).
 - Docker Compose
 - [Docker Rollout Plugin](https://github.com/Wowu/docker-rollout?tab=readme-ov-file#installation)
 
-### How to install Docker Rollout Plugin
+### Installing Docker Rollout Plugin
 
 It's very simple:
 
-```sh
+```bash
 # Create directory for Docker cli plugins
 mkdir -p ~/.docker/cli-plugins
 
@@ -42,7 +42,7 @@ chmod +x ~/.docker/cli-plugins/docker-rollout
 
 Run `docker rollout <name>` instead of `docker compose up -d <name>` to update a service without downtime.
 
-```sh
+```bash
 $ docker rollout -f docker-compose.yml <service-name>
 ```
 
@@ -128,3 +128,5 @@ jobs:
 
 I hope this tutorial helps you in some way,
 best regards Rafael Thayto.
+
+_Photo by <a href="https://unsplash.com/@hdbernd?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Bernd 📷 Dittrich</a> on <a href="https://unsplash.com/photos/a-group-of-trucks-parked-next-to-each-other-in-a-parking-lot-bUnsDLFRNWc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>_
