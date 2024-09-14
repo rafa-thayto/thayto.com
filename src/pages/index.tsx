@@ -41,7 +41,7 @@ const IndexPage = ({
         }}
       />
 
-      <main className="max-w-6xl mx-auto mt-6 shadow dark:shadow-black bg-slate-50 dark:bg-gray-800 py-6 px-4 sm:px-12">
+      <main className="max-w-6xl mx-auto mt-6 shadow dark:shadow-black bg-slate-50 dark:bg-gray-800 py-6 px-4 sm:px-24">
         <div className="flex mt-2 items-center justify-items-center justify-center flex-col sm:flex-row">
           <div className="relative w-52 h-52 ">
             <Image
@@ -77,10 +77,10 @@ const IndexPage = ({
           </h2>
           <ul>
             {p?.map(({ data: { publishedTime, title, href } }) => (
-              <li key={title} className="my-1 lg:max-w-md">
+              <li key={title} className="my-2 max-w">
                 <Link
                   href={href}
-                  className="text-base flex !text-balance gap-1 font-serif text-slate-800 dark:text-slate-200 underlined focus:outline-none whitespace-nowrap hover:text-gray-500 dark:hover:text-slate-500 focus:text-gray-500 dark:focus:text-slate-500"
+                  className="text-base flex !text-balance gap-1 font-serif text-slate-800 dark:text-slate-200 underlined focus:outline-none whitespace-nowrap hover:text-gray-400 dark:hover:text-slate-400 focus:text-gray-400 dark:focus:text-slate-400"
                   onClick={() => {
                     posthog.capture('blog-card-clicked', {
                       href,
