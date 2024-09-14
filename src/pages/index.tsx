@@ -1,10 +1,14 @@
-import { ArrowRightIcon } from '@heroicons/react/24/outline'
-import { IconsGroup, Layout } from '@/components'
+import { Layout } from '@/components'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
+import { Post, getPosts } from '@/utils/mdx'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
+import posthog from 'posthog-js'
 
-const IndexPage = () => {
+const IndexPage = ({
+  posts: p,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const description =
     'Rafael Thayto, Senior Software Engineer apaixonado por novas tecnologias, bem vindo ao meu blog <3!'
 
@@ -58,49 +62,65 @@ const IndexPage = () => {
           </div>
         </div>
 
-        <div className="mt-6">
+        <section className="mt-6">
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
-            Rafael Thayto é um desenvolvedor com mais de 5 anos de experiência,
+            Rafael Thayto é um desenvolvedor com mais de 6 anos de experiência,
             apaixonado por resolver problemas e aprender novas tecnologias e
             boas práticas de desenvolvimento. Atuei em diversos projetos, sempre
             me dedicando ao máximo para garantir a entrega de soluções
             eficientes e de alta qualidade.
           </p>
-          <p className="text-base font-serif text-slate-800 dark:text-slate-200 mt-2">
-            Ele gosta bastante de jogar, conhecer pessoas e lugares novos. Posso
-            ter certeza que se conversar com ele, em poucos minutos já terão
-            criado uma conexão.
-          </p>
-        </div>
-
-        <p className="mt-8 text-slate-800 dark:text-slate-200">
-          Não repara na bagunça que tá esse site pq eu ainda tô construindo blz?
-        </p>
-        <p className="font-mono font-semibold text-slate-800 dark:text-slate-200">
-          Vem dar uma olhada no blog que já tenho alguns posts pra você dar uma
-          conferida! ;)
-        </p>
-
-        <div className="w-36 mt-4">
-          <Link
-            href="/blog"
-            className="flex justify-center items-center  cursor-pointer border rounded-full font-medium text-slate-900 border-slate-900 hover:bg-indigo-300 dark:hover:bg-indigo-500 bg-slate-50 dark:bg-slate-100 py-2 mb-4 transition"
-          >
-            <>
-              Blog <ArrowRightIcon className="ml-2 h-4 w-4" />
-            </>
-          </Link>
-        </div>
-
-        <h2 className="text-lg text-slate-900 dark:text-white font-bold mt-10">
-          Alguns links úteis
-        </h2>
-        <div className="flex mt-4">
-          <IconsGroup />
-        </div>
+        </section>
+        <section className="flex justify-center my-6 text-base font-serif text-slate-800 dark:text-slate-200 flex-col">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+            Posts
+          </h2>
+          <ul>
+            {p?.map(({ data: { publishedTime, title, href } }) => (
+              <li key={title} className="my-1 lg:max-w-md">
+                <Link
+                  href={href}
+                  className="text-base flex !text-balance gap-1 font-serif text-slate-800 dark:text-slate-200 underlined focus:outline-none whitespace-nowrap hover:text-gray-500 dark:hover:text-slate-500 focus:text-gray-500 dark:focus:text-slate-500"
+                  onClick={() => {
+                    posthog.capture('blog-card-clicked', {
+                      href,
+                      title,
+                    })
+                    window.umami.track('blog-card-clicked', {
+                      href,
+                      title,
+                    })
+                  }}
+                >
+                  <span>
+                    <time dateTime={publishedTime.toString()}>
+                      {new Intl.DateTimeFormat('pt-BR', {
+                        dateStyle: 'short',
+                      }).format(new Date(publishedTime))}
+                    </time>
+                  </span>
+                  <span>|</span>
+                  <span className="">{title}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
     </Layout>
   )
+}
+
+export const getStaticProps: GetStaticProps<{
+  posts: Post[]
+}> = async () => {
+  const posts = getPosts()
+
+  return {
+    props: {
+      posts: posts,
+    },
+  }
 }
 
 export default IndexPage

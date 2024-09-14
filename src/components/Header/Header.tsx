@@ -2,16 +2,16 @@ import { Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { nanoid } from 'nanoid'
 import Link from 'next/link'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useState } from 'react'
 import ReactConfetti from 'react-confetti'
+import { useWindowSize } from 'react-use'
 import { ThemeSwitcher } from '../theme-switcher/theme-switcher'
 
 export const Header = () => {
   const navbarId = nanoid()
   const menuId = nanoid()
 
-  const confettiWidth = useRef(0)
-  const confettiHeight = useRef(0)
+  const { width, height } = useWindowSize()
   const [showConfetti, setShowConfetti] = useState(false)
 
   const navigation = [
@@ -27,24 +27,12 @@ export const Header = () => {
     // { name: 'About', href: '/about' },
   ]
 
-  useEffect(() => {
-    function handleResize() {
-      confettiWidth.current = window.screen.width
-      confettiHeight.current = window.screen.height
-    }
-
-    window.addEventListener('resize', handleResize)
-    handleResize()
-
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
   return (
     <>
       {showConfetti && (
         <ReactConfetti
-          width={confettiWidth.current}
-          height={confettiHeight.current}
+          width={width - 16}
+          height={height - 16}
           recycle={false}
           numberOfPieces={800}
           tweenDuration={15000}

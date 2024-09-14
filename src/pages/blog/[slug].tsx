@@ -65,7 +65,7 @@ const PostPage = ({
       }}
     />
 
-    <div className="mx-auto max-w-5xl">
+    <section className="mx-auto overflow-auto max-w-5xl">
       <div className="p-10">
         <Link
           href="/blog"
@@ -124,7 +124,7 @@ const PostPage = ({
         </main>
       </article>
 
-      <div className="grid md:grid-cols-2 lg:-mx-24 mt-6">
+      <section className="grid md:grid-cols-2 lg:-mx-24 mt-6">
         {prevPost && (
           <Link
             href={`/blog/${prevPost.slug}`}
@@ -173,7 +173,7 @@ const PostPage = ({
             <ArrowRightIcon className="h-6 w-6 text-indigo-500 mt-auto mx-auto md:ml-0" />
           </Link>
         )}
-      </div>
+      </section>
 
       <section id="comments" className="px-4 sm:px-12 border-t mt-6 pt-4">
         <h2 className="text-2xl text-slate-900 dark:text-white font-bold">
@@ -183,7 +183,7 @@ const PostPage = ({
           In progress... 🧱
         </p>
       </section>
-    </div>
+    </section>
   </Layout>
 )
 
