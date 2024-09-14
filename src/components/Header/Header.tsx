@@ -24,7 +24,7 @@ export const Header = () => {
     },
     { name: 'Home', href: '/' },
     { name: 'Blog', href: '/blog' },
-    { name: 'About', href: '/about' },
+    // { name: 'About', href: '/about' },
   ]
 
   useEffect(() => {
