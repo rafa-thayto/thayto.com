@@ -133,7 +133,7 @@ export const BlogCard = ({
         ))}
       </div>
 
-      <div className="px-6 py-4 flex">
+      <div className="px-6 py-4 hidden">
         <div className="flex">
           {hasLike && (
             <HeartIconSolid
