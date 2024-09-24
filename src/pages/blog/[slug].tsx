@@ -124,7 +124,7 @@ const PostPage = ({
         </main>
       </article>
 
-      <section className="grid md:grid-cols-2 lg:-mx-24 mt-6">
+      <footer className="grid md:grid-cols-2 mt-6 gap-4">
         {prevPost && (
           <Link
             href={`/blog/${prevPost.slug}`}
@@ -173,7 +173,7 @@ const PostPage = ({
             <ArrowRightIcon className="h-6 w-6 text-indigo-500 mt-auto mx-auto md:ml-0" />
           </Link>
         )}
-      </section>
+      </footer>
 
       <section id="comments" className="px-4 sm:px-12 border-t mt-6 pt-4">
         <h2 className="text-2xl text-slate-900 dark:text-white font-bold">
