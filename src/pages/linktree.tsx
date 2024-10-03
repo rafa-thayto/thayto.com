@@ -24,7 +24,7 @@ const links: ButtonLink[] = [
   {
     href: 'https://hotm.art/hnWXd89A',
     Icon: null,
-    text: 'Formação TS <- conteúdo infinite sobre TS'
+    text: 'Formação TS <- conteúdo infinito sobre TS'
   },
   {
     href: 'https://bit.ly/3nLnPQZ',
