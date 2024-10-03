@@ -22,6 +22,11 @@ const links: ButtonLink[] = [
     text: '🎙️ DevSenior Cast',
   },
   {
+    href: 'https://hotm.art/hnWXd89A',
+    Icon: null,
+    text: 'Formação TS <- conteúdo infinite sobre TS'
+  },
+  {
     href: 'https://bit.ly/3nLnPQZ',
     Icon: null,
     text: 'CRUD com qualidade - Curso DevSoutinho',
