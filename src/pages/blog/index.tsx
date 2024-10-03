@@ -3,6 +3,7 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { NextSeo } from 'next-seo'
 import { getPosts, Post } from '@/utils/mdx'
 import { useSearchParams } from 'next/navigation'
+import { generateRssFeed } from '@/utils/generate-rss-feed'
 
 const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const searchParams = useSearchParams()
@@ -90,6 +91,7 @@ const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
 export const getStaticProps: GetStaticProps<{
   posts: Post[]
 }> = async () => {
+  await generateRssFeed()
   const posts = getPosts()
 
   return {

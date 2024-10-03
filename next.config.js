@@ -20,14 +20,6 @@ const nextConfig = {
   swcMinify: true,
   reactStrictMode: true,
 
-  async rewrites() {
-    return [
-      {
-        source: '/rss.xml',
-        destination: '/api/rss',
-      },
-    ]
-  },
   async redirects() {
     return [
       {

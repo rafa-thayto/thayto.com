@@ -1,12 +1,12 @@
 import { getPosts } from '@/utils/mdx'
-import { NextApiRequest, NextApiResponse } from 'next'
 import RSS from 'rss'
+import fs from 'fs'
 
-export default async function handler(_: NextApiRequest, res: NextApiResponse) {
+export const generateRssFeed = async () => {
   const site_url =
-    process.env.NODE_ENV === 'production'
-      ? 'https://thayto.com'
-      : 'http://localhost:3000'
+    process.env.LOCAL === 'true'
+      ? 'http://localhost:3000'
+      : 'https://thayto.com'
 
   const feed = new RSS({
     title: 'Rafael Thayto, Blog and Thoughts',
@@ -24,14 +24,12 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
     feed.item({
       title: post.data.title,
       description: post.data.description,
-      url: `https://thayto.com/${post.data.href}`,
+      url: `${site_url}/${post.data.href}`,
       date: post.data.publishedTime,
       categories: post.data.tags,
       author: 'Rafael Thayto',
     })
   })
 
-  res.setHeader('Content-Type', 'text/xml')
-  res.write(feed.xml())
-  res.end()
+  fs.writeFileSync('./public/rss.xml', feed.xml({ indent: true }))
 }
