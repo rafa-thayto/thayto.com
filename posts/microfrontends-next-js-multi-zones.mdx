@@ -1,0 +1,376 @@
+---
+title: 'Micro Frontends com Next.js Multi Zones'
+publishedTime: '2024-10-01T16:09:33Z'
+modifiedTime: '2024-10-03T16:09:33Z'
+description: 'Quando estamos desenvolvendo uma aplicação Web e ela acaba escalando, geralmente precisamos de um time. Quando essa aplicação escala mais ainda, precisamos de mais times trabalhando na mesma aplicação.'
+image:
+  {
+    src: 'microfrontends-next-js-multi-zones.jpg',
+    placeholder: 'microfrontends-next-js-multi-zones-small.jpg',
+    type: 'image/jpeg',
+  }
+tags: ['microfrontends', 'nextjs', 'tutorial', 'react']
+href: '/blog/microfrontends-next-js-multi-zones'
+reactionsLength: 0
+commentsLength: 0
+---
+
+## Introdução
+
+Quando estamos desenvolvendo uma aplicação Web e ela acaba escalando, geralmente precisamos de um time. Quando essa aplicação escala mais ainda, precisamos de mais times trabalhando na mesma aplicação.
+
+Por que estou falando isso?
+
+Porque geralmente quando temos muitas pessoas alterando o mesmo projeto, podemos ter diversos problemas. Sejam eles muitos _Pull Requests_, diferenças de escopos, regras de negócio distintas, conflitos de _merge_ e até mesmo divergências de ideias.
+
+Quando isso acontece o que geralmente pensamos é em separar um pedaço dele em outro projeto e criar o famoso Micro Frontend que vai agilizar nossas entregas e garantir que o projeto evolua de maneira mais rápida e independente de outros escopos.
+
+O que facilita e muito o desenvolvimento!
+
+Com o isso o time do _Next.js_ criou uma feature avançada que chama [**Multi Zones**](https://nextjs.org/docs/advanced-features/multi-zones), com ela a gente consegue criar diversos Micro Frontends de forma muito rápida e simples utilizando _**Next.js**_
+
+## Pré-requisitos
+
+Antes de continuar a ler esse artigo, eu presumo que você tenha uma noção básica / familiaridade com **_Next.js_**
+
+## O que vamos fazer
+
+Até o final desse artigo vamos fazer 2 apps com Next.js, combinar eles usando a feature de **Multi Zones**. Vou fazer também uma parte 2 mostrando como deployar as 2 aplicações na Vercel.
+
+## Criando a pasta do projeto
+
+Abre seu terminal/cmd e manda o seguinte comando:
+
+```bash
+mkdir nextjs-multi-zones-post
+cd nextjs-multi-zones-post
+```
+
+Logo em seguida abram essa mesma pasta no editor preferido de vocês! (nessa época era o VSCode 💩, hoje em dia é o Neovim/VIM ❤️)
+
+## Criando os projetos
+
+Após ter entrado na pasta que vai centralizar nossos projetos, chegou a hora de criá-los!
+
+### Primeira aplicação - Home
+
+Abre seu terminal aí e escreve o seguinte comando para criarmos o primeiro projeto que vai ser nossa **HOME**:
+
+```bash
+npx create-next-app --ts home
+cd home
+```
+
+Depois de criar a home, vamos alterar a porta em que o projeto vai rodar pra facilitar a nossa vida e termos um padrão até o final do post
+
+Abra o arquivo `package.json` que está dentro da sua home e altere o script de dev de:
+
+```json
+...
+"scripts": {
+    "dev": "next dev",
+    ...
+  },
+...
+```
+
+para:
+
+```json
+...
+"scripts": {
+    "dev": "next dev -p 4444",
+    ...
+  },
+...
+```
+
+Abra seu terminal na mesma pasta e rode o seguinte comando pra executar a aplicação:
+
+```
+npm run dev
+```
+
+### Segunda aplicação - Blog
+
+Abra outro terminal e rode o seguinte comando para criarmos o nosso segundo projeto que vai ser nosso **BLOG**:
+
+```bash
+npx create-next-app --ts blog
+cd blog
+```
+
+Vamos seguir o mesmo procedimento que fizemos para home agora com o blog
+
+Abra o arquivo `package.json` que está dentro do seu blog e altere o script de dev de:
+
+```json
+...
+"scripts": {
+    "dev": "next dev",
+    ...
+  },
+...
+```
+
+para:
+
+```json
+...
+"scripts": {
+    "dev": "next dev -p 7777",
+    ...
+  },
+...
+```
+
+Abra seu terminal na mesma pasta e rode o seguinte comando pra executar a aplicação:
+
+```
+npm run dev
+```
+
+Pronto, agora já temos as 2 aplicações rodando e o resultado tem que ser algo parecido com isso:
+
+![Resultado esperado](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/iemso2388vls7qftr0b9.png)
+
+**Home (Aplicação 1)** rodando na porta **http://localhost:4444** e o **Blog (Aplicação 2)** rodando na porta **http://localhost:7777**
+
+## Configurando a Home (Aplicação 1)
+
+O primeiro projeto que vamos desenvolver e configurar vai ser Home que além de ser o projeto base também vai ser nossa Home. É nele onde vamos configurar as URLs que vamos fazer o [rewrite](https://nextjs.org/docs/api-reference/next.config.js/rewrites) para que o Micro Frontend e as Multi Zones funcionem.
+
+Abram o arquivo `next.config.js` e adicionem as seguintes linhas de código:
+
+```js
+const { BLOG_URL } = process.env
+
+const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        destination: `/:path*`,
+      },
+      {
+        source: '/blog',
+        destination: `${BLOG_URL}/blog`,
+      },
+      {
+        source: '/blog/:path*',
+        destination: `${BLOG_URL}/blog/:path*`,
+      },
+    ]
+  },
+}
+```
+
+Na parte de `rewrites` é basicamente uma reescrita mesmo, vamos reescrever as rotas `/blog` e tudo que vier depois, como por exemplo `/blog/posts/hello-world`. Para saber mais sobre rewrites é só acessar a documentação oficial do **Next.js**.
+
+E vocês podem perceber que também adicionamos uma constante usando uma desestruturação no objeto `process.env` para podermos pegara `URL` do blog via variáveis de ambiente.
+Agora bora criar o arquivo `.env` na raiz do nosso projeto da `home` como mostra no exemplo abaixo.
+
+![Onde vai ficar localizado o arquivo .env](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/e4ky9svj4jt4txy51zh8.png)
+
+É nele onde vamos colocar o `BLOG_URL` apontando para o `http://localhost:7777` que é onde está rodando nosso projeto do blog.
+`.env`
+
+```txt
+BLOG_URL=http://localhost:7777
+```
+
+Agora dentro do nosso projeto da home vamos transformar o `index.tsx` nisso daqui:
+
+```tsx
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
+import styles from '../styles/Home.module.css'
+
+const Home: NextPage = () => {
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>Next.js Blog With Multi Zones</title>
+        <meta name="description" content="Generated by create next app" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main className={styles.main}>
+        <h1 className={styles.title}>
+          Welcome to <Link href="/">Home!</Link> :D
+        </h1>
+
+        <div className={styles.grid}>
+          <a href="/blog" className={styles.card}>
+            <h2>Go Blog &rarr;</h2>
+            <p>Click here and go home on our other Next.js app :D</p>
+          </a>
+
+          <Link href="/about" passHref>
+            <a href="/about" className={styles.card}>
+              <h2>About us &rarr;</h2>
+              <p>Click here and go to About Us page!</p>
+            </a>
+          </Link>
+
+          <a href="/blog/posts/hello-hello" className={styles.card}>
+            <h2>Go to Hello post &rarr;</h2>
+            <p>Click here and go to the Hello Hello post</p>
+          </a>
+        </div>
+      </main>
+
+      <footer className={styles.footer}>
+        <a
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Powered by{' '}
+          <span className={styles.logo}>
+            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+          </span>
+        </a>
+      </footer>
+    </div>
+  )
+}
+
+export default Home
+```
+
+Basicamente adicionamos 3 links, sendo 2 deles para páginas do nosso blog (ainda não construído) e 1 link para o redirecionamento para uma página interna nossa que é a _About Us_.
+
+![Home page](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5w3xa558sm1z0c5qmdf5.png)
+
+Agora vamos criar o arquivo `about.tsx` dentro de `home/pages/about.tsx`:
+
+![Local onde vai ficar o nosso arquivo about.tsx](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7701xk00103lwhr83k8t.png)
+`about.tsx`
+
+```tsx
+import type { NextPage } from 'next'
+import Link from 'next/link'
+
+const About: NextPage = () => {
+  return (
+    <div>
+      <p>About us :O</p>
+      <hr />
+      <div>
+        <Link href="/">
+          <a>Go home</a>
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+export default About
+```
+
+Aqui criamos uma página sobre nós bem simples que só tem um texto e um link que nos faz voltar para a home.
+
+E assim finalizamos a parte da **Home**. Agora bora pro Blog!
+
+## Configurando o Blog (Aplicação 2)
+
+Agora vamos configurar o blog. No blog vai ser um pouco mais simples, basicamente vamos abrir o arquivo `next.config.js` e adicionar a propriedade `basePath` dentro do `nextConfig`, ele vai dizer para o next que a _URL_ base dele vai começar no endereço que escolhermos, que nesse caso vai ser `/blog`
+`next.config.js`
+
+```js
+const nextConfig = {
+  basePath: '/blog',
+}
+
+module.exports = nextConfig
+```
+
+> Lembrando que toda vez que alteramos o arquivo **next.config.js** ou adicionamos algo no **.env** precisamos parar o servidor e inicia-lo novamente 😁
+
+Agora dentro do nosso projeto da blog vamos transformar o `index.tsx` nisso daqui:
+
+```tsx
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
+import styles from '../styles/Home.module.css'
+
+const Blog: NextPage = () => {
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>Next.js Blog With Multi Zones</title>
+        <meta name="description" content="Generated by create next app" />
+        <link rel="icon" href="/blog/favicon.ico" />
+      </Head>
+
+      <main className={styles.main}>
+        <h1 className={styles.title}>
+          Welcome to <Link href="/">Blog!</Link>
+        </h1>
+
+        <div className={styles.grid}>
+          <a href="/" className={styles.card}>
+            <h2>Go Home &rarr;</h2>
+            <p>Click here and go home on our other Next.js app :D</p>
+          </a>
+
+          <Link href="/posts/it-works" passHref>
+            <a href="/blog/posts/it-works" className={styles.card}>
+              <h2>Go to It Works post &rarr;</h2>
+              <p>Click here and go to the It Works post</p>
+            </a>
+          </Link>
+
+          <Link href="/posts/hello-hello" passHref>
+            <a href="/blog/posts/hello-hello" className={styles.card}>
+              <h2>Go to Hello post &rarr;</h2>
+              <p>Click here and go to the Hello Hello post</p>
+            </a>
+          </Link>
+        </div>
+      </main>
+
+      <footer className={styles.footer}>
+        <a
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Powered by{' '}
+          <span className={styles.logo}>
+            <Image
+              src="/blog/vercel.svg"
+              alt="Vercel Logo"
+              width={72}
+              height={16}
+            />
+          </span>
+        </a>
+      </footer>
+    </div>
+  )
+}
+
+export default Blog
+```
+
+Na raiz do nosso blog temos 1 link que leva para nossa **Home** e 2 links que nos levam a posts no nosso blog
+
+![Blog page](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/buxvf0bmqx9e3mnj4erj.png)
+
+Na imagem acima vocês já conseguem ver a mágica acontecendo, se vocês olharem para o URL vão perceber que estamos rodando no **http://localhost:4444/blog**, mas por quê isso acontece?
+
+Quando configuramos o `basePath` dentro do `next.config.js` do projeto **Blog**, dizemos para o next que o `index.tsx` e todos os outros arquivos vão ser acessados sempre a partir do nosso `basePath` que nesse caso é `/blog`.
+
+Também devemos nos lembrar que no `next.config.js` do nosso projeto **Home** configuramos que sempre que estivermos em **http://localhost:4444** e acessarmos o `/blog` ou qualquer coisa depois de blog, estaremos fazendo um rewrite da rota e estaremos apontando para o nosso **Blog** via **Home**.
+
+> Ou seja: http://localhost:4444/blog vai apontar para http://localhost:7777/blog
+
+O mais incrível de tudo isso é que conseguimos acessar a nossa outra aplicação (blog) dentro da nossa aplicação (home) **sem alterar a URL** 🤯, não é impressionante?
+
+_Cover Image: Photo by <a href="https://unsplash.com/@anritikhon?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Andrey Tikhonovskiy</a> on <a href="https://unsplash.com/photos/water-droplets-on-green-leaf-oKbW1q6mXM4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>_
