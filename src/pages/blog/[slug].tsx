@@ -169,12 +169,12 @@ const PostPage = ({
       </footer>
 
       <section id="comments" className="px-4 sm:px-12 border-t mt-6 pt-4">
-        <h2 className="text-2xl text-slate-900 dark:text-white font-bold">
-          Comentários
-        </h2>
-        <p className="uppercase text-slate-700 dark:text-slate-400 mt-4">
-          In progress... 🧱
-        </p>
+        {/* <h2 className="text-2xl text-slate-900 dark:text-white font-bold"> */}
+        {/*   Comentários */}
+        {/* </h2> */}
+        {/* <p className="uppercase text-slate-700 dark:text-slate-400 mt-4"> */}
+        {/*   In progress... 🧱 */}
+        {/* </p> */}
       </section>
     </section>
   </Layout>

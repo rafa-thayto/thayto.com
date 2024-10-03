@@ -43,7 +43,7 @@ const IndexPage = ({
 
       <main className="max-w-6xl mx-auto mt-6 shadow dark:shadow-black bg-slate-50 dark:bg-gray-800 py-6 px-4 sm:px-24">
         <div className="flex mt-2 items-center justify-items-center justify-center flex-col sm:flex-row">
-          <div className="relative w-52 h-52 ">
+          <div className="relative w-40 h-40 ">
             <Image
               src="/static/images/profile.jpg"
               alt="Thayto's profile picture"
@@ -62,13 +62,25 @@ const IndexPage = ({
           </div>
         </div>
 
-        <section className="mt-6">
+        <section className="mt-6 flex flex-col gap-1">
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
-            Rafael Thayto é um desenvolvedor com mais de 6 anos de experiência,
-            apaixonado por resolver problemas e aprender novas tecnologias e
-            boas práticas de desenvolvimento. Atuei em diversos projetos, sempre
-            me dedicando ao máximo para garantir a entrega de soluções
-            eficientes e de alta qualidade.
+            Oi, sou o Rafael Thayto, prazer! :)
+          </p>
+          <p className="text-base font-serif text-slate-800 dark:text-slate-200">
+            Atualmente tenho mais de {new Date().getFullYear() - 2018} anos de
+            experiência como desenvolvedor, e desde o inicio da minha carreira,
+            sempre trabalhei com sistemas distribuídos, microsserviços,
+            microfrontends e observabilidade.
+          </p>
+          <p className="text-base font-serif text-slate-800 dark:text-slate-200">
+            Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns
+            pensamentos (tanto em inglês quanto em português).{' '}
+          </p>
+          <p className="text-base font-serif text-slate-800 dark:text-slate-200">
+            Prometo implementar i18n em breve.
+          </p>
+          <p className="text-base font-serif text-slate-800 dark:text-slate-200 mt-2">
+            I use VIM btw. ❤️
           </p>
         </section>
         <section className="flex justify-center my-6 text-base font-serif text-slate-800 dark:text-slate-200 flex-col">
@@ -82,7 +94,7 @@ const IndexPage = ({
                   href={href}
                   className="text-base flex !text-balance gap-1 font-serif text-slate-800 dark:text-slate-200 underlined focus:outline-none whitespace-nowrap hover:text-gray-400 dark:hover:text-slate-400 focus:text-gray-400 dark:focus:text-slate-400"
                   onClick={() => {
-                    posthog.capture('blog-card-clicked', {
+                    posthog.capture('blog-card-clicked-home', {
                       href,
                       title,
                     })
