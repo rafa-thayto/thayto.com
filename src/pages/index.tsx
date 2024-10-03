@@ -86,10 +86,6 @@ const IndexPage = ({
                       href,
                       title,
                     })
-                    window.umami.track('blog-card-clicked', {
-                      href,
-                      title,
-                    })
                   }}
                 >
                   <span>

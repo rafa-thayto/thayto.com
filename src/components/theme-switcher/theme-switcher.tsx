@@ -63,9 +63,6 @@ export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
           posthog.capture('switch-theme', {
             from: 'dark-to-light',
           })
-          window.umami.track('switch-theme', {
-            from: 'dark-to-light',
-          })
           document.documentElement.classList.add('dark')
           localStorage.setItem('theme', 'dark')
           onThemeChange?.('dark')
@@ -80,9 +77,6 @@ export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
         aria-label="Use Light Mode"
         onClick={() => {
           posthog.capture('switch-theme', {
-            from: 'light-to-dark',
-          })
-          window.umami.track('switch-theme', {
             from: 'light-to-dark',
           })
           document.documentElement.classList.remove('dark')

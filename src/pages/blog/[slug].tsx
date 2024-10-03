@@ -73,9 +73,6 @@ const PostPage = ({
             posthog.capture('blog-post-back-btn', {
               title: prevPost.title,
             })
-            window.umami.track('blog-post-back-btn', {
-              title: prevPost.title,
-            })
           }}
           className="flex justify-start"
         >
@@ -106,7 +103,11 @@ const PostPage = ({
                 className="object-cover max-h-96"
                 width={1000}
                 height={420}
-                blurDataURL={rgbDataURL(131, 72, 250)}
+                blurDataURL={
+                  image.placeholder
+                    ? `/static/images/${image.placeholder}`
+                    : image.base64
+                }
                 placeholder="blur"
                 style={{ height: 'auto', width: '100%' }}
                 sizes="100vw"
@@ -134,10 +135,6 @@ const PostPage = ({
                 href: `/blog/${prevPost.slug}`,
                 title: prevPost.title,
               })
-              window.umami.track('change-post-btn', {
-                href: `/blog/${prevPost.slug}`,
-                title: prevPost.title,
-              })
             }}
           >
             <p className="uppercase text-gray-500 dark:text-white mb-4">
@@ -155,10 +152,6 @@ const PostPage = ({
             className="py-8 px-10 text-center md:text-left md:first:rounded-t-lg last:rounded-b-lg first:rounded-l-lg md:last:rounded-bl-none md:last:rounded-r-lg backdrop-blur-lg bg-slate-50  bg-opacity-100 dark:bg-opacity-10 hover:bg-opacity-30 dark:hover:bg-opacity-20 transition border border-gray-800 border-opacity-10 border-t-0 first:border-t first:rounded-t-lg md:border-t border-b-0 last:border-b flex flex-col"
             onClick={() => {
               posthog.capture('change-post-btn', {
-                href: `/blog/${nextPost.slug}`,
-                title: nextPost.title,
-              })
-              window.umami.track('change-post-btn', {
                 href: `/blog/${nextPost.slug}`,
                 title: nextPost.title,
               })

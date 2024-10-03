@@ -103,27 +103,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
         `,
       }}
     />
-    {/* <Script */}
-    {/*   id="simplytics-cloud-local" */}
-    {/*   strategy="afterInteractive" */}
-    {/*   src="http://localhost:3000/script.js" */}
-    {/*   data-website-id="54d51e9d-0bdb-4f58-9444-8d6439c59ddc" */}
-    {/* /> */}
 
-    <Script
-      id="umami-analytics"
-      strategy="afterInteractive"
-      src="https://us.umami.is/script.js"
-      data-website-id="c21117b1-6b93-4d4e-8ad8-fdc209cfddba"
-      data-domains="thayto.com"
-    />
-
-    {/* <Script */}
-    {/*   id="simplytics-cloud" */}
-    {/*   strategy="afterInteractive" */}
-    {/*   src="https://app.simplytics.cloud/script.js" */}
-    {/*   data-website-id="54d51e9d-0bdb-4f58-9444-8d6439c59ddc" */}
-    {/* /> */}
     <Script
       id="gtag-base"
       strategy="afterInteractive"

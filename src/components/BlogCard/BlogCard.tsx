@@ -73,10 +73,6 @@ export const BlogCard = ({
             href,
             title,
           })
-          window.umami.track('blog-card-clicked', {
-            href,
-            title,
-          })
         }}
       >
         {image && (
