@@ -63,6 +63,12 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
         href="/favicon-16x16.png"
       />
       <link rel="manifest" href="/site.webmanifest" />
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title="RSS Feed"
+        href="/rss.xml"
+      />
     </Head>
     <Script
       id="microsoft-clarity"

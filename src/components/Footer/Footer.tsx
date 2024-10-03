@@ -30,6 +30,10 @@ export const Footer = ({
         name: 'Linktree',
       },
       {
+        href: '/rss.xml',
+        name: 'RSS Feed',
+      },
+      {
         href: '/sitemap.xml',
         name: 'Sitemap.xml',
       },
