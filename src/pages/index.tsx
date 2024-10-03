@@ -68,9 +68,11 @@ const IndexPage = ({
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
             Atualmente tenho mais de {new Date().getFullYear() - 2018} anos de
-            experiência como desenvolvedor, e desde o inicio da minha carreira,
-            sempre trabalhei com sistemas distribuídos, microsserviços,
-            microfrontends e observabilidade.
+            experiência como desenvolvedor. Desde o inicio da minha carreira lá
+            em 2018 (quando comecei à atuar profissionalmente) sempre trabalhei
+            com sistemas distribuídos, microsserviços, microfrontends e
+            observabilidade. Já trabalhei em grandes empresas com milhões de
+            usuarios ativos, empresas no Brasil, EUA e Suiça.
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
             Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns
