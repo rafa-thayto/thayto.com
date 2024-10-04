@@ -91,7 +91,7 @@ pensamentos (tanto em inglês quanto em português).`
             Prometo implementar i18n em breve.
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-slate-200 mt-2">
-            I use VIM btw. ❤️
+            I use VIM btw (since 2022). ❤️
           </p>
         </section>
         <section className="flex justify-center my-6 text-base font-serif text-slate-800 dark:text-slate-200 flex-col">
