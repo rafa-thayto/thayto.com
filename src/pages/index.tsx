@@ -5,6 +5,7 @@ import { Post, getPosts } from '@/utils/mdx'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 import posthog from 'posthog-js'
+import Head from 'next/head'
 
 const IndexPage = ({
   posts: p,
@@ -12,8 +13,61 @@ const IndexPage = ({
   const description =
     'Rafael Thayto, Senior Software Engineer apaixonado por novas tecnologias, bem vindo ao meu blog <3!'
 
+  const blogPostingStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': 'https://thayto.com',
+    url: 'https://thayto.com',
+    name: 'Rafael Thayto - Home',
+    description: description,
+    inLanguage: 'pt-BR',
+    author: {
+      '@type': 'Person',
+      name: 'Rafael Thayto',
+      url: 'https://thayto.com',
+      jobTitle: 'Senior Software Engineer',
+      description:
+        'Senior Software Engineer apaixonado por novas tecnologias, com experiência em sistemas distribuídos, microsserviços e observabilidade.',
+    },
+    image: {
+      '@type': 'ImageObject',
+      url: 'https://thayto.com/static/images/profile.jpg',
+      width: 460,
+      height: 460,
+      caption: 'Rafael Thayto Profile Picture',
+    },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://thayto.com',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Blog',
+          item: 'https://thayto.com/blog',
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: 'LinkTree',
+          item: 'https://thayto.com/linktree',
+        },
+      ],
+    },
+  }
+
   return (
     <Layout>
+      <Head>
+        <script type="application/ld+json">
+          {JSON.stringify(blogPostingStructuredData)}
+        </script>
+      </Head>
       <NextSeo
         title="Rafael Thayto - Home"
         description={description}

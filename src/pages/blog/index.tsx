@@ -4,6 +4,8 @@ import { NextSeo } from 'next-seo'
 import { getPosts, Post } from '@/utils/mdx'
 import { useSearchParams } from 'next/navigation'
 import { generateRssFeed } from '@/utils/generate-rss-feed'
+import { SITE_URL } from '@/utils/constants'
+import Head from 'next/head'
 
 const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const searchParams = useSearchParams()
@@ -15,8 +17,58 @@ const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const description =
     'Aqui você encontra vários artigos sobre tecnologia e carreira.'
 
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'Rafael Thayto - Blog',
+    url: 'https://thayto.com/blog',
+    description:
+      'Aqui você encontra vários artigos sobre tecnologia e carreira.',
+    publisher: {
+      '@type': 'Person',
+      name: 'Rafael Thayto',
+      url: 'https://thayto.com',
+      image: {
+        '@type': 'ImageObject',
+        url: 'https://thayto.com/static/images/profile.jpg',
+        width: 460,
+        height: 460,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': 'https://thayto.com/blog',
+    },
+    blogPost: posts.map(({ data }) => ({
+      '@type': 'BlogPosting',
+      headline: data.title,
+      description: data.description,
+      image: `${SITE_URL}/static/images/${data.image.src}`,
+      datePublished: data.publishedTime,
+      dateModified: data.modifiedTime,
+      author: {
+        '@type': 'Person',
+        name: 'Rafael Thayto',
+        jobTitle: 'Senior Software Engineer',
+        url: `${SITE_URL}/static/images/profile.jpg`,
+      },
+      publisher: {
+        '@type': 'Person',
+        name: 'Rafael Thayto',
+        jobTitle: 'Senior Software Engineer',
+        url: `${SITE_URL}/static/images/profile.jpg`,
+      },
+      url: `${SITE_URL}${data.href}`,
+    })),
+  }
+
   return (
     <Layout>
+      <Head>
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Head>
       <NextSeo
         title="Rafael Thayto - Blog"
         description={description}
