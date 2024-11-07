@@ -6,12 +6,21 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 import posthog from 'posthog-js'
 import Head from 'next/head'
+import { getYearsOfProfessionalExperience } from '@/constants'
 
 const IndexPage = ({
   posts: p,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const description =
-    'Rafael Thayto, Senior Software Engineer apaixonado por novas tecnologias, bem vindo ao meu blog <3!'
+  const description = `Oi, sou o Rafael Thayto, prazer! :)
+
+Atualmente tenho mais de ${getYearsOfProfessionalExperience()} anos de experiência
+como desenvolvedor. Desde o inicio da minha carreira lá em 2018 (quando comecei à
+atuar profissionalmente) sempre trabalhei com sistemas distribuídos, microsserviços,
+microfrontends e observabilidade. Já trabalhei em grandes empresas com milhões de usuarios ativos,
+empresas no Brasil, EUA e Suiça.
+
+Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns
+pensamentos (tanto em inglês quanto em português).`
 
   const blogPostingStructuredData = {
     '@context': 'https://schema.org',
@@ -26,8 +35,7 @@ const IndexPage = ({
       name: 'Rafael Thayto',
       url: 'https://thayto.com',
       jobTitle: 'Senior Software Engineer',
-      description:
-        'Senior Software Engineer apaixonado por novas tecnologias, com experiência em sistemas distribuídos, microsserviços e observabilidade.',
+      description: description,
     },
     image: {
       '@type': 'ImageObject',
@@ -121,22 +129,22 @@ const IndexPage = ({
             Oi, sou o Rafael Thayto, prazer! :)
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
-            Atualmente tenho mais de {new Date().getFullYear() - 2018} anos de
-            experiência como desenvolvedor. Desde o inicio da minha carreira lá
-            em 2018 (quando comecei à atuar profissionalmente) sempre trabalhei
-            com sistemas distribuídos, microsserviços, microfrontends e
-            observabilidade. Já trabalhei em grandes empresas com milhões de
+            Atualmente tenho mais de {getYearsOfProfessionalExperience()} anos
+            de experiência como desenvolvedor. Desde o inicio da minha carreira
+            lá em 2018 (quando comecei à atuar profissionalmente) sempre
+            trabalhei com sistemas distribuídos, microsserviços, microfrontends
+            e observabilidade. Já trabalhei em grandes empresas com milhões de
             usuarios ativos, empresas no Brasil, EUA e Suiça.
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
             Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns
-            pensamentos (tanto em inglês quanto em português).{' '}
+            pensamentos (tanto em inglês quanto em português).
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
             Prometo implementar i18n em breve.
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-slate-200 mt-2">
-            I use VIM btw. ❤️
+            I use VIM btw (since 2022). ❤️
           </p>
         </section>
         <section className="flex justify-center my-6 text-base font-serif text-slate-800 dark:text-slate-200 flex-col">

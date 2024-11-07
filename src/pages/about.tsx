@@ -1,8 +1,9 @@
 import { Layout } from '@/components'
+import { getYearsOfProfessionalExperience } from '@/constants'
 import { NextSeo } from 'next-seo'
 
 const AboutPage = () => {
-  const description = `Desenvolvedor com mais de 5 anos de experiência, apaixonado por resolver problemas e aprender novas tecnologias e boas práticas de desenvolvimento. Atuei em diversos projetos, sempre me dedicando ao máximo para garantir a entrega de soluções eficientes e de alta qualidade.
+  const description = `Desenvolvedor com mais de ${getYearsOfProfessionalExperience()} anos de experiência, apaixonado por resolver problemas e aprender novas tecnologias e boas práticas de desenvolvimento. Atuei em diversos projetos, sempre me dedicando ao máximo para garantir a entrega de soluções eficientes e de alta qualidade.
 
   Ele gosta bastante de jogar, conhecer pessoas e lugares novos. Posso ter certeza que se conversar com ele, em poucos minutos já terão criado um conexão.`
   return (
@@ -41,11 +42,12 @@ const AboutPage = () => {
 
         <div className="mt-6">
           <p className="text-base font-serif text-slate-800 dark:text-slate-200">
-            Rafael Thayto é um desenvolvedor com mais de 5 anos de experiência,
-            apaixonado por resolver problemas e aprender novas tecnologias e
-            boas práticas de desenvolvimento. Atuei em diversos projetos, sempre
-            me dedicando ao máximo para garantir a entrega de soluções
-            eficientes e de alta qualidade.
+            Rafael Thayto é um desenvolvedor com mais de{' '}
+            {getYearsOfProfessionalExperience()} anos de experiência, apaixonado
+            por resolver problemas e aprender novas tecnologias e boas práticas
+            de desenvolvimento. Atuei em diversos projetos, sempre me dedicando
+            ao máximo para garantir a entrega de soluções eficientes e de alta
+            qualidade.
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-slate-200 mt-2">
             Ele gosta bastante de jogar, conhecer pessoas e lugares novos. Posso
