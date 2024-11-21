@@ -17,9 +17,9 @@ type ButtonLink = {
 
 const links: ButtonLink[] = [
   {
-    href: 'https://podcasters.spotify.com/pod/show/devseniorscast',
+    href: 'https://thayto.substack.com/',
     Icon: null,
-    text: '🎙️ DevSenior Cast',
+    text: 'Newsletter - First Time Founder',
   },
   {
     href: 'https://hotm.art/hnWXd89A',
@@ -30,6 +30,11 @@ const links: ButtonLink[] = [
     href: 'https://bit.ly/3nLnPQZ',
     Icon: null,
     text: 'CRUD com qualidade - Curso DevSoutinho',
+  },
+  {
+    href: 'https://podcasters.spotify.com/pod/show/devseniorscast',
+    Icon: null,
+    text: '🎙️ DevSenior Cast',
   },
   {
     href: 'https://github.com/rafa-thayto/lazy-thayto-vim',
@@ -57,6 +62,11 @@ const links: ButtonLink[] = [
     text: 'GitHub',
   },
   {
+    href: 'https://twitter.com/thayto_dev',
+    Icon: Twitter,
+    text: 'Twitter',
+  },
+  {
     href: 'https://bsky.app/profile/thayto.dev',
     Icon: Bsky,
     text: 'Bluesky',
@@ -80,11 +90,6 @@ const links: ButtonLink[] = [
     href: 'https://www.tabnews.com.br/thayto',
     Icon: TabNews,
     text: 'TabNews',
-  },
-  {
-    href: 'https://twitter.com/thayto_dev',
-    Icon: Twitter,
-    text: 'Twitter',
   },
 ]
 
