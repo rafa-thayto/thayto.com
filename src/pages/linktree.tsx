@@ -22,6 +22,11 @@ const links: ButtonLink[] = [
     text: 'Newsletter - First Time Founder',
   },
   {
+    href: 'https://discord.gg/JXxC4xTdDU',
+    Icon: null,
+    text: 'Discord - Tutorandus Community',
+  },
+  {
     href: 'https://hotm.art/hnWXd89A',
     Icon: null,
     text: 'Formação TS <- conteúdo infinito sobre TS',
