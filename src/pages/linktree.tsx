@@ -67,7 +67,12 @@ const links: ButtonLink[] = [
     text: 'GitHub',
   },
   {
-    href: 'https://twitter.com/thayto_dev',
+    href: 'https://www.instagram.com/thayto_dev/?utm_source=thayto.com',
+    Icon: null,
+    text: 'Instagram',
+  },
+  {
+    href: 'https://x.com/thayto_dev',
     Icon: Twitter,
     text: 'Twitter',
   },
