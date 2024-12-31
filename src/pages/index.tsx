@@ -87,14 +87,11 @@ pensamentos (tanto em inglês quanto em português).`
           description,
           images: [
             {
-              url: 'https://thayto.com/static/images/profile.jpg',
-              width: 460,
-              height: 460,
-              alt: 'Rafael Thayto Profile Picture',
-              type: 'image/jpeg',
+              url: 'https://thayto.com/static/images/seo-card-home.png',
+              type: 'image/png',
             },
           ],
-          site_name: 'Thayto',
+          site_name: 'Thayto.com',
         }}
         twitter={{
           cardType: 'summary_large_image',
