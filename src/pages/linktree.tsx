@@ -142,7 +142,7 @@ const LinksPage = () => {
       />
       <div className="mx-0 pt-4 bg-slate-50 dark:bg-gray-900">
         <div className="px-8">
-          <header className="mb-8 mx-auto">
+          <header className="mb-6 mx-auto">
             <div className="relative w-44 h-44 mb-4 mx-auto">
               <Image
                 src="/static/images/profile.jpg"
@@ -155,6 +155,9 @@ const LinksPage = () => {
             <h1 className="text-2xl text-slate-900 dark:text-white font-bold text-center">
               Rafael Thayto Tani
             </h1>
+            <p className="text-md text-slate-900 dark:text-white text-center">
+              Senior Software Engineer 🇺🇸
+            </p>
           </header>
           <main className="lg:mx-72 xl:mx-96 mb-10">
             {links.map(({ Icon, href, text }) => (
