@@ -32,6 +32,11 @@ const links: ButtonLink[] = [
     text: 'Formação TS <- conteúdo infinito sobre TS',
   },
   {
+    href: 'https://higlobe.com?grsf=rafael-xnn88r',
+    Icon: null,
+    text: 'Higlobe - USD 20$ pra você e pra mim',
+  },
+  {
     href: 'https://bit.ly/3nLnPQZ',
     Icon: null,
     text: 'CRUD com qualidade - Curso DevSoutinho',
