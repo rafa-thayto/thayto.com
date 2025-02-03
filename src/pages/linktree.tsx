@@ -4,6 +4,7 @@ import { Twitch } from '@/components/Icons/Twitch'
 import { IconProps } from '@/components/Icons/types'
 import { YouTube } from '@/components/Icons/YouTube'
 import { NextSeo } from 'next-seo'
+import { Instagram } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import posthog from 'posthog-js'
@@ -73,7 +74,7 @@ const links: ButtonLink[] = [
   },
   {
     href: 'https://www.instagram.com/thayto_dev/?utm_source=thayto.com',
-    Icon: null,
+    Icon: Instagram as any,
     text: 'Instagram',
   },
   {
