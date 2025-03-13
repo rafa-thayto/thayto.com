@@ -18,24 +18,9 @@ type ButtonLink = {
 
 const links: ButtonLink[] = [
   {
-    href: 'https://thayto.substack.com/',
-    Icon: null,
-    text: 'Newsletter - First Time Founder',
-  },
-  {
-    href: 'https://discord.gg/JXxC4xTdDU',
-    Icon: null,
-    text: 'Discord - Tutorandus Community',
-  },
-  {
     href: 'https://hotm.art/hnWXd89A',
     Icon: null,
     text: 'Formação TS <- conteúdo infinito sobre TS',
-  },
-  {
-    href: 'https://higlobe.com?grsf=rafael-xnn88r',
-    Icon: null,
-    text: 'Higlobe - USD 20$ pra você e pra mim',
   },
   {
     href: 'https://bit.ly/3nLnPQZ',
@@ -43,14 +28,24 @@ const links: ButtonLink[] = [
     text: 'CRUD com qualidade - Curso DevSoutinho',
   },
   {
-    href: 'https://podcasters.spotify.com/pod/show/devseniorscast',
+    href: 'https://discord.gg/JXxC4xTdDU',
     Icon: null,
-    text: '🎙️ DevSenior Cast',
+    text: 'Discord - Tutorandus Community',
+  },
+  {
+    href: 'https://higlobe.com?grsf=rafael-xnn88r',
+    Icon: null,
+    text: 'Higlobe - USD 20$ pra você e pra mim',
   },
   {
     href: 'https://github.com/rafa-thayto/lazy-thayto-vim',
     Icon: null,
     text: '❤️ Neovim Configs',
+  },
+  {
+    href: 'https://thayto.substack.com/',
+    Icon: null,
+    text: 'Newsletter - First Time Founder',
   },
   {
     href: '/blog',
@@ -66,6 +61,11 @@ const links: ButtonLink[] = [
     href: 'https://www.youtube.com/@thayto_dev',
     Icon: YouTube,
     text: 'Youtube',
+  },
+  {
+    href: 'https://podcasters.spotify.com/pod/show/devseniorscast',
+    Icon: null,
+    text: '🎙️ DevSenior Cast',
   },
   {
     href: 'https://github.com/rafa-thayto',
