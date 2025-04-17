@@ -45,6 +45,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
         name="google-site-verification"
         content={GOOGLE_SITE_VERIFICATION}
       />
+      <meta name="google-adsense-account" content="ca-pub-8276321032154686" />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
