@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import posthog from 'posthog-js'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 interface BlogCardProps {
   id: string
@@ -23,6 +23,7 @@ interface BlogCardProps {
   href: string
   reactionsLength: number
   commentsLength: number
+  priority?: boolean
 }
 
 export const BlogCard = ({
@@ -35,11 +36,10 @@ export const BlogCard = ({
   image,
   reactionsLength,
   commentsLength,
+  priority = false,
 }: BlogCardProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const cardImageId = `card-image-${id}`
-  const cardImageElementRef = useRef<HTMLDivElement>(null)
 
   const [hasLike, setHasLike] = useState(false)
 
@@ -57,15 +57,8 @@ export const BlogCard = ({
     setHasLike((oldState) => !oldState)
   }, [])
 
-  const handleImageOnLoad = useCallback(() => {
-    const div = cardImageElementRef.current
-    if (div) {
-      div.className = `${div?.className} loaded not-blur`
-    }
-  }, [])
-
   return (
-    <div className="rounded-lg hover:bg-slate-100 dark:hover:bg-gray-700 overflow-hidden shadow-lg transition border-gray-400 dark:border-black hover:border-indigo-300 hover:border border bg-slate-50 dark:bg-gray-800">
+    <div className="rounded-lg hover:bg-slate-100 dark:hover:bg-gray-700 overflow-hidden shadow-lg transition-all duration-200 border border-gray-200 dark:border-gray-700 hover:border-indigo-300 hover:shadow-xl bg-white dark:bg-gray-800">
       <Link
         href={href}
         onClick={() => {
@@ -76,53 +69,44 @@ export const BlogCard = ({
         }}
       >
         {image && (
-          <>
-            <div
-              id={cardImageId}
-              ref={cardImageElementRef}
-              className="h-64 relative blurred-img"
-              style={
-                (image?.blurDataURL && {
-                  backgroundImage: `url(${image?.blurDataURL})`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover',
-                }) ||
-                {}
-              }
-            >
-              <Image
-                className="object-cover"
-                fill
-                loading="lazy"
-                onLoad={handleImageOnLoad}
-                src={image.src}
-                alt={image.alt || title}
-              />
-            </div>
-          </>
+          <div className="relative aspect-video bg-gray-100 dark:bg-gray-700 overflow-hidden">
+            <Image
+              className="object-cover transition-transform duration-200 hover:scale-105"
+              fill
+              priority={priority}
+              loading={priority ? 'eager' : 'lazy'}
+              placeholder={image.blurDataURL ? 'blur' : 'empty'}
+              blurDataURL={image.blurDataURL}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              src={image.src}
+              alt={image.alt || title}
+            />
+          </div>
         )}
-        <div className="px-6 py-4">
-          <h2 className="font-bold text-slate-900 dark:text-white text-xl mb-2">
+        <div className="px-6 py-4 flex flex-col gap-2">
+          <h2 className="font-bold text-slate-900 dark:text-white text-xl mb-2 line-clamp-2">
             {title}
           </h2>
           <p className="text-gray-400 text-sm mb-2">
-            {new Intl.DateTimeFormat('pt-BR', {
-              dateStyle: 'long',
-            }).format(new Date(publishedTime))}
+            <time dateTime={new Date(publishedTime).toISOString()}>
+              {new Intl.DateTimeFormat('pt-BR', {
+                dateStyle: 'long',
+              }).format(new Date(publishedTime))}
+            </time>
           </p>
-          <p className="text-gray-700 dark:text-slate-300 text-base">
+          <p className="text-gray-700 dark:text-slate-300 text-sm line-clamp-3">
             {description}
           </p>
         </div>
       </Link>
 
-      <div className="px-6 pt-4 pb-2">
+      <div className="px-6 pt-4 flex flex-wrap gap-2 mb-4 text-blue-800 dark:text-blue-300">
         {tags?.map((tag) => (
           <Link
             key={`tag-${tag}-${id}`}
             href={pathname + '?' + createQueryString('tag', tag)}
             rel="noopener nofollow"
-            className="inline-block bg-gray-200 dark:bg-slate-400 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-800 mr-2 mb-2"
+            className="inline-block bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 rounded-full px-3 py-1 text-xs font-normal hover:bg-gray-300 dark:hover:bg-slate-300 transition-colors duration-200"
           >
             #{tag}
           </Link>

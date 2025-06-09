@@ -62,12 +62,25 @@ const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
     })),
   }
 
+  const priorityPosts = posts.slice(0, 3)
+
   return (
     <Layout>
       <Head>
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
+        {priorityPosts.map((post, index) =>
+          post.data.image ? (
+            <link
+              key={`preload-${post.data.id}`}
+              rel="preload"
+              as="image"
+              href={`/static/images/${post.data.image.src}`}
+              crossOrigin="anonymous"
+            />
+          ) : null,
+        )}
       </Head>
       <NextSeo
         title="Rafael Thayto - Blog"
@@ -93,19 +106,22 @@ const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
       />
 
       <main className="sm:px-2 mt-8">
-        <div className="px-4 sm:px-2">
+        <div className="px-4 sm:px-2 mb-8 max-w-3xl mx-auto flex flex-col gap-2">
           <h1 className="text-4xl text-slate-900 dark:text-white font-bold m-4 text-center">
             Blog
           </h1>
-          <h2 className="text-lg text-slate-900 dark:text-slate-400 mb-4 text-center">
+          <p className="text-base text-slate-900 dark:text-slate-400 mb-4 font-light text-center">
             É aqui onde você encontra tudo que gostaria de saber, o que sabe e
             até o que nem sabia que queria saber! :D
-          </h2>
+          </p>
         </div>
 
-        <div className="flex flex-wrap justify-center">
-          {posts?.map((post) => (
-            <article key={post.data.title} className="my-2 sm:m-2 lg:max-w-md ">
+        <div className="flex flex-wrap justify-center gap-4">
+          {posts?.map((post, index) => (
+            <article
+              key={post.data.title}
+              className="w-full sm:max-w-sm lg:max-w-md"
+            >
               <BlogCard
                 id={post.data.id}
                 title={post.data.title}
@@ -124,6 +140,7 @@ const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 href={post.data.href}
                 reactionsLength={post.data.reactionsLength}
                 commentsLength={post.data.commentsLength}
+                priority={index < 3}
               />
             </article>
           ))}
