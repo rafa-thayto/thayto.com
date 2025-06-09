@@ -1,8 +1,0 @@
-ignoredBuiltDependencies:
-  - '@tailwindcss/oxide'
-onlyBuiltDependencies:
-  - '@swc/core'
-  - core-js
-  - core-js-pure
-  - cypress
-  - sharp
