@@ -45,6 +45,26 @@ module.exports = {
           },
         },
       }),
+      keyframes: {
+        'background-gradient': {
+          '0%, 100%': {
+            transform: 'translate(var(--tx-1), var(--ty-1))',
+          },
+          '25%': {
+            transform: 'translate(var(--tx-2), var(--ty-2))',
+          },
+          '50%': {
+            transform: 'translate(var(--tx-3), var(--ty-3))',
+          },
+          '75%': {
+            transform: 'translate(var(--tx-4), var(--ty-4))',
+          },
+        },
+      },
+      animation: {
+        'background-gradient':
+          'background-gradient var(--animation-duration, 5s) infinite ease-in-out',
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],
