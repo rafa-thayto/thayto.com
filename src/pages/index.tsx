@@ -107,14 +107,19 @@ pensamentos (tanto em inglês quanto em português).`
 
       <main className="max-w-4xl mx-auto mt-6 bg-neutral-50 dark:bg-slate-800 py-6 px-4 sm:px-24">
         <div className="flex mt-2 items-center justify-items-center justify-start flex-col sm:flex-row">
-          <div className="relative w-20 h-20">
-            <Image
-              src="/static/images/profile.jpg"
-              alt="Thayto's profile picture"
-              fill
-              priority
-              className="rounded-full"
-            />
+          <div className="relative w-20 h-20 group cursor-pointer">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full opacity-0 group-hover:opacity-75 blur-sm group-hover:animate-spin transition-all duration-300"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-spin transition-all duration-300"></div>
+
+            <div className="relative w-full h-full bg-neutral-50 dark:bg-slate-800 rounded-full p-0.5">
+              <Image
+                src="/static/images/profile.jpg"
+                alt="Thayto's profile picture"
+                fill
+                priority
+                className="rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
           </div>
           <div className="sm:ml-6 mt-4 sm:mt-0 flex justify-center flex-col">
             <h1 className="text-2xl text-gray-900 dark:text-white font-bold">
