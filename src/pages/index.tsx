@@ -12,10 +12,39 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useState, useEffect, useRef } from 'react'
 
 const IndexPage = ({
   posts: p,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const [showAnimation, setShowAnimation] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const handleMouseEnter = () => {
+    setIsHovering(true)
+    timeoutRef.current = setTimeout(() => {
+      setShowAnimation(true)
+    }, 1000)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovering(false)
+    setShowAnimation(false)
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
   const description = `Oi, sou o Rafael Thayto, prazer! :)
 
 Atualmente tenho mais de ${getYearsOfProfessionalExperience()} anos de experiência
@@ -107,9 +136,25 @@ pensamentos (tanto em inglês quanto em português).`
 
       <main className="max-w-4xl mx-auto mt-6 bg-neutral-50 dark:bg-slate-800 py-6 px-4 sm:px-24">
         <div className="flex mt-2 items-center justify-items-center justify-start flex-col sm:flex-row">
-          <div className="relative w-20 h-20 group cursor-pointer">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full opacity-0 group-hover:opacity-75 blur-sm group-hover:animate-spin transition-all duration-300"></div>
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-spin transition-all duration-300"></div>
+          <div
+            className="relative w-20 h-20 cursor-pointer"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div
+              className={`absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full blur-sm transition-all duration-500 ${
+                showAnimation ? 'opacity-75 animate-spin' : 'opacity-0'
+              }`}
+            ></div>
+            <div
+              className={`absolute -inset-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full transition-all duration-500 ${
+                showAnimation ? 'opacity-100 animate-spin' : 'opacity-0'
+              }`}
+            ></div>
+
+            {isHovering && !showAnimation && (
+              <div className="absolute -inset-2 rounded-full !border-2 !border-blue-500 !animate-pulse !opacity-60"></div>
+            )}
 
             <div className="relative w-full h-full bg-neutral-50 dark:bg-slate-800 rounded-full p-0.5">
               <Image
@@ -117,7 +162,9 @@ pensamentos (tanto em inglês quanto em português).`
                 alt="Thayto's profile picture"
                 fill
                 priority
-                className="rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
+                className={`rounded-full object-cover transition-transform duration-300 ${
+                  isHovering ? 'scale-105' : 'scale-100'
+                }`}
               />
             </div>
           </div>
