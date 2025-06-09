@@ -1,5 +1,5 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
-import { Layout, CodeBlock, Pre } from '@/components'
+import { Layout, CodeBlock, Pre, MDXImage } from '@/components'
 import { POSTS_PATH } from '@/constants'
 import fs from 'fs'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
@@ -16,6 +16,8 @@ import { SITE_URL } from '@/utils/constants'
 const components = {
   pre: (props: any) => <Pre {...props} />,
   code: (props: any) => <CodeBlock {...props} />,
+  img: (props: any) => <MDXImage {...props} />,
+  Image: (props: any) => <MDXImage {...props} />,
 }
 
 const PostPage = ({
