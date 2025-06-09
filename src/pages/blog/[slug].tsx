@@ -1,5 +1,5 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
-import { Layout } from '@/components'
+import { Layout, CodeBlock, Pre } from '@/components'
 import { POSTS_PATH } from '@/constants'
 import fs from 'fs'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
@@ -12,6 +12,11 @@ import path from 'path'
 import { getMdxSerializedPost, getPreviousOrNextPostBySlug } from '@/utils/mdx'
 import { posthog } from 'posthog-js'
 import { SITE_URL } from '@/utils/constants'
+
+const components = {
+  pre: (props: any) => <Pre {...props} />,
+  code: (props: any) => <CodeBlock {...props} />,
+}
 
 const PostPage = ({
   frontMatter: { title, description, tags, publishedTime, modifiedTime, image },
@@ -95,118 +100,142 @@ const PostPage = ({
         }}
       />
 
-      <section className="mx-auto overflow-auto max-w-5xl">
-        <div className="p-10">
-          <Link
-            href="/blog"
-            onClick={() => {
-              posthog.capture('blog-post-back-btn', {
-                title: prevPost.title,
-              })
-            }}
-            className="flex justify-start"
-          >
-            <ArrowLeftIcon className="h-6 w-6 text-black dark:text-white" />
-            <span className="ml-2 font-medium text-black dark:text-white">
-              Voltar para overview
-            </span>
-          </Link>
-        </div>
-        <article className="leading-6 pb-12 shadow bg-slate-50 dark:bg-gray-800">
-          <header className="mb-4">
-            <div className="px-4 sm:px-12 py-10">
-              <h1 className="text-2xl text-slate-900 dark:text-white font-bold">
+      <div className="min-h-screen ">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <nav className="py-8">
+            <Link
+              href="/blog"
+              onClick={() => {
+                posthog.capture('blog-post-back-btn', {
+                  title: title,
+                })
+              }}
+              className="inline-flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 group"
+            >
+              <ArrowLeftIcon className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" />
+              Voltar para o blog
+            </Link>
+          </nav>
+
+          <article className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+            <header className="px-6 sm:px-8 lg:px-12 pt-8 sm:pt-12 lg:pt-16">
+              {tags && tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {tags.map((tag: string) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
                 {title}
               </h1>
-              <h2 className="text-base text-slate-600 dark:text-slate-400 font-semibold mt-2">
-                <time dateTime={publishedTime}>
+
+              <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-8 sm:mb-12">
+                <time dateTime={publishedTime} className="font-medium">
                   {new Intl.DateTimeFormat('pt-BR', {
                     dateStyle: 'long',
-                    timeStyle: 'long',
                   }).format(new Date(publishedTime))}
                 </time>
-              </h2>
-            </div>
+                <span className="mx-2">•</span>
+                <span>Rafael Thayto</span>
+              </div>
+            </header>
+
             {image && (
-              <div className="mb-4">
-                <Image
-                  className="object-cover max-h-96"
-                  width={1000}
-                  height={420}
-                  blurDataURL={
-                    image.placeholder
-                      ? `/static/images/${image.placeholder}`
-                      : image.base64
-                  }
-                  placeholder="blur"
-                  style={{ height: 'auto', width: '100%' }}
-                  sizes="100vw"
-                  src={`/static/images/${image.src}`}
-                  alt={image.alt || title}
-                />
+              <div className="px-6 sm:px-8 lg:px-12 mb-8 sm:mb-12">
+                <div className="relative aspect-video rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700">
+                  <Image
+                    className="object-cover"
+                    fill
+                    blurDataURL={
+                      image.placeholder
+                        ? `/static/images/${image.placeholder}`
+                        : image.base64
+                    }
+                    placeholder="blur"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                    src={`/static/images/${image.src}`}
+                    alt={image.alt || title}
+                    priority
+                  />
+                </div>
               </div>
             )}
-          </header>
 
-          <main className="px-4 sm:px-12">
-            <article className="prose dark:prose-invert max-w-4xl">
-              <MDXRemote {...mdxSource} />
-            </article>
-          </main>
-        </article>
+            <main className="px-6 sm:px-8 lg:px-12 pb-8 sm:pb-12 lg:pb-16">
+              <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-blue-500 prose-blockquote:bg-blue-50 dark:prose-blockquote:bg-gray-800 dark:prose-blockquote:border-l-blue-400">
+                <MDXRemote {...mdxSource} components={components} />
+              </div>
+            </main>
+          </article>
 
-        <footer className="grid md:grid-cols-2 mt-6 gap-4">
-          {prevPost && (
-            <Link
-              href={`/blog/${prevPost.slug}`}
-              className="py-8 px-10 text-center md:text-right first:rounded-t-lg md:first:rounded-tr-none md:first:rounded-l-lg last:rounded-r-lg first last:rounded-b-lg backdrop-blur-lg bg-slate-50 bg-opacity-100 dark:bg-opacity-10 hover:bg-opacity-30 dark:hover:bg-opacity-20 transition border border-gray-800 border-opacity-10 last:border-t md:border-r-0 md:last:border-r md:last:rounded-r-none flex flex-col"
-              onClick={() => {
-                posthog.capture('change-post-btn', {
-                  href: `/blog/${prevPost.slug}`,
-                  title: prevPost.title,
-                })
-              }}
-            >
-              <p className="uppercase text-gray-500 dark:text-white mb-4">
-                Anterior
-              </p>
-              <h4 className="text-2xl text-gray-700 dark:text-gray-200 mb-6">
-                {prevPost.title}
-              </h4>
-              <ArrowLeftIcon className="h-6 w-6 text-indigo-500 mx-auto md:mr-0 mt-auto" />
-            </Link>
+          {(prevPost || nextPost) && (
+            <nav className="mt-12 mb-16">
+              <div className="grid gap-6 md:grid-cols-2">
+                {prevPost && (
+                  <Link
+                    href={`/blog/${prevPost.slug}`}
+                    className="group relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
+                    onClick={() => {
+                      posthog.capture('change-post-btn', {
+                        href: `/blog/${prevPost.slug}`,
+                        title: prevPost.title,
+                      })
+                    }}
+                  >
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0">
+                        <ArrowLeftIcon className="h-5 w-5 text-blue-500 transition-transform duration-300 group-hover:-translate-x-1" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
+                          Artigo anterior
+                        </p>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                          {prevPost.title}
+                        </h3>
+                      </div>
+                    </div>
+                  </Link>
+                )}
+
+                {nextPost && (
+                  <Link
+                    href={`/blog/${nextPost.slug}`}
+                    className="group relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-200 dark:border-gray-700 md:text-right"
+                    onClick={() => {
+                      posthog.capture('change-post-btn', {
+                        href: `/blog/${nextPost.slug}`,
+                        title: nextPost.title,
+                      })
+                    }}
+                  >
+                    <div className="flex items-start space-x-4 md:flex-row-reverse md:space-x-reverse">
+                      <div className="flex-shrink-0">
+                        <ArrowRightIcon className="h-5 w-5 text-blue-500 transition-transform duration-300 group-hover:translate-x-1" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
+                          Próximo artigo
+                        </p>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                          {nextPost.title}
+                        </h3>
+                      </div>
+                    </div>
+                  </Link>
+                )}
+              </div>
+            </nav>
           )}
-          {nextPost && (
-            <Link
-              href={`/blog/${nextPost.slug}`}
-              className="py-8 px-10 text-center md:text-left md:first:rounded-t-lg last:rounded-b-lg first:rounded-l-lg md:last:rounded-bl-none md:last:rounded-r-lg backdrop-blur-lg bg-slate-50  bg-opacity-100 dark:bg-opacity-10 hover:bg-opacity-30 dark:hover:bg-opacity-20 transition border border-gray-800 border-opacity-10 border-t-0 first:border-t first:rounded-t-lg md:border-t border-b-0 last:border-b flex flex-col"
-              onClick={() => {
-                posthog.capture('change-post-btn', {
-                  href: `/blog/${nextPost.slug}`,
-                  title: nextPost.title,
-                })
-              }}
-            >
-              <p className="uppercase text-gray-500 dark:text-white mb-4">
-                Próximo
-              </p>
-              <h4 className="text-2xl text-gray-700 dark:text-gray-200 mb-6">
-                {nextPost.title}
-              </h4>
-              <ArrowRightIcon className="h-6 w-6 text-indigo-500 mt-auto mx-auto md:ml-0" />
-            </Link>
-          )}
-        </footer>
-
-        <section id="comments" className="px-4 sm:px-12 border-t mt-6 pt-4">
-          {/* <h2 className="text-2xl text-slate-900 dark:text-white font-bold"> */}
-          {/*   Comentários */}
-          {/* </h2> */}
-          {/* <p className="uppercase text-slate-700 dark:text-slate-400 mt-4"> */}
-          {/*   In progress... 🧱 */}
-          {/* </p> */}
-        </section>
-      </section>
+        </div>
+      </div>
     </Layout>
   )
 }

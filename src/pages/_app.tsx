@@ -1,3 +1,4 @@
+import { Lora, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
@@ -12,6 +13,20 @@ import { PostHogProvider } from 'posthog-js/react'
 import '@/styles/blog.css'
 import '@/styles/globals.css'
 import '@/styles/styles.css'
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-poppins',
+  display: 'swap',
+})
+
+const lora = Lora({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-lora',
+  display: 'swap',
+})
 
 if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
   // checks that we are client-side
@@ -119,7 +134,11 @@ const CustomApp = ({ Component, pageProps }: AppProps) => (
       }}
     />
     <PostHogProvider client={posthog}>
-      <Component {...pageProps} />
+      <div className={`${poppins.variable} ${lora.variable}`}>
+        <main className="font-sans">
+          <Component {...pageProps} />
+        </main>
+      </div>
     </PostHogProvider>
     <Analytics />
   </>

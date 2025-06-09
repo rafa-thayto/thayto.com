@@ -1,5 +1,6 @@
 export * from './BlogCard'
 export * from './ButtonLink'
+export * from './CodeBlock'
 export * from './CustomLink'
 export * from './Footer'
 export * from './Header'

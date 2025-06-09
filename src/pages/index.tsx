@@ -100,7 +100,7 @@ pensamentos (tanto em inglês quanto em português).`
         }}
       />
 
-      <main className="max-w-6xl mx-auto mt-6 shadow dark:shadow-black bg-slate-50 dark:bg-gray-800 py-6 px-4 sm:px-24">
+      <main className="max-w-6xl mx-auto mt-6 shadow rounded-xl dark:shadow-black bg-slate-50 dark:bg-gray-800 py-6 px-4 sm:px-24">
         <div className="flex mt-2 items-center justify-items-center justify-center flex-col sm:flex-row">
           <div className="relative w-40 h-40 ">
             <Image

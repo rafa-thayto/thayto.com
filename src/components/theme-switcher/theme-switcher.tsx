@@ -1,51 +1,41 @@
 import posthog from 'posthog-js'
+import { useEffect, useState } from 'react'
 
-const sunIcon = (
+const SunIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="25"
-    height="24"
+    width="18"
+    height="18"
     fill="none"
-    viewBox="0 0 25 24"
-    className="dark:opacity-50"
+    viewBox="0 0 24 24"
+    className="transition-all duration-300"
   >
-    <g
-      stroke="#fff"
+    <path
+      stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
-      clipPath="url(#clip0_192_823)"
-    >
-      <path d="M12.5 17a5 5 0 100-10 5 5 0 000 10zM12.5 1v2M12.5 21v2M4.72 4.22l1.42 1.42M18.86 18.36l1.42 1.42M1.5 12h2M21.5 12h2M4.72 19.78l1.42-1.42M18.86 5.64l1.42-1.42"></path>
-    </g>
-    <defs>
-      <clipPath id="clip0_192_823">
-        <path
-          className="fill-current text-white"
-          d="M0 0H24V24H0z"
-          transform="translate(.5)"
-        ></path>
-      </clipPath>
-    </defs>
+      d="M12 17a5 5 0 100-10 5 5 0 000 10zM12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+    />
   </svg>
 )
 
-const moonIcon = (
+const MoonIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="21"
-    height="20"
+    width="18"
+    height="18"
     fill="none"
-    viewBox="0 0 21 20"
+    viewBox="0 0 24 24"
+    className="transition-all duration-300"
   >
     <path
-      stroke="#fff"
+      stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
-      className="stroke-current text-gray-400 dark:text-white"
-      d="M19.5 10.79A9 9 0 119.71 1a7 7 0 009.79 9.79v0z"
-    ></path>
+      d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79v0z"
+    />
   </svg>
 )
 
@@ -54,39 +44,95 @@ type ThemeSwitcherProps = {
 }
 
 export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
-  return (
-    <div className="flex bg-white justify-center dark:bg-gray-800 rounded-3xl p-1 shadow items-center">
-      <button
-        type="button"
-        aria-label="Use Dark Mode"
-        onClick={() => {
-          posthog.capture('switch-theme', {
-            from: 'dark-to-light',
-          })
-          document.documentElement.classList.add('dark')
-          localStorage.setItem('theme', 'dark')
-          onThemeChange?.('dark')
-        }}
-        className="flex items-center h-full pr-2 dark:bg-indigo-500 rounded-3xl justify-center align-center p-2 w-24 transition"
-      >
-        {moonIcon}
-      </button>
+  const [isDark, setIsDark] = useState(false)
 
-      <button
-        type="button"
-        aria-label="Use Light Mode"
-        onClick={() => {
-          posthog.capture('switch-theme', {
-            from: 'light-to-dark',
-          })
-          document.documentElement.classList.remove('dark')
-          localStorage.setItem('theme', 'light')
-          onThemeChange?.('light')
-        }}
-        className="flex items-center h-full pr-2 bg-indigo-500 dark:bg-transparent rounded-3xl justify-center align-center p-2 w-24 transition"
+  const updateThemeState = () => {
+    const theme = localStorage.getItem('theme')
+    const systemPrefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)',
+    ).matches
+    const shouldBeDark = theme === 'dark' || (!theme && systemPrefersDark)
+
+    setIsDark(shouldBeDark)
+
+    if (shouldBeDark) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }
+
+  useEffect(() => {
+    updateThemeState()
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'theme') {
+        updateThemeState()
+      }
+    }
+
+    const handleThemeChange = () => {
+      updateThemeState()
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    window.addEventListener('themeChange', handleThemeChange)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      window.removeEventListener('themeChange', handleThemeChange)
+    }
+  }, [])
+
+  const toggleTheme = () => {
+    const newTheme = isDark ? 'light' : 'dark'
+
+    posthog.capture('switch-theme', {
+      from: isDark ? 'dark-to-light' : 'light-to-dark',
+    })
+
+    setIsDark(!isDark)
+
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+
+    localStorage.setItem('theme', newTheme)
+    onThemeChange?.(newTheme)
+
+    window.dispatchEvent(new Event('themeChange'))
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={toggleTheme}
+      className="group relative inline-flex h-8 w-14 items-center rounded-full bg-gray-200 dark:bg-gray-700 transition-all duration-300 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+    >
+      <div
+        className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out transform ${
+          isDark ? 'translate-x-7' : 'translate-x-1'
+        } group-hover:scale-110`}
       >
-        {sunIcon}
-      </button>
-    </div>
+        <div
+          className={`transition-all duration-300 ${
+            isDark ? 'text-blue-500' : 'text-orange-500'
+          }`}
+        >
+          {isDark ? <MoonIcon /> : <SunIcon />}
+        </div>
+      </div>
+
+      <div
+        className={`absolute inset-0 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-20 ${
+          isDark
+            ? 'bg-gradient-to-r from-blue-500 to-purple-500'
+            : 'bg-gradient-to-r from-orange-400 to-yellow-400'
+        }`}
+      />
+    </button>
   )
 }

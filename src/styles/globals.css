@@ -1,10 +1,10 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
+@config "../../tailwind.config.js";
+
 
 @custom-variant dark (&:is(.dark *));
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer components {
   .mx-10vw {
@@ -64,9 +64,11 @@
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 0.1;
   }
+
   100% {
     opacity: 0;
   }
@@ -94,12 +96,30 @@
   0% {
     filter: blur(20px);
   }
+
   50% {
     filter: blur(15px);
   }
+
   100% {
     filter: blur(0px);
   }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
 }
 
 @theme inline {
@@ -209,10 +229,180 @@
   --sidebar-ring: oklch(0.553 0.013 58.071);
 }
 
+/* Enhanced Prose Styling */
+.prose {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  scroll-margin-top: 5rem;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+}
+
+.prose h2 {
+  position: relative;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.dark .prose h2 {
+  border-bottom-color: #374151;
+}
+
+.prose p {
+  font-family: var(--font-poppins);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.prose blockquote {
+  position: relative;
+  font-style: italic;
+  border-left: 4px solid #3b82f6;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+.dark .prose blockquote {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  border-left-color: #60a5fa;
+  color: #d1d5db;
+}
+
+.prose blockquote p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.prose blockquote::before {
+  content: '"';
+  position: absolute;
+  top: -0.5rem;
+  left: 1rem;
+  font-size: 3rem;
+  color: #3b82f6;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.dark .prose blockquote::before {
+  color: #60a5fa;
+}
+
+.prose img {
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.prose img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.prose code:not(pre code) {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  color: #1f2937;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.875em;
+  border: 1px solid #d1d5db;
+}
+
+.dark .prose code:not(pre code) {
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  color: #f9fafb;
+  border-color: #4b5563;
+}
+
+.prose pre {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  border: 1px solid #374151;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.prose pre code {
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.prose ul>li::marker {
+  color: #3b82f6;
+}
+
+.prose ol>li::marker {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.dark .prose ul>li::marker,
+.dark .prose ol>li::marker {
+  color: #60a5fa;
+}
+
+.prose a {
+  position: relative;
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.prose a:hover {
+  color: #1d4ed8;
+}
+
+.dark .prose a {
+  color: #60a5fa;
+}
+
+.dark .prose a:hover {
+  color: #93c5fd;
+}
+
+.prose a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.prose a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.dark .prose a::after {
+  background: linear-gradient(90deg, #60a5fa, #93c5fd);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
