@@ -76,7 +76,7 @@ export const Footer = ({
       <div className="flex flex-col items-center mt-10">
         <ThemeSwitcher onThemeChange={onThemeChange} />
       </div>
-      <footer className="border-t border-gray-200 bg-slate-50 dark:bg-gray-900 dark:border-black mt-10">
+      <footer className="border-t border-gray-200 bg-slate-100 dark:bg-slate-900 dark:border-black mt-10">
         <div className="flex justify-end gap-20 mx-10vw">
           <div className="py-14">
             <h6 className="text-lg font-medium text-black dark:text-white">

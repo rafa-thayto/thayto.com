@@ -32,7 +32,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
   }, [])
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen overflow-x-hidden bg-slate-50 dark:bg-slate-800">
       <Header />
       {children}
       <Footer />

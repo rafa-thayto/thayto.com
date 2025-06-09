@@ -7,6 +7,11 @@ import Link from 'next/link'
 import posthog from 'posthog-js'
 import Head from 'next/head'
 import { getYearsOfProfessionalExperience } from '@/constants'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 const IndexPage = ({
   posts: p,
@@ -100,9 +105,9 @@ pensamentos (tanto em inglês quanto em português).`
         }}
       />
 
-      <main className="max-w-6xl mx-auto mt-6 shadow rounded-xl dark:shadow-black bg-slate-50 dark:bg-gray-800 py-6 px-4 sm:px-24">
-        <div className="flex mt-2 items-center justify-items-center justify-center flex-col sm:flex-row">
-          <div className="relative w-40 h-40 ">
+      <main className="max-w-4xl mx-auto mt-6 bg-neutral-50 dark:bg-slate-800 py-6 px-4 sm:px-24">
+        <div className="flex mt-2 items-center justify-items-center justify-start flex-col sm:flex-row">
+          <div className="relative w-20 h-20">
             <Image
               src="/static/images/profile.jpg"
               alt="Thayto's profile picture"
@@ -112,40 +117,43 @@ pensamentos (tanto em inglês quanto em português).`
             />
           </div>
           <div className="sm:ml-6 mt-4 sm:mt-0 flex justify-center flex-col">
-            <h1 className="text-2xl text-slate-900 dark:text-white font-bold">
+            <h1 className="text-2xl text-gray-900 dark:text-white font-bold">
               Rafael Thayto Tani
             </h1>
-            <h2 className="text-xl text-slate-900 dark:text-slate-400 font-light">
+            <h2 className="text-xl text-gray-500 dark:text-gray-300 font-light">
               Senior Software Engineer
             </h2>
           </div>
         </div>
 
-        <section className="mt-6 flex flex-col gap-1">
-          <p className="text-base font-serif text-slate-800 dark:text-slate-200">
-            Oi, sou o Rafael Thayto, prazer! :)
-          </p>
-          <p className="text-base font-serif text-slate-800 dark:text-slate-200">
+        <section className="text-sm font-normal font-sans mt-6 flex flex-col gap-4 text-gray-700 dark:text-gray-200">
+          <p>Oi, sou o Rafael Thayto, prazer! :)</p>
+          <p>
             Atualmente tenho mais de {getYearsOfProfessionalExperience()} anos
             de experiência como desenvolvedor. Desde o inicio da minha carreira
             lá em 2018 (quando comecei à atuar profissionalmente) sempre
             trabalhei com sistemas distribuídos, microsserviços, microfrontends
-            e observabilidade. Já trabalhei em grandes empresas com milhões de
-            usuarios ativos, empresas no Brasil, EUA e Suiça.
+            e observabilidade. Já trabalhei em{' '}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="underline cursor-help">grandes empresas</span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  Nike, Flash, Creditas, Safra Bank (NY, BR, Sarasin), Avanade
+                </p>
+              </TooltipContent>
+            </Tooltip>{' '}
+            com milhões de usuarios ativos, empresas no Brasil, EUA e Suiça.
           </p>
-          <p className="text-base font-serif text-slate-800 dark:text-slate-200">
+          <p>
             Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns
             pensamentos (tanto em inglês quanto em português).
           </p>
-          <p className="text-base font-serif text-slate-800 dark:text-slate-200">
-            Prometo implementar i18n em breve.
-          </p>
-          <p className="text-base font-serif text-slate-800 dark:text-slate-200 mt-2">
-            I use VIM btw (since 2022). ❤️
-          </p>
+          <p>I use VIM btw (since 2022). ❤️</p>
         </section>
-        <section className="flex justify-center my-6 text-base font-serif text-slate-800 dark:text-slate-200 flex-col">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+        <section className="flex justify-center my-6 text-base text-slate-800 dark:text-slate-200 flex-col">
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
             Posts
           </h2>
           <ul>
@@ -153,7 +161,7 @@ pensamentos (tanto em inglês quanto em português).`
               <li key={title} className="my-2 max-w">
                 <Link
                   href={href}
-                  className="text-base flex !text-balance gap-1 font-serif text-slate-800 dark:text-slate-200 underlined focus:outline-none whitespace-nowrap hover:text-gray-400 dark:hover:text-slate-400 focus:text-gray-400 dark:focus:text-slate-400"
+                  className="text-sm flex !text-balance font-light gap-1 text-gray-800 dark:text-gray-200 underlined focus:outline-none whitespace-nowrap hover:text-gray-400 dark:hover:text-gray-400 focus:text-gray-400 dark:focus:text-gray-400"
                   onClick={() => {
                     posthog.capture('blog-card-clicked-home', {
                       href,
