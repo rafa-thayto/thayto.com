@@ -67,8 +67,8 @@ export const Header = () => {
                 : 'max-w-6xl bg-white/60 dark:bg-black/40 border border-white/30 dark:border-white/15 shadow-lg shadow-black/5 dark:shadow-black/10 hover:bg-white/70 dark:hover:bg-black/50 hover:shadow-xl hover:shadow-black/10 dark:hover:shadow-black/25'
             }`}
             style={{
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              backdropFilter: 'blur(5px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(5px) saturate(180%)',
             }}
           >
             <div
