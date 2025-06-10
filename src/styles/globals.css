@@ -106,6 +106,79 @@
   animation: fade-in 0.3s ease-out forwards;
 }
 
+/* Liquid Glass Blob Animations */
+@keyframes liquidBlob1 {
+
+  0%,
+  100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+
+  25% {
+    transform: translate(30px, -50px) scale(1.1) rotate(90deg);
+    border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%;
+  }
+
+  50% {
+    transform: translate(-20px, 20px) scale(0.9) rotate(180deg);
+    border-radius: 70% 30% 40% 60% / 30% 60% 40% 70%;
+  }
+
+  75% {
+    transform: translate(-40px, -30px) scale(1.05) rotate(270deg);
+    border-radius: 30% 70% 60% 40% / 70% 40% 60% 30%;
+  }
+}
+
+@keyframes liquidBlob2 {
+
+  0%,
+  100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+    border-radius: 50% 50% 20% 80% / 70% 30% 50% 50%;
+  }
+
+  33% {
+    transform: translate(-25px, 40px) scale(1.2) rotate(120deg);
+    border-radius: 80% 20% 50% 50% / 50% 70% 30% 50%;
+  }
+
+  66% {
+    transform: translate(35px, -25px) scale(0.8) rotate(240deg);
+    border-radius: 20% 80% 50% 50% / 30% 50% 70% 50%;
+  }
+}
+
+@keyframes liquidBlob3 {
+
+  0%,
+  100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+    border-radius: 40% 60% 60% 40% / 50% 50% 50% 50%;
+  }
+
+  20% {
+    transform: translate(20px, 30px) scale(1.15) rotate(72deg);
+    border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%;
+  }
+
+  40% {
+    transform: translate(-30px, 10px) scale(0.85) rotate(144deg);
+    border-radius: 40% 60% 40% 60% / 40% 60% 40% 60%;
+  }
+
+  60% {
+    transform: translate(15px, -35px) scale(1.1) rotate(216deg);
+    border-radius: 60% 40% 60% 40% / 50% 50% 50% 50%;
+  }
+
+  80% {
+    transform: translate(-25px, -15px) scale(0.95) rotate(288deg);
+    border-radius: 50% 50% 50% 50% / 40% 60% 40% 60%;
+  }
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

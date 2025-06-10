@@ -14,6 +14,7 @@ export const Header = () => {
   const { width, height } = useWindowSize()
   const [showConfetti, setShowConfetti] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 })
 
   const navigation = [
     {
@@ -37,6 +38,25 @@ export const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Liquid glass mouse tracking
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const header = document.querySelector('.liquid-glass-container')
+      if (header) {
+        const rect = header.getBoundingClientRect()
+        const x = ((e.clientX - rect.left) / rect.width) * 100
+        const y = ((e.clientY - rect.top) / rect.height) * 100
+        setMousePosition({
+          x: Math.max(0, Math.min(100, x)),
+          y: Math.max(0, Math.min(100, y)),
+        })
+      }
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   return (
     <>
       {showConfetti && (
@@ -54,32 +74,123 @@ export const Header = () => {
       )}
       <Popover>
         <div
-          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+          className={`liquid-glass-container fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
             isScrolled
               ? 'py-2 px-4 sm:px-6 lg:px-8'
               : 'py-4 px-4 sm:px-6 lg:px-8'
           }`}
         >
           <div
-            className={`relative mx-auto backdrop-blur-md rounded-2xl transition-all duration-500 ease-out ${
-              isScrolled
-                ? 'max-w-5xl bg-white/75 dark:bg-black/60 border border-white/20 dark:border-white/10 shadow-xl shadow-black/5 dark:shadow-black/20'
-                : 'max-w-6xl bg-white/60 dark:bg-black/40 border border-white/30 dark:border-white/15 shadow-lg shadow-black/5 dark:shadow-black/10 hover:bg-white/70 dark:hover:bg-black/50 hover:shadow-xl hover:shadow-black/10 dark:hover:shadow-black/25'
+            className={`relative mx-auto rounded-3xl transition-all duration-700 ease-out overflow-hidden ${
+              isScrolled ? 'max-w-5xl' : 'max-w-6xl'
             }`}
-            style={{
-              backdropFilter: 'blur(5px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(5px) saturate(180%)',
-            }}
+            style={
+              {
+                backdropFilter: 'blur(30px) saturate(200%)',
+                WebkitBackdropFilter: 'blur(30px) saturate(200%)',
+                background: `
+                radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, 
+                  rgba(255, 255, 255, 0.25) 0%, 
+                  rgba(255, 255, 255, 0.1) 50%, 
+                  rgba(255, 255, 255, 0.05) 100%
+                )
+              `,
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                boxShadow: `
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.1)
+              `,
+                '--mouse-x': `${mousePosition.x}%`,
+                '--mouse-y': `${mousePosition.y}%`,
+              } as React.CSSProperties
+            }
           >
+            {/* Liquid Glass Background Blobs */}
+            <div className="absolute inset-0 overflow-hidden rounded-3xl">
+              {/* Primary flowing blob */}
+              <div
+                className="absolute w-96 h-96 rounded-full opacity-30"
+                style={{
+                  background: `
+                    radial-gradient(circle, 
+                      rgba(168, 85, 247, 0.4) 0%, 
+                      rgba(59, 130, 246, 0.3) 50%, 
+                      transparent 100%
+                    )
+                  `,
+                  transform: `translate(${-150 + mousePosition.x * 2}px, ${
+                    -150 + mousePosition.y * 1.5
+                  }px)`,
+                  transition: 'transform 0.8s cubic-bezier(0.23, 1, 0.320, 1)',
+                  animation: 'liquidBlob1 12s ease-in-out infinite',
+                  filter: 'blur(40px)',
+                }}
+              />
+
+              {/* Secondary flowing blob */}
+              <div
+                className="absolute w-80 h-80 rounded-full opacity-25"
+                style={{
+                  background: `
+                    radial-gradient(circle, 
+                      rgba(236, 72, 153, 0.4) 0%, 
+                      rgba(139, 69, 19, 0.3) 50%, 
+                      transparent 100%
+                    )
+                  `,
+                  transform: `translate(${100 - mousePosition.x * 1.5}px, ${
+                    -100 + mousePosition.y * 2
+                  }px)`,
+                  transition: 'transform 0.6s cubic-bezier(0.23, 1, 0.320, 1)',
+                  animation: 'liquidBlob2 15s ease-in-out infinite reverse',
+                  filter: 'blur(35px)',
+                  right: 0,
+                  top: 0,
+                }}
+              />
+
+              {/* Tertiary accent blob */}
+              <div
+                className="absolute w-64 h-64 rounded-full opacity-20"
+                style={{
+                  background: `
+                    radial-gradient(circle, 
+                      rgba(34, 197, 94, 0.4) 0%, 
+                      rgba(59, 130, 246, 0.3) 50%, 
+                      transparent 100%
+                    )
+                  `,
+                  transform: `translate(${mousePosition.x * 1.2}px, ${
+                    50 + mousePosition.y * 0.8
+                  }px)`,
+                  transition: 'transform 0.4s cubic-bezier(0.23, 1, 0.320, 1)',
+                  animation: 'liquidBlob3 18s ease-in-out infinite',
+                  filter: 'blur(30px)',
+                  bottom: 0,
+                  left: '50%',
+                  marginLeft: '-128px',
+                }}
+              />
+            </div>
+
+            {/* Glass Refraction Layer */}
             <div
-              className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-white/10 to-white/5 dark:from-white/10 dark:via-white/5 dark:to-transparent"
+              className="absolute inset-0 rounded-3xl"
               style={{
-                background: isScrolled
-                  ? 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.02) 100%)'
-                  : 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%)',
+                background: `
+                  linear-gradient(135deg, 
+                    rgba(255, 255, 255, 0.3) 0%, 
+                    transparent 50%, 
+                    rgba(255, 255, 255, 0.1) 100%
+                  )
+                `,
+                backdropFilter: 'blur(2px)',
+                WebkitBackdropFilter: 'blur(2px)',
               }}
             />
 
+            {/* Content Layer */}
             <div
               className={`relative flex items-center justify-between transition-all duration-500 ease-out ${
                 isScrolled ? 'px-4 py-2.5' : 'px-6 py-3.5'
