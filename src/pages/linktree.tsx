@@ -18,14 +18,9 @@ type ButtonLink = {
 
 const links: ButtonLink[] = [
   {
-    href: 'https://hotm.art/hnWXd89A',
+    href: 'https://hub.la/r/lista-espera',
     Icon: null,
-    text: 'Formação TS <- conteúdo infinito sobre TS',
-  },
-  {
-    href: 'https://bit.ly/3nLnPQZ',
-    Icon: null,
-    text: 'CRUD com qualidade - Curso DevSoutinho',
+    text: 'lista de espera | linkedin',
   },
   {
     href: 'https://discord.gg/JXxC4xTdDU',
@@ -91,6 +86,16 @@ const links: ButtonLink[] = [
     href: 'https://twitch.tv/thayto_dev',
     Icon: Twitch,
     text: 'Twitch',
+  },
+  {
+    href: 'https://hotm.art/hnWXd89A',
+    Icon: null,
+    text: 'Formação TS',
+  },
+  {
+    href: 'https://bit.ly/3nLnPQZ',
+    Icon: null,
+    text: 'CRUD com qualidade',
   },
   {
     href: 'https://www.amazon.com.br/dp/8575226932?&_encoding=UTF8&tag=thayto-20&linkCode=ur2&linkId=a8887fab2c901ae25fb1855a72f0bc61&camp=1789&creative=9325',
