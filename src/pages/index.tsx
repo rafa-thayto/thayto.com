@@ -14,12 +14,14 @@ import {
 } from '@/components/ui/tooltip'
 import { useState, useEffect, useRef } from 'react'
 import { ChevronRight } from 'lucide-react'
+import Confetti from 'react-confetti'
 
 const IndexPage = ({
   posts: p,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [showAnimation, setShowAnimation] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleMouseEnter = () => {
@@ -36,6 +38,10 @@ const IndexPage = ({
       clearTimeout(timeoutRef.current)
       timeoutRef.current = null
     }
+  }
+
+  const handlePhotoClick = () => {
+    setShowConfetti(true)
   }
 
   useEffect(() => {
@@ -141,6 +147,7 @@ pensamentos (tanto em inglês quanto em português).`
             className="relative w-20 h-20 cursor-pointer"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onClick={handlePhotoClick}
           >
             <div
               className={`absolute -inset-1 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 rounded-full blur-sm transition-all duration-500 ${
@@ -268,6 +275,26 @@ pensamentos (tanto em inglês quanto em português).`
           </div>
         </section>
       </main>
+      {showConfetti && (
+        <Confetti
+          width={typeof window !== 'undefined' ? window.innerWidth : 300}
+          height={typeof window !== 'undefined' ? window.innerHeight : 200}
+          recycle={false}
+          numberOfPieces={200}
+          gravity={0.15}
+          onConfettiComplete={() => {
+            setShowConfetti(false)
+          }}
+          colors={[
+            '#3B82F6',
+            '#60A5FA',
+            '#93C5FD',
+            '#DBEAFE',
+            '#1D4ED8',
+            '#2563EB',
+          ]}
+        />
+      )}
     </Layout>
   )
 }
