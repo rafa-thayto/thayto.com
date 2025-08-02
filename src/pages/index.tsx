@@ -28,6 +28,7 @@ const IndexPage = ({
     setIsHovering(true)
     timeoutRef.current = setTimeout(() => {
       setShowAnimation(true)
+      handlePhotoClick()
     }, 500)
   }
 
