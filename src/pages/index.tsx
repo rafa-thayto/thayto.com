@@ -13,6 +13,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useState, useEffect, useRef } from 'react'
+import { ChevronRight } from 'lucide-react'
 
 const IndexPage = ({
   posts: p,
@@ -204,36 +205,66 @@ pensamentos (tanto em inglês quanto em português).`
           </p>
           <p>I use VIM btw (since 2022). ❤️</p>
         </section>
-        <section className="flex justify-center my-6 text-base text-slate-800 dark:text-slate-200 flex-col">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
+        <section className="my-8 text-base text-slate-800 dark:text-slate-200">
+          <Link
+            href="/blog"
+            className="group flex items-center gap-2 text-lg font-normal text-slate-600 dark:text-slate-400 mb-6 hover:text-slate-800 dark:hover:text-slate-200 transition-colors duration-200"
+          >
             Posts
-          </h2>
-          <ul>
-            {p?.map(({ data: { publishedTime, title, href } }) => (
-              <li key={title} className="my-2 max-w">
-                <Link
-                  href={href}
-                  className="text-sm flex !text-balance font-light gap-1 text-gray-800 dark:text-gray-200 underlined focus:outline-none whitespace-nowrap hover:text-gray-400 dark:hover:text-gray-400 focus:text-gray-400 dark:focus:text-gray-400"
-                  onClick={() => {
-                    posthog.capture('blog-card-clicked-home', {
-                      href,
-                      title,
-                    })
-                  }}
-                >
-                  <span>
-                    <time dateTime={publishedTime.toString()}>
-                      {new Intl.DateTimeFormat('pt-BR', {
-                        dateStyle: 'short',
-                      }).format(new Date(publishedTime))}
-                    </time>
-                  </span>
-                  <span>|</span>
-                  <span className="">{title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+            <ChevronRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </Link>
+          <div className="space-y-1">
+            {(() => {
+              // Group posts by year
+              const postsByYear =
+                p?.reduce((acc, post) => {
+                  const year = new Date(post.data.publishedTime).getFullYear()
+                  if (!acc[year]) acc[year] = []
+                  acc[year].push(post)
+                  return acc
+                }, {} as Record<number, typeof p>) || {}
+
+              // Sort years in descending order
+              const sortedYears = Object.keys(postsByYear)
+                .map(Number)
+                .sort((a, b) => b - a)
+
+              return sortedYears.map((year) => (
+                <div key={year}>
+                  {postsByYear[year].map(
+                    ({ data: { publishedTime, title, href } }, index) => (
+                      <Link
+                        key={title}
+                        href={href}
+                        className="group flex items-center py-2 px-3 -mx-3 rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800/50"
+                        onClick={() => {
+                          posthog.capture('blog-card-clicked-home', {
+                            href,
+                            title,
+                          })
+                        }}
+                      >
+                        <div className="w-12 flex-shrink-0 text-sm text-gray-500 dark:text-gray-400">
+                          {index === 0 ? year : ''}
+                        </div>
+                        <div className="flex-1 text-sm text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-200">
+                          {title}
+                        </div>
+                        <div className="text-xs text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400 transition-colors duration-200">
+                          <time dateTime={publishedTime.toString()}>
+                            {new Intl.DateTimeFormat('pt-BR', {
+                              month: '2-digit',
+                              day: '2-digit',
+                            }).format(new Date(publishedTime))}
+                          </time>
+                        </div>
+                      </Link>
+                    ),
+                  )}
+                </div>
+              ))
+            })()}
+          </div>
         </section>
       </main>
     </Layout>

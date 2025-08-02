@@ -33,7 +33,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-50 dark:bg-slate-800">
-      <Header />
+      {/* <Header /> */}
       {children}
       <Footer />
     </div>

@@ -106,22 +106,9 @@ const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
       />
 
       <main className="sm:px-2 mt-8">
-        <div className="px-4 sm:px-2 mb-8 max-w-3xl mx-auto flex flex-col gap-2">
-          <h1 className="text-4xl text-slate-900 dark:text-white font-bold m-4 text-center">
-            Blog
-          </h1>
-          <p className="text-base text-slate-900 dark:text-slate-400 mb-4 font-light text-center">
-            É aqui onde você encontra tudo que gostaria de saber, o que sabe e
-            até o que nem sabia que queria saber! :D
-          </p>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="max-w-4xl mx-auto flex flex-col gap-4 px-4">
           {posts?.map((post, index) => (
-            <article
-              key={post.data.title}
-              className="w-full sm:max-w-sm lg:max-w-md"
-            >
+            <article key={post.data.title} className="w-full">
               <BlogCard
                 id={post.data.id}
                 title={post.data.title}

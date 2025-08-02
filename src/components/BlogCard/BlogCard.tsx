@@ -67,9 +67,10 @@ export const BlogCard = ({
             title,
           })
         }}
+        className="flex flex-col sm:flex-row"
       >
         {image && (
-          <div className="relative aspect-video bg-gray-100 dark:bg-gray-700 overflow-hidden">
+          <div className="relative w-full sm:w-48 h-48 sm:h-auto bg-gray-100 dark:bg-gray-700 overflow-hidden flex-shrink-0">
             <Image
               className="object-cover transition-transform duration-200 hover:scale-105"
               fill
@@ -77,41 +78,40 @@ export const BlogCard = ({
               loading={priority ? 'eager' : 'lazy'}
               placeholder={image.blurDataURL ? 'blur' : 'empty'}
               blurDataURL={image.blurDataURL}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 640px) 100vw, 192px"
               src={image.src}
               alt={image.alt || title}
             />
           </div>
         )}
-        <div className="px-6 py-4 flex flex-col gap-2">
-          <h2 className="font-bold text-slate-900 dark:text-white text-xl mb-2 line-clamp-2">
-            {title}
-          </h2>
-          <p className="text-gray-400 text-sm mb-2">
-            <time dateTime={new Date(publishedTime).toISOString()}>
-              {new Intl.DateTimeFormat('pt-BR', {
-                dateStyle: 'long',
-              }).format(new Date(publishedTime))}
-            </time>
-          </p>
-          <p className="text-gray-700 dark:text-slate-300 text-sm line-clamp-3">
+        <div className="px-6 py-4 flex flex-col gap-2 flex-grow">
+          <div className="flex items-start justify-between gap-4 mb-2">
+            <h2 className="font-bold text-slate-900 dark:text-white text-xl line-clamp-2 flex-grow">
+              {title}
+            </h2>
+            <p className="text-gray-400 text-xs flex-shrink-0 mt-1">
+              <time dateTime={new Date(publishedTime).toISOString()}>
+                {new Intl.DateTimeFormat('pt-BR', {
+                  dateStyle: 'short',
+                }).format(new Date(publishedTime))}
+              </time>
+            </p>
+          </div>
+          <p className="text-gray-700 dark:text-slate-300 text-sm line-clamp-3 mb-4">
             {description}
           </p>
+          <div className="flex flex-wrap gap-2 text-blue-800 dark:text-blue-300">
+            {tags?.map((tag) => (
+              <span
+                key={`tag-${tag}-${id}`}
+                className="inline-block bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 rounded-full px-3 py-1 text-xs font-normal"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
         </div>
       </Link>
-
-      <div className="px-6 pt-4 flex flex-wrap gap-2 mb-4 text-blue-800 dark:text-blue-300">
-        {tags?.map((tag) => (
-          <Link
-            key={`tag-${tag}-${id}`}
-            href={pathname + '?' + createQueryString('tag', tag)}
-            rel="noopener nofollow"
-            className="inline-block bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 rounded-full px-3 py-1 text-xs font-normal hover:bg-gray-300 dark:hover:bg-slate-300 transition-colors duration-200"
-          >
-            #{tag}
-          </Link>
-        ))}
-      </div>
 
       <div className="px-6 py-4 hidden">
         <div className="flex">
