@@ -32,6 +32,9 @@ importers:
       '@plaiceholder/next':
         specifier: ^2.5.0
         version: 2.5.0(next@14.2.29(@babel/core@7.20.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(sharp@0.31.2)
+      '@radix-ui/react-slot':
+        specifier: ^1.2.3
+        version: 1.2.3(@types/react@18.0.25)(react@18.2.0)
       '@radix-ui/react-tooltip':
         specifier: ^1.2.7
         version: 1.2.7(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)

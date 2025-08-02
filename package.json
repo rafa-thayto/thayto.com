@@ -22,6 +22,7 @@
     "@mdx-js/react": "^2.1.5",
     "@next/mdx": "^13.0.4",
     "@plaiceholder/next": "^2.5.0",
+    "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@tailwindcss/postcss": "^4.1.8",
     "@types/lodash": "^4.17.17",

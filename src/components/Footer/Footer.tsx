@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { ThemeSwitcher } from '../theme-switcher/theme-switcher'
+import { Text } from '../ui/text'
 
 type Link = {
   href: string
@@ -69,7 +70,12 @@ export const Footer = ({
                       : undefined
                   }
                 >
-                  {link.name}
+                  <Text
+                    variant="hover-decoration"
+                    className="text-gray-900 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200"
+                  >
+                    {link.name}
+                  </Text>
                 </Link>
                 {index < allLinks.length - 1 && (
                   <span className="ml-4 text-gray-400 dark:text-gray-600">

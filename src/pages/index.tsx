@@ -143,12 +143,12 @@ pensamentos (tanto em inglês quanto em português).`
             onMouseLeave={handleMouseLeave}
           >
             <div
-              className={`absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full blur-sm transition-all duration-500 ${
+              className={`absolute -inset-1 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 rounded-full blur-sm transition-all duration-500 ${
                 showAnimation ? 'opacity-75 animate-spin' : 'opacity-0'
               }`}
             ></div>
             <div
-              className={`absolute -inset-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full transition-all duration-500 ${
+              className={`absolute -inset-0.5 bg-gradient-to-r from-blue-500 via-blue-400 to-blue-300 rounded-full transition-all duration-500 ${
                 showAnimation ? 'opacity-100 animate-spin' : 'opacity-0'
               }`}
             ></div>
