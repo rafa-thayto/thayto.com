@@ -26,7 +26,7 @@ const IndexPage = ({
     setIsHovering(true)
     timeoutRef.current = setTimeout(() => {
       setShowAnimation(true)
-    }, 1000)
+    }, 500)
   }
 
   const handleMouseLeave = () => {
@@ -205,7 +205,8 @@ pensamentos (tanto em inglês quanto em português).`
           </p>
           <p>I use VIM btw (since 2022). ❤️</p>
         </section>
-        <section className="my-8 text-base text-slate-800 dark:text-slate-200">
+
+        <section className="mt-8 text-base text-slate-800 dark:text-slate-200">
           <Link
             href="/blog"
             className="group flex items-center gap-2 text-lg font-normal text-slate-600 dark:text-slate-400 mb-6 hover:text-slate-800 dark:hover:text-slate-200 transition-colors duration-200"

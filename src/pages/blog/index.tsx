@@ -6,6 +6,8 @@ import { useSearchParams } from 'next/navigation'
 import { generateRssFeed } from '@/utils/generate-rss-feed'
 import { SITE_URL } from '@/utils/constants'
 import Head from 'next/head'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const searchParams = useSearchParams()
@@ -107,8 +109,18 @@ const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
       <main className="sm:px-2 mt-8">
         <div className="max-w-4xl mx-auto flex flex-col gap-4 px-4">
+          <Link
+            href="/"
+            className="group flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors duration-200 mb-4 w-fit"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
+            Index
+          </Link>
           {posts?.map((post, index) => (
-            <article key={post.data.title} className="w-full">
+            <article
+              key={post.data.title}
+              className="w-full [&:has(a:hover)>a:not(:hover)]:opacity-30"
+            >
               <BlogCard
                 id={post.data.id}
                 title={post.data.title}
@@ -131,10 +143,6 @@ const Blog = ({ posts: p }: InferGetStaticPropsType<typeof getStaticProps>) => {
               />
             </article>
           ))}
-        </div>
-
-        <div className="flex justify-center my-6">
-          <IconsGroup />
         </div>
       </main>
     </Layout>

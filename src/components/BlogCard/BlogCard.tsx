@@ -58,7 +58,7 @@ export const BlogCard = ({
   }, [])
 
   return (
-    <div className="rounded-lg hover:bg-slate-100 dark:hover:bg-gray-700 overflow-hidden shadow-lg transition-all duration-200 border border-gray-200 dark:border-gray-700 hover:border-indigo-300 hover:shadow-xl bg-white dark:bg-gray-800">
+    <div className="rounded-lg hover:bg-slate-100 dark:hover:bg-gray-700 overflow-hidden transition-all duration-200 border border-gray-200 dark:border-gray-700 hover:border-indigo-300 hover:shadow-xl">
       <Link
         href={href}
         onClick={() => {
