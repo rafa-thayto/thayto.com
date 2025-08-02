@@ -76,13 +76,13 @@ export const Header = () => {
         <div
           className={`liquid-glass-container fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
             isScrolled
-              ? 'py-2 px-4 sm:px-6 lg:px-8'
-              : 'py-4 px-4 sm:px-6 lg:px-8'
+              ? 'py-1 px-4 sm:px-6 lg:px-8'
+              : 'py-2 px-4 sm:px-6 lg:px-8'
           }`}
         >
           <div
             className={`relative mx-auto rounded-3xl transition-all duration-700 ease-out overflow-hidden ${
-              isScrolled ? 'max-w-5xl' : 'max-w-6xl'
+              isScrolled ? 'max-w-3xl' : 'max-w-4xl'
             }`}
             style={
               {
@@ -193,15 +193,15 @@ export const Header = () => {
             {/* Content Layer */}
             <div
               className={`relative flex items-center justify-between transition-all duration-500 ease-out ${
-                isScrolled ? 'px-4 py-2.5' : 'px-6 py-3.5'
+                isScrolled ? 'px-4 py-1.5' : 'px-6 py-2.5'
               }`}
             >
               <div className="flex items-center">
                 <Link href="/" className="flex items-center space-x-3 group">
                   <span
-                    className={`font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent transition-all duration-500 ease-out ${
+                    className={`font-bold text-gray-900 dark:text-white transition-all duration-500 ease-out ${
                       isScrolled ? 'text-lg' : 'text-xl'
-                    } group-hover:from-blue-600 group-hover:via-purple-600 group-hover:to-blue-600 dark:group-hover:from-blue-400 dark:group-hover:via-purple-400 dark:group-hover:to-blue-400`}
+                    }`}
                   >
                     Rafael Thayto
                   </span>
@@ -219,7 +219,7 @@ export const Header = () => {
                     }`}
                   >
                     {item.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-300"></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-900 dark:bg-white group-hover:w-full transition-all duration-300"></span>
                   </Link>
                 ))}
               </nav>
@@ -255,7 +255,7 @@ export const Header = () => {
 
         <div
           className={`transition-all duration-500 ease-out ${
-            isScrolled ? 'h-16' : 'h-20'
+            isScrolled ? 'h-12' : 'h-16'
           }`}
         />
 

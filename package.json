@@ -9,6 +9,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "next lint",
+    "check-types": "tsc --noEmit",
     "prepare": "husky install",
     "postbuild": "next-sitemap"
   },

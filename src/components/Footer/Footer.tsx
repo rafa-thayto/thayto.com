@@ -15,7 +15,7 @@ export const Footer = ({
 }: {
   onThemeChange?: (theme: 'dark' | 'light') => void
 }) => {
-  const sitemapLinks = useMemo<Link[]>(
+  const allLinks = useMemo<Link[]>(
     () => [
       {
         href: '/',
@@ -30,20 +30,6 @@ export const Footer = ({
         name: 'Linktree',
       },
       {
-        href: '/rss.xml',
-        name: 'RSS Feed',
-      },
-      {
-        href: '/sitemap.xml',
-        name: 'Sitemap.xml',
-      },
-    ],
-    [],
-  )
-
-  const socialLinks = useMemo<Link[]>(
-    () => [
-      {
         href: 'https://www.linkedin.com/in/thayto/',
         name: 'LinkedIn',
       },
@@ -56,65 +42,45 @@ export const Footer = ({
         name: 'YouTube',
       },
       {
-        href: 'https://www.twitch.tv/thayto_dev',
-        name: 'Twitch',
-      },
-      {
-        href: 'https://dev.to/thayto/',
-        name: 'Dev.to',
-      },
-      {
-        href: 'https://www.tabnews.com.br/thayto',
-        name: 'TabNews',
+        href: '/rss.xml',
+        name: 'RSS',
       },
     ],
     [],
   )
 
   return (
-    <>
-      <div className="flex flex-col items-center mt-10">
-        <ThemeSwitcher onThemeChange={onThemeChange} />
-      </div>
-      <footer className="border-t border-gray-200 bg-slate-100 dark:bg-slate-900 dark:border-black mt-10">
-        <div className="flex justify-end gap-20 mx-10vw">
-          <div className="py-14">
-            <h6 className="text-lg font-medium text-black dark:text-white">
-              Social
-            </h6>
-            <ul className="mt-4">
-              {socialLinks.map((link) => (
-                <li key={`${link.name}-${linkNanoId}`} className="py-1">
-                  <Link
-                    href={link.href}
-                    className="text-gray-500 dark:text-slate-500 underlined focus:outline-none inline-block whitespace-nowrap text-lg hover:text-gray-500 dark:hover:text-slate-500 focus:text-gray-500 dark:focus:text-slate-500"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="py-14">
-            <h6 className="text-lg font-medium text-black dark:text-white">
-              Sitemap
-            </h6>
-            <ul className="mt-4">
-              {sitemapLinks.map((link) => (
-                <li key={`${link.name}-${linkNanoId}`} className="py-1">
-                  <Link
-                    href={link.href}
-                    className="text-gray-500 dark:text-slate-500 underlined focus:outline-none inline-block whitespace-nowrap text-lg hover:text-gray-500 dark:hover:text-slate-500 focus:text-gray-500 dark:focus:text-slate-500"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+    <footer className="mt-16 py-8 bg-slate-50 dark:bg-slate-800">
+      <div className="max-w-4xl mx-auto px-4 sm:px-24">
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-wrap justify-center items-center gap-4 text-sm">
+            {allLinks.map((link, index) => (
+              <div
+                key={`${link.name}-${linkNanoId}`}
+                className="flex items-center"
+              >
+                <Link
+                  href={link.href}
+                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200"
+                  target={link.href.startsWith('http') ? '_blank' : undefined}
+                  rel={
+                    link.href.startsWith('http')
+                      ? 'noopener noreferrer'
+                      : undefined
+                  }
+                >
+                  {link.name}
+                </Link>
+                {index < allLinks.length - 1 && (
+                  <span className="ml-4 text-gray-400 dark:text-gray-600">
+                    •
+                  </span>
+                )}
+              </div>
+            ))}
           </div>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   )
 }
