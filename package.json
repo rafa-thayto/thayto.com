@@ -101,8 +101,6 @@
     "jest-environment-jsdom": "29.7.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.6.2",
-    "rehype-prism": "link:@types/@mapbox/rehype-prism",
-    "remark-a11y-emoji": "link:@types/@fec/remark-a11y-emoji",
     "ts-jest": "29.4.6",
     "ts-node": "10.9.1",
     "tw-animate-css": "^1.3.3",
@@ -122,11 +120,9 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@9.15.0",
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.2.7",
-      "@types/react-dom": "19.2.3"
-    }
+  "packageManager": "bun@1.3.4",
+  "overrides": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3"
   }
 }

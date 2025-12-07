@@ -10,22 +10,26 @@ This is a personal blog and portfolio website built with Next.js (Pages Router),
 
 ### Running the project
 
-- `pnpm dev` - Start development server
-- `pnpm build` - Build for production
-- `pnpm start` - Start production server
-- `pnpm lint` - Run ESLint
-- `pnpm check-types` - Run TypeScript type checking without emitting files
+- `bun dev` - Start development server
+- `bun build` - Build for production
+- `bun start` - Start production server
+- `bun lint` - Run ESLint
+- `bun check-types` - Run TypeScript type checking without emitting files
 
 ### Testing
 
-- `pnpm test` - Run Jest tests
-- `pnpm test:watch` - Run Jest in watch mode
-- `pnpm test -- path/to/file.spec.tsx` - Run a single test file
+- `bun test` - Run Jest tests
+- `bun test:watch` - Run Jest in watch mode
+- `bun test -- path/to/file.spec.tsx` - Run a single test file
 - Test files use `.spec.tsx` naming convention
+
+### E2E Testing
+
+Cypress is available in devDependencies but no npm scripts are configured. Run directly with `bunx cypress open`.
 
 ### Note on Package Manager
 
-This project uses `pnpm` as the package manager (see `packageManager` field in package.json).
+This project uses `bun` as the package manager (see `packageManager` field in package.json). Bun is a fast all-in-one JavaScript runtime and package manager that is significantly faster than npm/pnpm/yarn.
 
 ## Architecture & Key Patterns
 
@@ -36,7 +40,7 @@ The blog is powered by MDX files stored in the `/posts` directory. The system us
 - **MDX Processing**: Uses `next-mdx-remote` for serializing MDX content with plugins:
   - `remark-gfm` for GitHub Flavored Markdown
   - `rehype-slug` and `rehype-autolink-headings` for auto-generated heading anchors
-  - `rehype-prism` for syntax highlighting
+  - `rehype-prism-plus` for syntax highlighting
 - **Post Utilities** (`src/utils/mdx.ts`): Central location for MDX processing logic
   - `getPosts()` - Fetches all posts and sorts by date
   - `getMdxSerializedPost(slug)` - Serializes a single post for rendering

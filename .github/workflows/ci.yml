@@ -21,24 +21,19 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          version: 7.13.5
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'pnpm'
+          bun-version: latest
 
       - name: Install dependencies
-        run: pnpm install
+        run: bun install
 
       - name: Lint
-        run: pnpm lint
+        run: bun run lint
 
       - name: Test
-        run: pnpm test
+        run: bun run test
 
       - name: Build
-        run: pnpm build
+        run: bun run build
