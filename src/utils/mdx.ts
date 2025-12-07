@@ -1,5 +1,4 @@
 import remarkA11yEmoji from '@fec/remark-a11y-emoji'
-import rehypePrism from '@mapbox/rehype-prism'
 import { POSTS_PATH } from '@/constants'
 import * as A from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/function'
@@ -10,11 +9,9 @@ import { h } from 'hastscript'
 import { serialize } from 'next-mdx-remote/serialize'
 import path from 'path'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypePrismPlus from 'rehype-prism-plus'
 import rehypeSlug from 'rehype-slug'
-import rehypeStringify from 'rehype-stringify'
 import remarkGfm from 'remark-gfm'
-import remarkParse from 'remark-parse'
-import remarkRehype from 'remark-rehype'
 import { nanoid } from 'nanoid'
 
 export type Post = {
@@ -81,10 +78,10 @@ export const getMdxSerializedPost = async (slug: string) => {
 
   const mdxSource = await serialize(content, {
     mdxOptions: {
-      remarkPlugins: [remarkGfm, remarkA11yEmoji, remarkParse, remarkRehype],
+      remarkPlugins: [remarkGfm, remarkA11yEmoji],
       rehypePlugins: [
         rehypeSlug,
-        rehypePrism,
+        rehypePrismPlus,
         [
           rehypeAutolinkHeadings,
           {
@@ -96,7 +93,6 @@ export const getMdxSerializedPost = async (slug: string) => {
             content: h('span.text-indigo-500', '# '),
           },
         ],
-        rehypeStringify,
       ],
     },
     scope: frontMatter,

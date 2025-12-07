@@ -43,36 +43,43 @@ type ThemeSwitcherProps = {
   onThemeChange?: (theme: 'dark' | 'light') => void
 }
 
+const getInitialTheme = () => {
+  if (typeof window === 'undefined') return false
+  const theme = localStorage.getItem('theme')
+  const systemPrefersDark = window.matchMedia(
+    '(prefers-color-scheme: dark)',
+  ).matches
+  return theme === 'dark' || (!theme && systemPrefersDark)
+}
+
 export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
-  const [isDark, setIsDark] = useState(false)
+  const [isDark, setIsDark] = useState(getInitialTheme)
 
-  const updateThemeState = () => {
-    const theme = localStorage.getItem('theme')
-    const systemPrefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)',
-    ).matches
-    const shouldBeDark = theme === 'dark' || (!theme && systemPrefersDark)
-
-    setIsDark(shouldBeDark)
-
-    if (shouldBeDark) {
+  useEffect(() => {
+    if (isDark) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
-  }
+  }, [isDark])
 
   useEffect(() => {
-    updateThemeState()
-
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'theme') {
-        updateThemeState()
+        const theme = localStorage.getItem('theme')
+        const systemPrefersDark = window.matchMedia(
+          '(prefers-color-scheme: dark)',
+        ).matches
+        setIsDark(theme === 'dark' || (!theme && systemPrefersDark))
       }
     }
 
     const handleThemeChange = () => {
-      updateThemeState()
+      const theme = localStorage.getItem('theme')
+      const systemPrefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)',
+      ).matches
+      setIsDark(theme === 'dark' || (!theme && systemPrefersDark))
     }
 
     window.addEventListener('storage', handleStorageChange)

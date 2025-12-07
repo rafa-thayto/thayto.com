@@ -1,6 +1,5 @@
 //@ts-check
 
-// eslint-disable-next-line
 // @typescript-eslint/no-var-requires
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
@@ -17,7 +16,6 @@ const { withPlaiceholder } = require('@plaiceholder/next')
  * @type {import('next').NextConfig}
  **/
 const nextConfig = {
-  swcMinify: true,
   reactStrictMode: true,
   images: {
     remotePatterns: [

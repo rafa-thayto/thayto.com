@@ -8,12 +8,12 @@ import { Instagram, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import posthog from 'posthog-js'
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Confetti from 'react-confetti'
 
 type ButtonLink = {
   href: string
-  Icon?: (({ color }: IconProps) => JSX.Element) | null
+  Icon?: (({ color }: IconProps) => React.JSX.Element) | null
   text: string
 }
 
