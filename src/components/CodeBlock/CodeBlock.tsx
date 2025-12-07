@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useCallback } from 'react'
 import { ClipboardIcon, CheckIcon } from '@heroicons/react/24/outline'
 

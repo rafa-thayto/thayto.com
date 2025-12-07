@@ -1,3 +1,5 @@
+'use client'
+
 import {
   ChatBubbleLeftEllipsisIcon,
   HeartIcon as HeartIconOutline,

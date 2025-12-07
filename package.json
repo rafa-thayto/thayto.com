@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && bun run generate-rss",
+    "generate-rss": "bun run src/utils/generate-rss-script.ts",
     "start": "next start",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint .",
     "check-types": "tsc --noEmit",
-    "prepare": "husky install",
-    "postbuild": "next-sitemap"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@fec/remark-a11y-emoji": "^4.0.2",
@@ -44,8 +44,6 @@
     "nanoid": "^4.0.0",
     "next": "16.0.7",
     "next-mdx-remote": "^5.0.0",
-    "next-seo": "^5.8.0",
-    "next-sitemap": "^3.1.29",
     "plaiceholder": "^2.5.0",
     "poly-decomp": "^0.3.0",
     "postcss": "^8.5.4",

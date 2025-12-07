@@ -1,17 +1,10 @@
-import remarkA11yEmoji from '@fec/remark-a11y-emoji'
 import { POSTS_PATH } from '@/constants'
 import * as A from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/lib/Option'
 import fs from 'fs'
 import matter from 'gray-matter'
-import { h } from 'hastscript'
-import { serialize } from 'next-mdx-remote/serialize'
 import path from 'path'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypePrismPlus from 'rehype-prism-plus'
-import rehypeSlug from 'rehype-slug'
-import remarkGfm from 'remark-gfm'
 import { nanoid } from 'nanoid'
 
 export type Post = {
@@ -76,31 +69,9 @@ export const getMdxSerializedPost = async (slug: string) => {
 
   const { data: frontMatter, content } = matter(markdownWithMeta)
 
-  const mdxSource = await serialize(content, {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm, remarkA11yEmoji],
-      rehypePlugins: [
-        rehypeSlug,
-        rehypePrismPlus,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: 'prepend',
-            properties: {
-              ariaLabel: 'Link to this section',
-              classname: ['no-underline'],
-            },
-            content: h('span.text-indigo-500', '# '),
-          },
-        ],
-      ],
-    },
-    scope: frontMatter,
-  })
-
   return {
     frontMatter,
-    mdxSource,
+    mdxSource: content,
   }
 }
 

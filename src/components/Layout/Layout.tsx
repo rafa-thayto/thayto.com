@@ -1,3 +1,5 @@
+'use client'
+
 import { PropsWithChildren, useEffect } from 'react'
 import { Footer, Header } from '../'
 

@@ -1,3 +1,5 @@
+'use client'
+
 import { Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { nanoid } from 'nanoid'

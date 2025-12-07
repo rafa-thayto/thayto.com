@@ -1,3 +1,5 @@
+'use client'
+
 import posthog from 'posthog-js'
 import { useEffect, useState } from 'react'
 

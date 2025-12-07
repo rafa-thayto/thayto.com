@@ -318,7 +318,6 @@
 }
 
 .prose p {
-  font-family: var(--font-poppins);
   font-size: 1rem;
   line-height: 1.5;
   margin-top: 1.25em;
@@ -353,7 +352,7 @@
   left: 1rem;
   font-size: 3rem;
   color: #3b82f6;
-  font-family: Georgia, serif;
+  font-family: var(--font-lora), Georgia, serif;
   line-height: 1;
 }
 
