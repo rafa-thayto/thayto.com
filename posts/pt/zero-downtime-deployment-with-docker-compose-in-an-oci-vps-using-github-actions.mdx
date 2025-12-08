@@ -1,0 +1,133 @@
+---
+title: 'Deploy sem downtime com Docker Compose em VPS OCI usando GitHub Actions'
+publishedTime: '2024-09-13T21:16:36Z'
+modifiedTime: '2024-09-13T21:16:36Z'
+description: 'Primeiro, você precisa ter um VPS Linux (vou usar Ubuntu 22 nesse tutorial). Tags: docker, devops, github actions, linux, tutorial.'
+image:
+  {
+    src: 'zero-downtime-deployment-with-docker-compose-in-an-oci-vps-using-github-actions.jpg',
+    placeholder: 'zero-downtime-deployment-with-docker-compose-in-an-oci-vps-using-github-actions-small.jpg',
+    type: 'image/jpeg',
+  }
+tags: ['docker', 'devops', 'github actions', 'linux', 'tutorial']
+href: '/blog/zero-downtime-deployment-with-docker-compose-in-an-oci-vps-using-github-actions'
+reactionsLength: 0
+commentsLength: 0
+---
+
+Primeiro, você precisa ter um VPS Linux (vou usar Ubuntu 22 nesse tutorial).
+
+## Requisitos
+
+- Docker
+- Docker Compose
+- [Docker Rollout Plugin](https://github.com/Wowu/docker-rollout?tab=readme-ov-file#installation)
+
+### Instalando o Docker Rollout Plugin
+
+É bem simples:
+
+```bash
+# Create directory for Docker cli plugins
+mkdir -p ~/.docker/cli-plugins
+
+# Download docker-rollout script to Docker cli plugins directory
+curl https://raw.githubusercontent.com/wowu/docker-rollout/master/docker-rollout -o ~/.docker/cli-plugins/docker-rollout
+
+# Make the script executable
+chmod +x ~/.docker/cli-plugins/docker-rollout
+```
+
+### Como usar o Docker Rollout
+
+Rode `docker rollout <name>` ao invés de `docker compose up -d <name>` para atualizar um serviço sem downtime.
+
+```bash
+$ docker rollout -f docker-compose.yml <service-name>
+```
+
+## Workflow GitHub Actions build_and_deploy.yml
+
+> Nesse caso estou usando um registry privado no Digital Ocean.
+
+```yaml
+name: CI
+
+# 1
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events but only for the master branch
+  push:
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Image version'
+        required: true
+#2
+env:
+  REGISTRY: 'registry.digitalocean.com/YOUR_REGISTRY_NAME'
+  IMAGE_NAME: 'YOUR_IMAGE_NAME'
+
+#3
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+
+      - name: Build container image
+        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) .
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Remove all old images
+        run: if [ ! -z "$(doctl registry repository list | grep "$(echo $IMAGE_NAME)")" ]; then doctl registry repository delete-manifest $(echo $IMAGE_NAME) $(doctl registry repository list-tags $(echo $IMAGE_NAME) | grep -o "sha.*") --force; else echo "No repository"; fi
+
+      - name: Push image to DigitalOcean Container Registry
+        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build_and_push
+
+    steps:
+      - name: Deploy to Digital Ocean droplet via SSH action
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.OCI_HOST }}
+          username: ${{ secrets.OCI_USERNAME }}
+          key: ${{ secrets.OCI_SSH_KEY }}
+          envs: IMAGE_NAME,REGISTRY,{{ secrets.DIGITALOCEAN_ACCESS_TOKEN }},GITHUB_SHA
+          script: |
+            whoami
+            cd ~/app
+            pwd
+            ls -la
+            # Login to registry
+            docker login -u ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} -p ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} registry.digitalocean.com
+            # Update the APP image in docker-compose.yml
+            sed -i '0,/image:/s|image: .*|image: '$(echo $REGISTRY)'/'$(echo $IMAGE_NAME)':'$(echo $GITHUB_SHA | head -c7)'|' docker-compose.yml
+            # Pull the latest image
+            docker compose pull
+            # Here is the magic docker plugin
+            docker rollout -f docker-compose.yml app
+            echo "Deployed with success to production"
+```
+
+## Conclusão
+
+Espero que esse tutorial te ajude de alguma forma, tmj!
+
+Rafael Thayto.
+
+_Photo by <a href="https://unsplash.com/@hdbernd?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Bernd 📷 Dittrich</a> on <a href="https://unsplash.com/photos/a-group-of-trucks-parked-next-to-each-other-in-a-parking-lot-bUnsDLFRNWc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>_

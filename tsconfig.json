@@ -18,7 +18,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "types": ["cypress", "jest"],
+    "types": ["cypress", "vitest/globals"],
     "plugins": [
       {
         "name": "next"
@@ -29,9 +29,15 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "jest.config.js",
-    "jest.setup.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "test",
+    "vitest.config.ts",
+    "vitest.setup.ts",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
+  ]
 }

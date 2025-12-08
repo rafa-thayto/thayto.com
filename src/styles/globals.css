@@ -70,8 +70,8 @@
 }
 
 .dark {
-  --skeleton-base: #374151;
-  --skeleton-highlight: #4b5563;
+  --skeleton-base: #0a0a0a;
+  --skeleton-highlight: #1a1a1a;
 }
 
 @keyframes progress-spin {
@@ -253,19 +253,19 @@
 }
 
 .dark {
-  --background: oklch(0.147 0.004 49.25);
+  --background: oklch(0.05 0 0);
   --foreground: oklch(0.985 0.001 106.423);
-  --card: oklch(0.216 0.006 56.043);
+  --card: oklch(0.08 0 0);
   --card-foreground: oklch(0.985 0.001 106.423);
-  --popover: oklch(0.216 0.006 56.043);
+  --popover: oklch(0.08 0 0);
   --popover-foreground: oklch(0.985 0.001 106.423);
   --primary: oklch(0.923 0.003 48.717);
-  --primary-foreground: oklch(0.216 0.006 56.043);
-  --secondary: oklch(0.268 0.007 34.298);
+  --primary-foreground: oklch(0.05 0 0);
+  --secondary: oklch(0.12 0 0);
   --secondary-foreground: oklch(0.985 0.001 106.423);
-  --muted: oklch(0.268 0.007 34.298);
+  --muted: oklch(0.12 0 0);
   --muted-foreground: oklch(0.709 0.01 56.259);
-  --accent: oklch(0.268 0.007 34.298);
+  --accent: oklch(0.12 0 0);
   --accent-foreground: oklch(0.985 0.001 106.423);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
@@ -276,11 +276,11 @@
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.216 0.006 56.043);
+  --sidebar: oklch(0.08 0 0);
   --sidebar-foreground: oklch(0.985 0.001 106.423);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-accent: oklch(0.268 0.007 34.298);
+  --sidebar-accent: oklch(0.12 0 0);
   --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
@@ -314,11 +314,10 @@
 }
 
 .dark .prose h2 {
-  border-bottom-color: #374151;
+  border-bottom-color: #1a1a1a;
 }
 
 .prose p {
-  font-family: var(--font-poppins);
   font-size: 1rem;
   line-height: 1.5;
   margin-top: 1.25em;
@@ -335,7 +334,7 @@
 }
 
 .dark .prose blockquote {
-  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
   border-left-color: #60a5fa;
   color: #d1d5db;
 }
@@ -353,7 +352,7 @@
   left: 1rem;
   font-size: 3rem;
   color: #3b82f6;
-  font-family: Georgia, serif;
+  font-family: var(--font-lora), Georgia, serif;
   line-height: 1;
 }
 
@@ -383,22 +382,32 @@
 }
 
 .dark .prose code:not(pre code) {
-  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
-  color: #f9fafb;
-  border-color: #4b5563;
+  background: #1f1f1f;
+  color: #e5e7eb;
+  border-color: #2a2a2a;
 }
 
 .prose pre {
-  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-  border: 1px solid #374151;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background: #0f0f0f !important;
+  border: 1px solid #1f1f1f;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 
 .prose pre code {
+  background: transparent !important;
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   font-size: 0.875rem;
   font-weight: 400;
-  line-height: 1.15;
+  line-height: 1.6;
+}
+
+.prose pre code .line {
+  display: block;
+  background: transparent !important;
+}
+
+.prose pre code span {
+  background: transparent !important;
 }
 
 .prose ul>li::marker {

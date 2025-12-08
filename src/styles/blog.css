@@ -8,7 +8,7 @@
 
 code[class*='language-'],
 pre[class*='language-'] {
-  color: #d6deeb;
+  color: #e5e7eb;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   text-align: left;
   white-space: pre;
@@ -33,7 +33,7 @@ pre[class*='language-'] ::-moz-selection,
 code[class*='language-']::-moz-selection,
 code[class*='language-'] ::-moz-selection {
   text-shadow: none;
-  background: rgba(29, 59, 83, 0.99);
+  background: rgba(59, 130, 246, 0.3);
 }
 
 pre[class*='language-']::selection,
@@ -41,7 +41,7 @@ pre[class*='language-'] ::selection,
 code[class*='language-']::selection,
 code[class*='language-'] ::selection {
   text-shadow: none;
-  background: rgba(29, 59, 83, 0.99);
+  background: rgba(59, 130, 246, 0.3);
 }
 
 @media print {
@@ -58,10 +58,46 @@ pre[class*='language-'] {
   overflow: auto;
 }
 
+/* Remove any line backgrounds */
+pre[class*='language-'] code {
+  background: transparent !important;
+}
+
+pre[class*='language-'] .line,
+pre[class*='language-'] > code > span,
+pre[class*='language-'] span[class*='line'],
+pre[class*='language-'] code > span,
+pre > code > span {
+  background: transparent !important;
+  background-color: transparent !important;
+  display: block;
+}
+
+/* Ensure all nested spans have transparent backgrounds */
+pre[class*='language-'] span span,
+pre code span span {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Remove backgrounds from data-line attributes */
+pre[class*='language-'] [data-line],
+pre code [data-line] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Ensure no alternating line colors */
+pre[class*='language-'] code > *:nth-child(odd),
+pre[class*='language-'] code > *:nth-child(even) {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 :not(pre) > code[class*='language-'],
 pre[class*='language-'] {
-  color: white;
-  background: #011627;
+  color: #e5e7eb;
+  background: #0f0f0f;
 }
 
 :not(pre) > code[class*='language-'] {
@@ -73,7 +109,7 @@ pre[class*='language-'] {
 .token.comment,
 .token.prolog,
 .token.cdata {
-  color: rgb(99, 119, 119);
+  color: #6b7280;
   font-style: italic;
 }
 
@@ -155,4 +191,42 @@ pre[class*='language-'] {
 
 .token.italic {
   font-style: italic;
+}
+
+/* Line numbers */
+.line-number {
+  display: inline-block;
+  padding-right: 1em;
+  text-align: right;
+  user-select: none;
+  opacity: 0.5;
+  color: #6b7280;
+}
+
+/* Highlighted lines - only apply when explicitly marked */
+.highlight-line,
+pre[class*='language-'] .line-highlight {
+  background-color: rgba(59, 130, 246, 0.08) !important;
+  border-left: 2px solid rgb(59, 130, 246);
+  display: block;
+}
+
+/* Code block scrollbar */
+pre[class*='language-']::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+pre[class*='language-']::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 4px;
+}
+
+pre[class*='language-']::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 4px;
+}
+
+pre[class*='language-']::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
 }

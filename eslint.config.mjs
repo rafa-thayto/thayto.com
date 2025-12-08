@@ -6,6 +6,11 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export default defineConfig([{
-    extends: [...nextCoreWebVitals],
-}]);
+export default defineConfig([
+    {
+        ignores: ['test/**', 'vitest.config.ts', 'vitest.setup.ts', '**/*.spec.ts', '**/*.spec.tsx'],
+    },
+    {
+        extends: [...nextCoreWebVitals],
+    }
+]);

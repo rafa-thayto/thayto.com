@@ -13,7 +13,7 @@ export const ButtonLink = ({
 }: PropsWithChildren<ButtonLinkProps>) => (
   <a
     className={clsx(
-      'p-2 rounded-md border transition border-slate-900 hover:bg-indigo-300 dark:hover:bg-indigo-500 bg-slate-50 dark:bg-slate-100',
+      'p-2 rounded-md border transition border-slate-900 hover:bg-indigo-300 dark:hover:bg-indigo-500 bg-slate-50 dark:bg-gray-900',
       className,
     )}
     {...props}

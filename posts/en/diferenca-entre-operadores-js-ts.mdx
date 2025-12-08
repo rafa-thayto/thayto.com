@@ -1,0 +1,88 @@
+---
+title: 'Difference Between the ?, ?? and || Operators in JavaScript / TypeScript'
+publishedTime: '2022-10-31T19:34:48Z'
+modifiedTime: '2024-07-11T19:34:53Z'
+description: '? -> Optional Chaining Operator. Allows reading the value of a property located internally in a chain of connected objects without having to explicitly validate each reference in the chain.'
+image:
+  {
+    src: 'diferenca-entre-operadores-js-ts.png',
+    placeholder: 'diferenca-entre-operadores-js-ts-small.png',
+    type: 'image/png',
+  }
+tags: ['javascript', 'typescript', 'learning']
+href: '/blog/diferenca-entre-operadores-js-ts'
+reactionsLength: 0
+commentsLength: 0
+---
+
+# Context
+
+I believe every developer has had doubts about the differences between some JavaScript/TypeScript operators. That's why I made this quick and simple post about the differences between the ?, ?? and || operators. Check it out below
+
+## ? - Optional Chaining
+
+`?` -> **Optional Chaining Operator**.
+Allows reading the value of a property located internally in a chain of connected objects without having to explicitly validate each reference in the chain.
+
+The `?.` operator works similarly to the `.` chaining operator, except that instead of causing an error if a reference is [nullish](https://developer.mozilla.org/en-US/docs/Glossary/Nullish) (`null` or `undefined`), the expression short-circuits and returns with a value of `undefined`. When used with a function call, it returns `undefined` if the executed function does not exist.
+
+This results in shorter and simpler expressions when accessing chained properties when there's a possibility of a reference being non-existent. This can also help when exploring the content of an object when there's no guarantee of certain required properties existing.
+
+**Example**
+
+```js
+const user = {
+  id: 13,
+  name: 'Thayto',
+}
+
+console.log(user?.name) // John
+console.log(user?.fullName) // undefined, application won't break.
+console.log(user.fullName) // TypeError: Cannot read property 'fullName' of undefined, application breaks.
+```
+
+## ?? - Nullish Coalescing
+
+`??` -> **Nullish Coalescing Operator**.
+Is a logical operator that returns its right-hand side operand when its left-hand side operand is `null` or `undefined`. Otherwise, it returns its left-hand side operand.
+
+**Example**
+
+```js
+console.log(13 ?? 'not found') // 13
+console.log(0 ?? 'not found') // 0
+
+console.log('Dri' ?? 'not found') // "Dri"
+console.log('' ?? 'not found') // ""
+
+console.log(true ?? 'not found') // true
+console.log(false ?? 'not found') // false
+
+console.log(undefined ?? 'not found') // "not found"
+console.log(null ?? 'not found') // "not found"
+```
+
+## || - Logical OR
+
+`||` is the **Logical OR Operator**
+The Logical OR expression is evaluated from left to right, it is tested for possible "short-circuit" evaluation using the following rule:
+
+`(some truthy expression) || expr` is short-circuit evaluated to the truthy expression.
+
+Short-circuit means that the `expr` part above is not evaluated, therefore any side effects of doing so do not take effect (for example, if `expr` is a function call, the call never occurs). This happens because the value of the operator is already determined after evaluation of the first operand.
+
+**Example**
+
+```js
+console.log(13 || 'not found') // 13
+console.log(0 || 'not found') // "not found"
+
+console.log('Dri' || 'not found') // "Dri"
+console.log('' || 'not found') // "not found"
+
+console.log(true || 'not found') // true
+console.log(false || 'not found') // "not found"
+
+console.log(undefined || 'not found') // "not found"
+console.log(null || 'not found') // "not found"
+```

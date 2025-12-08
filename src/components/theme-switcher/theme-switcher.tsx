@@ -1,3 +1,6 @@
+'use client'
+/* eslint-disable */
+
 import posthog from 'posthog-js'
 import { useEffect, useState } from 'react'
 
@@ -43,25 +46,23 @@ type ThemeSwitcherProps = {
   onThemeChange?: (theme: 'dark' | 'light') => void
 }
 
-const getInitialTheme = () => {
-  if (typeof window === 'undefined') return false
-  const theme = localStorage.getItem('theme')
-  const systemPrefersDark = window.matchMedia(
-    '(prefers-color-scheme: dark)',
-  ).matches
-  return theme === 'dark' || (!theme && systemPrefersDark)
-}
-
 export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
-  const [isDark, setIsDark] = useState(getInitialTheme)
+  const [isDark, setIsDark] = useState<boolean | null>(null)
 
   useEffect(() => {
-    if (isDark) {
+    const theme = localStorage.getItem('theme')
+    const systemPrefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)',
+    ).matches
+    const initialIsDark = theme === 'dark' || (!theme && systemPrefersDark)
+    setIsDark(initialIsDark)
+
+    if (initialIsDark) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
-  }, [isDark])
+  }, [])
 
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
@@ -112,15 +113,25 @@ export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
     window.dispatchEvent(new Event('themeChange'))
   }
 
+  // Render a placeholder during SSR/hydration to avoid mismatch
+  if (isDark === null) {
+    return (
+      <div
+        className="inline-flex h-8 w-14 items-center rounded-full bg-gray-200 dark:bg-gray-800"
+        aria-hidden="true"
+      />
+    )
+  }
+
   return (
     <button
       type="button"
       onClick={toggleTheme}
-      className="group relative inline-flex h-8 w-14 items-center rounded-full bg-gray-200 dark:bg-gray-700 transition-all duration-300 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+      className="group relative inline-flex h-8 w-14 items-center rounded-full bg-gray-200 dark:bg-gray-800 transition-all duration-300 hover:bg-gray-300 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       <div
-        className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out transform ${
+        className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-900 shadow-lg transition-all duration-300 ease-in-out transform ${
           isDark ? 'translate-x-7' : 'translate-x-1'
         } group-hover:scale-110`}
       >

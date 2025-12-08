@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { ThemeSwitcher } from '../theme-switcher/theme-switcher'
+import { LanguageSwitcher } from '../language-switcher'
 import { Text } from '../ui/text'
 
 type Link = {
@@ -51,7 +52,7 @@ export const Footer = ({
   )
 
   return (
-    <footer className="mt-10 py-8 bg-slate-50 dark:bg-slate-800">
+    <footer className="mt-10 py-8 bg-slate-50 dark:bg-black">
       <div className="max-w-4xl mx-auto px-4 sm:px-24">
         <div className="flex flex-col items-center gap-4">
           <div className="flex flex-wrap justify-center items-center gap-4 text-sm">
@@ -88,6 +89,12 @@ export const Footer = ({
               <span className="ml-4 text-gray-400 dark:text-gray-600">•</span>
               <div className="ml-4">
                 <ThemeSwitcher onThemeChange={onThemeChange} />
+              </div>
+            </div>
+            <div className="flex items-center">
+              <span className="ml-4 text-gray-400 dark:text-gray-600">•</span>
+              <div className="ml-4">
+                <LanguageSwitcher />
               </div>
             </div>
           </div>

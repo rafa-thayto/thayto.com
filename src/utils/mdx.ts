@@ -1,17 +1,10 @@
-import remarkA11yEmoji from '@fec/remark-a11y-emoji'
-import { POSTS_PATH } from '@/constants'
+import { getPostsPath } from '@/constants'
 import * as A from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/lib/Option'
 import fs from 'fs'
 import matter from 'gray-matter'
-import { h } from 'hastscript'
-import { serialize } from 'next-mdx-remote/serialize'
 import path from 'path'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypePrismPlus from 'rehype-prism-plus'
-import rehypeSlug from 'rehype-slug'
-import remarkGfm from 'remark-gfm'
 import { nanoid } from 'nanoid'
 
 export type Post = {
@@ -22,6 +15,19 @@ export type Post = {
     publishedTime: Date
     modifiedTime: Date
     description: string
+    // New LLM/AI SEO fields
+    keywords?: string[]
+    summary?: string
+    difficulty?: 'beginner' | 'intermediate' | 'advanced'
+    readingTime?: number
+    tableOfContents?: boolean
+    sources?: Array<{
+      title: string
+      url: string
+      accessed?: string
+    }>
+    relatedPosts?: string[]
+    // Existing fields
     image: {
       src: string
       placeholder?: string
@@ -35,12 +41,8 @@ export type Post = {
     commentsLength: number
   }
   filePath: string
+  locale: string
 }
-
-export const postFilePaths = fs
-  .readdirSync(POSTS_PATH)
-  // Only include md(x) files
-  .filter((path) => /\.mdx?$/.test(path))
 
 export const sortPostsByDate = (posts: any) => {
   return posts.sort((a: any, b: any) => {
@@ -50,9 +52,26 @@ export const sortPostsByDate = (posts: any) => {
   })
 }
 
-export const getPosts = (): Post[] => {
+// Calculate word count from MDX content (for LLM SEO)
+export function calculateWordCount(content: string): number {
+  return content
+    .replace(/<[^>]*>/g, '') // Remove HTML tags
+    .replace(/```[\s\S]*?```/g, '') // Remove code blocks
+    .replace(/`[^`]*`/g, '') // Remove inline code
+    .trim()
+    .split(/\s+/)
+    .filter((word) => word.length > 0).length
+}
+
+export const getPosts = (locale: string): Post[] => {
+  const postsPath = getPostsPath(locale)
+  const postFilePaths = fs
+    .readdirSync(postsPath)
+    // Only include md(x) files
+    .filter((path) => /\.mdx?$/.test(path))
+
   const files = postFilePaths.map((filePath) => {
-    const source = fs.readFileSync(path.join(POSTS_PATH, filePath), 'utf-8')
+    const source = fs.readFileSync(path.join(postsPath, filePath), 'utf-8')
     const { content, data } = matter(source)
     data.id = nanoid()
 
@@ -60,6 +79,7 @@ export const getPosts = (): Post[] => {
       content,
       data,
       filePath,
+      locale,
     }
   })
 
@@ -68,39 +88,18 @@ export const getPosts = (): Post[] => {
   return posts
 }
 
-export const getMdxSerializedPost = async (slug: string) => {
+export const getMdxSerializedPost = async (slug: string, locale: string) => {
+  const postsPath = getPostsPath(locale)
   const markdownWithMeta = fs.readFileSync(
-    path.join(POSTS_PATH, `${slug}.mdx`),
+    path.join(postsPath, `${slug}.mdx`),
     'utf-8',
   )
 
   const { data: frontMatter, content } = matter(markdownWithMeta)
 
-  const mdxSource = await serialize(content, {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm, remarkA11yEmoji],
-      rehypePlugins: [
-        rehypeSlug,
-        rehypePrismPlus,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: 'prepend',
-            properties: {
-              ariaLabel: 'Link to this section',
-              classname: ['no-underline'],
-            },
-            content: h('span.text-indigo-500', '# '),
-          },
-        ],
-      ],
-    },
-    scope: frontMatter,
-  })
-
   return {
     frontMatter,
-    mdxSource,
+    mdxSource: content,
   }
 }
 
@@ -109,11 +108,12 @@ type NextPreviousType = 'previous' | 'next'
 export const getPreviousOrNextPostBySlug = (
   slug: string,
   type: NextPreviousType,
+  locale: string,
 ) => {
-  const posts = getPosts()
+  const posts = getPosts(locale)
   const currentFileName = `${slug}.mdx`
   const currentPostIndex = pipe(
-    getPosts(),
+    posts,
     A.findIndex((post) => post.filePath === currentFileName),
     O.getOrElse(() => -1),
   )
