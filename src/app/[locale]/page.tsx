@@ -58,7 +58,65 @@ export default async function IndexPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: 'metadata.home' })
   const description = t('description', { years })
 
-  const blogPostingStructuredData = {
+  // Enhanced Person Schema for LLM/AI discoverability
+  const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': 'https://thayto.com/#person',
+    name: 'Rafael Thayto',
+    url: 'https://thayto.com',
+    image: {
+      '@type': 'ImageObject',
+      url: 'https://thayto.com/static/images/profile.jpg',
+      width: 460,
+      height: 460,
+      caption: 'Rafael Thayto Profile Picture',
+    },
+    jobTitle: 'Senior Software Engineer',
+    description: description,
+    sameAs: [
+      'https://github.com/rafa-thayto',
+      'https://linkedin.com/in/thayto',
+      'https://x.com/thayto_dev',
+    ],
+    knowsAbout: [
+      'TypeScript',
+      'Next.js',
+      'React',
+      'Node.js',
+      'Microservices',
+      'Software Architecture',
+      'Full-Stack Development',
+      'Web Performance',
+      'PWA Development',
+      'SEO',
+    ],
+    knowsLanguage: [
+      { '@type': 'Language', name: 'Portuguese', alternateName: 'pt' },
+      { '@type': 'Language', name: 'English', alternateName: 'en' },
+    ],
+  }
+
+  // Organization Schema
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': ['Organization', 'Brand'],
+    '@id': 'https://thayto.com/#organization',
+    name: 'Rafael Thayto',
+    url: 'https://thayto.com',
+    logo: 'https://thayto.com/static/images/profile.jpg',
+    founder: { '@id': 'https://thayto.com/#person' },
+    sameAs: [
+      'https://github.com/rafa-thayto',
+      'https://linkedin.com/in/thayto',
+    ],
+    description:
+      locale === 'pt'
+        ? 'Blog sobre desenvolvimento de software, TypeScript, Next.js e arquitetura'
+        : 'Blog about software development, TypeScript, Next.js, and architecture',
+  }
+
+  const webPageStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     '@id': locale === 'pt' ? 'https://thayto.com' : 'https://thayto.com/en',
@@ -66,13 +124,7 @@ export default async function IndexPage({ params }: Props) {
     name: 'Rafael Thayto - Home',
     description: description,
     inLanguage: locale === 'pt' ? 'pt-BR' : 'en-US',
-    author: {
-      '@type': 'Person',
-      name: 'Rafael Thayto',
-      url: 'https://thayto.com',
-      jobTitle: 'Senior Software Engineer',
-      description: description,
-    },
+    author: { '@id': 'https://thayto.com/#person' },
     image: {
       '@type': 'ImageObject',
       url: 'https://thayto.com/static/images/profile.jpg',
@@ -117,7 +169,19 @@ export default async function IndexPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(blogPostingStructuredData),
+          __html: JSON.stringify(personSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageStructuredData),
         }}
       />
 

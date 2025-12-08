@@ -6,6 +6,7 @@ import {
   getMdxSerializedPost,
   getPreviousOrNextPostBySlug,
   getPosts,
+  calculateWordCount,
 } from '@/utils/mdx'
 import { SITE_URL } from '@/utils/constants'
 import { BlogPostNavigation } from './blog-post-navigation'
@@ -119,16 +120,30 @@ export default async function PostPage({
 }) {
   const { locale, slug } = await params
   const { frontMatter, mdxSource } = await getMdxSerializedPost(slug, locale)
-  const { title, description, tags, publishedTime, modifiedTime, image } =
-    frontMatter
+  const {
+    title,
+    description,
+    tags,
+    publishedTime,
+    modifiedTime,
+    image,
+    keywords,
+  } = frontMatter
   const prevPost = getPreviousOrNextPostBySlug(slug, 'previous', locale)
   const nextPost = getPreviousOrNextPostBySlug(slug, 'next', locale)
 
   const blogUrl = locale === 'pt' ? `/blog/${slug}` : `/en/blog/${slug}`
 
+  // Calculate word count for LLM SEO
+  const content = mdxSource.toString()
+  const wordCount = calculateWordCount(content)
+  const readingTimeMinutes = Math.ceil(wordCount / 200)
+
+  // Enhanced BlogPosting Schema for LLM/AI discoverability
   const blogPostingStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    '@id': `${SITE_URL}${blogUrl}`,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `${SITE_URL}${blogUrl}`,
@@ -138,19 +153,79 @@ export default async function PostPage({
     datePublished: publishedTime,
     dateModified: modifiedTime,
     inLanguage: locale === 'pt' ? 'pt-BR' : 'en-US',
+    // NEW: Word count and reading time (critical for LLMs)
+    wordCount: wordCount,
+    timeRequired: `PT${readingTimeMinutes}M`,
+    // NEW: Keywords (use frontmatter keywords or fallback to tags)
+    keywords: keywords?.join(', ') || tags?.join(', '),
+    // NEW: Article topics
+    about: tags?.map((tag: string) => ({
+      '@type': 'Thing',
+      name: tag,
+    })),
+    // NEW: Educational context
+    educationalUse: 'learning',
+    learningResourceType: 'tutorial',
+    // ENHANCED: Author with full details
     author: {
       '@type': 'Person',
+      '@id': 'https://thayto.com/#person',
       name: 'Rafael Thayto',
+      url: `${SITE_URL}${locale === 'en' ? '/en' : ''}/about`,
       jobTitle: 'Senior Software Engineer',
-      url: `${SITE_URL}/static/images/profile.jpg`,
+      sameAs: [
+        'https://github.com/rafa-thayto',
+        'https://linkedin.com/in/thayto',
+      ],
     },
+    // ENHANCED: Publisher
     publisher: {
       '@type': 'Person',
+      '@id': 'https://thayto.com/#person',
       name: 'Rafael Thayto',
-      jobTitle: 'Senior Software Engineer',
-      url: `${SITE_URL}/static/images/profile.jpg`,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/static/images/profile.jpg`,
+        width: 460,
+        height: 460,
+      },
     },
-    image: `${SITE_URL}/static/images/${image?.src || 'profile.jpg'}`,
+    // Enhanced image
+    image: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}/static/images/${image?.src || 'profile.jpg'}`,
+      width: 1200,
+      height: 630,
+    },
+    // NEW: Breadcrumb
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: `${SITE_URL}${locale === 'en' ? '/en' : ''}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Blog',
+          item: `${SITE_URL}${locale === 'en' ? '/en' : ''}/blog`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: title,
+          item: `${SITE_URL}${blogUrl}`,
+        },
+      ],
+    },
+    // NEW: Speakable sections for voice assistants
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', 'h2', '.prose'],
+    },
   }
 
   return (

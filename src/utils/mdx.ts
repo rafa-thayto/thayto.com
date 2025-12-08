@@ -15,6 +15,19 @@ export type Post = {
     publishedTime: Date
     modifiedTime: Date
     description: string
+    // New LLM/AI SEO fields
+    keywords?: string[]
+    summary?: string
+    difficulty?: 'beginner' | 'intermediate' | 'advanced'
+    readingTime?: number
+    tableOfContents?: boolean
+    sources?: Array<{
+      title: string
+      url: string
+      accessed?: string
+    }>
+    relatedPosts?: string[]
+    // Existing fields
     image: {
       src: string
       placeholder?: string
@@ -37,6 +50,17 @@ export const sortPostsByDate = (posts: any) => {
     const bDate = new Date(b.data.publishedTime).getTime()
     return bDate - aDate
   })
+}
+
+// Calculate word count from MDX content (for LLM SEO)
+export function calculateWordCount(content: string): number {
+  return content
+    .replace(/<[^>]*>/g, '') // Remove HTML tags
+    .replace(/```[\s\S]*?```/g, '') // Remove code blocks
+    .replace(/`[^`]*`/g, '') // Remove inline code
+    .trim()
+    .split(/\s+/)
+    .filter((word) => word.length > 0).length
 }
 
 export const getPosts = (locale: string): Post[] => {
