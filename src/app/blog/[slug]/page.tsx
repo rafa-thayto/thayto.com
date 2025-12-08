@@ -145,7 +145,7 @@ export default async function PostPage({
         }}
       />
 
-      <div className="min-h-screen ">
+      <div className="min-h-screen bg-slate-50 dark:bg-black">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <BlogPostNavigation
             prevPost={prevPost}
@@ -154,7 +154,7 @@ export default async function PostPage({
             position="top"
           />
 
-          <article className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+          <article className="bg-white dark:bg-black rounded-2xl shadow-xl overflow-hidden">
             <header className="px-6 sm:px-8 lg:px-12 pt-8 sm:pt-12 lg:pt-16">
               {tags && tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-6">
@@ -186,7 +186,7 @@ export default async function PostPage({
 
             {image && (
               <div className="px-6 sm:px-8 lg:px-12 mb-8 sm:mb-12">
-                <div className="relative aspect-video rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700">
+                <div className="relative aspect-video rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-900">
                   <Image
                     className="object-cover"
                     fill
@@ -206,7 +206,7 @@ export default async function PostPage({
             )}
 
             <main className="px-6 sm:px-8 lg:px-12 pb-8 sm:pb-12 lg:pb-16">
-              <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-blue-500 prose-blockquote:bg-blue-50 dark:prose-blockquote:bg-gray-800 dark:prose-blockquote:border-l-blue-400">
+              <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-blue-500 prose-blockquote:bg-blue-50 dark:prose-blockquote:bg-black dark:prose-blockquote:border-l-blue-400">
                 <MDXRemote
                   source={mdxSource}
                   components={components}

@@ -60,7 +60,7 @@ export const BlogCard = ({
   }, [])
 
   return (
-    <div className="rounded-lg hover:bg-slate-100 dark:hover:bg-gray-700 overflow-hidden transition-all duration-200 border border-gray-200 dark:border-gray-700 hover:border-indigo-300 hover:shadow-xl">
+    <div className="rounded-lg hover:bg-slate-100 dark:hover:bg-gray-900 overflow-hidden transition-all duration-200 border border-gray-200 dark:border-gray-700 hover:border-indigo-300 hover:shadow-xl">
       <Link
         href={href}
         onClick={() => {
@@ -72,7 +72,7 @@ export const BlogCard = ({
         className="flex flex-col sm:flex-row"
       >
         {image && (
-          <div className="relative w-full sm:w-48 h-48 sm:h-auto bg-gray-100 dark:bg-gray-700 overflow-hidden flex-shrink-0">
+          <div className="relative w-full sm:w-48 h-48 sm:h-auto bg-gray-100 dark:bg-gray-900 overflow-hidden flex-shrink-0">
             <Image
               className="object-cover transition-transform duration-200 hover:scale-105"
               fill
@@ -99,7 +99,7 @@ export const BlogCard = ({
               </time>
             </p>
           </div>
-          <p className="text-gray-700 dark:text-slate-300 text-sm line-clamp-3 mb-4">
+          <p className="text-gray-700 dark:text-gray-200 text-sm line-clamp-3 mb-4">
             {description}
           </p>
           <div className="flex flex-wrap gap-2 text-blue-800 dark:text-blue-300">
@@ -135,7 +135,7 @@ export const BlogCard = ({
           )}
           <span
             title="Number of reactions"
-            className="ml-1 text-slate-800 dark:text-slate-100"
+            className="ml-1 text-slate-800 dark:text-gray-100"
           >
             {reactionsLength + (hasLike ? 1 : 0)}
             <span>&nbsp;Reactions</span>
@@ -150,11 +150,11 @@ export const BlogCard = ({
           <>
             <ChatBubbleLeftEllipsisIcon
               height={24}
-              className="text-slate-800 dark:text-slate-100"
+              className="text-slate-800 dark:text-gray-100"
             />
             <span
               title="Number of comments"
-              className="ml-1 text-slate-800 dark:text-slate-100"
+              className="ml-1 text-slate-800 dark:text-gray-100"
             >
               {commentsLength}
               <span>&nbsp;Comments</span>

@@ -51,7 +51,7 @@ export const Footer = ({
   )
 
   return (
-    <footer className="mt-10 py-8 bg-slate-50 dark:bg-slate-800">
+    <footer className="mt-10 py-8 bg-slate-50 dark:bg-black">
       <div className="max-w-4xl mx-auto px-4 sm:px-24">
         <div className="flex flex-col items-center gap-4">
           <div className="flex flex-wrap justify-center items-center gap-4 text-sm">

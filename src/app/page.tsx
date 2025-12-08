@@ -100,10 +100,12 @@ export default async function IndexPage() {
     <Layout>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingStructuredData) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(blogPostingStructuredData),
+        }}
       />
 
-      <main className="max-w-4xl mx-auto mt-6 bg-neutral-50 dark:bg-slate-800 py-6 px-4 sm:px-24">
+      <main className="max-w-4xl mx-auto mt-6 bg-neutral-50 dark:bg-black py-6 px-4 sm:px-24">
         <HomeContent posts={posts} />
       </main>
     </Layout>

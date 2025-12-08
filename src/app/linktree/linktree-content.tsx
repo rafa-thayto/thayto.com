@@ -157,7 +157,7 @@ export function LinktreeContent() {
   }, [])
 
   return (
-    <div className="mx-0 pt-4 bg-slate-50 dark:bg-gray-900">
+    <div className="mx-0 pt-4 bg-slate-50 dark:bg-black">
       <div className="px-8">
         <header className="mb-6 mx-auto">
           <div className="flex items-center justify-center flex-col sm:flex-row mb-4">
@@ -182,7 +182,7 @@ export function LinktreeContent() {
                 <div className="absolute -inset-2 rounded-full !border-2 !border-blue-500 !animate-pulse !opacity-60"></div>
               )}
 
-              <div className="relative w-full h-full bg-slate-50 dark:bg-gray-900 rounded-full p-0.5">
+              <div className="relative w-full h-full bg-slate-50 dark:bg-black rounded-full p-0.5">
                 <Image
                   src="/static/images/profile.jpg"
                   alt="Thayto's profile picture"
@@ -210,7 +210,7 @@ export function LinktreeContent() {
               <Link
                 key={text}
                 href={href}
-                className="group flex items-center justify-between py-4 px-4 bg-white dark:bg-gray-800 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="group flex items-center justify-between py-4 px-4 bg-white dark:bg-gray-900 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-950"
                 style={{
                   borderBottom:
                     index !== links.length - 1 ? '1px solid #d1d5db' : 'none',
@@ -225,9 +225,7 @@ export function LinktreeContent() {
                 <div className="flex items-center">
                   {Icon && (
                     <div className="w-6 h-6 flex-shrink-0 mr-3 flex items-center justify-center">
-                      <Icon
-                        color={theme === 'dark' ? '#FFFFFF' : '#374151'}
-                      />
+                      <Icon color={theme === 'dark' ? '#FFFFFF' : '#000000'} />
                     </div>
                   )}
                   <div className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200">

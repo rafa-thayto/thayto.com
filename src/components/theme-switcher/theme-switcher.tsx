@@ -118,11 +118,11 @@ export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
     <button
       type="button"
       onClick={toggleTheme}
-      className="group relative inline-flex h-8 w-14 items-center rounded-full bg-gray-200 dark:bg-gray-700 transition-all duration-300 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+      className="group relative inline-flex h-8 w-14 items-center rounded-full bg-gray-200 dark:bg-gray-800 transition-all duration-300 hover:bg-gray-300 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       <div
-        className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out transform ${
+        className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-900 shadow-lg transition-all duration-300 ease-in-out transform ${
           isDark ? 'translate-x-7' : 'translate-x-1'
         } group-hover:scale-110`}
       >

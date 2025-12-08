@@ -22,7 +22,7 @@ export function BlogContent({ posts: p }: BlogContentProps) {
     <div className="max-w-4xl mx-auto flex flex-col gap-4 px-4">
       <Link
         href="/"
-        className="group flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors duration-200 mb-4 w-fit"
+        className="group flex items-center gap-2 text-sm text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-100 transition-colors duration-200 mb-4 w-fit"
       >
         <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
         Index

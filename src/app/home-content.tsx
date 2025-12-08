@@ -77,7 +77,7 @@ export function HomeContent({ posts }: HomeContentProps) {
             <div className="absolute -inset-2 rounded-full !border-2 !border-blue-500 !animate-pulse !opacity-60"></div>
           )}
 
-          <div className="relative w-full h-full bg-neutral-50 dark:bg-slate-800 rounded-full p-0.5">
+          <div className="relative w-full h-full bg-neutral-50 dark:bg-black rounded-full p-0.5">
             <Image
               src="/static/images/profile.jpg"
               alt="Thayto's profile picture"
@@ -102,18 +102,19 @@ export function HomeContent({ posts }: HomeContentProps) {
       <section className="text-sm font-normal font-sans mt-6 flex flex-col gap-4 text-gray-700 dark:text-gray-200">
         <p>Oi, sou o Rafael Thayto, prazer! :)</p>
         <p>
-          Atualmente tenho mais de {getYearsOfProfessionalExperience()} anos
-          de experiência como desenvolvedor. Desde o inicio da minha carreira
-          lá em 2018 (quando comecei à atuar profissionalmente) sempre
-          trabalhei com sistemas distribuídos, microsserviços, microfrontends
-          e observabilidade. Já trabalhei em{' '}
+          Atualmente tenho mais de {getYearsOfProfessionalExperience()} anos de
+          experiência como desenvolvedor. Desde o inicio da minha carreira lá em
+          2018 (quando comecei à atuar profissionalmente) sempre trabalhei com
+          sistemas distribuídos, microsserviços, microfrontends e
+          observabilidade. Já trabalhei em{' '}
           <Tooltip>
             <TooltipTrigger asChild>
               <span className="underline cursor-help">grandes empresas</span>
             </TooltipTrigger>
             <TooltipContent>
               <p>
-                Nike, Flash, Creditas, Safra Bank (NY, BR, Sarasin), Avanade
+                Nike, Outlit (YC W25), Flash, Creditas, Safra Bank (NY, BR,
+                Sarasin), Avanade
               </p>
             </TooltipContent>
           </Tooltip>{' '}
@@ -126,10 +127,10 @@ export function HomeContent({ posts }: HomeContentProps) {
         <p>I use VIM btw (since 2022). ❤️</p>
       </section>
 
-      <section className="mt-8 text-base text-slate-800 dark:text-slate-200">
+      <section className="mt-8 text-base text-slate-800 dark:text-gray-100">
         <Link
           href="/blog"
-          className="group flex items-center gap-2 text-lg font-normal text-slate-600 dark:text-slate-400 mb-6 hover:text-slate-800 dark:hover:text-slate-200 transition-colors duration-200"
+          className="group flex items-center gap-2 text-lg font-normal text-slate-600 dark:text-gray-400 mb-6 hover:text-slate-800 dark:hover:text-gray-100 transition-colors duration-200"
         >
           Posts
           <ChevronRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />

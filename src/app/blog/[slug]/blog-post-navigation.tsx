@@ -44,7 +44,7 @@ export function BlogPostNavigation({
             {prevPost && (
               <Link
                 href={`/blog/${prevPost.slug}`}
-                className="group relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
+                className="group relative overflow-hidden rounded-xl bg-white dark:bg-gray-900 p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
                 onClick={() => {
                   posthog.capture('change-post-btn', {
                     href: `/blog/${prevPost.slug}`,
@@ -71,7 +71,7 @@ export function BlogPostNavigation({
             {nextPost && (
               <Link
                 href={`/blog/${nextPost.slug}`}
-                className="group relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-200 dark:border-gray-700 md:text-right"
+                className="group relative overflow-hidden rounded-xl bg-white dark:bg-gray-900 p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-200 dark:border-gray-700 md:text-right"
                 onClick={() => {
                   posthog.capture('change-post-btn', {
                     href: `/blog/${nextPost.slug}`,

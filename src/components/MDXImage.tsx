@@ -92,11 +92,7 @@ export const MDXImage = ({
           onClick={(e) => e.stopPropagation()}
         >
           {isExternalImage ? (
-            <img
-              src={src}
-              alt={alt}
-              className="w-full h-full object-contain"
-            />
+            <img src={src} alt={alt} className="w-full h-full object-contain" />
           ) : (
             <Image
               src={src}
@@ -149,7 +145,7 @@ export const MDXImage = ({
         )}
 
         <span className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-3">
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-full p-3">
             <EyeIcon className="h-6 w-6 text-gray-900 dark:text-white" />
           </span>
         </span>
