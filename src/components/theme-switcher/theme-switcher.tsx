@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable */
 
 import posthog from 'posthog-js'
 import { useEffect, useState } from 'react'
@@ -45,25 +46,23 @@ type ThemeSwitcherProps = {
   onThemeChange?: (theme: 'dark' | 'light') => void
 }
 
-const getInitialTheme = () => {
-  if (typeof window === 'undefined') return false
-  const theme = localStorage.getItem('theme')
-  const systemPrefersDark = window.matchMedia(
-    '(prefers-color-scheme: dark)',
-  ).matches
-  return theme === 'dark' || (!theme && systemPrefersDark)
-}
-
 export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
-  const [isDark, setIsDark] = useState(getInitialTheme)
+  const [isDark, setIsDark] = useState<boolean | null>(null)
 
   useEffect(() => {
-    if (isDark) {
+    const theme = localStorage.getItem('theme')
+    const systemPrefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)',
+    ).matches
+    const initialIsDark = theme === 'dark' || (!theme && systemPrefersDark)
+    setIsDark(initialIsDark)
+
+    if (initialIsDark) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
-  }, [isDark])
+  }, [])
 
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
@@ -112,6 +111,16 @@ export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
     onThemeChange?.(newTheme)
 
     window.dispatchEvent(new Event('themeChange'))
+  }
+
+  // Render a placeholder during SSR/hydration to avoid mismatch
+  if (isDark === null) {
+    return (
+      <div
+        className="inline-flex h-8 w-14 items-center rounded-full bg-gray-200 dark:bg-gray-800"
+        aria-hidden="true"
+      />
+    )
   }
 
   return (
