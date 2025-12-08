@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "home": {
+      "title": "Rafael Thayto - Home",
+      "description": "Hi, I'm Rafael Thayto, nice to meet you! :) I currently have over {years} years of experience as a developer. Since the beginning of my career back in 2018 (when I started working professionally) I have always worked with distributed systems, microservices, microfrontends and observability. I have worked at large companies with millions of active users, companies in Brazil, USA and Switzerland. Here you will find some posts about technology and some thoughts (both in English and Portuguese)."
+    },
+    "blog": {
+      "title": "Rafael Thayto - Blog",
+      "description": "Here you'll find various articles about technology and career."
+    },
+    "about": {
+      "title": "Rafael Thayto - About",
+      "description": "About me"
+    },
+    "linktree": {
+      "title": "Rafael Thayto - Linktree",
+      "description": "Links and social media"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "blog": "Blog",
+    "about": "About",
+    "linktree": "Linktree"
+  },
+  "blog": {
+    "backToBlog": "Back to blog",
+    "previousArticle": "Previous article",
+    "nextArticle": "Next article",
+    "index": "Index",
+    "publishedOn": "Published on",
+    "tags": "Tags",
+    "readMore": "Read more"
+  },
+  "home": {
+    "greeting": "Hi, I'm Rafael Thayto, nice to meet you! :)",
+    "title": "Rafael Thayto Tani",
+    "subtitle": "Senior Software Engineer",
+    "bio": {
+      "intro": "I currently have over {years} years of experience as a developer. Since the beginning of my career back in 2018 (when I started working professionally) I have always worked with distributed systems, microservices, microfrontends and observability. I have worked at",
+      "companies": "large companies",
+      "companiesDetail": "Nike, Outlit (YC W25), Flash, Creditas, Safra Bank (NY, BR, Sarasin), Avanade",
+      "location": "with millions of active users, companies in Brazil, USA and Switzerland.",
+      "blog": "Here you will find some posts about technology and some thoughts (both in English and Portuguese).",
+      "vim": "I use VIM btw (since 2022). ❤️"
+    },
+    "recentPosts": "Posts"
+  },
+  "about": {
+    "title": "About me",
+    "bio": {
+      "paragraph1": "Rafael Thayto is a developer with over {years} years of experience, passionate about solving problems and learning new technologies and good development practices. I have worked on several projects, always dedicating myself to the maximum to ensure the delivery of efficient and high quality solutions.",
+      "paragraph2": "He really enjoys playing, meeting new people and places. I can be sure that if you talk to him, in a few minutes you will have already created a connection.",
+      "inProgress": "In progress... 🧱"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "notFound": "Not found"
+  }
+}

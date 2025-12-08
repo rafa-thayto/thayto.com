@@ -4,45 +4,65 @@ import { getPosts } from '@/utils/mdx'
 import { SITE_URL } from '@/utils/constants'
 import { BlogContent } from './blog-content'
 import { Suspense } from 'react'
+import { getTranslations } from 'next-intl/server'
 
-const description =
-  'Aqui você encontra vários artigos sobre tecnologia e carreira.'
-
-export const metadata: Metadata = {
-  title: 'Rafael Thayto - Blog',
-  description,
-  alternates: {
-    canonical: 'https://thayto.com/blog',
-  },
-  openGraph: {
-    url: 'https://thayto.com/blog',
-    title: 'Rafael Thayto - Blog',
-    description,
-    images: [
-      {
-        url: 'https://thayto.com/static/images/seo-card-blog.png',
-        type: 'image/png',
-      },
-    ],
-    siteName: 'Thayto.com',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@thayto',
-    creator: '@thayto',
-  },
+type Props = {
+  params: Promise<{ locale: string }>
 }
 
-export default async function Blog() {
-  const posts = getPosts()
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'metadata.blog' })
+
+  const canonicalUrl =
+    locale === 'pt' ? 'https://thayto.com/blog' : 'https://thayto.com/en/blog'
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        pt: 'https://thayto.com/blog',
+        en: 'https://thayto.com/en/blog',
+      },
+    },
+    openGraph: {
+      url: canonicalUrl,
+      title: t('title'),
+      description: t('description'),
+      locale: locale === 'pt' ? 'pt_BR' : 'en_US',
+      alternateLocale: locale === 'pt' ? 'en_US' : 'pt_BR',
+      images: [
+        {
+          url: 'https://thayto.com/static/images/seo-card-blog.png',
+          type: 'image/png',
+        },
+      ],
+      siteName: 'Thayto.com',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@thayto',
+      creator: '@thayto',
+    },
+  }
+}
+
+export default async function Blog({ params }: Props) {
+  const { locale } = await params
+  const posts = getPosts(locale)
+  const t = await getTranslations({ locale, namespace: 'metadata.blog' })
+
+  const blogUrl = locale === 'pt' ? '/blog' : '/en/blog'
 
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'Rafael Thayto - Blog',
-    url: 'https://thayto.com/blog',
-    description:
-      'Aqui você encontra vários artigos sobre tecnologia e carreira.',
+    name: t('title'),
+    url: `${SITE_URL}${blogUrl}`,
+    description: t('description'),
+    inLanguage: locale === 'pt' ? 'pt-BR' : 'en-US',
     publisher: {
       '@type': 'Person',
       name: 'Rafael Thayto',
@@ -56,7 +76,7 @@ export default async function Blog() {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': 'https://thayto.com/blog',
+      '@id': `${SITE_URL}${blogUrl}`,
     },
     blogPost: posts.map(({ data }) => ({
       '@type': 'BlogPosting',
@@ -65,6 +85,7 @@ export default async function Blog() {
       image: `${SITE_URL}/static/images/${data.image.src}`,
       datePublished: data.publishedTime,
       dateModified: data.modifiedTime,
+      inLanguage: locale === 'pt' ? 'pt-BR' : 'en-US',
       author: {
         '@type': 'Person',
         name: 'Rafael Thayto',

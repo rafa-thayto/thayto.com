@@ -1,0 +1,75 @@
+---
+title: 'TypeScript - Template Literal Types'
+publishedTime: '2023-07-07T07:30:51Z'
+modifiedTime: '2024-07-07T21:08:51Z'
+description: 'Template Literal Types is really cool and expands the possibilities of what was already possible with string literals + unions in TS, check it out! It has the same syntax as JavaScript template literal strings.'
+image:
+  {
+    src: 'typescript-template-literal-types.png',
+    placeholder: 'typescript-template-literal-types-small.png',
+    type: 'image/png',
+  }
+tags: ['typescript', 'utilities', 'types', 'learning']
+href: '/blog/typescript-template-literal-types'
+reactionsLength: 0
+commentsLength: 0
+---
+
+## What is Template Literal Types?
+
+**Template Literal Types** is really cool and expands the possibilities of what was already possible with `string literals + unions` in TS, check it out!
+
+It has the same syntax as JavaScript template literal strings.
+
+```ts
+type Goodbye = 'goodbye!'
+
+type Greeting = `Hi ${Goodbye}`
+```
+
+With it, you can use your needs + imagination to do several cool things that will add a lot to your project/type.
+
+A nice example would be to standardize that all extra properties we add to a type need to have the prefix "data\_" and the suffix "\_prop", so we can create an object with a pattern that will make it easier to read and know which extra properties were sent.
+
+Talk is cheap, but where's the example? Let's start by creating an EventData type, it's our base for our event object.
+
+```ts
+type EventData = {
+  id: string
+  name: string
+  step: 'first_step' | 'second_step'
+}
+```
+
+It already has defined properties that cannot be changed, but now we need to send some more fields related to the fields it has in each step. We could extend the EventData type and add the fields, but instead, let's use Template Literal Types!
+
+```ts
+type FormFields = {
+  name: string
+  age: number
+}
+
+type EventDataExtraProps<T> = `field_${string & keyof T}`
+// here we'll modify EventData a bit
+type EventData<T> = {
+  id: string
+  name: string
+  step: 'first_step' | 'second_step'
+} & Record<EventDataExtraProps<T>, any>
+
+const event: EventData<FormFields> = {
+  id: 'sextou?',
+  name: 'thayto',
+  step: 'first_step',
+  field_name: 'full_name',
+  field_age: 22,
+}
+```
+
+It seems complex, but it's quite simple. In large projects / libs, with a single utility like this, we can work magic on auto_completes and standardize sending certain properties!
+
+Hope you learned something, if not, at least you read until the end, cheers!
+
+https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
+
+![image calling you dumb if you still don't know template literal types](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/12fb3fct25e3hcwbhr9d.png)

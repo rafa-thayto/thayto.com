@@ -1,0 +1,65 @@
+---
+title: 'TypeScript - How to Extract a String from Your Literal Types'
+publishedTime: '2023-07-24T15:58:51Z'
+modifiedTime: '2024-07-07T21:33:51Z'
+description: "I won't beat around the bush. Basically just use TypeScript's Extract Utility Type and that's it!"
+image:
+  {
+    src: 'ts-como-pegar-string-no-seu-literal-types.jpg',
+    placeholder: 'ts-como-pegar-string-no-seu-literal-types-small.jpg',
+    type: 'image/jpeg',
+  }
+tags: ['typescript', 'utilities', 'types', 'tutorial']
+href: '/blog/ts-como-pegar-string-no-seu-literal-types'
+reactionsLength: 0
+commentsLength: 0
+---
+
+Hey there, senior devs.
+
+I won't beat around the bush. Basically just use **TypeScript**'s _Utility Type_ `Extract` and that's it! _**For example:**_
+
+```ts
+type CatNames = 'Garfield' | 'Yoru' | 'Yuki' | 'Fluffy' | 'Lady' | 'Lucky'
+
+type MyCatNames = Extract<CatNames, 'Yoru' | 'Yuki'>
+// |-> Extract these two `literal types` from CatNames `literal type`
+
+type Cat = {
+  age: number
+  name: CatNames
+}
+
+function getMyCat(age: number, name: MyCatNames): Cat {
+  // |--> only show 'Yoru' and
+  //                'Yuki'
+  return {
+    age,
+    name,
+  } as Cat
+}
+
+const myCat1 = getMyCat(1, 'Yoru')
+const myCat2 = getMyCat(1, 'Yuki')
+
+const otherCat: Cat = {
+  age: 3,
+  name: 'Garfield',
+}
+const otherCatWithMyCatName: Cat = {
+  age: 5,
+  name: 'Yoru',
+}
+
+// cheers!
+```
+
+> [TS Playground](https://www.typescriptlang.org/play?#code/C4TwDgpgBAwghsAcnAthAzlAvFA5AcTgCcAzASwgBsATXKAHzwE0B7IgVzsdyfYGsyXPADFK7EiRBDcAGTjUpDPDPYBjPlIBQm0JCgBZEPCSoM2KAFEAHsCJxVwADzHkadABpmbTkp79BAHyaUCGhYeERkVEA9NEMALQBljZ2DlDAABYY0MAA7ixQAAaUZMAQdpTp4BiFUCRELCiwCK5mxaXlcJW6EIXaPc3A5gDewVBwAOYQAFxQAHbsKABG5e5jc6azLqbomgC+2iTscw5kLHNQU8CGxgAUkzPziytEnhtoszctOwCUWwhQUZRYEgsKxBKJKDnSggKDoDIsXJeDh0OBzahQMag7ERcE4kJ+AS4MZECDAdhEC5A0IPNZhd4QOlQPbjTDGfbaVTndBDFBGBAARnMVy+wFuAs8PG8uB+mi5cx5UD5xgATMKyaLxZLeETZXLuUMWJlysZ-kMcNSQg9ZgBmJkhBmzAjEchUWgc+WKo1ZIjGADqpQyotaZpGWPGU1mAFZ7fNNsjOPsgA) link
+
+hope this helps someone!
+
+(NOTE: this post was written in 10 minutes max)
+
+my links: https://thayto.com/linktree
+
+_Photo by <a href="https://unsplash.com/@_k_arinn?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Karina Vorozheeva</a> on <a href="https://unsplash.com/photos/white-butterfly-resting-on-cats-nose-rW-I87aPY5Y?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>_

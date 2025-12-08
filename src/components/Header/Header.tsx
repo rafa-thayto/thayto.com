@@ -8,16 +8,20 @@ import { Fragment, useState, useEffect } from 'react'
 import ReactConfetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
 import { ThemeSwitcher } from '../theme-switcher/theme-switcher'
+import { LanguageSwitcher } from '../language-switcher'
+import { useLocale } from 'next-intl'
 
 export const Header = () => {
   const navbarId = nanoid()
   const menuId = nanoid()
+  const locale = useLocale()
 
   const { width, height } = useWindowSize()
   const [showConfetti, setShowConfetti] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 })
 
+  const basePath = locale === 'pt' ? '' : '/en'
   const navigation = [
     {
       name: ';)',
@@ -26,8 +30,8 @@ export const Header = () => {
         setShowConfetti(true)
       },
     },
-    { name: 'Home', href: '/' },
-    { name: 'Blog', href: '/blog' },
+    { name: 'Home', href: basePath || '/' },
+    { name: 'Blog', href: `${basePath}/blog` },
   ]
 
   useEffect(() => {
@@ -226,7 +230,14 @@ export const Header = () => {
                 ))}
               </nav>
 
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
+                <div
+                  className={`transition-all duration-500 ease-out ${
+                    isScrolled ? 'scale-90' : 'scale-100'
+                  }`}
+                >
+                  <LanguageSwitcher />
+                </div>
                 <div
                   className={`transition-all duration-500 ease-out ${
                     isScrolled ? 'scale-90' : 'scale-100'

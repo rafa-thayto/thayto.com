@@ -43,6 +43,7 @@
     "motion": "^12.16.0",
     "nanoid": "^4.0.0",
     "next": "16.0.7",
+    "next-intl": "^4.5.8",
     "next-mdx-remote": "^5.0.0",
     "plaiceholder": "^2.5.0",
     "poly-decomp": "^0.3.0",
@@ -59,7 +60,7 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "rss": "^1.2.2",
-    "sharp": "^0.31.2",
+    "sharp": "^0.34.4",
     "svg-path-commander": "^2.1.11",
     "tailwind-merge": "^3.3.0",
     "tailwindcss": "^4.1.8"

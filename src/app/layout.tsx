@@ -34,7 +34,11 @@ export const metadata: Metadata = {
   },
   alternates: {
     types: {
-      'application/rss+xml': 'https://thayto.com/rss.xml',
+      'application/rss+xml': [
+        { url: 'https://thayto.com/rss.xml', title: 'RSS Feed (Português)' },
+        { url: 'https://thayto.com/rss-pt.xml', title: 'RSS Feed - Português' },
+        { url: 'https://thayto.com/rss-en.xml', title: 'RSS Feed - English' },
+      ],
     },
   },
   icons: {
@@ -53,10 +57,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR" className="dark">
+    <html suppressHydrationWarning className="dark">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <meta
           name="theme-color"
           media="(prefers-color-scheme: light)"
@@ -68,10 +76,8 @@ export default function RootLayout({
           content="black"
         />
       </head>
-      <body className={`${poppins.variable} ${lora.variable}`}>
-        <Providers>
-          <main className="font-sans">{children}</main>
-        </Providers>
+      <body className={`${poppins.variable} ${lora.variable} font-sans`}>
+        <Providers>{children}</Providers>
         <Analytics />
         <VercelAnalytics />
       </body>

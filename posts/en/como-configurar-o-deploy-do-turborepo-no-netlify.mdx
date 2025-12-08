@@ -1,0 +1,169 @@
+---
+title: 'How to Configure Turborepo Deployment on Netlify'
+publishedTime: '2022-06-21T15:14:48Z'
+modifiedTime: '2022-10-25T23:50:06Z'
+description: "The other day I faced a challenge deploying one of my applications using Turborepo with Next.js and since I believe more people might have this problem, I decided to make a guide on how to do the initial configurations, let's go?"
+image:
+  {
+    src: 'como-configurar-o-deploy-do-turborepo-no-netlify.png',
+    placeholder: 'como-configurar-o-deploy-do-turborepo-no-netlify-small.png',
+    type: 'image/png',
+  }
+tags: ['turborepo', 'netlify', 'tutorial', 'react', 'next.js']
+href: '/blog/como-configurar-o-deploy-do-turborepo-no-netlify'
+reactionsLength: 0
+commentsLength: 0
+---
+
+The other day I faced a challenge deploying one of my applications using Turborepo with Next.js and since I believe more people might have this problem, I decided to make a guide on how to do the initial configurations, let's go?
+
+## Setup / Initial Configurations
+
+Well first let's start with the basics, create an application using Turborepo, which is quite simple, just execute this command below in the terminal :)
+
+```bash
+npx create-turbo@latest
+```
+
+And then something like this will probably appear:
+
+```bash
+Need to install the following packages:
+  create-turbo@1.2.16
+Ok to proceed? (y)
+```
+
+Just press `enter ⏎` or `y` and it will download this dependency so you can create the project in a much simpler way. Right after you'll see something like this:
+
+```bash
+>>> TURBOREPO
+
+>>> Welcome to Turborepo! Let's get you set up with a new codebase.
+
+? Where would you like to create your turborepo? (./my-turborepo)
+```
+
+And in this case I pressed `enter ⏎` to use the default name. Then it will ask you to use your preferred package manager:
+
+```bash
+? Which package manager do you want to use? (Use arrow keys)
+❯ npm
+  pnpm
+  yarn
+```
+
+I chose `npm` to make things easier for you :D
+
+After all this you'll probably have something like this on your screen:
+
+```bash
+>>> TURBOREPO
+
+>>> Welcome to Turborepo! Let's get you set up with a new codebase.
+
+? Where would you like to create your turborepo? ./my-turborepo
+? Which package manager do you want to use? npm
+
+>>> Creating a new turborepo with the following:
+
+ - apps/web: Next.js with TypeScript
+ - apps/docs: Next.js with TypeScript
+ - packages/ui: Shared React component library
+ - packages/eslint-config-custom: Shared configuration (ESLint)
+ - packages/tsconfig: Shared TypeScript `tsconfig.json`
+
+>   Installing dependencies...
+```
+
+And finally everything will be beautifully installed and we can move on to the interesting part. 😎.
+
+Let's open the folder with our preferred code editor (in my case it's VSCode) and when we open it we'll have something like this in the folder structure:
+
+![Image showing how the project structure should look](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/fizlxcl9y35xg8ixxxld.png)
+
+## Creating Netlify Configuration File
+
+After verifying that everything is correct, let's create a file called `netlify.toml` inside `./apps/web`
+
+![Image showing where the file we created should be located](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mwu7606izt80mx6u6bwx.png)
+
+And inside `netlify.toml` we'll put the following code:
+
+```toml
+[build]
+  command = "cd ../.. && npm install && npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+```
+
+Okay, but what's this for?
+
+Well, this is basically the configuration file that Netlify looks at before deploying.
+
+The `[build]` is the step that Netlify looks at to know how to build
+
+The `[[plugins]]` is the step where before building it installs some plugins that will make deployment easier internally. In our case it's extremely important to add the `Next.js` plugin to avoid any complications when it creates the internal cache and uses Next's `SSR` and `Edge Functions`.
+
+After this is configured we'll make a commit to our repo so we can push it to a GitHub repo and do the actual deployment. In the commit below notice that I'm using a famous convention for commits which is [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#specification) leave a comment if you want me to bring something related to commit standards :)
+
+```bash
+git add .
+git commit -m "build(web): adding Netlify configuration file"
+```
+
+Once the commit is done we now need to create a repo on GitHub to set the remote and be able to push
+
+![Image showing repo creation on GitHub](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wyz9ih56t7zhxdobuse6.png)
+
+Here I created the repo with the name `netlify-turborepo-post` but you can give it whatever name you prefer.
+
+After that the GitHub screen will open showing something like this
+
+![Image showing the initial state of the empty repo on GitHub](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/pf8qj76l9l08kxj7s3s9.png)
+
+You'll copy the bottom part since we already have an existing repo
+
+![Image showing the second GitHub box that we should copy](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vonm2u0moerjgcg1uy29.png)
+
+And then you'll paste it in our project's terminal, run the commands and voila ✨, we now have our code inside GitHub
+
+![Image showing our code inside GitHub](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/fjyt2bbhy5f97wxg50s8.png)
+
+Well... after creating and pushing our code to GitHub, we can now go to Netlify for the final step 😁!
+
+## Deploying Site on Netlify
+
+Open your Netlify account, then click on `Add new site`
+
+![Image showing an arrow pointing to the Add new site button](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/xfpndqa3d619fh8wsmbs.png)
+
+Select the `Import an existent project` option
+
+![Image showing selecting the Import an existent project option](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/02ryw39x9gvq2oqpvvgw.png)
+
+Select the GitHub provider
+
+![Image showing an arrow pointing to the GitHub icon which is the provider we should select](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ygc2oh8gwrr7teau4zas.png)
+
+Search for the name you gave your project
+
+![Image showing the search for our repo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sn5y68ln56sni8phfijj.png)
+
+Then put these settings in the **Basic build settings**
+
+![Image showing that we should set base directory as apps/web, leave build command empty and set publish directory as apps/web/
+.next](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/72w3i8z16opeu4tt3mgr.png)
+
+Then just click deploy and wait 😎...
+
+After a few minutes your site will be beautifully deployed on Netlify 😁🎆.
+
+However it will look ugly like this, buttttt... changing that is up to you!
+
+![Image showing how the site turned out](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4sl83phei0mqe45rywhu.png)
+
+Deploy link: https://thayto-netlify-turborepo-post.netlify.app/
+
+GitHub repository link: https://github.com/rafa-thayto/netlify-turborepo-post

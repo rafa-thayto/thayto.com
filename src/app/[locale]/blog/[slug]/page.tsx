@@ -1,11 +1,12 @@
 import { Layout, CodeBlock, Pre, MDXImage } from '@/components'
-import { POSTS_PATH } from '@/constants'
-import fs from 'fs'
 import { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
-import path from 'path'
-import { getMdxSerializedPost, getPreviousOrNextPostBySlug } from '@/utils/mdx'
+import {
+  getMdxSerializedPost,
+  getPreviousOrNextPostBySlug,
+  getPosts,
+} from '@/utils/mdx'
 import { SITE_URL } from '@/utils/constants'
 import { BlogPostNavigation } from './blog-post-navigation'
 import remarkGfm from 'remark-gfm'
@@ -14,6 +15,7 @@ import rehypeSlug from 'rehype-slug'
 import rehypePrismPlus from 'rehype-prism-plus'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { h } from 'hastscript'
+import { locales } from '@/i18n/config'
 
 const components = {
   pre: (props: any) => <Pre {...props} />,
@@ -42,34 +44,46 @@ const mdxOptions: any = {
 }
 
 export async function generateStaticParams() {
-  const files = fs.readdirSync(path.join(POSTS_PATH))
-
-  return files.map((filename) => ({
-    slug: filename.replace('.mdx', ''),
-  }))
+  return locales.flatMap((locale) =>
+    getPosts(locale).map((post) => ({
+      locale,
+      slug: post.filePath.replace('.mdx', ''),
+    })),
+  )
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ locale: string; slug: string }>
 }): Promise<Metadata> {
-  const { slug } = await params
-  const { frontMatter } = await getMdxSerializedPost(slug)
+  const { locale, slug } = await params
+  const { frontMatter } = await getMdxSerializedPost(slug, locale)
   const { title, description, tags, image } = frontMatter
+
+  const canonicalUrl =
+    locale === 'pt'
+      ? `https://thayto.com/blog/${slug}`
+      : `https://thayto.com/en/blog/${slug}`
 
   return {
     title: `${title} - Rafael Thayto`,
     description,
     keywords: tags?.join(', '),
     alternates: {
-      canonical: `https://thayto.com/blog/${slug}`,
+      canonical: canonicalUrl,
+      languages: {
+        pt: `https://thayto.com/blog/${slug}`,
+        en: `https://thayto.com/en/blog/${slug}`,
+      },
     },
     openGraph: {
       type: 'article',
-      url: `https://thayto.com/blog/${slug}`,
+      url: canonicalUrl,
       title,
       description,
+      locale: locale === 'pt' ? 'pt_BR' : 'en_US',
+      alternateLocale: locale === 'pt' ? 'en_US' : 'pt_BR',
       images: [
         {
           url: `https://thayto.com/static/images/${
@@ -101,26 +115,29 @@ export async function generateMetadata({
 export default async function PostPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ locale: string; slug: string }>
 }) {
-  const { slug } = await params
-  const { frontMatter, mdxSource } = await getMdxSerializedPost(slug)
+  const { locale, slug } = await params
+  const { frontMatter, mdxSource } = await getMdxSerializedPost(slug, locale)
   const { title, description, tags, publishedTime, modifiedTime, image } =
     frontMatter
-  const prevPost = getPreviousOrNextPostBySlug(slug, 'previous')
-  const nextPost = getPreviousOrNextPostBySlug(slug, 'next')
+  const prevPost = getPreviousOrNextPostBySlug(slug, 'previous', locale)
+  const nextPost = getPreviousOrNextPostBySlug(slug, 'next', locale)
+
+  const blogUrl = locale === 'pt' ? `/blog/${slug}` : `/en/blog/${slug}`
 
   const blogPostingStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${SITE_URL}/blog/${slug}`,
+      '@id': `${SITE_URL}${blogUrl}`,
     },
     headline: title,
     description: description,
     datePublished: publishedTime,
     dateModified: modifiedTime,
+    inLanguage: locale === 'pt' ? 'pt-BR' : 'en-US',
     author: {
       '@type': 'Person',
       name: 'Rafael Thayto',
@@ -155,7 +172,7 @@ export default async function PostPage({
           />
 
           <article className="bg-white dark:bg-black rounded-2xl shadow-xl overflow-hidden">
-            <header className="px-6 sm:px-8 lg:px-12 pt-8 sm:pt-12 lg:pt-16">
+            <header className="px-6 sm:px-8 lg:px-12 pt-4 sm:pt-8 lg:pt-12">
               {tags && tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-6">
                   {tags.map((tag: string) => (
@@ -175,9 +192,12 @@ export default async function PostPage({
 
               <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-8 sm:mb-12">
                 <time dateTime={publishedTime} className="font-medium">
-                  {new Intl.DateTimeFormat('pt-BR', {
-                    dateStyle: 'long',
-                  }).format(new Date(publishedTime))}
+                  {new Intl.DateTimeFormat(
+                    locale === 'pt' ? 'pt-BR' : 'en-US',
+                    {
+                      dateStyle: 'long',
+                    },
+                  ).format(new Date(publishedTime))}
                 </time>
                 <span className="mx-2">•</span>
                 <span>Rafael Thayto</span>

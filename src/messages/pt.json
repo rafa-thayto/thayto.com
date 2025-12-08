@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "home": {
+      "title": "Rafael Thayto - Home",
+      "description": "Oi, sou o Rafael Thayto, prazer! :) Atualmente tenho mais de {years} anos de experiência como desenvolvedor. Desde o inicio da minha carreira lá em 2018 (quando comecei à atuar profissionalmente) sempre trabalhei com sistemas distribuídos, microsserviços, microfrontends e observabilidade. Já trabalhei em grandes empresas com milhões de usuarios ativos, empresas no Brasil, EUA e Suiça. Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns pensamentos (tanto em inglês quanto em português)."
+    },
+    "blog": {
+      "title": "Rafael Thayto - Blog",
+      "description": "Aqui você encontra vários artigos sobre tecnologia e carreira."
+    },
+    "about": {
+      "title": "Rafael Thayto - About",
+      "description": "Sobre mim"
+    },
+    "linktree": {
+      "title": "Rafael Thayto - Linktree",
+      "description": "Links e redes sociais"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "blog": "Blog",
+    "about": "About",
+    "linktree": "Linktree"
+  },
+  "blog": {
+    "backToBlog": "Voltar para o blog",
+    "previousArticle": "Artigo anterior",
+    "nextArticle": "Próximo artigo",
+    "index": "Index",
+    "publishedOn": "Publicado em",
+    "tags": "Tags",
+    "readMore": "Ler mais"
+  },
+  "home": {
+    "greeting": "Oi, sou o Rafael Thayto, prazer! :)",
+    "title": "Rafael Thayto Tani",
+    "subtitle": "Senior Software Engineer",
+    "bio": {
+      "intro": "Atualmente tenho mais de {years} anos de experiência como desenvolvedor. Desde o inicio da minha carreira lá em 2018 (quando comecei à atuar profissionalmente) sempre trabalhei com sistemas distribuídos, microsserviços, microfrontends e observabilidade. Já trabalhei em",
+      "companies": "grandes empresas",
+      "companiesDetail": "Nike, Outlit (YC W25), Flash, Creditas, Safra Bank (NY, BR, Sarasin), Avanade",
+      "location": "com milhões de usuarios ativos, empresas no Brasil, EUA e Suiça.",
+      "blog": "Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns pensamentos (tanto em inglês quanto em português).",
+      "vim": "I use VIM btw (since 2022). ❤️"
+    },
+    "recentPosts": "Posts"
+  },
+  "about": {
+    "title": "Sobre mim",
+    "bio": {
+      "paragraph1": "Rafael Thayto é um desenvolvedor com mais de {years} anos de experiência, apaixonado por resolver problemas e aprender novas tecnologias e boas práticas de desenvolvimento. Atuei em diversos projetos, sempre me dedicando ao máximo para garantir a entrega de soluções eficientes e de alta qualidade.",
+      "paragraph2": "Ele gosta bastante de jogar, conhecer pessoas e lugares novos. Posso ter certeza que se conversar com ele, em poucos minutos já terão criado um conexão.",
+      "inProgress": "In progress... 🧱"
+    }
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "notFound": "Não encontrado"
+  }
+}
