@@ -1,0 +1,86 @@
+---
+title: 'Como Deixar a Sugestão de Arquivos do Claude Code Mais Rápida'
+publishedTime: '2026-01-08T12:00:00Z'
+modifiedTime: '2026-01-08T12:00:00Z'
+description: 'Aprenda a melhorar a sugestão de arquivos do Claude Code usando fzf para fuzzy matching, suporte a symlinks e melhor performance.'
+image:
+  {
+    src: 'claude-code-faster-file-suggestion.jpg',
+    placeholder: 'claude-code-faster-file-suggestion-small.jpg',
+    type: 'image/jpeg',
+  }
+tags: ['claude-code', 'cli', 'fzf', 'productivity', 'tutorial']
+href: '/blog/claude-code-faster-file-suggestion'
+reactionsLength: 0
+commentsLength: 0
+---
+
+A sugestão padrão de arquivos com `@` do Claude Code sempre me decepcionou, sendo acostumado com opções superiores tipo fzf.
+
+Além disso, não sugeria arquivos de pastas gitignored ou symlinks, o que era chato pra caramba.
+
+Mas recentemente a Anthropic liberou a customização via File Suggestion settings.
+
+E cara! Fuzzy matching de verdade com fzf é muito melhor do que o padrão!
+
+## Pré-requisitos
+
+Você vai precisar instalar essas ferramentas CLI:
+
+- **rg (ripgrep)** - pra listagem rápida de arquivos com suporte a symlink
+- **fzf** - pro fuzzy matching
+- **jq** - pra parsear o JSON de entrada
+
+## Setup
+
+### 1. Configurar o Claude Code
+
+Adiciona isso no seu `~/.claude/settings.json`:
+
+```json
+"fileSuggestion": {
+  "type": "command",
+  "command": "~/.claude/file-suggestion.sh"
+}
+```
+
+### 2. Criar o Script de Sugestão de Arquivos
+
+Cria o arquivo `~/.claude/file-suggestion.sh` com esse conteúdo:
+
+```bash
+#!/bin/bash
+# Custom file suggestion script for Claude Code
+# Uses rg + fzf for fuzzy matching and symlink support
+
+# Parse JSON input to get query
+QUERY=$(jq -r '.query // ""')
+
+# Use project dir from env, fallback to pwd
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
+
+# cd into project dir so rg outputs relative paths
+cd "$PROJECT_DIR" || exit 1
+
+{
+  # Main search - respects .gitignore, includes hidden files, follows symlinks
+  rg --files --follow --hidden . 2>/dev/null
+
+  # Additional paths - include even if gitignored (uncomment and customize)
+  # [ -e .notes ] && rg --files --follow --hidden --no-ignore-vcs .notes 2>/dev/null
+} | sort -u | fzf --filter "$QUERY" | head -15
+```
+
+### 3. Tornar o Script Executável
+
+Não esquece de deixar o script executável:
+
+```bash
+chmod +x ~/.claude/file-suggestion.sh
+```
+
+### 4. Reiniciar o Claude Code
+
+Reinicia o Claude Code e boa!
+
+tmj :)
