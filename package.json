@@ -21,6 +21,7 @@
     "@mdx-js/loader": "^2.1.5",
     "@mdx-js/react": "^2.1.5",
     "@next/mdx": "16.0.7",
+    "@outlit/browser": "^0.3.0",
     "@plaiceholder/next": "^2.5.0",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",

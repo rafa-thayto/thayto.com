@@ -11,6 +11,7 @@
         "@mdx-js/loader": "^2.1.5",
         "@mdx-js/react": "^2.1.5",
         "@next/mdx": "16.0.7",
+        "@outlit/browser": "^0.3.0",
         "@plaiceholder/next": "^2.5.0",
         "@radix-ui/react-slot": "^1.2.3",
         "@radix-ui/react-tooltip": "^1.2.7",
@@ -424,6 +425,10 @@
     "@nodelib/fs.walk": ["@nodelib/fs.walk@1.2.8", "", { "dependencies": { "@nodelib/fs.scandir": "2.1.5", "fastq": "^1.6.0" } }, "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg=="],
 
     "@nolyfill/is-core-module": ["@nolyfill/is-core-module@1.0.39", "", {}, "sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA=="],
+
+    "@outlit/browser": ["@outlit/browser@0.3.0", "", { "dependencies": { "@outlit/core": "0.3.0" }, "peerDependencies": { "react": ">=17.0.0" }, "optionalPeers": ["react"] }, "sha512-jOV00ObejAEn64awZAp0JwH1GXXAPNf6Bts/FXsDcN0xL+ucEBdEDgDLpheikdusTsnmqPQP/WN8LaDHn7CsLw=="],
+
+    "@outlit/core": ["@outlit/core@0.3.0", "", {}, "sha512-a1IJppsfg9PcAgCbFeYgfsC/cRdbhP1G7EILA5/iReBW+M6eMwopdDgNxTr7+P63bvLiy5x5IVRWUfmvX8gI4g=="],
 
     "@oxc-resolver/binding-android-arm-eabi": ["@oxc-resolver/binding-android-arm-eabi@11.15.0", "", { "os": "android", "cpu": "arm" }, "sha512-Q+lWuFfq7whNelNJIP1dhXaVz4zO9Tu77GcQHyxDWh3MaCoO2Bisphgzmsh4ZoUe2zIchQh6OvQL99GlWHg9Tw=="],
 
