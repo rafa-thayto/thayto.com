@@ -112,6 +112,26 @@ export function HomeContent({ posts }: HomeContentProps) {
     }
   }
 
+  const handleIdentifyClick = () => {
+    const trimmedValue = identityValue.trim()
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (trimmedValue && emailRegex.test(trimmedValue)) {
+      // Valid email - play success sound and trigger confetti
+      playSound('/static/sounds/success.mp3')
+      setShowConfetti(true)
+
+      // Identify user in PostHog
+      posthog.identify(trimmedValue)
+
+      // Identify user in Outlit (moves to signup stage)
+      identify({ email: trimmedValue })
+    } else {
+      // Invalid or empty email - play error sound
+      playSound('/static/sounds/disabled.wav')
+    }
+  }
+
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
@@ -186,7 +206,7 @@ export function HomeContent({ posts }: HomeContentProps) {
         <p>{t('bio.vim')}</p>
       </section>
 
-      <div className="mt-6">
+      <div className="mt-6 flex gap-2">
         <input
           type="email"
           value={identityValue}
@@ -197,8 +217,14 @@ export function HomeContent({ posts }: HomeContentProps) {
           onBlur={handleIdentityBlur}
           onMouseEnter={() => playSound('/static/sounds/swipe_01.wav', 0.2)}
           placeholder={t('identityPlaceholder')}
-          className="w-full px-4 py-2 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 placeholder-gray-400 dark:placeholder-gray-500"
+          className="flex-1 px-4 py-2 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 placeholder-gray-400 dark:placeholder-gray-500"
         />
+        <button
+          onClick={handleIdentifyClick}
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 whitespace-nowrap"
+        >
+          {t('identityButton')}
+        </button>
       </div>
 
       <section className="mt-8 text-base text-slate-800 dark:text-gray-100">

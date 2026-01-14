@@ -45,7 +45,8 @@
       "vim": "I use VIM btw (since 2022). ❤️"
     },
     "recentPosts": "Posts",
-    "identityPlaceholder": "does nothing, just to identify you (needs to be a valid email)"
+    "identityPlaceholder": "does nothing, just to identify you (needs to be a valid email)",
+    "identityButton": "does nothing"
   },
   "about": {
     "title": "About me",
