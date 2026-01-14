@@ -14,6 +14,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useTranslations, useLocale } from 'next-intl'
+import { identify } from '@outlit/browser'
 
 interface HomeContentProps {
   posts: Post[]
@@ -25,8 +26,46 @@ export function HomeContent({ posts }: HomeContentProps) {
   const [showAnimation, setShowAnimation] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [identityValue, setIdentityValue] = useState('')
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const typeSoundIndexRef = useRef(0)
   const years = getYearsOfProfessionalExperience()
+
+  // Audio playback helper
+  const playSound = (soundPath: string, volume: number = 0.5) => {
+    if (typeof window !== 'undefined') {
+      const audio = new Audio(soundPath)
+      audio.volume = volume
+      audio.play().catch(() => {
+        // Ignore errors if audio can't play (e.g., user hasn't interacted with page yet)
+      })
+    }
+  }
+
+  // Play multiple sounds in sequence
+  const playSoundsSequence = (soundPaths: string[], delayMs: number = 100) => {
+    soundPaths.forEach((soundPath, index) => {
+      setTimeout(() => {
+        playSound(soundPath)
+      }, index * delayMs)
+    })
+  }
+
+  // Typing sounds array
+  const typingSounds = [
+    '/static/sounds/type_01.wav',
+    '/static/sounds/type_02.wav',
+    '/static/sounds/type_03.wav',
+    '/static/sounds/type_04.wav',
+    '/static/sounds/type_05.wav',
+  ]
+
+  // Play next typing sound in sequence
+  const playTypingSound = () => {
+    playSound(typingSounds[typeSoundIndexRef.current])
+    typeSoundIndexRef.current =
+      (typeSoundIndexRef.current + 1) % typingSounds.length
+  }
 
   const handleMouseEnter = () => {
     setIsHovering(true)
@@ -47,6 +86,30 @@ export function HomeContent({ posts }: HomeContentProps) {
 
   const handlePhotoClick = () => {
     setShowConfetti(true)
+  }
+
+  const handleIdentityBlur = () => {
+    const trimmedValue = identityValue.trim()
+
+    // Simple email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (trimmedValue) {
+      if (emailRegex.test(trimmedValue)) {
+        // Valid email - play success sound and trigger confetti
+        playSound('/static/sounds/success.mp3')
+        setShowConfetti(true)
+
+        // Identify user in PostHog
+        posthog.identify(trimmedValue)
+
+        // Identify user in Outlit
+        identify({ email: trimmedValue })
+      } else {
+        // Invalid email - play error sound
+        playSound('/static/sounds/disabled.wav')
+      }
+    }
   }
 
   useEffect(() => {
@@ -123,10 +186,32 @@ export function HomeContent({ posts }: HomeContentProps) {
         <p>{t('bio.vim')}</p>
       </section>
 
+      <div className="mt-6">
+        <input
+          type="email"
+          value={identityValue}
+          onChange={(e) => {
+            setIdentityValue(e.target.value)
+            playTypingSound()
+          }}
+          onBlur={handleIdentityBlur}
+          onMouseEnter={() => playSound('/static/sounds/swipe_01.wav', 0.2)}
+          placeholder={t('identityPlaceholder')}
+          className="w-full px-4 py-2 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 placeholder-gray-400 dark:placeholder-gray-500"
+        />
+      </div>
+
       <section className="mt-8 text-base text-slate-800 dark:text-gray-100">
         <Link
           href={locale === 'pt' ? '/blog' : '/en/blog'}
           className="group flex items-center gap-2 text-lg font-normal text-slate-600 dark:text-gray-400 mb-6 hover:text-slate-800 dark:hover:text-gray-100 transition-colors duration-200"
+          onMouseEnter={() =>
+            playSoundsSequence([
+              '/static/sounds/tap_01.wav',
+              '/static/sounds/tap_02.wav',
+              '/static/sounds/tap_03.wav',
+            ])
+          }
         >
           {t('recentPosts')}
           <ChevronRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />

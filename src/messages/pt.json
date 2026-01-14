@@ -44,7 +44,8 @@
       "blog": "Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns pensamentos (tanto em inglês quanto em português).",
       "vim": "I use VIM btw (since 2022). ❤️"
     },
-    "recentPosts": "Posts"
+    "recentPosts": "Posts",
+    "identityPlaceholder": "não faz nada só serve pra identificar você (precisa ser um email válido)"
   },
   "about": {
     "title": "Sobre mim",

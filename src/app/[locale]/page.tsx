@@ -4,6 +4,8 @@ import { getPosts } from '@/utils/mdx'
 import { getYearsOfProfessionalExperience } from '@/constants'
 import { HomeContent } from './home-content'
 import { getTranslations } from 'next-intl/server'
+import { locales } from '@/i18n/config'
+import { notFound } from 'next/navigation'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -11,6 +13,12 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
+
+  // Validate locale - return default metadata for invalid locales
+  if (!locales.includes(locale as any)) {
+    return {}
+  }
+
   const t = await getTranslations({ locale, namespace: 'metadata.home' })
   const years = getYearsOfProfessionalExperience()
   const description = t('description', { years })
@@ -53,6 +61,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function IndexPage({ params }: Props) {
   const { locale } = await params
+
+  // Validate locale - return 404 for invalid locales
+  if (!locales.includes(locale as any)) {
+    notFound()
+  }
+
   const posts = getPosts(locale)
   const years = getYearsOfProfessionalExperience()
   const t = await getTranslations({ locale, namespace: 'metadata.home' })
