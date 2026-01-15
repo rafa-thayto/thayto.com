@@ -29,16 +29,51 @@ export function HomeContent({ posts }: HomeContentProps) {
   const [identityValue, setIdentityValue] = useState('')
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const typeSoundIndexRef = useRef(0)
+  const audioCache = useRef<Map<string, HTMLAudioElement>>(new Map())
   const years = getYearsOfProfessionalExperience()
+
+  // Preload all audio files
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const soundsToPreload = [
+        '/static/sounds/tap_01.wav',
+        '/static/sounds/tap_02.wav',
+        '/static/sounds/tap_03.wav',
+        '/static/sounds/type_01.wav',
+        '/static/sounds/type_02.wav',
+        '/static/sounds/type_03.wav',
+        '/static/sounds/type_04.wav',
+        '/static/sounds/type_05.wav',
+        '/static/sounds/swipe_01.wav',
+        '/static/sounds/success.mp3',
+        '/static/sounds/disabled.wav',
+      ]
+
+      soundsToPreload.forEach((soundPath) => {
+        const audio = new Audio(soundPath)
+        audio.preload = 'auto'
+        audioCache.current.set(soundPath, audio)
+      })
+    }
+  }, [])
 
   // Audio playback helper
   const playSound = (soundPath: string, volume: number = 0.5) => {
     if (typeof window !== 'undefined') {
-      const audio = new Audio(soundPath)
-      audio.volume = volume
-      audio.play().catch(() => {
-        // Ignore errors if audio can't play (e.g., user hasn't interacted with page yet)
-      })
+      const cachedAudio = audioCache.current.get(soundPath)
+      if (cachedAudio) {
+        // Clone the audio to allow overlapping plays
+        const audio = cachedAudio.cloneNode() as HTMLAudioElement
+        audio.volume = volume
+        audio.play().catch(() => {
+          // Ignore errors if audio can't play
+        })
+      } else {
+        // Fallback if not preloaded
+        const audio = new Audio(soundPath)
+        audio.volume = volume
+        audio.play().catch(() => {})
+      }
     }
   }
 
