@@ -47,7 +47,7 @@
     "nanoid": "^4.0.0",
     "next": "16.0.7",
     "next-intl": "^4.5.8",
-    "next-mdx-remote": "^5.0.0",
+    "next-mdx-remote": "^6.0.0",
     "plaiceholder": "^2.5.0",
     "poly-decomp": "^0.3.0",
     "postcss": "^8.5.4",
