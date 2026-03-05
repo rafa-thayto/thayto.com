@@ -15,6 +15,10 @@
     "linktree": {
       "title": "Rafael Thayto - Linktree",
       "description": "Links and social media"
+    },
+    "books": {
+      "title": "Rafael Thayto - Books",
+      "description": "My personal library of books I've read, am reading, and want to read."
     }
   },
   "navigation": {
@@ -60,5 +64,28 @@
     "loading": "Loading...",
     "error": "Error",
     "notFound": "Not found"
+  },
+  "books": {
+    "pageTitle": "Books",
+    "pageSubtitle": "My own little library.",
+    "back": "Back",
+    "filters": "Filters",
+    "sort": "Sort",
+    "lang": "Lang",
+    "status": {
+      "read": "Read",
+      "reading": "Reading",
+      "buy": "Buy",
+      "willRead": "Will Read",
+      "dropped": "Dropped",
+      "favorites": "Favorites"
+    },
+    "sortOptions": {
+      "best": "Best",
+      "worst": "Worst",
+      "abc": "ABC",
+      "zxy": "ZXY"
+    },
+    "noResults": "No books found with the selected filters."
   }
 }

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "1",
+    "title": "Código Limpo",
+    "englishTitle": "Clean Code",
+    "author": "Robert C. Martin",
+    "coverUrl": "https://m.media-amazon.com/images/I/51E2055ZGUL._SY522_.jpg",
+    "amazonUrl": "https://amzn.to/3ZQ3Z3Z",
+    "status": "READ",
+    "stars": 5,
+    "love": true,
+    "createdAt": "2024-01-15T00:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "title": "Arquitetura Limpa",
+    "englishTitle": "Clean Architecture",
+    "author": "Robert C. Martin",
+    "coverUrl": "https://m.media-amazon.com/images/I/41SH-SvWPxL._SY445_SX342_.jpg",
+    "amazonUrl": "https://amzn.to/3ZQ3Z3Z",
+    "status": "READING",
+    "createdAt": "2024-02-01T00:00:00.000Z"
+  },
+  {
+    "id": "3",
+    "title": "Domain-Driven Design",
+    "englishTitle": "Domain-Driven Design",
+    "author": "Eric Evans",
+    "coverUrl": "https://m.media-amazon.com/images/I/51OWGtzQLLL._SY445_SX342_.jpg",
+    "amazonUrl": "https://amzn.to/3ZQ3Z3Z",
+    "status": "WILL_READ",
+    "createdAt": "2024-03-10T00:00:00.000Z"
+  },
+  {
+    "id": "4",
+    "title": "The Pragmatic Programmer",
+    "englishTitle": "The Pragmatic Programmer",
+    "author": "Andrew Hunt, David Thomas",
+    "coverUrl": "https://m.media-amazon.com/images/I/51W1sBPO7tL._SY445_SX342_.jpg",
+    "amazonUrl": "https://amzn.to/3ZQ3Z3Z",
+    "status": "READ",
+    "stars": 5,
+    "love": true,
+    "createdAt": "2023-12-20T00:00:00.000Z"
+  },
+  {
+    "id": "5",
+    "title": "Refatoração",
+    "englishTitle": "Refactoring",
+    "author": "Martin Fowler",
+    "coverUrl": "https://m.media-amazon.com/images/I/41LBzpPXCOL._SY445_SX342_.jpg",
+    "amazonUrl": "https://amzn.to/3ZQ3Z3Z",
+    "status": "READ",
+    "stars": 4,
+    "createdAt": "2023-11-05T00:00:00.000Z"
+  },
+  {
+    "id": "6",
+    "title": "Design Patterns",
+    "englishTitle": "Design Patterns",
+    "author": "Gang of Four",
+    "coverUrl": "https://m.media-amazon.com/images/I/51kuc0iWoKL._SY445_SX342_.jpg",
+    "amazonUrl": "https://amzn.to/3ZQ3Z3Z",
+    "status": "BUY",
+    "createdAt": "2024-04-01T00:00:00.000Z"
+  }
+]

@@ -466,6 +466,37 @@
   background: linear-gradient(90deg, #60a5fa, #93c5fd);
 }
 
+/* Books Page - 3D Book Hover Effect */
+.book-card {
+  transform-origin: left center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.book-card:hover {
+  transform: perspective(600px) rotateY(-15deg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Book cover gradient overlay for depth/shine */
+.book-cover {
+  position: relative;
+  overflow: hidden;
+}
+
+.book-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    270deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -1,4 +1,5 @@
 export * from './BlogCard'
+export * from './BookCard'
 export * from './ButtonLink'
 export * from './CodeBlock'
 export * from './CustomLink'
