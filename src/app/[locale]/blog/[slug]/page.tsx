@@ -67,6 +67,11 @@ export async function generateMetadata({
       ? `https://thayto.com/blog/${slug}`
       : `https://thayto.com/en/blog/${slug}`
 
+  const mdUrl =
+    locale === 'pt'
+      ? `https://thayto.com/blog/${slug}.md`
+      : `https://thayto.com/en/blog/${slug}.md`
+
   return {
     title: `${title} - Rafael Thayto`,
     description,
@@ -76,6 +81,9 @@ export async function generateMetadata({
       languages: {
         pt: `https://thayto.com/blog/${slug}`,
         en: `https://thayto.com/en/blog/${slug}`,
+      },
+      types: {
+        'text/markdown': mdUrl,
       },
     },
     openGraph: {
