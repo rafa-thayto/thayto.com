@@ -29,6 +29,18 @@ const nextConfig = {
     ],
   },
 
+  async rewrites() {
+    return [
+      {
+        source: '/blog/:slug.md',
+        destination: '/api/blog/:slug/md',
+      },
+      {
+        source: '/en/blog/:slug.md',
+        destination: '/api/blog/:slug/md',
+      },
+    ]
+  },
   async redirects() {
     return [
       {
