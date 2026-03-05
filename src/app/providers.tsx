@@ -2,8 +2,7 @@
 
 import { posthog } from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
-import { useEffect } from 'react'
-import { init as outlitInit, track as outlitTrack } from '@outlit/browser'
+import { init as outlitInit } from '@outlit/browser'
 import { HumanBehaviorProvider } from 'humanbehavior-js/react'
 
 if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
