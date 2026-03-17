@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   description,
   alternates: {
     canonical: 'https://thayto.com/linktree',
+    types: {
+      'text/markdown': 'https://thayto.com/linktree',
+    },
   },
   openGraph: {
     type: 'article',

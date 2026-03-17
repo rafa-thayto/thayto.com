@@ -5,6 +5,7 @@ import { Bsky } from '@/components/Icons/Bsky'
 import { Twitch } from '@/components/Icons/Twitch'
 import { IconProps } from '@/components/Icons/types'
 import { YouTube } from '@/components/Icons/YouTube'
+import { linktreeLinks } from '@/data/linktree-links'
 import { Instagram, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,103 +19,26 @@ type ButtonLink = {
   text: string
 }
 
-const links: ButtonLink[] = [
-  {
-    href: 'https://hub.la/r/lista-espera',
-    Icon: null,
-    text: 'lista de espera | linkedin',
-  },
-  {
-    href: 'https://discord.gg/JXxC4xTdDU',
-    Icon: null,
-    text: 'Discord - Tutorandus Community',
-  },
-  {
-    href: 'https://higlobe.com?grsf=rafael-xnn88r',
-    Icon: null,
-    text: 'Higlobe - USD 20$ pra você e pra mim',
-  },
-  {
-    href: 'https://github.com/rafa-thayto/lazy-thayto-vim',
-    Icon: null,
-    text: '❤️ Neovim Configs',
-  },
-  {
-    href: 'https://thayto.substack.com/',
-    Icon: null,
-    text: 'Newsletter - First Time Founder',
-  },
-  {
-    href: '/blog',
-    Icon: null,
-    text: 'Blog',
-  },
-  {
-    href: 'https://www.linkedin.com/in/thayto/',
-    Icon: LinkedIn,
-    text: 'LinkedIn',
-  },
-  {
-    href: 'https://www.youtube.com/@thayto_dev',
-    Icon: YouTube,
-    text: 'Youtube',
-  },
-  {
-    href: 'https://podcasters.spotify.com/pod/show/devseniorscast',
-    Icon: null,
-    text: '🎙️ DevSenior Cast',
-  },
-  {
-    href: 'https://github.com/rafa-thayto',
-    Icon: GitHub,
-    text: 'GitHub',
-  },
-  {
-    href: 'https://www.instagram.com/thayto_dev/?utm_source=thayto.com',
-    Icon: Instagram as any,
-    text: 'Instagram',
-  },
-  {
-    href: 'https://x.com/thayto_dev',
-    Icon: Twitter,
-    text: 'Twitter',
-  },
-  {
-    href: 'https://bsky.app/profile/thayto.dev',
-    Icon: Bsky,
-    text: 'Bluesky',
-  },
-  {
-    href: 'https://twitch.tv/thayto_dev',
-    Icon: Twitch,
-    text: 'Twitch',
-  },
-  {
-    href: 'https://hotm.art/hnWXd89A',
-    Icon: null,
-    text: 'Formação TS',
-  },
-  {
-    href: 'https://bit.ly/3nLnPQZ',
-    Icon: null,
-    text: 'CRUD com qualidade',
-  },
-  {
-    href: 'https://www.amazon.com.br/dp/8575226932?&_encoding=UTF8&tag=thayto-20&linkCode=ur2&linkId=a8887fab2c901ae25fb1855a72f0bc61&camp=1789&creative=9325',
-    Icon: null,
-    text: 'Estrutura de dados e algoritmos com JavaScript - Loiane',
-  },
-  {
-    href: 'https://dev.to/thayto/',
-    Icon: DevTo,
-    text: 'Dev.to',
-  },
-  {
-    href: 'https://www.tabnews.com.br/thayto',
-    Icon: TabNews,
-    text: 'TabNews',
-  },
-]
+const iconMap: Record<
+  string,
+  (({ color }: IconProps) => React.JSX.Element) | null
+> = {
+  LinkedIn,
+  Youtube: YouTube,
+  GitHub,
+  Instagram: Instagram as any,
+  Twitter,
+  Bluesky: Bsky,
+  Twitch,
+  'Dev.to': DevTo,
+  TabNews,
+}
+
+const links: ButtonLink[] = linktreeLinks.map((link) => ({
+  href: link.href,
+  text: link.text,
+  Icon: iconMap[link.text] ?? null,
+}))
 
 export function LinktreeContent() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')

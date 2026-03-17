@@ -35,6 +35,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         pt: 'https://thayto.com/',
         en: 'https://thayto.com/en/',
       },
+      types: {
+        'text/markdown': canonicalUrl,
+      },
     },
     openGraph: {
       type: 'article',
