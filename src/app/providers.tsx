@@ -2,9 +2,6 @@
 
 import { posthog } from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
-import { init as outlitInit } from '@outlit/browser'
-import { HumanBehaviorProvider } from 'humanbehavior-js/react'
-
 if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
     api_host:
@@ -16,32 +13,6 @@ if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
   })
 }
 
-if (
-  typeof window !== 'undefined' &&
-  process.env.NEXT_PUBLIC_OUTLIT_PUBLIC_KEY
-) {
-  outlitInit({
-    publicKey: process.env.NEXT_PUBLIC_OUTLIT_PUBLIC_KEY,
-    trackPageviews: true,
-    trackForms: true,
-    autoIdentify: true,
-    trackCalendarEmbeds: true,
-  })
-}
-
 export function Providers({ children }: { children: React.ReactNode }) {
-  return (
-    <PostHogProvider client={posthog}>
-      <HumanBehaviorProvider
-        apiKey={process.env.NEXT_PUBLIC_HUMANBEHAVIOR_API_KEY}
-        options={{
-          redactionStrategy: {
-            mode: 'visibility-first' as const,
-          },
-        }}
-      >
-        {children}
-      </HumanBehaviorProvider>
-    </PostHogProvider>
-  )
+  return <PostHogProvider client={posthog}>{children}</PostHogProvider>
 }

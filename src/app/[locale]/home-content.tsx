@@ -14,8 +14,6 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useTranslations, useLocale } from 'next-intl'
-import { identify } from '@outlit/browser'
-
 interface HomeContentProps {
   posts: Post[]
 }
@@ -137,9 +135,6 @@ export function HomeContent({ posts }: HomeContentProps) {
 
         // Identify user in PostHog
         posthog.identify(trimmedValue)
-
-        // Identify user in Outlit
-        identify({ email: trimmedValue })
       } else {
         // Invalid email - play error sound
         playSound('/static/sounds/disabled.wav')
@@ -158,9 +153,6 @@ export function HomeContent({ posts }: HomeContentProps) {
 
       // Identify user in PostHog
       posthog.identify(trimmedValue)
-
-      // Identify user in Outlit (moves to signup stage)
-      identify({ email: trimmedValue })
     } else {
       // Invalid or empty email - play error sound
       playSound('/static/sounds/disabled.wav')
