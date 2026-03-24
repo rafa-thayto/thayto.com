@@ -24,9 +24,7 @@ export function HomeContent({ posts }: HomeContentProps) {
   const [showAnimation, setShowAnimation] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
-  const [identityValue, setIdentityValue] = useState('')
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const typeSoundIndexRef = useRef(0)
   const audioCache = useRef<Map<string, HTMLAudioElement>>(new Map())
   const years = getYearsOfProfessionalExperience()
 
@@ -37,14 +35,6 @@ export function HomeContent({ posts }: HomeContentProps) {
         '/static/sounds/tap_01.wav',
         '/static/sounds/tap_02.wav',
         '/static/sounds/tap_03.wav',
-        '/static/sounds/type_01.wav',
-        '/static/sounds/type_02.wav',
-        '/static/sounds/type_03.wav',
-        '/static/sounds/type_04.wav',
-        '/static/sounds/type_05.wav',
-        '/static/sounds/swipe_01.wav',
-        '/static/sounds/success.mp3',
-        '/static/sounds/disabled.wav',
       ]
 
       soundsToPreload.forEach((soundPath) => {
@@ -84,22 +74,6 @@ export function HomeContent({ posts }: HomeContentProps) {
     })
   }
 
-  // Typing sounds array
-  const typingSounds = [
-    '/static/sounds/type_01.wav',
-    '/static/sounds/type_02.wav',
-    '/static/sounds/type_03.wav',
-    '/static/sounds/type_04.wav',
-    '/static/sounds/type_05.wav',
-  ]
-
-  // Play next typing sound in sequence
-  const playTypingSound = () => {
-    playSound(typingSounds[typeSoundIndexRef.current])
-    typeSoundIndexRef.current =
-      (typeSoundIndexRef.current + 1) % typingSounds.length
-  }
-
   const handleMouseEnter = () => {
     setIsHovering(true)
     timeoutRef.current = setTimeout(() => {
@@ -119,44 +93,6 @@ export function HomeContent({ posts }: HomeContentProps) {
 
   const handlePhotoClick = () => {
     setShowConfetti(true)
-  }
-
-  const handleIdentityBlur = () => {
-    const trimmedValue = identityValue.trim()
-
-    // Simple email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-    if (trimmedValue) {
-      if (emailRegex.test(trimmedValue)) {
-        // Valid email - play success sound and trigger confetti
-        playSound('/static/sounds/success.mp3')
-        setShowConfetti(true)
-
-        // Identify user in PostHog
-        posthog.identify(trimmedValue)
-      } else {
-        // Invalid email - play error sound
-        playSound('/static/sounds/disabled.wav')
-      }
-    }
-  }
-
-  const handleIdentifyClick = () => {
-    const trimmedValue = identityValue.trim()
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-    if (trimmedValue && emailRegex.test(trimmedValue)) {
-      // Valid email - play success sound and trigger confetti
-      playSound('/static/sounds/success.mp3')
-      setShowConfetti(true)
-
-      // Identify user in PostHog
-      posthog.identify(trimmedValue)
-    } else {
-      // Invalid or empty email - play error sound
-      playSound('/static/sounds/disabled.wav')
-    }
   }
 
   useEffect(() => {
@@ -232,27 +168,6 @@ export function HomeContent({ posts }: HomeContentProps) {
         <p>{t('bio.blog')}</p>
         <p>{t('bio.vim')}</p>
       </section>
-
-      <div className="mt-6 flex gap-2">
-        <input
-          type="email"
-          value={identityValue}
-          onChange={(e) => {
-            setIdentityValue(e.target.value)
-            playTypingSound()
-          }}
-          onBlur={handleIdentityBlur}
-          onMouseEnter={() => playSound('/static/sounds/swipe_01.wav', 0.2)}
-          placeholder={t('identityPlaceholder')}
-          className="flex-1 px-4 py-2 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 placeholder-gray-400 dark:placeholder-gray-500"
-        />
-        <button
-          onClick={handleIdentifyClick}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 whitespace-nowrap"
-        >
-          {t('identityButton')}
-        </button>
-      </div>
 
       <section className="mt-8 text-base text-slate-800 dark:text-gray-100">
         <Link
