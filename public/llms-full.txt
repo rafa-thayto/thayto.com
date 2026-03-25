@@ -1,0 +1,411 @@
+# Rafael Thayto
+
+> Personal blog and portfolio of Rafael Thayto, a Senior Software Engineer with 7+ years of experience. Features articles about software development, TypeScript, Next.js, Docker, and architecture. Available in Portuguese and English.
+
+## Main Pages
+
+- [Homepage](https://thayto.com/): Professional intro and recent blog posts
+- [Blog](https://thayto.com/blog): All articles with search and tag filtering
+- [About](https://thayto.com/about): Author bio and background
+- [Linktree](https://thayto.com/linktree): Social links aggregator
+
+## Blog Posts
+
+- [Claude Code Faster File Suggestion](https://thayto.com/blog/claude-code-faster-file-suggestion): Improve Claude Code file suggestion with fzf
+- [Micro Frontends with Next.js Multi Zones](https://thayto.com/blog/microfrontends-next-js-multi-zones): Guide to implementing Micro Frontends with Next.js
+- [Zero Downtime Deployment with Docker Compose](https://thayto.com/blog/zero-downtime-deployment-with-docker-compose-in-an-oci-vps-using-github-actions): Zero-downtime Docker deploys with GitHub Actions
+- [Exposing Localhost with Ngrok](https://thayto.com/blog/expondo-seu-localhost-com-ngrok): Tutorial on exposing localhost with ngrok
+- [TypeScript Extract String from Literal Types](https://thayto.com/blog/ts-como-pegar-string-no-seu-literal-types): Using Extract type for string literal types
+- [TypeScript Template Literal Types](https://thayto.com/blog/typescript-template-literal-types): Guide to TypeScript template literal types
+- [Open VS Code from GitHub](https://thayto.com/blog/como-abrir-o-vscode-direto-do-github): Opening VS Code directly from GitHub
+- [JS/TS Operators Comparison](https://thayto.com/blog/diferenca-entre-operadores-js-ts): Differences between ??, ?., ==, and === operators
+- [Git Bash Aliases like Zsh](https://thayto.com/blog/turbinando-seu-git-bash-windows-adicionando-aliases-como-se-fosse-o-git-plugin-do-zsh): Enhancing Git Bash on Windows with zsh-like aliases
+- [Turborepo Deployment on Netlify](https://thayto.com/blog/como-configurar-o-deploy-do-turborepo-no-netlify): Configuring Turborepo deployment on Netlify
+- [Set Default Node Version with nvm](https://thayto.com/blog/como-settar-a-versao-default-do-node-usando-nvm): Setting default Node.js version using nvm
+
+## English Versions
+
+- [Homepage (EN)](https://thayto.com/en): English version of the homepage
+- [Blog (EN)](https://thayto.com/en/blog): All articles in English
+- [About (EN)](https://thayto.com/en/about): Author bio in English
+
+## Social Profiles
+
+- [GitHub](https://github.com/rafa-thayto): Open source contributions and projects
+- [LinkedIn](https://linkedin.com/in/thayto): Professional profile
+- [X/Twitter](https://x.com/thayto_dev): Tech posts and updates
+- [YouTube](https://youtube.com/@thayto_dev): Video content
+- [dev.to](https://dev.to/thayto): Cross-posted articles
+- [Bluesky](https://bsky.app/profile/thayto.dev): Social updates
+- [Substack](https://thayto.substack.com): Newsletter
+
+## Optional
+
+- [RSS Feed](https://thayto.com/rss.xml): RSS feed for all posts
+- [RSS Feed (PT)](https://thayto.com/rss-pt.xml): RSS feed for Portuguese posts
+- [RSS Feed (EN)](https://thayto.com/rss-en.xml): RSS feed for English posts
+- [Sitemap](https://thayto.com/sitemap.xml): XML sitemap for all pages
+
+---
+
+## Full Page Content
+
+## About
+
+Rafael Thayto is a developer with over 7 years of experience, passionate about solving problems and learning new technologies and good development practices. He has worked on several projects, always dedicating himself to the maximum to ensure the delivery of efficient and high quality solutions.
+
+His career has focused on distributed systems, microservices, microfrontends, and observability across organizations including Clerk, Nike, Outlit (YC W25), Flash, Creditas, and banking institutions. He has contributed to platforms serving millions of users across Brazil, the USA, and Switzerland.
+
+He really enjoys playing, meeting new people and places. If you talk to him, in a few minutes you will have already created a connection.
+
+---
+
+## Quick Guide to Make Claude Code File Suggestion Faster
+
+**Published:** January 8, 2026
+
+### Overview
+
+The default file matching feature in Claude Code has limitations -- it lacks fuzzy matching capabilities and doesn't access files in gitignored or symlinked directories. Anthropic now enables customization through File Suggestion settings, allowing integration with superior tools like fzf.
+
+### Required Tools
+
+Three command-line utilities are necessary:
+
+- **ripgrep (rg)** -- enables rapid file discovery with symlink traversal
+- **fzf** -- provides fuzzy search functionality
+- **jq** -- handles JSON parsing
+
+### Implementation Steps
+
+#### Step 1: Update Configuration
+
+Modify `~/.claude/settings.json` to reference a custom script:
+
+```json
+"fileSuggestion": {
+  "type": "command",
+  "command": "~/.claude/file-suggestion.sh"
+}
+```
+
+#### Step 2: Create Script File
+
+Save this bash script as `~/.claude/file-suggestion.sh`:
+
+```bash
+#!/bin/bash
+# Custom file suggestion script for Claude Code
+# Uses rg + fzf for fuzzy matching and symlink support
+
+# Parse JSON input to get query
+QUERY=$(jq -r '.query // ""')
+
+# Use project dir from env, fallback to pwd
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
+
+# cd into project dir so rg outputs relative paths
+cd "$PROJECT_DIR" || exit 1
+
+{
+  # Main search - respects .gitignore, includes hidden files, follows symlinks
+  rg --files --follow --hidden . 2>/dev/null
+
+  # Additional paths - include even if gitignored (uncomment and customize)
+  # [ -e .notes ] && rg --files --follow --hidden --no-ignore-vcs .notes 2>/dev/null
+} | sort -u | fzf --filter "$QUERY" | head -15
+```
+
+#### Step 3: Grant Permissions
+
+Execute this command to allow script execution:
+
+```bash
+chmod +x ~/.claude/file-suggestion.sh
+```
+
+#### Step 4: Activate Changes
+
+Restart Claude Code to apply the new configuration.
+
+---
+
+## Micro Frontends with Next.js Multi Zones
+
+**Published:** October 1, 2024
+**Modified:** October 3, 2024
+
+### Introduction
+
+As web applications expand, development teams grow. Multiple teams working on the same project introduce challenges: numerous pull requests, scope conflicts, merge disputes, and varying business rules. The solution is decomposing the application into independent Micro Frontends, enabling faster delivery and parallel evolution.
+
+Next.js offers "Multi Zones," an advanced feature enabling developers to create several Micro Frontends very quickly and simply using Next.js.
+
+### Prerequisites
+
+Basic familiarity with Next.js is assumed.
+
+### Project Overview
+
+This guide creates two Next.js applications combined via Multi Zones -- a home application and a blog application.
+
+### Setup Instructions
+
+#### Project Structure
+
+```bash
+mkdir nextjs-multi-zones-post
+cd nextjs-multi-zones-post
+```
+
+#### Home Application (Port 4444)
+
+Create the home project and configure its development script:
+
+```bash
+npx create-next-app --ts home
+cd home
+```
+
+Update `package.json` to run on port 4444:
+
+```json
+"scripts": {
+  "dev": "next dev -p 4444"
+}
+```
+
+#### Blog Application (Port 7777)
+
+Create the blog project similarly:
+
+```bash
+npx create-next-app --ts blog
+cd blog
+```
+
+Configure `package.json` for port 7777:
+
+```json
+"scripts": {
+  "dev": "next dev -p 7777"
+}
+```
+
+Both applications now run independently on separate ports.
+
+### Home Configuration
+
+The home application serves as the base, using rewrites to integrate the blog.
+
+Update `next.config.js`:
+
+```js
+const { BLOG_URL } = process.env
+
+const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        destination: `/:path*`,
+      },
+      {
+        source: '/blog',
+        destination: `${BLOG_URL}/blog`,
+      },
+      {
+        source: '/blog/:path*',
+        destination: `${BLOG_URL}/blog/:path*`,
+      },
+    ]
+  },
+}
+
+module.exports = nextConfig
+```
+
+Create `.env` in the home directory:
+
+```
+BLOG_URL=http://localhost:7777
+```
+
+### Blog Configuration
+
+The blog application uses `basePath` to indicate routes begin at `/blog`.
+
+Update `next.config.js`:
+
+```js
+const nextConfig = {
+  basePath: '/blog',
+}
+
+module.exports = nextConfig
+```
+
+### Result
+
+The integration works seamlessly. Accessing `http://localhost:4444/blog` loads the blog application while maintaining the home application's URL structure. The rewrite system transparently routes requests to `http://localhost:7777/blog` without visible URL changes, creating a unified user experience across separate applications.
+
+---
+
+## Zero Downtime Deployment with Docker Compose in an OCI VPS using GitHub Actions
+
+**Published:** September 13, 2024
+
+### Overview
+
+This tutorial demonstrates implementing zero-downtime deployments using Docker Compose on an Ubuntu VPS with GitHub Actions automation.
+
+### Requirements
+
+The setup requires three core components:
+
+- Docker
+- Docker Compose
+- Docker Rollout Plugin
+
+#### Installing Docker Rollout Plugin
+
+The installation process involves three straightforward steps: creating a Docker CLI plugins directory, downloading the docker-rollout script from GitHub, and making it executable via chmod command.
+
+#### Docker Rollout Usage
+
+Run `docker rollout <name>` instead of `docker compose up -d <name>` to update a service without downtime.
+
+The command syntax is: `docker rollout -f docker-compose.yml <service-name>`
+
+### GitHub Actions Workflow
+
+The tutorial includes a complete CI/CD workflow (`build_and_deploy.yml`) that:
+
+**Build Phase:**
+
+- Triggers on pushes to the main branch
+- Builds a Docker image with the commit SHA
+- Authenticates with DigitalOcean Container Registry
+- Removes outdated images and pushes the new one
+
+**Deploy Phase:**
+
+- Connects to the OCI VPS via SSH
+- Updates the docker-compose.yml with the new image tag
+- Pulls the latest image
+- Uses `docker rollout` to deploy without downtime
+
+The workflow leverages GitHub Secrets for secure credential management and demonstrates practical DevOps automation for production deployments.
+
+---
+
+## TypeScript - Template Literal Types
+
+**Published:** July 7, 2023
+**Modified:** July 7, 2024
+
+### Overview
+
+Template Literal Types leverage JavaScript's template string syntax within TypeScript's type system. This feature expands the possibilities of what was already possible with string literals + unions in TS.
+
+### Basic Syntax
+
+The syntax mirrors JavaScript template literals:
+
+```ts
+type Goodbye = 'goodbye!'
+type Greeting = `Hi ${Goodbye}`
+```
+
+### Practical Application
+
+A real-world use case: enforcing naming conventions for extra properties. By combining Template Literal Types with utility types, developers can create self-documenting type patterns.
+
+**Example implementation:**
+
+```ts
+type FormFields = {
+  name: string
+  age: number
+}
+
+type EventDataExtraProps<T> = `field_${string & keyof T}`
+
+type EventData<T> = {
+  id: string
+  name: string
+  step: 'first_step' | 'second_step'
+} & Record<EventDataExtraProps<T>, any>
+
+const event: EventData<FormFields> = {
+  id: 'sextou?',
+  name: 'thayto',
+  step: 'first_step',
+  field_name: 'full_name',
+  field_age: 22,
+}
+```
+
+### Key Takeaway
+
+Template Literal Types enable developers to create standardized property patterns that enhance autocomplete functionality and enforce consistency in large codebases without extending types directly.
+
+---
+
+## Difference Between the ?, ?? and || Operators in JavaScript / TypeScript
+
+**Published:** October 31, 2022
+**Last Modified:** July 11, 2024
+
+### Introduction
+
+Developers frequently encounter confusion around JavaScript and TypeScript operators. This guide clarifies the distinctions between three commonly misunderstood operators: `?`, `??`, and `||`.
+
+### ? - Optional Chaining
+
+The optional chaining operator (`?.`) provides a way to safely access nested object properties without validating each intermediate reference.
+
+Rather than throwing an error when encountering `null` or `undefined`, the expression "short-circuits" and yields `undefined`. When applied to function calls, it returns `undefined` if the function doesn't exist.
+
+**Example:**
+
+```js
+const user = {
+  id: 13,
+  name: 'Thayto',
+}
+
+console.log(user?.name) // Thayto
+console.log(user?.fullName) // undefined
+console.log(user.fullName) // TypeError
+```
+
+### ?? - Nullish Coalescing
+
+The nullish coalescing operator (`??`) returns the right operand only when the left side is `null` or `undefined`. All other values -- including falsy ones -- return the left operand.
+
+**Key distinction:** Treats `0`, empty strings, and `false` as valid values.
+
+**Example:**
+
+```js
+console.log(0 ?? 'not found') // 0
+console.log('' ?? 'not found') // ""
+console.log(false ?? 'not found') // false
+console.log(undefined ?? 'not found') // "not found"
+```
+
+### || - Logical OR
+
+The logical OR operator (`||`) evaluates expressions left-to-right, returning the first truthy value. When a truthy value appears, the expression short-circuits without evaluating subsequent operands.
+
+**Key difference:** Treats falsy values (`0`, `""`, `false`) as triggers for the fallback.
+
+**Example:**
+
+```js
+console.log(0 || 'not found') // "not found"
+console.log('' || 'not found') // "not found"
+console.log(false || 'not found') // "not found"
+console.log(undefined || 'not found') // "not found"
+```
