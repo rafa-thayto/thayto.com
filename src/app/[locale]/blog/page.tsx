@@ -2,9 +2,22 @@ import { Layout } from '@/components'
 import { Metadata } from 'next'
 import { getPosts } from '@/utils/mdx'
 import { SITE_URL } from '@/utils/constants'
+import { Locale } from '@/i18n/config'
 import { BlogContent } from './blog-content'
 import { Suspense } from 'react'
 import { getTranslations } from 'next-intl/server'
+import {
+  TWITTER_CARD,
+  SCHEMA_CONTEXT,
+  toOgLocale,
+  toAlternateOgLocale,
+  toCanonicalUrl,
+  toLanguageTag,
+  alternateLanguages,
+  personPublisher,
+  breadcrumbSchema,
+  JsonLd,
+} from '@/utils/seo'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -13,74 +26,58 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'metadata.blog' })
-
-  const canonicalUrl =
-    locale === 'pt' ? 'https://thayto.com/blog' : 'https://thayto.com/en/blog'
+  const validLocale = locale as Locale
+  const canonicalUrl = toCanonicalUrl(validLocale, '/blog')
 
   return {
     title: t('title'),
     description: t('description'),
     alternates: {
       canonical: canonicalUrl,
-      languages: {
-        pt: 'https://thayto.com/blog',
-        en: 'https://thayto.com/en/blog',
-      },
-      types: {
-        'text/markdown': canonicalUrl,
-      },
+      languages: alternateLanguages('/blog'),
+      types: { 'text/markdown': canonicalUrl },
     },
     openGraph: {
       url: canonicalUrl,
       title: t('title'),
       description: t('description'),
-      locale: locale === 'pt' ? 'pt_BR' : 'en_US',
-      alternateLocale: locale === 'pt' ? 'en_US' : 'pt_BR',
+      locale: toOgLocale(validLocale),
+      alternateLocale: toAlternateOgLocale(validLocale),
       images: [
         {
-          url: 'https://thayto.com/static/images/seo-card-blog.png',
+          url: `${SITE_URL}/static/images/seo-card-blog.png`,
           type: 'image/png',
         },
       ],
       siteName: 'Thayto.com',
     },
-    twitter: {
-      card: 'summary_large_image',
-      site: '@thayto',
-      creator: '@thayto',
-    },
+    twitter: TWITTER_CARD,
   }
 }
 
 export default async function Blog({ params }: Props) {
   const { locale } = await params
+  const validLocale = locale as Locale
   const posts = getPosts(locale)
   const t = await getTranslations({ locale, namespace: 'metadata.blog' })
+  const blogUrl = toCanonicalUrl(validLocale, '/blog')
 
-  const blogUrl = locale === 'pt' ? '/blog' : '/en/blog'
+  const blogAuthor = {
+    '@type': 'Person' as const,
+    name: 'Rafael Thayto',
+    jobTitle: 'Senior Software Engineer',
+    url: SITE_URL,
+  }
 
   const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'Blog',
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'Blog' as const,
     name: t('title'),
-    url: `${SITE_URL}${blogUrl}`,
+    url: blogUrl,
     description: t('description'),
-    inLanguage: locale === 'pt' ? 'pt-BR' : 'en-US',
-    publisher: {
-      '@type': 'Person',
-      name: 'Rafael Thayto',
-      url: 'https://thayto.com',
-      image: {
-        '@type': 'ImageObject',
-        url: 'https://thayto.com/static/images/profile.jpg',
-        width: 460,
-        height: 460,
-      },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${SITE_URL}${blogUrl}`,
-    },
+    inLanguage: toLanguageTag(validLocale),
+    publisher: personPublisher(),
+    mainEntityOfPage: { '@type': 'WebPage', '@id': blogUrl },
     blogPost: posts.map(({ data }) => ({
       '@type': 'BlogPosting',
       headline: data.title,
@@ -88,31 +85,27 @@ export default async function Blog({ params }: Props) {
       image: `${SITE_URL}/static/images/${data.image.src}`,
       datePublished: data.publishedTime,
       dateModified: data.modifiedTime,
-      inLanguage: locale === 'pt' ? 'pt-BR' : 'en-US',
-      author: {
-        '@type': 'Person',
-        name: 'Rafael Thayto',
-        jobTitle: 'Senior Software Engineer',
-        url: `${SITE_URL}/static/images/profile.jpg`,
-      },
-      publisher: {
-        '@type': 'Person',
-        name: 'Rafael Thayto',
-        jobTitle: 'Senior Software Engineer',
-        url: `${SITE_URL}/static/images/profile.jpg`,
-      },
+      inLanguage: toLanguageTag(validLocale),
+      author: blogAuthor,
+      publisher: blogAuthor,
       url: `${SITE_URL}${data.href}`,
     })),
+  }
+
+  const breadcrumbData = {
+    '@context': SCHEMA_CONTEXT,
+    ...breadcrumbSchema(validLocale, [
+      { name: 'Home', path: '/' },
+      { name: 'Blog', path: '/blog' },
+    ]),
   }
 
   const priorityPosts = posts.slice(0, 3)
 
   return (
     <Layout>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <JsonLd data={structuredData} />
+      <JsonLd data={breadcrumbData} />
       {priorityPosts.map((post) =>
         post.data.image ? (
           <link

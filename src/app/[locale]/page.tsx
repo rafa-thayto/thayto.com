@@ -4,8 +4,23 @@ import { getPosts } from '@/utils/mdx'
 import { getYearsOfProfessionalExperience } from '@/constants'
 import { HomeContent } from './home-content'
 import { getTranslations } from 'next-intl/server'
-import { locales } from '@/i18n/config'
+import { Locale, locales } from '@/i18n/config'
 import { notFound } from 'next/navigation'
+import { SITE_URL } from '@/utils/constants'
+import {
+  SCHEMA_CONTEXT,
+  TWITTER_CARD,
+  SOCIAL_LINKS,
+  PROFILE_IMAGE,
+  PERSON_REF,
+  toOgLocale,
+  toAlternateOgLocale,
+  toCanonicalUrl,
+  toLanguageTag,
+  alternateLanguages,
+  breadcrumbSchema,
+  JsonLd,
+} from '@/utils/seo'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -14,88 +29,67 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
 
-  // Validate locale - return default metadata for invalid locales
-  if (!locales.includes(locale as any)) {
+  if (!locales.includes(locale as Locale)) {
     return {}
   }
 
+  const validLocale = locale as Locale
   const t = await getTranslations({ locale, namespace: 'metadata.home' })
   const years = getYearsOfProfessionalExperience()
   const description = t('description', { years })
-
-  const canonicalUrl =
-    locale === 'pt' ? 'https://thayto.com/' : 'https://thayto.com/en/'
+  const canonicalUrl = toCanonicalUrl(validLocale, '/')
 
   return {
     title: t('title'),
     description,
     alternates: {
       canonical: canonicalUrl,
-      languages: {
-        pt: 'https://thayto.com/',
-        en: 'https://thayto.com/en/',
-      },
-      types: {
-        'text/markdown': canonicalUrl,
-      },
+      languages: alternateLanguages('/'),
+      types: { 'text/markdown': canonicalUrl },
     },
     openGraph: {
-      type: 'article',
+      type: 'website',
       url: canonicalUrl,
       title: t('title'),
       description,
-      locale: locale === 'pt' ? 'pt_BR' : 'en_US',
-      alternateLocale: locale === 'pt' ? 'en_US' : 'pt_BR',
+      locale: toOgLocale(validLocale),
+      alternateLocale: toAlternateOgLocale(validLocale),
       images: [
         {
-          url: 'https://thayto.com/static/images/seo-card-home.png',
+          url: `${SITE_URL}/static/images/seo-card-home.png`,
           type: 'image/png',
         },
       ],
       siteName: 'Thayto.com',
     },
-    twitter: {
-      card: 'summary_large_image',
-      site: '@thayto',
-      creator: '@thayto',
-    },
+    twitter: TWITTER_CARD,
   }
 }
 
 export default async function IndexPage({ params }: Props) {
   const { locale } = await params
 
-  // Validate locale - return 404 for invalid locales
-  if (!locales.includes(locale as any)) {
+  if (!locales.includes(locale as Locale)) {
     notFound()
   }
 
+  const validLocale = locale as Locale
   const posts = getPosts(locale)
   const years = getYearsOfProfessionalExperience()
   const t = await getTranslations({ locale, namespace: 'metadata.home' })
   const description = t('description', { years })
+  const homeUrl = toCanonicalUrl(validLocale, '/')
 
-  // Enhanced Person Schema for LLM/AI discoverability
   const personSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    '@id': 'https://thayto.com/#person',
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'Person' as const,
+    '@id': `${SITE_URL}/#person`,
     name: 'Rafael Thayto',
-    url: 'https://thayto.com',
-    image: {
-      '@type': 'ImageObject',
-      url: 'https://thayto.com/static/images/profile.jpg',
-      width: 460,
-      height: 460,
-      caption: 'Rafael Thayto Profile Picture',
-    },
+    url: SITE_URL,
+    image: { ...PROFILE_IMAGE, caption: 'Rafael Thayto Profile Picture' },
     jobTitle: 'Senior Software Engineer',
-    description: description,
-    sameAs: [
-      'https://github.com/rafa-thayto',
-      'https://linkedin.com/in/thayto',
-      'https://x.com/thayto_dev',
-    ],
+    description,
+    sameAs: [...SOCIAL_LINKS],
     knowsAbout: [
       'TypeScript',
       'Next.js',
@@ -114,93 +108,44 @@ export default async function IndexPage({ params }: Props) {
     ],
   }
 
-  // Organization Schema
   const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': ['Organization', 'Brand'],
-    '@id': 'https://thayto.com/#organization',
+    '@context': SCHEMA_CONTEXT,
+    '@type': ['Organization', 'Brand'] as const,
+    '@id': `${SITE_URL}/#organization`,
     name: 'Rafael Thayto',
-    url: 'https://thayto.com',
-    logo: 'https://thayto.com/static/images/profile.jpg',
-    founder: { '@id': 'https://thayto.com/#person' },
-    sameAs: [
-      'https://github.com/rafa-thayto',
-      'https://linkedin.com/in/thayto',
-    ],
+    url: SITE_URL,
+    logo: { ...PROFILE_IMAGE },
+    founder: PERSON_REF,
+    sameAs: [...SOCIAL_LINKS],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'professional inquiries',
+      url: `${SITE_URL}/linktree`,
+    },
     description:
-      locale === 'pt'
+      validLocale === 'pt'
         ? 'Blog sobre desenvolvimento de software, TypeScript, Next.js e arquitetura'
         : 'Blog about software development, TypeScript, Next.js, and architecture',
   }
 
-  const webPageStructuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    '@id': locale === 'pt' ? 'https://thayto.com' : 'https://thayto.com/en',
-    url: locale === 'pt' ? 'https://thayto.com' : 'https://thayto.com/en',
+  const webPageSchema = {
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'WebPage' as const,
+    '@id': homeUrl,
+    url: homeUrl,
     name: 'Rafael Thayto - Home',
-    description: description,
-    inLanguage: locale === 'pt' ? 'pt-BR' : 'en-US',
-    author: { '@id': 'https://thayto.com/#person' },
-    image: {
-      '@type': 'ImageObject',
-      url: 'https://thayto.com/static/images/profile.jpg',
-      width: 460,
-      height: 460,
-      caption: 'Rafael Thayto Profile Picture',
-    },
-    breadcrumb: {
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'Home',
-          item:
-            locale === 'pt' ? 'https://thayto.com' : 'https://thayto.com/en',
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'Blog',
-          item:
-            locale === 'pt'
-              ? 'https://thayto.com/blog'
-              : 'https://thayto.com/en/blog',
-        },
-        {
-          '@type': 'ListItem',
-          position: 3,
-          name: 'LinkTree',
-          item:
-            locale === 'pt'
-              ? 'https://thayto.com/linktree'
-              : 'https://thayto.com/en/linktree',
-        },
-      ],
-    },
+    description,
+    inLanguage: toLanguageTag(validLocale),
+    author: PERSON_REF,
+    image: { ...PROFILE_IMAGE, caption: 'Rafael Thayto Profile Picture' },
+    breadcrumb: breadcrumbSchema(validLocale, [{ name: 'Home', path: '/' }]),
   }
 
   return (
     <Layout>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(personSchema),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(webPageStructuredData),
-        }}
-      />
+      <JsonLd data={personSchema} />
+      <JsonLd data={organizationSchema} />
+      <JsonLd data={webPageSchema} />
 
       <main className="max-w-4xl mx-auto bg-neutral-50 dark:bg-black py-4 px-4 sm:px-24">
         <HomeContent posts={posts} />

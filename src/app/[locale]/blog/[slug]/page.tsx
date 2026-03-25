@@ -9,6 +9,7 @@ import {
   calculateWordCount,
 } from '@/utils/mdx'
 import { SITE_URL } from '@/utils/constants'
+import { Locale, locales } from '@/i18n/config'
 import { BlogPostNavigation } from './blog-post-navigation'
 import remarkGfm from 'remark-gfm'
 import remarkA11yEmoji from '@fec/remark-a11y-emoji'
@@ -16,16 +17,34 @@ import rehypeSlug from 'rehype-slug'
 import rehypePrismPlus from 'rehype-prism-plus'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { h } from 'hastscript'
-import { locales } from '@/i18n/config'
+import {
+  TWITTER_CARD,
+  SCHEMA_CONTEXT,
+  toOgLocale,
+  toAlternateOgLocale,
+  toCanonicalUrl,
+  toLanguageTag,
+  alternateLanguages,
+  personSummary,
+  personPublisher,
+  breadcrumbSchema,
+  JsonLd,
+} from '@/utils/seo'
 
 const components = {
-  pre: (props: any) => <Pre {...props} />,
-  code: (props: any) => <CodeBlock {...props} />,
-  img: (props: any) => <MDXImage {...props} />,
-  Image: (props: any) => <MDXImage {...props} />,
+  pre: (props: React.ComponentProps<typeof Pre>) => <Pre {...props} />,
+  code: (props: React.ComponentProps<typeof CodeBlock>) => (
+    <CodeBlock {...props} />
+  ),
+  img: (props: React.ComponentProps<typeof MDXImage>) => (
+    <MDXImage {...props} />
+  ),
+  Image: (props: React.ComponentProps<typeof MDXImage>) => (
+    <MDXImage {...props} />
+  ),
 }
 
-const mdxOptions: any = {
+const mdxOptions = {
   remarkPlugins: [remarkGfm, remarkA11yEmoji],
   rehypePlugins: [
     rehypeSlug,
@@ -41,7 +60,9 @@ const mdxOptions: any = {
         content: h('span.text-indigo-500', '# '),
       },
     ],
-  ],
+  ] as NonNullable<
+    NonNullable<Parameters<typeof MDXRemote>[0]['options']>['mdxOptions']
+  >['rehypePlugins'],
 }
 
 export async function generateStaticParams() {
@@ -59,18 +80,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>
 }): Promise<Metadata> {
   const { locale, slug } = await params
+  const validLocale = locale as Locale
   const { frontMatter } = await getMdxSerializedPost(slug, locale)
   const { title, description, tags, image } = frontMatter
 
-  const canonicalUrl =
-    locale === 'pt'
-      ? `https://thayto.com/blog/${slug}`
-      : `https://thayto.com/en/blog/${slug}`
-
-  const mdUrl =
-    locale === 'pt'
-      ? `https://thayto.com/blog/${slug}.md`
-      : `https://thayto.com/en/blog/${slug}.md`
+  const canonicalUrl = toCanonicalUrl(validLocale, `/blog/${slug}`)
 
   return {
     title: `${title} - Rafael Thayto`,
@@ -78,12 +92,9 @@ export async function generateMetadata({
     keywords: tags?.join(', '),
     alternates: {
       canonical: canonicalUrl,
-      languages: {
-        pt: `https://thayto.com/blog/${slug}`,
-        en: `https://thayto.com/en/blog/${slug}`,
-      },
+      languages: alternateLanguages(`/blog/${slug}`),
       types: {
-        'text/markdown': mdUrl,
+        'text/markdown': toCanonicalUrl(validLocale, `/blog/${slug}.md`),
       },
     },
     openGraph: {
@@ -91,17 +102,17 @@ export async function generateMetadata({
       url: canonicalUrl,
       title,
       description,
-      locale: locale === 'pt' ? 'pt_BR' : 'en_US',
-      alternateLocale: locale === 'pt' ? 'en_US' : 'pt_BR',
+      locale: toOgLocale(validLocale),
+      alternateLocale: toAlternateOgLocale(validLocale),
       images: [
         {
-          url: `https://thayto.com/static/images/${
-            image?.src || 'seo-card-default.png'
+          url: `${SITE_URL}/static/images/${
+            image?.src ?? 'seo-card-default.png'
           }`,
           width: 460,
           height: 460,
           alt: 'Blog Hero',
-          type: image?.type || 'image/png',
+          type: image?.type ?? 'image/png',
         },
       ],
       siteName: 'Thayto',
@@ -111,12 +122,8 @@ export async function generateMetadata({
       tags,
     },
     twitter: {
-      card: 'summary_large_image',
-      site: '@thayto',
-      creator: '@_thayto',
-      images: [
-        `https://thayto.com/static/images/${image?.src || 'profile.jpg'}`,
-      ],
+      ...TWITTER_CARD,
+      images: [`${SITE_URL}/static/images/${image?.src ?? 'profile.jpg'}`],
     },
   }
 }
@@ -127,6 +134,7 @@ export default async function PostPage({
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await params
+  const validLocale = locale as Locale
   const { frontMatter, mdxSource } = await getMdxSerializedPost(slug, locale)
   const {
     title,
@@ -140,110 +148,53 @@ export default async function PostPage({
   const prevPost = getPreviousOrNextPostBySlug(slug, 'previous', locale)
   const nextPost = getPreviousOrNextPostBySlug(slug, 'next', locale)
 
-  const blogUrl = locale === 'pt' ? `/blog/${slug}` : `/en/blog/${slug}`
-
-  // Calculate word count for LLM SEO
-  const content = mdxSource.toString()
-  const wordCount = calculateWordCount(content)
+  const postUrl = toCanonicalUrl(validLocale, `/blog/${slug}`)
+  const wordCount = calculateWordCount(mdxSource.toString())
   const readingTimeMinutes = Math.ceil(wordCount / 200)
 
-  // Enhanced BlogPosting Schema for LLM/AI discoverability
-  const blogPostingStructuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    '@id': `${SITE_URL}${blogUrl}`,
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${SITE_URL}${blogUrl}`,
-    },
+  const blogPostingSchema = {
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'BlogPosting' as const,
+    '@id': postUrl,
+    url: postUrl,
+    mainEntityOfPage: { '@type': 'WebPage' as const, '@id': postUrl },
     headline: title,
-    description: description,
+    description,
     datePublished: publishedTime,
     dateModified: modifiedTime,
-    inLanguage: locale === 'pt' ? 'pt-BR' : 'en-US',
-    // NEW: Word count and reading time (critical for LLMs)
-    wordCount: wordCount,
+    inLanguage: toLanguageTag(validLocale),
+    wordCount,
     timeRequired: `PT${readingTimeMinutes}M`,
-    // NEW: Keywords (use frontmatter keywords or fallback to tags)
-    keywords: keywords?.join(', ') || tags?.join(', '),
-    // NEW: Article topics
-    about: tags?.map((tag: string) => ({
-      '@type': 'Thing',
-      name: tag,
-    })),
-    // NEW: Educational context
+    keywords: keywords?.join(', ') ?? tags?.join(', '),
+    about: tags?.map((tag: string) => ({ '@type': 'Thing', name: tag })),
     educationalUse: 'learning',
     learningResourceType: 'tutorial',
-    // ENHANCED: Author with full details
-    author: {
-      '@type': 'Person',
-      '@id': 'https://thayto.com/#person',
-      name: 'Rafael Thayto',
-      url: `${SITE_URL}${locale === 'en' ? '/en' : ''}/about`,
-      jobTitle: 'Senior Software Engineer',
-      sameAs: [
-        'https://github.com/rafa-thayto',
-        'https://linkedin.com/in/thayto',
-      ],
-    },
-    // ENHANCED: Publisher
-    publisher: {
-      '@type': 'Person',
-      '@id': 'https://thayto.com/#person',
-      name: 'Rafael Thayto',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${SITE_URL}/static/images/profile.jpg`,
-        width: 460,
-        height: 460,
-      },
-    },
-    // Enhanced image
+    author: personSummary(validLocale),
+    publisher: personPublisher(),
     image: {
       '@type': 'ImageObject',
-      url: `${SITE_URL}/static/images/${image?.src || 'profile.jpg'}`,
+      url: `${SITE_URL}/static/images/${image?.src ?? 'profile.jpg'}`,
       width: 1200,
       height: 630,
     },
-    // NEW: Breadcrumb
-    breadcrumb: {
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'Home',
-          item: `${SITE_URL}${locale === 'en' ? '/en' : ''}`,
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'Blog',
-          item: `${SITE_URL}${locale === 'en' ? '/en' : ''}/blog`,
-        },
-        {
-          '@type': 'ListItem',
-          position: 3,
-          name: title,
-          item: `${SITE_URL}${blogUrl}`,
-        },
-      ],
-    },
-    // NEW: Speakable sections for voice assistants
+    breadcrumb: breadcrumbSchema(validLocale, [
+      { name: 'Home', path: '/' },
+      { name: 'Blog', path: '/blog' },
+      { name: title, path: `/blog/${slug}` },
+    ]),
     speakable: {
       '@type': 'SpeakableSpecification',
       cssSelector: ['h1', 'h2', '.prose'],
     },
   }
 
+  const dateFormatter = new Intl.DateTimeFormat(toLanguageTag(validLocale), {
+    dateStyle: 'long',
+  })
+
   return (
     <Layout>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(blogPostingStructuredData),
-        }}
-      />
+      <JsonLd data={blogPostingSchema} />
 
       <div className="min-h-screen bg-slate-50 dark:bg-black">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
@@ -275,12 +226,7 @@ export default async function PostPage({
 
               <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-8 sm:mb-12">
                 <time dateTime={publishedTime} className="font-medium">
-                  {new Intl.DateTimeFormat(
-                    locale === 'pt' ? 'pt-BR' : 'en-US',
-                    {
-                      dateStyle: 'long',
-                    },
-                  ).format(new Date(publishedTime))}
+                  {dateFormatter.format(new Date(publishedTime))}
                 </time>
                 <span className="mx-2">•</span>
                 <span>Rafael Thayto</span>
