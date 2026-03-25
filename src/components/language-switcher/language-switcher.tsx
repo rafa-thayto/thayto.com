@@ -3,7 +3,6 @@
 import { useLocale } from 'next-intl'
 import { usePathname, useRouter } from '@/i18n/routing'
 import { locales } from '@/i18n/config'
-import { GlobeAltIcon } from '@heroicons/react/24/outline'
 import { useParams } from 'next/navigation'
 
 export function LanguageSwitcher() {
@@ -23,19 +22,19 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-1 p-0.5 rounded-lg bg-gray-100 dark:bg-gray-800 transition-all duration-300">
+    <div className="flex items-center gap-1 transition-all duration-300">
       {locales.map((loc) => (
         <button
           key={loc}
           onClick={() => switchLocale(loc)}
           className={`
-            px-3 py-1.5 rounded-md text-sm font-medium
+            px-2 py-1 rounded-md text-sm font-medium
             transition-all duration-300 ease-in-out
             transform hover:scale-105 active:scale-95
             ${
               loc === locale
-                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm scale-100'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700/50'
+                ? 'text-gray-900 dark:text-gray-200'
+                : 'text-gray-400 dark:text-gray-600 hover:text-gray-900 dark:hover:text-gray-200'
             }
           `}
           aria-label={`Switch to ${loc === 'pt' ? 'Portuguese' : 'English'}`}

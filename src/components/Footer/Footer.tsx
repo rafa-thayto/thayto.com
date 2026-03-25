@@ -5,7 +5,7 @@ import { ThemeSwitcher } from '../theme-switcher/theme-switcher'
 import { LanguageSwitcher } from '../language-switcher'
 import { Text } from '../ui/text'
 
-type Link = {
+type FooterLink = {
   href: string
   name: string
 }
@@ -17,7 +17,7 @@ export const Footer = ({
 }: {
   onThemeChange?: (theme: 'dark' | 'light') => void
 }) => {
-  const allLinks = useMemo<Link[]>(
+  const allLinks = useMemo<FooterLink[]>(
     () => [
       {
         href: '/',
@@ -55,7 +55,7 @@ export const Footer = ({
     <footer className="mt-10 py-8 bg-slate-50 dark:bg-black">
       <div className="max-w-4xl mx-auto px-4 sm:px-24">
         <div className="flex flex-col items-center gap-4">
-          <div className="flex flex-wrap justify-center items-center gap-4 text-sm">
+          <div className="flex flex-nowrap justify-center items-center gap-3 text-xs">
             {allLinks.map((link, index) => (
               <div
                 key={`${link.name}-${linkNanoId}`}
@@ -79,21 +79,21 @@ export const Footer = ({
                   </Text>
                 </Link>
                 {index < allLinks.length - 1 && (
-                  <span className="ml-4 text-gray-400 dark:text-gray-600">
+                  <span className="ml-3 text-gray-400 dark:text-gray-600">
                     •
                   </span>
                 )}
               </div>
             ))}
             <div className="flex items-center">
-              <span className="ml-4 text-gray-400 dark:text-gray-600">•</span>
-              <div className="ml-4">
+              <span className="ml-3 text-gray-400 dark:text-gray-600">•</span>
+              <div className="ml-3">
                 <ThemeSwitcher onThemeChange={onThemeChange} />
               </div>
             </div>
             <div className="flex items-center">
-              <span className="ml-4 text-gray-400 dark:text-gray-600">•</span>
-              <div className="ml-4">
+              <span className="ml-3 text-gray-400 dark:text-gray-600">•</span>
+              <div className="ml-3">
                 <LanguageSwitcher />
               </div>
             </div>
