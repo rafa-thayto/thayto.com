@@ -27,7 +27,7 @@ function detectLocale(pathname: string): {
   return { locale: defaultLocale, pathWithoutLocale: pathname }
 }
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const accept = request.headers.get('accept') || ''
 
   if (accept.includes('text/markdown')) {
