@@ -1,50 +1,34 @@
 import { MetadataRoute } from 'next'
 
+const AI_CRAWLERS = [
+  'GPTBot',
+  ['ClaudeBot', 'anthropic-ai'],
+  'PerplexityBot',
+  'Google-Extended',
+  'CCBot',
+  'FacebookBot',
+  'Bytespider',
+  'Applebot-Extended',
+  'cohere-ai',
+  'Amazonbot',
+  'Meta-ExternalAgent',
+] as const
+
+const aiCrawlerRules = AI_CRAWLERS.map((userAgent) => ({
+  userAgent: userAgent as string | string[],
+  allow: '/' as const,
+  crawlDelay: 2,
+}))
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      // General crawlers
       {
         userAgent: '*',
         allow: '/',
         disallow: ['/api/', '/_next/', '/static/temp/'],
       },
-      // OpenAI ChatGPT crawler
-      {
-        userAgent: 'GPTBot',
-        allow: '/',
-        crawlDelay: 2,
-      },
-      // Anthropic Claude crawler
-      {
-        userAgent: ['ClaudeBot', 'anthropic-ai'],
-        allow: '/',
-        crawlDelay: 2,
-      },
-      // Perplexity AI crawler
-      {
-        userAgent: 'PerplexityBot',
-        allow: '/',
-        crawlDelay: 2,
-      },
-      // Google's AI training crawler
-      {
-        userAgent: 'Google-Extended',
-        allow: '/',
-        crawlDelay: 2,
-      },
-      // Common Crawl (used by many AI models)
-      {
-        userAgent: 'CCBot',
-        allow: '/',
-        crawlDelay: 2,
-      },
-      // Meta AI crawler
-      {
-        userAgent: 'FacebookBot',
-        allow: '/',
-        crawlDelay: 2,
-      },
+      ...aiCrawlerRules,
     ],
     sitemap: 'https://thayto.com/sitemap.xml',
     host: 'https://thayto.com',
