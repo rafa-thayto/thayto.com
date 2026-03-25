@@ -4,6 +4,16 @@ import { getTranslations } from 'next-intl/server'
 import { Suspense } from 'react'
 import booksData from '@/data/books.json'
 import { Book } from '@/data/books.types'
+import { Locale } from '@/i18n/config'
+import { SITE_URL } from '@/utils/constants'
+import {
+  SCHEMA_CONTEXT,
+  PERSON_REF,
+  toCanonicalUrl,
+  toOgLocale,
+  alternateLanguages,
+  JsonLd,
+} from '@/utils/seo'
 import { BooksContent } from './books-content'
 
 type Props = {
@@ -17,30 +27,24 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
+  const validLocale = locale as Locale
   const t = await getTranslations({ locale, namespace: 'metadata.books' })
-
-  const canonicalUrl =
-    locale === 'pt' ? 'https://thayto.com/books' : 'https://thayto.com/en/books'
+  const canonicalUrl = toCanonicalUrl(validLocale, '/books')
 
   return {
     title: t('title'),
     description: t('description'),
     alternates: {
       canonical: canonicalUrl,
-      languages: {
-        pt: 'https://thayto.com/books',
-        en: 'https://thayto.com/en/books',
-      },
-      types: {
-        'text/markdown': canonicalUrl,
-      },
+      languages: alternateLanguages('/books'),
+      types: { 'text/markdown': canonicalUrl },
     },
     openGraph: {
       title: t('title'),
       description: t('description'),
       url: canonicalUrl,
       type: 'website',
-      locale: locale === 'pt' ? 'pt_BR' : 'en_US',
+      locale: toOgLocale(validLocale),
       siteName: 'Rafael Thayto',
     },
     twitter: {
@@ -53,38 +57,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BooksPage({ params }: Props) {
   const { locale } = await params
+  const validLocale = locale as Locale
 
   const books: Book[] = booksData as Book[]
 
-  // Safe: JSON-LD structured data with controlled content for SEO
   const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: locale === 'pt' ? 'Livros' : 'Books',
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'CollectionPage' as const,
+    name: validLocale === 'pt' ? 'Livros' : 'Books',
     description:
-      locale === 'pt'
+      validLocale === 'pt'
         ? 'Minha pequena biblioteca pessoal'
         : 'My own little library',
-    url:
-      locale === 'pt'
-        ? 'https://thayto.com/books'
-        : 'https://thayto.com/en/books',
+    url: toCanonicalUrl(validLocale, '/books'),
     author: {
-      '@type': 'Person',
+      '@type': 'Person' as const,
       name: 'Rafael Thayto',
-      url: 'https://thayto.com',
+      url: SITE_URL,
+      ...PERSON_REF,
     },
     mainEntity: {
-      '@type': 'ItemList',
+      '@type': 'ItemList' as const,
       numberOfItems: books.length,
       itemListElement: books.map((book, index) => ({
-        '@type': 'ListItem',
+        '@type': 'ListItem' as const,
         position: index + 1,
         item: {
-          '@type': 'Book',
-          name: locale === 'pt' ? book.title : book.englishTitle,
+          '@type': 'Book' as const,
+          name: validLocale === 'pt' ? book.title : book.englishTitle,
           author: {
-            '@type': 'Person',
+            '@type': 'Person' as const,
             name: book.author,
           },
         },
@@ -94,10 +96,7 @@ export default async function BooksPage({ params }: Props) {
 
   return (
     <Layout>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <JsonLd data={structuredData} />
       <Suspense fallback={null}>
         <BooksContent books={books} locale={locale} />
       </Suspense>

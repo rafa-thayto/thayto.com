@@ -1,37 +1,53 @@
 import { Metadata } from 'next'
+import { SITE_URL } from '@/utils/constants'
+import { Locale } from '@/i18n/config'
 import { LinktreeContent } from './linktree-content'
+import { TWITTER_CARD, profilePageSchema, JsonLd } from '@/utils/seo'
 
 const description = 'Minha árvore de links'
+
+type Props = {
+  params: Promise<{ locale: string }>
+}
 
 export const metadata: Metadata = {
   title: 'Rafael Thayto - Linktree',
   description,
   alternates: {
-    canonical: 'https://thayto.com/linktree',
-    types: {
-      'text/markdown': 'https://thayto.com/linktree',
-    },
+    canonical: `${SITE_URL}/linktree`,
+    types: { 'text/markdown': `${SITE_URL}/linktree` },
   },
   openGraph: {
     type: 'article',
-    url: 'https://thayto.com/linktree',
+    url: `${SITE_URL}/linktree`,
     title: 'Rafael Thayto - Linktree',
     description,
     images: [
       {
-        url: 'https://thayto.com/static/images/seo-card-linktree.png',
+        url: `${SITE_URL}/static/images/seo-card-linktree.png`,
         type: 'image/png',
       },
     ],
     siteName: 'Thayto.com',
   },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@thayto',
-    creator: '@thayto',
-  },
+  twitter: TWITTER_CARD,
 }
 
-export default function LinksPage() {
-  return <LinktreeContent />
+export default async function LinksPage({ params }: Props) {
+  const { locale } = await params
+  const validLocale = locale as Locale
+
+  const schema = profilePageSchema(validLocale, {
+    path: '/linktree',
+    name: 'Rafael Thayto - Linktree',
+    description,
+    breadcrumbLabel: 'Linktree',
+  })
+
+  return (
+    <>
+      <JsonLd data={schema} />
+      <LinktreeContent />
+    </>
+  )
 }
