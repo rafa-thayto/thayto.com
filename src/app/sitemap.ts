@@ -11,7 +11,7 @@ const buildUrl = (path: string, locale: string): string => {
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = []
 
-  const staticPages = ['', 'blog', 'about', 'linktree']
+  const staticPages = ['', 'blog', 'books', 'about', 'linktree']
 
   // Generate static pages (one entry per page with alternates)
   for (const page of staticPages) {

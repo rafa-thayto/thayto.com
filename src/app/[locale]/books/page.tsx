@@ -79,18 +79,58 @@ export default async function BooksPage({ params }: Props) {
     mainEntity: {
       '@type': 'ItemList' as const,
       numberOfItems: books.length,
-      itemListElement: books.map((book, index) => ({
-        '@type': 'ListItem' as const,
-        position: index + 1,
-        item: {
-          '@type': 'Book' as const,
-          name: validLocale === 'pt' ? book.title : book.englishTitle,
-          author: {
-            '@type': 'Person' as const,
-            name: book.author,
+      itemListElement: books.map((book, index) => {
+        const bookName = validLocale === 'pt' ? book.title : book.englishTitle
+        const alternateName =
+          validLocale === 'pt' ? book.englishTitle : book.title
+        const bookUrl =
+          book.amazonUrl ||
+          `${toCanonicalUrl(validLocale, '/books')}#book-${book.id}`
+
+        const review =
+          book.stars !== undefined
+            ? {
+                review: {
+                  '@type': 'Review' as const,
+                  reviewRating: {
+                    '@type': 'Rating' as const,
+                    ratingValue: book.stars,
+                    bestRating: 5,
+                    worstRating: 1,
+                  },
+                  author: {
+                    '@type': 'Person' as const,
+                    name: 'Rafael Thayto',
+                    url: SITE_URL,
+                  },
+                },
+              }
+            : {}
+
+        return {
+          '@type': 'ListItem' as const,
+          position: index + 1,
+          item: {
+            '@type': 'Book' as const,
+            '@id': `${SITE_URL}/#book-${book.id}`,
+            name: bookName,
+            ...(alternateName && alternateName !== bookName
+              ? { alternateName }
+              : {}),
+            author: {
+              '@type': 'Person' as const,
+              name: book.author,
+            },
+            ...(book.coverUrl ? { image: book.coverUrl } : {}),
+            url: bookUrl,
+            inLanguage:
+              book.title !== book.englishTitle && validLocale === 'pt'
+                ? 'pt-BR'
+                : 'en',
+            ...review,
           },
-        },
-      })),
+        }
+      }),
     },
   }
 

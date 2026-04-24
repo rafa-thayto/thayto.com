@@ -18,7 +18,7 @@
     "author": "Robert C. Martin",
     "coverUrl": "https://m.media-amazon.com/images/I/41SH-SvWPxL._SY445_SX342_.jpg",
     "amazonUrl": "https://amzn.to/4dNPyIH",
-    "status": "READING",
+    "status": "READ",
     "createdAt": "2024-02-01T00:00:00.000Z"
   },
   {
@@ -28,7 +28,7 @@
     "author": "Eric Evans",
     "coverUrl": "https://m.media-amazon.com/images/I/51OWGtzQLLL._SY445_SX342_.jpg",
     "amazonUrl": "https://amzn.to/3ZQ3Z3Z",
-    "status": "WILL_READ",
+    "status": "READ",
     "createdAt": "2024-03-10T00:00:00.000Z"
   },
   {
@@ -61,7 +61,287 @@
     "author": "Gang of Four",
     "coverUrl": "https://m.media-amazon.com/images/I/51kuc0iWoKL._SY445_SX342_.jpg",
     "amazonUrl": "https://amzn.to/3ZQ3Z3Z",
-    "status": "BUY",
+    "status": "READ",
     "createdAt": "2024-04-01T00:00:00.000Z"
+  },
+  {
+    "id": "7",
+    "title": "Organize Sua Mente",
+    "englishTitle": "Building a Second Brain",
+    "author": "Tiago Forte",
+    "coverUrl": "https://m.media-amazon.com/images/P/1800815492.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/1800815492",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "8",
+    "title": "O Lado Difícil das Situações Difíceis",
+    "englishTitle": "The Hard Thing About Hard Things",
+    "author": "Ben Horowitz",
+    "coverUrl": "https://m.media-amazon.com/images/P/857827976X.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/857827976X",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "9",
+    "title": "Data Science para Negócios",
+    "englishTitle": "Data Science for Business",
+    "author": "Foster Provost, Tom Fawcett",
+    "coverUrl": "https://m.media-amazon.com/images/P/8576089726.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8576089726",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "10",
+    "title": "O Poder do Hábito",
+    "englishTitle": "The Power of Habit",
+    "author": "Charles Duhigg",
+    "coverUrl": "https://m.media-amazon.com/images/P/8539004119.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8539004119",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "11",
+    "title": "A Coragem de Ser Imperfeito",
+    "englishTitle": "The Gifts of Imperfection",
+    "author": "Brené Brown",
+    "coverUrl": "https://m.media-amazon.com/images/P/8543104335.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8543104335",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "12",
+    "title": "A Regra é Não Ter Regras",
+    "englishTitle": "No Rules Rules",
+    "author": "Reed Hastings, Erin Meyer",
+    "coverUrl": "https://m.media-amazon.com/images/P/6555600314.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/6555600314",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "13",
+    "title": "Lean Inception",
+    "englishTitle": "Lean Inception",
+    "author": "Paulo Caroli",
+    "coverUrl": "https://m.media-amazon.com/images/P/8594377061.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8594377061",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "14",
+    "title": "Product Backlog Building",
+    "englishTitle": "Product Backlog Building",
+    "author": "Fábio Aguiar, Paulo Caroli",
+    "coverUrl": "https://m.media-amazon.com/images/P/6586660106.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/6586660106",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "15",
+    "title": "Gatilhos Mentais",
+    "englishTitle": "Mental Triggers",
+    "author": "Gustavo Ferreira",
+    "coverUrl": "https://m.media-amazon.com/images/P/8582892101.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8582892101",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "16",
+    "title": "Sócrates Café",
+    "englishTitle": "Socrates Café",
+    "author": "Christopher Phillips",
+    "coverUrl": "https://m.media-amazon.com/images/P/8568014038.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8568014038",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "17",
+    "title": "Os Primeiros 90 Dias",
+    "englishTitle": "The First 90 Days",
+    "author": "Michael Watkins",
+    "coverUrl": "https://m.media-amazon.com/images/P/8550807346.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8550807346",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "18",
+    "title": "Receita Previsível",
+    "englishTitle": "Predictable Revenue",
+    "author": "Aaron Ross, Marylou Tyler",
+    "coverUrl": "https://m.media-amazon.com/images/P/6586040825.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/6586040825",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "19",
+    "title": "StoryBrand",
+    "englishTitle": "Building a StoryBrand",
+    "author": "Donald Miller",
+    "coverUrl": "https://m.media-amazon.com/images/P/8550804592.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8550804592",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "20",
+    "title": "Comunicação Não Violenta",
+    "englishTitle": "Nonviolent Communication",
+    "author": "Marshall B. Rosenberg",
+    "coverUrl": "https://m.media-amazon.com/images/P/8571832641.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8571832641",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "21",
+    "title": "Arrume a Sua Cama",
+    "englishTitle": "Make Your Bed",
+    "author": "William H. McRaven",
+    "coverUrl": "https://m.media-amazon.com/images/P/8542215788.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8542215788",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "22",
+    "title": "Meditações",
+    "englishTitle": "Meditations",
+    "author": "Marco Aurélio",
+    "coverUrl": "https://m.media-amazon.com/images/P/8552100916.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8552100916",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "23",
+    "title": "As Leis da Simplicidade",
+    "englishTitle": "The Laws of Simplicity",
+    "author": "John Maeda",
+    "coverUrl": "https://m.media-amazon.com/images/P/8599560093.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8599560093",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "24",
+    "title": "Ganbatte",
+    "englishTitle": "Ganbatte",
+    "author": "Nobuo Suzuki",
+    "coverUrl": "https://m.media-amazon.com/images/P/6555644729.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/6555644729",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "25",
+    "title": "Estruturas de Dados e Algoritmos com JavaScript",
+    "englishTitle": "Data Structures and Algorithms with JavaScript",
+    "author": "Loiane Groner",
+    "coverUrl": "https://m.media-amazon.com/images/P/8575226932.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8575226932",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "26",
+    "title": "Entendendo Algoritmos",
+    "englishTitle": "Grokking Algorithms",
+    "author": "Aditya Bhargava",
+    "coverUrl": "https://m.media-amazon.com/images/P/8575225634.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8575225634",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "27",
+    "title": "O Ato Criativo: Uma Forma de Ser",
+    "englishTitle": "The Creative Act: A Way of Being",
+    "author": "Rick Rubin",
+    "coverUrl": "https://m.media-amazon.com/images/P/6555646748.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/6555646748",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "28",
+    "title": "System Design Interview",
+    "englishTitle": "System Design Interview",
+    "author": "Alex Xu",
+    "coverUrl": "https://m.media-amazon.com/images/P/B08CMF2CQF.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/B08CMF2CQF",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "29",
+    "title": "O Projeto Fênix",
+    "englishTitle": "The Phoenix Project",
+    "author": "Gene Kim, Kevin Behr, George Spafford",
+    "coverUrl": "https://m.media-amazon.com/images/P/8550814067.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8550814067",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "30",
+    "title": "Cracking the Coding Interview",
+    "englishTitle": "Cracking the Coding Interview",
+    "author": "Gayle Laakmann McDowell",
+    "coverUrl": "https://m.media-amazon.com/images/P/0984782850.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/0984782850",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "31",
+    "title": "10 Cases do Design Brasileiro - Vol. 1",
+    "englishTitle": "10 Cases of Brazilian Design - Vol. 1",
+    "author": "Auresnede Pires Stephan",
+    "coverUrl": "https://m.media-amazon.com/images/P/8521204612.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8521204612",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "32",
+    "title": "10 Cases do Design Brasileiro - Vol. 2",
+    "englishTitle": "10 Cases of Brazilian Design - Vol. 2",
+    "author": "Auresnede Pires Stephan",
+    "coverUrl": "https://m.media-amazon.com/images/P/8521204965.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8521204965",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "33",
+    "title": "10 Cases do Design Brasileiro - Vol. 3",
+    "englishTitle": "10 Cases of Brazilian Design - Vol. 3",
+    "author": "Auresnede Pires Stephan",
+    "coverUrl": "https://m.media-amazon.com/images/P/8521206313.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/8521206313",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": "34",
+    "title": "System Design Interview – An Insider's Guide: Volume 2",
+    "englishTitle": "System Design Interview – An Insider's Guide: Volume 2",
+    "author": "Alex Xu, Sahn Lam",
+    "coverUrl": "https://m.media-amazon.com/images/P/1736049119.01.L.jpg",
+    "amazonUrl": "https://www.amazon.com.br/dp/1736049119",
+    "status": "READ",
+    "createdAt": "2026-04-23T00:00:00.000Z"
   }
 ]
