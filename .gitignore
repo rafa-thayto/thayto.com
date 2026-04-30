@@ -79,3 +79,9 @@ sitemap-0.xml
 .env.development
 .env.staging
 .env.production
+
+# Local SQLite database (Drizzle + libSQL)
+local.db
+local.db-journal
+local.db-shm
+local.db-wal
