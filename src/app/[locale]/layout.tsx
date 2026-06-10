@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
-import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+import { notFound } from 'next/navigation'
+import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { getMessages, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { SITE_URL } from '@/utils/constants'
 import { SCHEMA_CONTEXT, JsonLd } from '@/utils/seo'
@@ -16,6 +17,15 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params
+
+  // Reject unknown locales, then opt this segment into static rendering:
+  // setRequestLocale lets next-intl resolve the locale from the route param at
+  // build time instead of reading request headers (which forces dynamic).
+  if (!hasLocale(routing.locales, locale)) {
+    notFound()
+  }
+  setRequestLocale(locale)
+
   const messages = await getMessages()
 
   const websiteSchema = {
