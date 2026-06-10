@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid'
-import Link from 'next/link'
+import NextLink from 'next/link'
+import { Link } from '@/i18n/routing'
 import { useMemo } from 'react'
 import { ThemeSwitcher } from '../theme-switcher/theme-switcher'
 import { LanguageSwitcher } from '../language-switcher'
@@ -29,7 +30,7 @@ export const Footer = ({
       },
       {
         href: '/books',
-        name: 'Library',
+        name: 'Books',
       },
       {
         href: '/linktree',
@@ -60,35 +61,40 @@ export const Footer = ({
       <div className="max-w-4xl mx-auto px-4 sm:px-24">
         <div className="flex flex-col items-center gap-4">
           <div className="flex flex-nowrap justify-center items-center gap-3 text-xs">
-            {allLinks.map((link, index) => (
-              <div
-                key={`${link.name}-${linkNanoId}`}
-                className="flex items-center"
-              >
-                <Link
-                  href={link.href}
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200"
-                  target={link.href.startsWith('http') ? '_blank' : undefined}
-                  rel={
-                    link.href.startsWith('http')
-                      ? 'noopener noreferrer'
-                      : undefined
-                  }
+            {allLinks.map((link, index) => {
+              const isExternal = link.href.startsWith('http')
+              // App pages go through the i18n-aware Link so the current
+              // locale is preserved; external URLs and static files like
+              // /rss.xml must not receive a locale prefix.
+              const LinkComponent =
+                isExternal || link.href.includes('.') ? NextLink : Link
+
+              return (
+                <div
+                  key={`${link.name}-${linkNanoId}`}
+                  className="flex items-center"
                 >
-                  <Text
-                    variant="hover-decoration"
-                    className="text-gray-900 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200"
+                  <LinkComponent
+                    href={link.href}
+                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200"
+                    target={isExternal ? '_blank' : undefined}
+                    rel={isExternal ? 'noopener noreferrer' : undefined}
                   >
-                    {link.name}
-                  </Text>
-                </Link>
-                {index < allLinks.length - 1 && (
-                  <span className="ml-3 text-gray-400 dark:text-gray-600">
-                    •
-                  </span>
-                )}
-              </div>
-            ))}
+                    <Text
+                      variant="hover-decoration"
+                      className="text-gray-900 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200"
+                    >
+                      {link.name}
+                    </Text>
+                  </LinkComponent>
+                  {index < allLinks.length - 1 && (
+                    <span className="ml-3 text-gray-400 dark:text-gray-600">
+                      •
+                    </span>
+                  )}
+                </div>
+              )
+            })}
             <div className="flex items-center">
               <span className="ml-3 text-gray-400 dark:text-gray-600">•</span>
               <div className="ml-3">
