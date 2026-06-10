@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: canonicalUrl,
       languages: alternateLanguages('/about'),
-      types: { 'text/markdown': canonicalUrl },
+      types: { 'text/markdown': `${canonicalUrl}.md` },
     },
     openGraph: {
       type: 'article',

@@ -1,6 +1,10 @@
 import { getPosts } from '@/utils/mdx'
 import { SITE_URL } from '@/utils/constants'
 import { getPostsPath } from '@/constants'
+import {
+  generateBooksMarkdown,
+  generateAboutMarkdown,
+} from '@/utils/markdown-response'
 import { promises as fs } from 'fs'
 import path from 'path'
 import { NextResponse } from 'next/server'
@@ -57,6 +61,25 @@ export async function GET() {
       '',
     )
   }
+
+  sections.push(
+    '## Books',
+    '',
+    generateBooksMarkdown('pt'),
+    '',
+    '---',
+    '',
+    generateBooksMarkdown('en'),
+    '',
+    '---',
+    '',
+    '## About',
+    '',
+    generateAboutMarkdown('en'),
+    '',
+    '---',
+    '',
+  )
 
   return new NextResponse(sections.join('\n'), {
     headers: {

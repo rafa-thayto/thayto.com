@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: canonicalUrl,
       languages: alternateLanguages('/'),
-      types: { 'text/markdown': canonicalUrl },
+      types: { 'text/markdown': toCanonicalUrl(validLocale, '/index.md') },
     },
     openGraph: {
       type: 'website',

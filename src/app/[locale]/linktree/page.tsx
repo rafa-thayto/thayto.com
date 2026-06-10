@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description,
   alternates: {
     canonical: `${SITE_URL}/linktree`,
-    types: { 'text/markdown': `${SITE_URL}/linktree` },
+    types: { 'text/markdown': `${SITE_URL}/linktree.md` },
   },
   openGraph: {
     type: 'article',

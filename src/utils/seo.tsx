@@ -55,6 +55,9 @@ export const toCanonicalUrl = (locale: Locale, path: string) =>
   `${SITE_URL}${toLocalePath(locale, path)}`
 
 export const alternateLanguages = (path: string) => ({
+  // x-default tells search engines which URL to serve when no locale matches;
+  // it points at the default locale (pt), mirroring the sitemap's alternates.
+  'x-default': `${SITE_URL}${path}`,
   pt: `${SITE_URL}${path}`,
   en: `${SITE_URL}/en${path}`,
 })
