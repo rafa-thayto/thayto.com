@@ -85,5 +85,29 @@
       "zxy": "ZXY"
     },
     "noResults": "No books found with the selected filters."
+  },
+  "commandPalette": {
+    "title": "Command palette",
+    "placeholder": "Search posts, books, pages, or actions...",
+    "noResults": "No results found.",
+    "pages": "Pages",
+    "posts": "Posts",
+    "books": "Books",
+    "actions": "Actions",
+    "links": "Links",
+    "page": {
+      "home": "Home",
+      "blog": "Blog",
+      "books": "Books",
+      "about": "About",
+      "linktree": "Linktree"
+    },
+    "toggleTheme": "Toggle theme (light/dark)",
+    "switchToEnglish": "Switch to English",
+    "switchToPortuguese": "Mudar para Português",
+    "openLabel": "Open command palette",
+    "hintNavigate": "navigate",
+    "hintSelect": "select",
+    "hintClose": "close"
   }
 }

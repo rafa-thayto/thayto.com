@@ -5,6 +5,9 @@ import { getMessages, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { SITE_URL } from '@/utils/constants'
 import { SCHEMA_CONTEXT, JsonLd } from '@/utils/seo'
+import { getPosts } from '@/utils/mdx'
+import { CommandPalette } from '@/components/command-palette'
+import { getBooks } from './books/books-data'
 
 type Props = {
   children: ReactNode
@@ -28,6 +31,24 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   const messages = await getMessages()
 
+  // Lightweight post metadata for the cmd+k palette — computed at build time
+  // (getPosts is fs-based and server-only), serialized as props to the client.
+  const palettePosts = getPosts(locale).map((post) => ({
+    title: post.data.title,
+    slug: post.filePath.replace(/\.mdx?$/, ''),
+    tags: post.data.tags ?? [],
+  }))
+
+  // Lightweight book metadata for the cmd+k palette. getBooks() is the same
+  // 24h-cached server read the /books page uses, so this adds no per-request DB
+  // cost. Title is resolved to the active locale up front.
+  const paletteBooks = (await getBooks()).map((book) => ({
+    id: book.id,
+    title: locale === 'pt' ? book.title : book.englishTitle,
+    author: book.author,
+    amazonUrl: book.amazonUrl,
+  }))
+
   const websiteSchema = {
     '@context': SCHEMA_CONTEXT,
     '@type': 'WebSite' as const,
@@ -45,6 +66,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
       <JsonLd data={websiteSchema} />
+      <CommandPalette posts={palettePosts} books={paletteBooks} />
       {children}
     </NextIntlClientProvider>
   )

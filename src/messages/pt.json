@@ -85,5 +85,29 @@
       "zxy": "Z-A"
     },
     "noResults": "Nenhum livro encontrado com os filtros selecionados."
+  },
+  "commandPalette": {
+    "title": "Paleta de comandos",
+    "placeholder": "Busca posts, livros, páginas ou ações...",
+    "noResults": "Nenhum resultado encontrado.",
+    "pages": "Páginas",
+    "posts": "Posts",
+    "books": "Livros",
+    "actions": "Ações",
+    "links": "Links",
+    "page": {
+      "home": "Home",
+      "blog": "Blog",
+      "books": "Livros",
+      "about": "Sobre",
+      "linktree": "Linktree"
+    },
+    "toggleTheme": "Alternar tema (claro/escuro)",
+    "switchToEnglish": "Switch to English",
+    "switchToPortuguese": "Mudar para Português",
+    "openLabel": "Abrir paleta de comandos",
+    "hintNavigate": "navegar",
+    "hintSelect": "selecionar",
+    "hintClose": "fechar"
   }
 }
