@@ -1,9 +1,7 @@
 import { Layout } from '@/components'
 import { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Suspense } from 'react'
-import booksData from '@/data/books.json'
-import { Book } from '@/data/books.types'
 import { Locale } from '@/i18n/config'
 import { SITE_URL } from '@/utils/constants'
 import {
@@ -11,14 +9,23 @@ import {
   PERSON_REF,
   toCanonicalUrl,
   toOgLocale,
+  toAlternateOgLocale,
+  toLanguageTag,
   alternateLanguages,
+  breadcrumbSchema,
   JsonLd,
 } from '@/utils/seo'
 import { BooksContent } from './books-content'
+import { getBooks } from './books-data'
 
 type Props = {
   params: Promise<{ locale: string }>
 }
+
+// Statically render both locales at build time and regenerate (ISR) at most
+// once every 24h, so library/DB updates surface within a day without querying
+// the database on every request.
+export const revalidate = 86400 // 24 hours, in seconds
 
 // Static params for both locales
 export function generateStaticParams() {
@@ -28,6 +35,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const validLocale = locale as Locale
+  setRequestLocale(validLocale)
   const t = await getTranslations({ locale, namespace: 'metadata.books' })
   const canonicalUrl = toCanonicalUrl(validLocale, '/books')
 
@@ -37,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: canonicalUrl,
       languages: alternateLanguages('/books'),
-      types: { 'text/markdown': canonicalUrl },
+      types: { 'text/markdown': `${canonicalUrl}.md` },
     },
     openGraph: {
       title: t('title'),
@@ -45,12 +53,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: canonicalUrl,
       type: 'website',
       locale: toOgLocale(validLocale),
+      alternateLocale: toAlternateOgLocale(validLocale),
       siteName: 'Rafael Thayto',
+      images: [
+        {
+          url: `${SITE_URL}/static/images/seo-card-default.png`,
+          width: 1290,
+          height: 675,
+          alt: t('title'),
+          type: 'image/png',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: t('title'),
       description: t('description'),
+      images: [`${SITE_URL}/static/images/seo-card-default.png`],
     },
   }
 }
@@ -58,22 +77,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BooksPage({ params }: Props) {
   const { locale } = await params
   const validLocale = locale as Locale
+  setRequestLocale(validLocale)
 
-  const books: Book[] = booksData as Book[]
+  const books = await getBooks()
+
+  const pageName = validLocale === 'pt' ? 'Livros' : 'Books'
 
   const structuredData = {
     '@context': SCHEMA_CONTEXT,
     '@type': 'CollectionPage' as const,
-    name: validLocale === 'pt' ? 'Livros' : 'Books',
+    '@id': toCanonicalUrl(validLocale, '/books'),
+    name: pageName,
     description:
       validLocale === 'pt'
         ? 'Minha pequena biblioteca pessoal'
         : 'My own little library',
     url: toCanonicalUrl(validLocale, '/books'),
+    inLanguage: toLanguageTag(validLocale),
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    breadcrumb: breadcrumbSchema(validLocale, [
+      { name: 'Home', path: '/' },
+      { name: pageName, path: '/books' },
+    ]),
     author: {
       '@type': 'Person' as const,
       name: 'Rafael Thayto',
-      url: SITE_URL,
+      url: toCanonicalUrl(validLocale, '/about'),
       ...PERSON_REF,
     },
     mainEntity: {
@@ -94,14 +123,14 @@ export default async function BooksPage({ params }: Props) {
                   '@type': 'Review' as const,
                   reviewRating: {
                     '@type': 'Rating' as const,
-                    ratingValue: book.stars,
+                    ratingValue: Math.min(5, Math.max(1, book.stars)),
                     bestRating: 5,
                     worstRating: 1,
                   },
                   author: {
                     '@type': 'Person' as const,
                     name: 'Rafael Thayto',
-                    url: SITE_URL,
+                    url: toCanonicalUrl(validLocale, '/about'),
                   },
                 },
               }
@@ -123,10 +152,10 @@ export default async function BooksPage({ params }: Props) {
             },
             ...(book.coverUrl ? { image: book.coverUrl } : {}),
             url: bookUrl,
-            inLanguage:
-              book.title !== book.englishTitle && validLocale === 'pt'
-                ? 'pt-BR'
-                : 'en',
+            // inLanguage describes the edition Rafael read, so it is intrinsic
+            // to the book — a distinct PT title means the PT edition. It must
+            // not depend on which locale is rendering the page.
+            inLanguage: book.title !== book.englishTitle ? 'pt-BR' : 'en',
             ...review,
           },
         }

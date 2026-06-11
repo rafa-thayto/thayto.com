@@ -9,6 +9,7 @@ import ReactConfetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
 import { ThemeSwitcher } from '../theme-switcher/theme-switcher'
 import { LanguageSwitcher } from '../language-switcher'
+import { CommandPaletteTrigger } from '../command-palette'
 import { useLocale } from 'next-intl'
 
 export const Header = () => {
@@ -231,6 +232,13 @@ export const Header = () => {
               </nav>
 
               <div className="flex items-center space-x-3">
+                <div
+                  className={`transition-all duration-500 ease-out ${
+                    isScrolled ? 'scale-90' : 'scale-100'
+                  }`}
+                >
+                  <CommandPaletteTrigger />
+                </div>
                 <div
                   className={`transition-all duration-500 ease-out ${
                     isScrolled ? 'scale-90' : 'scale-100'

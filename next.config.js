@@ -39,6 +39,21 @@ const nextConfig = {
         source: '/en/blog/:slug.md',
         destination: '/api/blog/:slug/md',
       },
+      // AEO: expose every markdown-capable page at /<page>.md. The proxy
+      // already serves these via "Accept: text/markdown", but its matcher
+      // excludes dotted paths, so the .md URLs need explicit rewrites.
+      // No query params here: rewrites preserve the original URL, so the
+      // route handler derives page + locale from the .md pathname itself.
+      ...['index', 'blog', 'about', 'books', 'linktree'].flatMap((page) => [
+        {
+          source: `/${page}.md`,
+          destination: '/api/markdown',
+        },
+        {
+          source: `/en/${page}.md`,
+          destination: '/api/markdown',
+        },
+      ]),
     ]
   },
   async redirects() {

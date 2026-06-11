@@ -35,5 +35,10 @@ jobs:
       - name: Test
         run: bun run test
 
+      # /books is statically prerendered at build time from the database, so
+      # the build needs a migrated + seeded local db (file:./local.db default).
+      - name: Prepare books database
+        run: bun run db:migrate && bun run db:seed
+
       - name: Build
         run: bun run build
