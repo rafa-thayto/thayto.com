@@ -88,6 +88,7 @@
   },
   "commandPalette": {
     "title": "Command palette",
+    "description": "Search and jump to pages, posts, books, actions, and links.",
     "placeholder": "Search posts, books, pages, or actions...",
     "noResults": "No results found.",
     "pages": "Pages",

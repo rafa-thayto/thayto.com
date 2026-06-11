@@ -111,6 +111,7 @@ export function LinktreeContent() {
                   src="/static/images/profile.jpg"
                   alt="Thayto's profile picture"
                   fill
+                  sizes="128px"
                   priority
                   className={`rounded-full object-cover transition-transform duration-300 ${
                     isHovering ? 'scale-105' : 'scale-100'

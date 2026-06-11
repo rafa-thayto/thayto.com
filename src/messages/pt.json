@@ -88,6 +88,7 @@
   },
   "commandPalette": {
     "title": "Paleta de comandos",
+    "description": "Busque e navegue por páginas, posts, livros, ações e links.",
     "placeholder": "Busca posts, livros, páginas ou ações...",
     "noResults": "Nenhum resultado encontrado.",
     "pages": "Páginas",

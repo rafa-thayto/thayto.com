@@ -1,5 +1,9 @@
 'use client'
 
+import {
+  Description as DialogDescription,
+  Title as DialogTitle,
+} from '@radix-ui/react-dialog'
 import { Command } from 'cmdk'
 import {
   BookMarked,
@@ -204,6 +208,13 @@ export const CommandPalette = ({ posts, books }: CommandPaletteProps) => {
       contentClassName="fixed z-[70] left-1/2 top-24 w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2"
       loop
     >
+      {/* Radix's DialogContent (rendered by Command.Dialog) requires a title and
+          description for screen readers. The palette is visually self-explanatory,
+          so both are hidden with sr-only rather than shown. */}
+      <DialogTitle className="sr-only">{t('title')}</DialogTitle>
+      <DialogDescription className="sr-only">
+        {t('description')}
+      </DialogDescription>
       <div
         className="overflow-hidden rounded-2xl border border-white/30 bg-white/90 shadow-2xl shadow-black/20 ring-1 ring-black/5 backdrop-blur-xl dark:border-white/10 dark:bg-black/80 dark:ring-white/10"
         style={{
