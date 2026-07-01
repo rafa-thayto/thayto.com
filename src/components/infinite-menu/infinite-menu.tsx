@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import {
   InfiniteGridMenu,
   defaultItems,
@@ -13,15 +13,28 @@ export type { InfiniteMenuItem }
 interface InfiniteMenuProps {
   items?: InfiniteMenuItem[]
   scale?: number
+  /** Fires with the index (into `items`) of the disc facing the camera. */
+  onActiveIndex?: (index: number) => void
+  /** Fires when the sphere starts/stops moving (drag or inertia). */
+  onMovingChange?: (isMoving: boolean) => void
 }
 
 export default function InfiniteMenu({
   items = [],
   scale = 1.0,
+  onActiveIndex,
+  onMovingChange,
 }: InfiniteMenuProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [activeItem, setActiveItem] = useState<InfiniteMenuItem | null>(null)
-  const [isMoving, setIsMoving] = useState(false)
+
+  // Keep callbacks in refs so changing their identity doesn't re-run the effect
+  // (which would tear down and rebuild the whole WebGL engine).
+  const onActiveIndexRef = useRef(onActiveIndex)
+  const onMovingChangeRef = useRef(onMovingChange)
+  useEffect(() => {
+    onActiveIndexRef.current = onActiveIndex
+    onMovingChangeRef.current = onMovingChange
+  })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -30,8 +43,7 @@ export default function InfiniteMenu({
     const menuItems = items.length ? items : defaultItems
 
     const handleActiveItem = (index: number) => {
-      const itemIndex = index % menuItems.length
-      setActiveItem(menuItems[itemIndex])
+      onActiveIndexRef.current?.(index % menuItems.length)
     }
 
     let sketch: InfiniteGridMenu | null = null
@@ -40,7 +52,7 @@ export default function InfiniteMenu({
         canvas,
         menuItems,
         handleActiveItem,
-        setIsMoving,
+        (isMoving) => onMovingChangeRef.current?.(isMoving),
         (sk) => sk.run(),
         scale,
       )
@@ -52,7 +64,6 @@ export default function InfiniteMenu({
     }
 
     const handleResize = () => sketch?.resize()
-
     window.addEventListener('resize', handleResize)
     handleResize()
 
@@ -62,56 +73,9 @@ export default function InfiniteMenu({
     }
   }, [items, scale])
 
-  const handleButtonClick = () => {
-    if (!activeItem?.link) return
-    if (activeItem.link.startsWith('http')) {
-      window.open(activeItem.link, '_blank', 'noopener,noreferrer')
-    }
-  }
-
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       <canvas id="infinite-grid-menu-canvas" ref={canvasRef} />
-
-      {activeItem && (
-        <>
-          <h2
-            className={`infinite-menu-face-title ${
-              isMoving ? 'inactive' : 'active'
-            }`}
-          >
-            {activeItem.title}
-          </h2>
-
-          <p
-            className={`infinite-menu-face-description ${
-              isMoving ? 'inactive' : 'active'
-            }`}
-          >
-            {activeItem.description}
-          </p>
-
-          <button
-            type="button"
-            aria-label={
-              activeItem.title
-                ? `Open post: ${activeItem.title}`
-                : 'Open item link'
-            }
-            onClick={handleButtonClick}
-            className={`infinite-menu-action-button ${
-              isMoving ? 'inactive' : 'active'
-            }`}
-          >
-            <span
-              className="infinite-menu-action-button-icon"
-              aria-hidden="true"
-            >
-              &#x2197;
-            </span>
-          </button>
-        </>
-      )}
     </div>
   )
 }

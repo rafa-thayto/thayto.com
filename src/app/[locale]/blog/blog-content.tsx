@@ -6,10 +6,11 @@ import { useSearchParams } from 'next/navigation'
 import { Post } from '@/utils/mdx'
 import { toCanonicalUrl } from '@/utils/seo'
 import type { Locale } from '@/i18n/config'
+import { Link as LocaleLink } from '@/i18n/routing'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { useMemo, useState } from 'react'
-import { ArrowLeft, Globe, List, Loader2 } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Globe, List, Loader2 } from 'lucide-react'
 import type { InfiniteMenuItem } from '@/components/infinite-menu'
 
 // Lazily loaded on first switch to globe view — keeps the WebGL engine and
@@ -35,6 +36,8 @@ type View = 'list' | 'globe'
 export function BlogContent({ posts: p, locale }: BlogContentProps) {
   const searchParams = useSearchParams()
   const [view, setView] = useState<View>('list')
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isMoving, setIsMoving] = useState(false)
 
   // Stable string key for the active tag filter. Deriving `tags`/`posts` inline
   // would produce a new array identity every render, which cascades into a new
@@ -48,23 +51,25 @@ export function BlogContent({ posts: p, locale }: BlogContentProps) {
     )
   }, [p, tagKey])
 
-  // Only posts with an image can be textured onto the sphere. Locale-prefixed
-  // absolute link so the component's built-in http handler opens the post (in
-  // the correct language) in a new tab.
+  // Only posts with an image can be textured onto the sphere.
+  const globePosts = useMemo(
+    () => posts.filter((post) => post.data.image?.src),
+    [posts],
+  )
+
   const menuItems = useMemo<InfiniteMenuItem[]>(
     () =>
-      posts
-        .filter((post) => post.data.image?.src)
-        .map((post) => ({
-          image: `/static/images/${post.data.image.src}`,
-          link: toCanonicalUrl(locale, post.data.href),
-          title: post.data.title,
-          description: post.data.description,
-        })),
-    [posts, locale],
+      globePosts.map((post) => ({
+        image: `/static/images/${post.data.image.src}`,
+        link: toCanonicalUrl(locale, post.data.href),
+        title: post.data.title,
+        description: post.data.description,
+      })),
+    [globePosts, locale],
   )
 
   const isGlobe = view === 'globe'
+  const activePost = globePosts[activeIndex] ?? globePosts[0]
 
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-4 px-4">
@@ -99,11 +104,49 @@ export function BlogContent({ posts: p, locale }: BlogContentProps) {
 
       {isGlobe ? (
         menuItems.length > 0 ? (
-          <div
-            className="relative w-full h-[70vh] rounded-lg overflow-hidden"
-            style={{ position: 'relative' }}
-          >
-            <InfiniteMenu items={menuItems} />
+          <div className="flex flex-col items-center">
+            {/* Square, centered stage: the sphere's FOV is symmetric only at a
+                1:1 aspect — a wide/short box flings edge discs into the corners. */}
+            <div className="relative w-full max-w-[520px] aspect-square mx-auto select-none">
+              <InfiniteMenu
+                items={menuItems}
+                onActiveIndex={setActiveIndex}
+                onMovingChange={setIsMoving}
+              />
+            </div>
+
+            {/* Active-post caption rendered in normal flow, styled to match the
+                site — avoids the demo overlay that mangled long titles. */}
+            <div
+              className={`w-full max-w-xl mt-2 flex flex-col items-center gap-3 text-center transition-opacity duration-300 ${
+                isMoving ? 'opacity-40' : 'opacity-100'
+              }`}
+            >
+              {activePost && (
+                <>
+                  <LocaleLink
+                    href={activePost.data.href}
+                    className="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-gray-50 hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-2"
+                  >
+                    {activePost.data.title}
+                  </LocaleLink>
+                  <p className="text-sm text-slate-600 dark:text-gray-400 line-clamp-2">
+                    {activePost.data.description}
+                  </p>
+                  <LocaleLink
+                    href={activePost.data.href}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-2 transition-colors"
+                  >
+                    Read post
+                    <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                  </LocaleLink>
+                </>
+              )}
+            </div>
+
+            <p className="mt-3 text-xs text-slate-400 dark:text-gray-500">
+              Drag to spin · click “Read post” to open
+            </p>
           </div>
         ) : (
           <div className="flex h-[40vh] items-center justify-center text-center text-slate-500 dark:text-gray-400">

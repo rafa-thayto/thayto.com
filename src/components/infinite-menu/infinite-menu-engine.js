@@ -742,9 +742,12 @@ export class InfiniteGridMenu {
   }
 
   #init(onInit) {
+    // alpha:true so the sphere blends with the page background (light & dark)
+    // instead of sitting on an opaque black rectangle.
     this.gl = this.canvas.getContext('webgl2', {
       antialias: true,
-      alpha: false,
+      alpha: true,
+      premultipliedAlpha: false,
     })
     const gl = this.gl
     if (!gl) {
