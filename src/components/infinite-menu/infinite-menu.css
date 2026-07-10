@@ -1,0 +1,19 @@
+#infinite-grid-menu-canvas {
+  cursor: grab;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+  touch-action: none;
+}
+
+#infinite-grid-menu-canvas:focus-visible {
+  outline: none;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+#infinite-grid-menu-canvas:active {
+  cursor: grabbing;
+}

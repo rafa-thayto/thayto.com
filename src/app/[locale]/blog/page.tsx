@@ -120,7 +120,7 @@ export default async function Blog({ params }: Props) {
 
       <main className="sm:px-2 mt-8">
         <Suspense fallback={null}>
-          <BlogContent posts={posts} />
+          <BlogContent posts={posts} locale={validLocale} />
         </Suspense>
       </main>
     </Layout>
