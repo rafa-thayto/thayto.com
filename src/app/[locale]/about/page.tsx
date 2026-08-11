@@ -4,6 +4,8 @@ import { getYearsOfProfessionalExperience } from '@/constants'
 import { SITE_URL } from '@/utils/constants'
 import { Locale } from '@/i18n/config'
 import { getTranslations } from 'next-intl/server'
+import { Fragment } from 'react'
+import { companies, getCompanyLabel, CompanyLink } from '@/data/companies'
 import {
   TWITTER_CARD,
   toOgLocale,
@@ -55,13 +57,27 @@ export default async function AboutPage({ params }: Props) {
   const { locale } = await params
   const validLocale = locale as Locale
   const t = await getTranslations({ locale, namespace: 'about' })
+  const tMeta = await getTranslations({ locale, namespace: 'metadata.about' })
   const years = getYearsOfProfessionalExperience()
 
   const schema = profilePageSchema(validLocale, {
     path: '/about',
     name: 'Rafael Thayto - About',
+    description: tMeta('description'),
     breadcrumbLabel: 'About',
   })
+
+  const companyLink = (company: CompanyLink) => (
+    <a
+      href={company.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      // unlayered `a` reset in styles.css beats Tailwind's underline utility
+      style={{ textDecoration: 'underline', textUnderlineOffset: 2 }}
+    >
+      {getCompanyLabel(company, validLocale)}
+    </a>
+  )
 
   return (
     <Layout>
@@ -77,6 +93,30 @@ export default async function AboutPage({ params }: Props) {
           </p>
           <p className="text-base font-serif text-slate-800 dark:text-gray-100 mt-2">
             {t('bio.paragraph2')}
+          </p>
+          <p className="text-base font-serif text-slate-800 dark:text-gray-100 mt-2">
+            {t('bio.companies')}{' '}
+            {companies.map((entry, index) => (
+              <Fragment key={entry.name}>
+                {index > 0 && ', '}
+                {'offices' in entry ? (
+                  <>
+                    {entry.name}
+                    {' ('}
+                    {entry.offices.map((office, officeIndex) => (
+                      <Fragment key={office.name}>
+                        {officeIndex > 0 && ', '}
+                        {companyLink(office)}
+                      </Fragment>
+                    ))}
+                    {')'}
+                  </>
+                ) : (
+                  companyLink(entry)
+                )}
+              </Fragment>
+            ))}
+            .
           </p>
         </div>
 

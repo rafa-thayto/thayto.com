@@ -34,7 +34,8 @@
     "index": "Index",
     "publishedOn": "Published on",
     "tags": "Tags",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "pageTitle": "Blog"
   },
   "home": {
     "greeting": "Hi, I'm Rafael Thayto, nice to meet you! :)",
@@ -59,7 +60,8 @@
     "bio": {
       "paragraph1": "Rafael Thayto is a developer with over {years} years of experience, passionate about solving problems and learning new technologies and good development practices. I have worked on several projects, always dedicating myself to the maximum to ensure the delivery of efficient and high quality solutions.",
       "paragraph2": "He really enjoys playing, meeting new people and places. I can be sure that if you talk to him, in a few minutes you will have already created a connection.",
-      "inProgress": "In progress... 🧱"
+      "inProgress": "In progress... 🧱",
+      "companies": "Companies along the way:"
     }
   },
   "common": {

@@ -34,7 +34,8 @@
     "index": "Index",
     "publishedOn": "Publicado em",
     "tags": "Tags",
-    "readMore": "Ler mais"
+    "readMore": "Ler mais",
+    "pageTitle": "Blog"
   },
   "home": {
     "greeting": "Oi, sou o Rafael Thayto, prazer! :)",
@@ -59,7 +60,8 @@
     "bio": {
       "paragraph1": "Rafael Thayto é um desenvolvedor com mais de {years} anos de experiência, apaixonado por resolver problemas e aprender novas tecnologias e boas práticas de desenvolvimento. Atuei em diversos projetos, sempre me dedicando ao máximo para garantir a entrega de soluções eficientes e de alta qualidade.",
       "paragraph2": "Ele gosta bastante de jogar, conhecer pessoas e lugares novos. Posso ter certeza que se conversar com ele, em poucos minutos já terão criado um conexão.",
-      "inProgress": "In progress... 🧱"
+      "inProgress": "In progress... 🧱",
+      "companies": "Empresas pelo caminho:"
     }
   },
   "common": {

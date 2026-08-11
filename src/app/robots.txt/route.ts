@@ -17,7 +17,7 @@ const AI_CRAWLERS = [
 
 export async function GET() {
   const aiCrawlerBlocks = AI_CRAWLERS.map(
-    (ua) => `User-agent: ${ua}\nAllow: /\nCrawl-delay: 2`,
+    (ua) => `User-agent: ${ua}\nAllow: /`,
   ).join('\n\n')
 
   const content = [
@@ -25,13 +25,11 @@ export async function GET() {
     'Allow: /',
     'Disallow: /api/',
     'Disallow: /_next/',
-    'Disallow: /static/temp/',
     'Content-Signal: ai-train=no, search=yes, ai-input=no',
     '',
     aiCrawlerBlocks,
     '',
     'Sitemap: https://thayto.com/sitemap.xml',
-    'Host: https://thayto.com',
     '',
   ].join('\n')
 

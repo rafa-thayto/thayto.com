@@ -60,7 +60,10 @@ export const Footer = ({
     <footer className="mt-10 py-8 bg-slate-50 dark:bg-black">
       <div className="max-w-4xl mx-auto px-4 sm:px-24">
         <div className="flex flex-col items-center gap-4">
-          <div className="flex flex-nowrap justify-center items-center gap-3 text-xs">
+          <nav
+            aria-label="Footer"
+            className="flex flex-nowrap justify-center items-center gap-3 text-xs"
+          >
             {allLinks.map((link, index) => {
               const isExternal = link.href.startsWith('http')
               // App pages go through the i18n-aware Link so the current
@@ -107,7 +110,7 @@ export const Footer = ({
                 <LanguageSwitcher />
               </div>
             </div>
-          </div>
+          </nav>
         </div>
       </div>
     </footer>

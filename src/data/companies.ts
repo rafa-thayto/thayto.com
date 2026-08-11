@@ -5,6 +5,8 @@ export interface CompanyLink {
   schemaName?: string
   /** Current employer — emitted as worksFor instead of alumniOf in JSON-LD */
   current?: boolean
+  /** ISO start date; wraps the worksFor entry in an OrganizationRole */
+  startDate?: string
   url: string
 }
 
@@ -16,7 +18,12 @@ export interface CompanyGroup {
 export type CompanyEntry = CompanyLink | CompanyGroup
 
 export const companies: CompanyEntry[] = [
-  { name: 'BlindPay', url: 'https://blindpay.com/', current: true },
+  {
+    name: 'BlindPay',
+    url: 'https://blindpay.com/',
+    current: true,
+    startDate: '2026-08',
+  },
   { name: 'Clerk', url: 'https://clerk.com' },
   { name: 'Nike', url: 'https://nike.com' },
   { name: 'Resend', url: 'https://resend.com' },

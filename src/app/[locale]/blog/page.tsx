@@ -14,7 +14,8 @@ import {
   toCanonicalUrl,
   toLanguageTag,
   alternateLanguages,
-  personPublisher,
+  organizationPublisher,
+  personSummary,
   breadcrumbSchema,
   JsonLd,
 } from '@/utils/seo'
@@ -60,26 +61,25 @@ export default async function Blog({ params }: Props) {
   const validLocale = locale as Locale
   const posts = getPosts(locale)
   const t = await getTranslations({ locale, namespace: 'metadata.blog' })
+  const tBlog = await getTranslations({ locale, namespace: 'blog' })
   const blogUrl = toCanonicalUrl(validLocale, '/blog')
 
-  const blogAuthor = {
-    '@type': 'Person' as const,
-    name: 'Rafael Thayto',
-    jobTitle: 'Senior Software Engineer',
-    url: SITE_URL,
-  }
+  const blogAuthor = personSummary(validLocale)
 
   const structuredData = {
     '@context': SCHEMA_CONTEXT,
     '@type': 'Blog' as const,
+    '@id': blogUrl,
     name: t('title'),
     url: blogUrl,
     description: t('description'),
     inLanguage: toLanguageTag(validLocale),
-    publisher: personPublisher(),
+    publisher: organizationPublisher(),
+    isPartOf: { '@id': `${SITE_URL}/#website` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': blogUrl },
     blogPost: posts.map(({ data }) => ({
       '@type': 'BlogPosting',
+      '@id': toCanonicalUrl(validLocale, data.href),
       headline: data.title,
       description: data.description,
       image: `${SITE_URL}/static/images/${data.image.src}`,
@@ -87,8 +87,8 @@ export default async function Blog({ params }: Props) {
       dateModified: data.modifiedTime,
       inLanguage: toLanguageTag(validLocale),
       author: blogAuthor,
-      publisher: blogAuthor,
-      url: `${SITE_URL}${data.href}`,
+      publisher: organizationPublisher(),
+      url: toCanonicalUrl(validLocale, data.href),
     })),
   }
 
@@ -119,6 +119,7 @@ export default async function Blog({ params }: Props) {
       )}
 
       <main className="sm:px-2 mt-8">
+        <h1 className="sr-only">{tBlog('pageTitle')}</h1>
         <Suspense fallback={null}>
           <BlogContent posts={posts} />
         </Suspense>

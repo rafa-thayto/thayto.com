@@ -77,13 +77,24 @@ const companyLinks = companies.flatMap((entry) =>
 
 const toOrganization = (company: CompanyLink) => ({
   '@type': 'Organization' as const,
+  '@id': company.url,
   name: company.schemaName ?? company.name,
   url: company.url,
 })
 
+// Not-yet-started or dated roles use the schema.org Role pattern:
+// Person.worksFor -> OrganizationRole (with startDate) -> worksFor -> Organization
 export const WORKS_FOR_ORGANIZATIONS = companyLinks
   .filter((company) => company.current)
-  .map(toOrganization)
+  .map((company) =>
+    company.startDate
+      ? {
+          '@type': 'OrganizationRole' as const,
+          worksFor: toOrganization(company),
+          startDate: company.startDate,
+        }
+      : toOrganization(company),
+  )
 
 export const ALUMNI_ORGANIZATIONS = companyLinks
   .filter((company) => !company.current)
@@ -98,10 +109,13 @@ export const personSummary = (locale: Locale) => ({
   sameAs: [...SOCIAL_LINKS],
 })
 
-export const personPublisher = () => ({
-  '@type': 'Person' as const,
-  '@id': `${SITE_URL}/#person`,
+// Publisher must be an Organization: `logo` is not a valid Person property,
+// and the site already declares this Organization on the home page.
+export const organizationPublisher = () => ({
+  '@type': 'Organization' as const,
+  '@id': `${SITE_URL}/#organization`,
   name: 'Rafael Thayto',
+  url: SITE_URL,
   logo: { ...PROFILE_IMAGE },
 })
 
@@ -138,6 +152,7 @@ export const profilePageSchema = (
   name: options.name,
   ...(options.description && { description: options.description }),
   inLanguage: toLanguageTag(locale),
+  isPartOf: { '@id': `${SITE_URL}/#website` },
   mainEntity: {
     ...personSummary(locale),
     image: { ...PROFILE_IMAGE },

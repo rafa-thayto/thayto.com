@@ -11,7 +11,8 @@ import {
   toCanonicalUrl,
   toLanguageTag,
   alternateLanguages,
-  personPublisher,
+  organizationPublisher,
+  personSummary,
   breadcrumbSchema,
   JsonLd,
 } from '@/utils/seo'
@@ -68,21 +69,18 @@ export default async function PostsPage({ params }: Props) {
   }))
 
   // JSON-LD: Blog schema with all posts (critical for canvas-based pages)
-  const blogAuthor = {
-    '@type': 'Person' as const,
-    name: 'Rafael Thayto',
-    jobTitle: 'Senior Software Engineer',
-    url: SITE_URL,
-  }
+  const blogAuthor = personSummary(validLocale)
 
   const structuredData = {
     '@context': SCHEMA_CONTEXT,
     '@type': 'CollectionPage' as const,
+    '@id': postsUrl,
     name: t('title'),
     url: postsUrl,
     description: t('description'),
     inLanguage: toLanguageTag(validLocale),
-    publisher: personPublisher(),
+    publisher: organizationPublisher(),
+    isPartOf: { '@id': `${SITE_URL}/#website` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': postsUrl },
     mainEntity: {
       '@type': 'ItemList' as const,
@@ -92,6 +90,7 @@ export default async function PostsPage({ params }: Props) {
         position: index + 1,
         item: {
           '@type': 'BlogPosting',
+          '@id': toCanonicalUrl(validLocale, data.href),
           headline: data.title,
           description: data.description,
           image: `${SITE_URL}/static/images/${data.image.src}`,

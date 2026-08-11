@@ -236,9 +236,9 @@ export function HomeContent({ posts }: HomeContentProps) {
           <h1 className="text-2xl text-gray-900 dark:text-white font-bold">
             {t('title')}
           </h1>
-          <h2 className="text-xl text-gray-500 dark:text-gray-300 font-light">
+          <p className="text-xl text-gray-500 dark:text-gray-300 font-light">
             {t('subtitle')}
-          </h2>
+          </p>
         </div>
       </div>
 
@@ -275,20 +275,22 @@ export function HomeContent({ posts }: HomeContentProps) {
       </section>
 
       <section className="mt-8 text-base text-slate-800 dark:text-gray-100">
-        <Link
-          href={locale === 'pt' ? '/blog' : '/en/blog'}
-          className="group flex items-center gap-2 text-lg font-normal text-slate-600 dark:text-gray-400 mb-6 hover:text-slate-800 dark:hover:text-gray-100 transition-colors duration-200"
-          onMouseEnter={() =>
-            playSoundsSequence([
-              '/static/sounds/tap_01.wav',
-              '/static/sounds/tap_02.wav',
-              '/static/sounds/tap_03.wav',
-            ])
-          }
-        >
-          {t('recentPosts')}
-          <ChevronRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-        </Link>
+        <h2 className="mb-6">
+          <Link
+            href={locale === 'pt' ? '/blog' : '/en/blog'}
+            className="group flex items-center gap-2 text-lg font-normal text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-100 transition-colors duration-200"
+            onMouseEnter={() =>
+              playSoundsSequence([
+                '/static/sounds/tap_01.wav',
+                '/static/sounds/tap_02.wav',
+                '/static/sounds/tap_03.wav',
+              ])
+            }
+          >
+            {t('recentPosts')}
+            <ChevronRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </Link>
+        </h2>
         <div className="space-y-1">
           {(() => {
             // Group posts by year

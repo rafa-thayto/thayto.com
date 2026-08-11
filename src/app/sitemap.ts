@@ -13,24 +13,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticPages = ['', 'blog', 'books', 'about', 'linktree']
 
-  // Generate static pages (one entry per page with alternates)
+  // Generate static pages: one entry per page per locale, so English URLs
+  // are discoverable as their own <loc>, not only inside alternates.
   for (const page of staticPages) {
     const pageUrl = page === '' ? '' : `${page}`
-
-    entries.push({
-      url: buildUrl(pageUrl, 'pt'), // Default locale URL
-      lastModified: new Date(),
-      changeFrequency:
-        page === '' ? 'weekly' : page === 'blog' ? 'weekly' : 'monthly',
-      priority: page === '' ? 1.0 : page === 'blog' ? 0.9 : 0.8,
-      alternates: {
-        languages: {
-          'x-default': buildUrl(pageUrl, 'pt'),
-          pt: buildUrl(pageUrl, 'pt'),
-          en: buildUrl(pageUrl, 'en'),
-        },
+    const alternates = {
+      languages: {
+        'x-default': buildUrl(pageUrl, 'pt'),
+        pt: buildUrl(pageUrl, 'pt'),
+        en: buildUrl(pageUrl, 'en'),
       },
-    })
+    }
+
+    for (const locale of ['pt', 'en']) {
+      entries.push({
+        url: buildUrl(pageUrl, locale),
+        lastModified: new Date(),
+        changeFrequency:
+          page === '' ? 'weekly' : page === 'blog' ? 'weekly' : 'monthly',
+        priority: page === '' ? 1.0 : page === 'blog' ? 0.9 : 0.8,
+        alternates,
+      })
+    }
   }
 
   // Fetch posts from both locales

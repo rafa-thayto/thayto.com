@@ -140,6 +140,7 @@ export default async function IndexPage({ params }: Props) {
     name: 'Rafael Thayto - Home',
     description,
     inLanguage: toLanguageTag(validLocale),
+    isPartOf: { '@id': `${SITE_URL}/#website` },
     author: PERSON_REF,
     image: { ...PROFILE_IMAGE, caption: 'Rafael Thayto Profile Picture' },
     breadcrumb: breadcrumbSchema(validLocale, [{ name: 'Home', path: '/' }]),

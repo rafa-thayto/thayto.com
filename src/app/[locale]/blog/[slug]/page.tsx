@@ -26,7 +26,7 @@ import {
   toLanguageTag,
   alternateLanguages,
   personSummary,
-  personPublisher,
+  organizationPublisher,
   breadcrumbSchema,
   JsonLd,
 } from '@/utils/seo'
@@ -170,7 +170,7 @@ export default async function PostPage({
     educationalUse: 'learning',
     learningResourceType: 'tutorial',
     author: personSummary(validLocale),
-    publisher: personPublisher(),
+    publisher: organizationPublisher(),
     image: {
       '@type': 'ImageObject',
       url: `${SITE_URL}/static/images/${image?.src ?? 'profile.jpg'}`,
