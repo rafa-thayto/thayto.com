@@ -31,7 +31,7 @@ export async function GET() {
       'en',
     )}.`,
     '',
-    `Open source contributions: ${openSource}. Published [ajusta](${curiosityLinks.ajusta}) and [mdlens](${curiosityLinks.mdlens}) on npm. Creator of the [DevSenior Cast](${curiosityLinks.podcast}) podcast.`,
+    `Built [Thaytool](${curiosityLinks.thaytool}), his own tool for orchestrating AI agents. Open source contributions: ${openSource}. Published [ajusta](${curiosityLinks.ajusta}) and [mdlens](${curiosityLinks.mdlens}) on npm. Creator of the [DevSenior Cast](${curiosityLinks.podcast}) podcast.`,
     '',
     '## Pages',
     '',

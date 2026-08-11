@@ -16,5 +16,5 @@ export const curiosityLinks: Record<string, string> = {
   tiktokDev: 'https://www.tiktok.com/@thayto_dev',
   instagram: 'https://www.instagram.com/thayto_dev',
   tiktok: 'https://www.tiktok.com/@thayto_perfumes',
-  linktree: 'https://thayto.com/links',
+  linktree: 'https://thayto.com/linktree',
 }
