@@ -35,7 +35,8 @@
     "publishedOn": "Published on",
     "tags": "Tags",
     "readMore": "Read more",
-    "pageTitle": "Blog"
+    "pageTitle": "Blog",
+    "searchPlaceholder": "Search posts..."
   },
   "home": {
     "greeting": "Hi, I'm Rafael Thayto, nice to meet you! :)",

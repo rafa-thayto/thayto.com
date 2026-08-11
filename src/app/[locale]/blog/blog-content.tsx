@@ -4,20 +4,45 @@ import { BlogCard } from '@/components'
 import { LanguageSwitcher } from '@/components/language-switcher'
 import { useSearchParams } from 'next/navigation'
 import { Post } from '@/utils/mdx'
+import { matchesSearch } from '@/utils/post-search'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Search } from 'lucide-react'
+import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 interface BlogContentProps {
   posts: Post[]
 }
 
 export function BlogContent({ posts: p }: BlogContentProps) {
+  const t = useTranslations('blog')
   const searchParams = useSearchParams()
   const search = searchParams?.get('tags') || searchParams?.get('tag')
+  const [query, setQuery] = useState(searchParams?.get('q') ?? '')
   const tags = search?.split(',')
-  const posts = p.filter((post) =>
-    !tags?.length ? true : post.data.tags.some((t) => tags.includes(t)),
-  )
+  const posts = p
+    .filter((post) =>
+      !tags?.length ? true : post.data.tags.some((t) => tags.includes(t)),
+    )
+    .filter((post) => matchesSearch(query, post.data))
+
+  const handleQueryChange = (value: string) => {
+    setQuery(value)
+    // Keep ?q= shareable (and honest for the WebSite SearchAction schema)
+    // without triggering a navigation on every keystroke.
+    const params = new URLSearchParams(searchParams?.toString())
+    if (value) {
+      params.set('q', value)
+    } else {
+      params.delete('q')
+    }
+    const queryString = params.toString()
+    window.history.replaceState(
+      null,
+      '',
+      queryString ? `?${queryString}` : window.location.pathname,
+    )
+  }
 
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-4 px-4">
@@ -31,6 +56,16 @@ export function BlogContent({ posts: p }: BlogContentProps) {
         </Link>
         <LanguageSwitcher />
       </div>
+      <label className="flex items-center gap-2 mb-2 text-sm text-slate-600 dark:text-gray-400 focus-within:text-slate-800 dark:focus-within:text-gray-100 transition-colors duration-200">
+        <Search className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => handleQueryChange(event.target.value)}
+          placeholder={t('searchPlaceholder')}
+          className="w-full bg-transparent text-sm text-slate-800 dark:text-gray-100 placeholder:text-slate-400 dark:placeholder:text-gray-500 focus:outline-none"
+        />
+      </label>
       {posts?.map((post, index) => (
         <article
           key={post.data.title}
