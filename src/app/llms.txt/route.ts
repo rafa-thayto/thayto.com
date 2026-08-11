@@ -39,6 +39,7 @@ export async function GET() {
     `- [About](${SITE_URL}/about.md)`,
     `- [Blog](${SITE_URL}/blog.md)`,
     `- [Books](${SITE_URL}/books.md): personal library — books read, currently reading, and to-read, with star ratings`,
+    `- [Hobbies](${SITE_URL}/hobbies.md)`,
     `- [Linktree](${SITE_URL}/linktree.md)`,
     '',
     '## Blog Posts (Portuguese)',

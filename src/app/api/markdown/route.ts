@@ -6,6 +6,7 @@ import {
   generateBlogPostMarkdown,
   generateAboutMarkdown,
   generateBooksMarkdown,
+  generateHobbiesMarkdown,
   generateLinktreeMarkdown,
 } from '@/utils/markdown-response'
 
@@ -79,6 +80,11 @@ export async function GET(request: NextRequest) {
     // Books
     if (normalizedPath === '/books') {
       return markdownResponse(generateBooksMarkdown(locale))
+    }
+
+    // Hobbies
+    if (normalizedPath === '/hobbies') {
+      return markdownResponse(generateHobbiesMarkdown(locale))
     }
 
     // Linktree

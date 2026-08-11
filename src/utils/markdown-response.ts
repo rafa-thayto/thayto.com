@@ -94,6 +94,7 @@ export function generateHomeMarkdown(locale: string): string {
     `- [Blog](${SITE_URL}${prefix}/blog)`,
     `- [About](${SITE_URL}${prefix}/about)`,
     `- [Books](${SITE_URL}${prefix}/books)`,
+    `- [Hobbies](${SITE_URL}${prefix}/hobbies)`,
     `- [Linktree](${SITE_URL}${prefix}/linktree)`,
     '',
   ]
@@ -155,6 +156,23 @@ export function generateAboutMarkdown(locale: string): string {
     interpolate(messages.about.bio.paragraph1, { years }),
     '',
     messages.about.bio.paragraph2,
+    '',
+  ]
+
+  return lines.join('\n')
+}
+
+export function generateHobbiesMarkdown(locale: string): string {
+  const messages = getMessages(locale)
+
+  const lines: string[] = [
+    `# ${messages.hobbies.title}`,
+    '',
+    `> ${messages.metadata.hobbies.description}`,
+    '',
+    messages.hobbies.paragraph1,
+    '',
+    messages.hobbies.paragraph2,
     '',
   ]
 
