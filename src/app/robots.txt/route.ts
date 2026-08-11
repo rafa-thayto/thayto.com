@@ -25,7 +25,7 @@ export async function GET() {
     'Allow: /',
     'Disallow: /api/',
     'Disallow: /_next/',
-    'Content-Signal: ai-train=no, search=yes, ai-input=no',
+    'Content-Signal: ai-train=yes, search=yes, ai-input=yes',
     '',
     aiCrawlerBlocks,
     '',
