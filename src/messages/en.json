@@ -52,7 +52,7 @@
     },
     "curiosities": {
       "title": "Fun facts",
-      "text": "I built my own work tool to orchestrate my agents, <thaytool>Thaytool</thaytool>. Some open source contributions I've made (<clerkCli>Clerk's CLI</clerkCli>, <resendCli>Resend's CLI</resendCli>, <outlitSdk>Outlit's SDK and CLI</outlitSdk>, <mcpApps>MCP Apps</mcpApps>), published <ajusta>ajusta</ajusta> and <mdlens>mdlens</mdlens> on npm, write articles on <devto>dev.to</devto>, <tabnews>TabNews</tabnews> and <substack>Substack</substack>, created the <podcast>DevSenior Cast</podcast> podcast, post about tech and career on <x>X</x>, <instagram>Instagram</instagram>, <tiktokDev>TikTok</tiktokDev> and <youtube>YouTube</youtube>, and I was once so passionate about perfumes that I even had a <tiktok>perfume TikTok</tiktok> for a while. If you want more links, check out my <linktree>linktree</linktree>."
+      "text": "I built my own work tool to orchestrate my agents, <thaytool>Thaytool</thaytool>. Some open source contributions I've made (<clerkCli>Clerk's CLI</clerkCli>, <resendCli>Resend's CLI</resendCli>, <outlitSdk>Outlit's SDK and CLI</outlitSdk>, <mcpApps>MCP Apps</mcpApps>), published <ajusta>ajusta</ajusta> and <mdlens>mdlens</mdlens> on npm, write articles on <devto>dev.to</devto>, <tabnews>TabNews</tabnews> and <substack>Substack</substack>, created the <podcast>DevSenior Cast</podcast> podcast, post about tech and career on <x>X/Twitter</x>, <instagram>Instagram</instagram>, <tiktokDev>TikTok</tiktokDev> and <youtube>YouTube</youtube>, and I was once so passionate about perfumes that I even had a <tiktok>perfume TikTok</tiktok> for a while. If you want more links, check out my <linktree>linktree</linktree>."
     },
     "recentPosts": "Posts"
   },
