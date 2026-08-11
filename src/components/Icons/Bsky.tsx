@@ -4,7 +4,7 @@ export const Bsky = ({ color }: IconProps) => (
   <svg
     stroke="currentColor"
     fill="currentColor"
-    style={{ color: color || '#121212' }}
+    style={color ? { color } : undefined}
     height="24px"
     width="24px"
     aria-label="Bluesky"

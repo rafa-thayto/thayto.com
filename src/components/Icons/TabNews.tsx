@@ -6,7 +6,7 @@ export const TabNews = ({ color }: IconProps) => (
     fill="none"
     strokeWidth="0"
     viewBox="0 0 24 24"
-    style={{ color: color || '#121212' }}
+    style={color ? { color } : undefined}
     height="24px"
     width="24px"
     xmlns="https://www.w3.org/2000/svg"

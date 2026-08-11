@@ -6,7 +6,7 @@ export const GitHub = ({ color }: IconProps) => (
     fill="currentColor"
     strokeWidth="0"
     viewBox="0 0 496 512"
-    style={{ color: color || '#121212' }}
+    style={color ? { color } : undefined}
     height="24px"
     width="24px"
     xmlns="https://www.w3.org/2000/svg"

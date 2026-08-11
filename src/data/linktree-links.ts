@@ -50,7 +50,7 @@ export const linktreeLinks: LinktreeLink[] = [
   },
   {
     href: 'https://x.com/thayto_dev',
-    text: 'Twitter',
+    text: 'X/Twitter',
   },
   {
     href: 'https://bsky.app/profile/thayto.dev',

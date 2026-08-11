@@ -10,24 +10,21 @@ import { Instagram, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import posthog from 'posthog-js'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, type ComponentType } from 'react'
 import Confetti from 'react-confetti'
 
 type ButtonLink = {
   href: string
-  Icon?: (({ color }: IconProps) => React.JSX.Element) | null
+  Icon?: ComponentType<IconProps> | null
   text: string
 }
 
-const iconMap: Record<
-  string,
-  (({ color }: IconProps) => React.JSX.Element) | null
-> = {
+const iconMap: Record<string, ComponentType<IconProps>> = {
   LinkedIn,
   Youtube: YouTube,
   GitHub,
-  Instagram: Instagram as any,
-  Twitter,
+  Instagram,
+  'X/Twitter': Twitter,
   Bluesky: Bsky,
   Twitch,
   'Dev.to': DevTo,
@@ -41,15 +38,10 @@ const links: ButtonLink[] = linktreeLinks.map((link) => ({
 }))
 
 export function LinktreeContent() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   const [showAnimation, setShowAnimation] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-  const handleThemeChange = (theme: 'dark' | 'light') => {
-    setTheme(theme)
-  }
 
   const handleMouseEnter = () => {
     setIsHovering(true)
@@ -149,8 +141,8 @@ export function LinktreeContent() {
               >
                 <div className="flex items-center">
                   {Icon && (
-                    <div className="w-6 h-6 flex-shrink-0 mr-3 flex items-center justify-center">
-                      <Icon color={theme === 'dark' ? '#FFFFFF' : '#000000'} />
+                    <div className="w-6 h-6 flex-shrink-0 mr-3 flex items-center justify-center text-gray-900 dark:text-white">
+                      <Icon />
                     </div>
                   )}
                   <div className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-200">
@@ -163,7 +155,7 @@ export function LinktreeContent() {
           </div>
         </main>
       </div>
-      <Footer onThemeChange={handleThemeChange} />
+      <Footer />
       {showConfetti && (
         <Confetti
           width={typeof window !== 'undefined' ? window.innerWidth : 300}

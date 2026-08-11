@@ -70,7 +70,7 @@ const EXTERNAL_LINKS: { label: string; href: string; Icon: LucideIcon }[] = [
     href: 'https://www.linkedin.com/in/thayto/',
     Icon: Linkedin,
   },
-  { label: 'Twitter / X', href: 'https://x.com/thayto_dev', Icon: Twitter },
+  { label: 'X/Twitter', href: 'https://x.com/thayto_dev', Icon: Twitter },
   {
     label: 'YouTube',
     href: 'https://www.youtube.com/@thayto_dev',
