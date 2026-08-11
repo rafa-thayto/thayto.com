@@ -1,5 +1,6 @@
 /** Maps rich-text tags in home.curiosities.text to their destination URLs */
 export const curiosityLinks: Record<string, string> = {
+  thaytool: 'https://thaytool.com',
   clerkCli: 'https://github.com/clerk/cli',
   resendCli: 'https://github.com/resend/resend-cli',
   outlitSdk: 'https://github.com/OutlitAI/outlit-sdk',
