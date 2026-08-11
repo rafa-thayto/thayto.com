@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import posthog from 'posthog-js'
-import { useState, useEffect, useRef } from 'react'
+import { Fragment, useState, useEffect, useRef, type ReactNode } from 'react'
 import { ChevronRight } from 'lucide-react'
 import Confetti from 'react-confetti'
 import { Post } from '@/utils/mdx'
@@ -14,8 +14,76 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useTranslations, useLocale } from 'next-intl'
+import {
+  companies,
+  getCompanyLabel,
+  CompanyLink,
+  CompanyGroup,
+} from '@/data/companies'
+import { curiosityLinks } from '@/data/curiosity-links'
+
 interface HomeContentProps {
   posts: Post[]
+}
+
+function TrackedLink({
+  href,
+  event,
+  eventProps,
+  children,
+}: {
+  href: string
+  event: string
+  eventProps?: Record<string, string>
+  children: ReactNode
+}) {
+  const locale = useLocale()
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:opacity-75 transition-opacity"
+      // the unlayered `a { text-decoration: inherit }` reset in styles.css
+      // beats Tailwind's `underline` utility, so underline inline
+      style={{ textDecoration: 'underline', textUnderlineOffset: 2 }}
+      onClick={() =>
+        posthog.capture(event, { ...eventProps, url: href, locale })
+      }
+    >
+      {children}
+    </a>
+  )
+}
+
+const curiosityRenderers = Object.fromEntries(
+  Object.entries(curiosityLinks).map(([tag, url]) => [
+    tag,
+    (chunks: ReactNode) => (
+      <TrackedLink href={url} event="curiosity-link-clicked">
+        {chunks}
+      </TrackedLink>
+    ),
+  ]),
+)
+
+function HintTooltip({
+  trigger,
+  children,
+}: {
+  trigger: ReactNode
+  children: ReactNode
+}) {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className="underline cursor-help">{trigger}</span>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{children}</p>
+      </TooltipContent>
+    </Tooltip>
+  )
 }
 
 export function HomeContent({ posts }: HomeContentProps) {
@@ -95,6 +163,30 @@ export function HomeContent({ posts }: HomeContentProps) {
     setShowConfetti(true)
   }
 
+  const renderCompanyLink = (company: CompanyLink) => (
+    <TrackedLink
+      href={company.url}
+      event="company-link-clicked"
+      eventProps={{ company: company.name }}
+    >
+      {getCompanyLabel(company, locale)}
+    </TrackedLink>
+  )
+
+  const renderCompanyGroup = (group: CompanyGroup) => (
+    <>
+      {group.name}
+      {' ('}
+      {group.offices.map((office, index) => (
+        <Fragment key={office.name}>
+          {index > 0 && ', '}
+          {renderCompanyLink(office)}
+        </Fragment>
+      ))}
+      {')'}
+    </>
+  )
+
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
@@ -153,21 +245,33 @@ export function HomeContent({ posts }: HomeContentProps) {
       <section className="text-sm font-normal font-sans mt-6 flex flex-col gap-4 text-gray-700 dark:text-gray-200">
         <p>{t('greeting')}</p>
         <p>
-          {t('bio.intro', { years })}{' '}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <span className="underline cursor-help">
-                {t('bio.companies')}
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{t('bio.companiesDetail')}</p>
-            </TooltipContent>
-          </Tooltip>{' '}
+          {t.rich('bio.intro', {
+            years,
+            exp: (chunks) => (
+              <HintTooltip trigger={chunks}>{t('bio.startDate')}</HintTooltip>
+            ),
+          })}{' '}
+          <HintTooltip trigger={t('bio.companies')}>
+            {companies.map((entry, index) => (
+              <Fragment key={entry.name}>
+                {index > 0 && ', '}
+                {'offices' in entry
+                  ? renderCompanyGroup(entry)
+                  : renderCompanyLink(entry)}
+              </Fragment>
+            ))}
+          </HintTooltip>{' '}
           {t('bio.location')}
         </p>
         <p>{t('bio.blog')}</p>
         <p>{t('bio.vim')}</p>
+      </section>
+
+      <section className="mt-8 text-sm font-normal font-sans flex flex-col gap-2 text-gray-700 dark:text-gray-200">
+        <h2 className="text-lg font-normal text-slate-600 dark:text-gray-400">
+          {t('curiosities.title')}
+        </h2>
+        <p>{t.rich('curiosities.text', curiosityRenderers)}</p>
       </section>
 
       <section className="mt-8 text-base text-slate-800 dark:text-gray-100">

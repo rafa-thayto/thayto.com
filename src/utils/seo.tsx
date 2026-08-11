@@ -1,5 +1,6 @@
 import { SITE_URL } from './constants'
 import { Locale } from '@/i18n/config'
+import { companies, CompanyLink } from '@/data/companies'
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
@@ -65,6 +66,24 @@ export const alternateLanguages = (path: string) => ({
 // ─── Schema fragments ───────────────────────────────────────────────────────
 
 export const PERSON_REF = { '@id': `${SITE_URL}/#person` } as const
+
+const companyLinks = companies.flatMap((entry) =>
+  'offices' in entry ? entry.offices : [entry],
+)
+
+const toOrganization = (company: CompanyLink) => ({
+  '@type': 'Organization' as const,
+  name: company.schemaName ?? company.name,
+  url: company.url,
+})
+
+export const WORKS_FOR_ORGANIZATIONS = companyLinks
+  .filter((company) => company.current)
+  .map(toOrganization)
+
+export const ALUMNI_ORGANIZATIONS = companyLinks
+  .filter((company) => !company.current)
+  .map(toOrganization)
 
 export const personSummary = (locale: Locale) => ({
   '@type': 'Person' as const,

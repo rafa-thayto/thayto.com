@@ -9,6 +9,13 @@ import { Book } from '@/data/books.types'
 import { linktreeLinks } from '@/data/linktree-links'
 import ptMessages from '@/messages/pt.json'
 import enMessages from '@/messages/en.json'
+import {
+  companies,
+  getCompanyLabel,
+  CompanyEntry,
+  CompanyLink,
+} from '@/data/companies'
+import { curiosityLinks } from '@/data/curiosity-links'
 
 function getMessages(locale: string) {
   return locale === 'en' ? enMessages : ptMessages
@@ -18,6 +25,36 @@ function interpolate(template: string, vars: Record<string, string | number>) {
   return template.replace(/\{(\w+)\}/g, (_, key) =>
     String(vars[key] ?? `{${key}}`),
   )
+}
+
+// messages meant for t.rich() carry tags like <exp>…</exp>; markdown gets the plain text
+function stripRichTags(text: string): string {
+  return text.replace(/<\/?\w+>/g, '')
+}
+
+function richTagsToMarkdownLinks(text: string): string {
+  return text.replace(/<(\w+)>(.*?)<\/\1>/g, (_, tag, label) => {
+    const url = curiosityLinks[tag]
+    return url ? `[${label}](${url})` : label
+  })
+}
+
+function toMarkdownLink(company: CompanyLink, locale: string): string {
+  return `[${getCompanyLabel(company, locale)}](${company.url})`
+}
+
+function formatCompanyEntry(entry: CompanyEntry, locale: string): string {
+  if (!('offices' in entry)) {
+    return toMarkdownLink(entry, locale)
+  }
+  const offices = entry.offices
+    .map((office) => toMarkdownLink(office, locale))
+    .join(', ')
+  return `${entry.name} (${offices})`
+}
+
+function getCompaniesDetail(locale: string): string {
+  return companies.map((entry) => formatCompanyEntry(entry, locale)).join(', ')
 }
 
 export function generateHomeMarkdown(locale: string): string {
@@ -32,11 +69,15 @@ export function generateHomeMarkdown(locale: string): string {
     '',
     `> ${messages.home.subtitle}`,
     '',
-    `${interpolate(bio.intro, { years })} ${bio.companies} (${
-      bio.companiesDetail
-    }) ${bio.location}`,
+    `${stripRichTags(interpolate(bio.intro, { years }))} ${
+      bio.companies
+    } (${getCompaniesDetail(locale)}) ${bio.location}`,
     '',
     bio.blog,
+    '',
+    `## ${messages.home.curiosities.title}`,
+    '',
+    richTagsToMarkdownLinks(messages.home.curiosities.text),
     '',
     `## ${messages.home.recentPosts}`,
     '',

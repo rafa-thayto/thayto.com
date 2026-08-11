@@ -13,6 +13,8 @@ import {
   SOCIAL_LINKS,
   PROFILE_IMAGE,
   PERSON_REF,
+  ALUMNI_ORGANIZATIONS,
+  WORKS_FOR_ORGANIZATIONS,
   toOgLocale,
   toAlternateOgLocale,
   toCanonicalUrl,
@@ -90,6 +92,8 @@ export default async function IndexPage({ params }: Props) {
     jobTitle: 'Senior Software Engineer',
     description,
     sameAs: [...SOCIAL_LINKS],
+    worksFor: WORKS_FOR_ORGANIZATIONS,
+    alumniOf: ALUMNI_ORGANIZATIONS,
     knowsAbout: [
       'TypeScript',
       'Next.js',

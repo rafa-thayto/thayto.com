@@ -2,7 +2,7 @@
   "metadata": {
     "home": {
       "title": "Rafael Thayto - Home",
-      "description": "Oi, sou o Rafael Thayto, prazer! :) Atualmente tenho mais de {years} anos de experiência como desenvolvedor. Desde o inicio da minha carreira lá em 2018 (quando comecei à atuar profissionalmente) sempre trabalhei com sistemas distribuídos, microsserviços, microfrontends e observabilidade. Já trabalhei em grandes empresas com milhões de usuarios ativos, empresas no Brasil, EUA e Suiça. Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns pensamentos (tanto em inglês quanto em português)."
+      "description": "Oi, sou o Rafael Thayto, prazer! :) Atualmente tenho mais de {years} anos de experiência como desenvolvedor. Desde o inicio da minha carreira lá em 2018 (quando comecei à atuar profissionalmente) sempre trabalhei com sistemas distribuídos, microsserviços, microfrontends e observabilidade. Já trabalhei em grandes empresas com milhões de usuarios ativos, milhões de transações diárias e que já transacionaram bilhões de dólares, empresas no Brasil, EUA e Suiça. Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns pensamentos (tanto em inglês quanto em português)."
     },
     "blog": {
       "title": "Rafael Thayto - Blog",
@@ -41,12 +41,16 @@
     "title": "Rafael Thayto Tani",
     "subtitle": "Senior Software Engineer",
     "bio": {
-      "intro": "Atualmente tenho mais de {years} anos de experiência como desenvolvedor. Desde o inicio da minha carreira lá em 2018 (quando comecei à atuar profissionalmente) sempre trabalhei com sistemas distribuídos, microsserviços, microfrontends e observabilidade. Já trabalhei em",
+      "intro": "Atualmente tenho mais de <exp>{years} anos</exp> de experiência como desenvolvedor. Desde o inicio da minha carreira lá em 2018 (quando comecei à atuar profissionalmente) sempre trabalhei com sistemas distribuídos, microsserviços, microfrontends e observabilidade. Já trabalhei em",
+      "startDate": "Desde 18 de Dezembro de 2018",
       "companies": "grandes empresas",
-      "companiesDetail": "Clerk, Nike, Outlit (YC W25), Flash, Creditas, Safra Bank (NY, BR, Sarasin), Avanade",
-      "location": "com milhões de usuarios ativos, empresas no Brasil, EUA e Suiça.",
+      "location": "com milhões de usuarios ativos, milhões de transações diárias e que já transacionaram bilhões de dólares, empresas no Brasil, EUA e Suíça.",
       "blog": "Aqui vocês vão encontrar alguns posts sobre tecnologia e alguns pensamentos (tanto em inglês quanto em português).",
       "vim": "I use VIM btw (since 2022). ❤️"
+    },
+    "curiosities": {
+      "title": "Curiosidades",
+      "text": "Algumas contribuições open source que já fiz (<clerkCli>CLI da Clerk</clerkCli>, <resendCli>CLI da Resend</resendCli>, <outlitSdk>SDK e CLI da Outlit</outlitSdk>, <mcpApps>MCP Apps</mcpApps>), publiquei o <ajusta>ajusta</ajusta> e o <mdlens>mdlens</mdlens> no npm, escrevo artigos no <devto>dev.to</devto>, no <tabnews>TabNews</tabnews> e no <substack>Substack</substack>, criei o podcast <podcast>DevSenior Cast</podcast>, posto sobre tech e carreira no <x>X</x>, no <instagram>Instagram</instagram>, no <tiktokDev>TikTok</tiktokDev> e no <youtube>YouTube</youtube>, e já fui tão apaixonado por perfumes que até tive um <tiktok>TikTok de perfumes</tiktok> por um tempo. Se quiser mais links dá uma olhada no meu <linktree>linktree</linktree>."
     },
     "recentPosts": "Posts"
   },
