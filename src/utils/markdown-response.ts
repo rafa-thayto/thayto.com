@@ -53,7 +53,7 @@ function formatCompanyEntry(entry: CompanyEntry, locale: string): string {
   return `${entry.name} (${offices})`
 }
 
-function getCompaniesDetail(locale: string): string {
+export function getCompaniesDetail(locale: string): string {
   return companies.map((entry) => formatCompanyEntry(entry, locale)).join(', ')
 }
 

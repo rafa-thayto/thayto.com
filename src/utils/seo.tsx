@@ -31,6 +31,10 @@ export const SOCIAL_LINKS = [
   'https://thayto.substack.com',
   'https://www.instagram.com/thayto_dev',
   'https://www.twitch.tv/thayto_dev',
+  'https://www.tiktok.com/@thayto_dev',
+  'https://www.tiktok.com/@thayto_perfumes',
+  'https://creators.spotify.com/pod/profile/devseniorscast/',
+  'https://www.npmjs.com/~rafa-thayto',
 ] as const
 
 export const PROFILE_IMAGE = {
