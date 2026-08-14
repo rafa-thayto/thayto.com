@@ -86,6 +86,19 @@ export const ThemePullCord = () => {
 
     const isDark = () => document.documentElement.classList.contains('dark')
 
+    const lampOnSound = new Audio('/static/sounds/lamp-on.mp3')
+    const lampOffSound = new Audio('/static/sounds/lamp-off.mp3')
+    lampOnSound.preload = 'auto'
+    lampOffSound.preload = 'auto'
+
+    const playLampClick = (toLight: boolean) => {
+      const sound = toLight ? lampOnSound : lampOffSound
+      sound.currentTime = 0
+      // play() can reject (e.g. autoplay policy edge cases) — the toggle
+      // must never break because the sound didn't
+      sound.play().catch(() => {})
+    }
+
     const flashProgress = () =>
       (performance.now() - flashStart) / FLASH_DURATION
 
@@ -93,6 +106,7 @@ export const ThemePullCord = () => {
       const newTheme = isDark() ? 'light' : 'dark'
       flashToLight = newTheme === 'light'
       flashStart = performance.now()
+      playLampClick(flashToLight)
 
       posthog.capture('switch-theme', {
         from: newTheme === 'light' ? 'dark-to-light' : 'light-to-dark',
