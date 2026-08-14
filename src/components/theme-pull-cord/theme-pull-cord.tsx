@@ -76,7 +76,7 @@ export const ThemePullCord = () => {
     let dragging = false
     let dragX = last.x
     let dragY = last.y
-    let flashStart = 0
+    let flashStart = -FLASH_DURATION
     let flashToLight = false
     let running = false
     let calmFrames = 0
@@ -85,6 +85,9 @@ export const ThemePullCord = () => {
     let rafId = 0
 
     const isDark = () => document.documentElement.classList.contains('dark')
+
+    const flashProgress = () =>
+      (performance.now() - flashStart) / FLASH_DURATION
 
     const toggleTheme = () => {
       const newTheme = isDark() ? 'light' : 'dark'
@@ -177,9 +180,8 @@ export const ThemePullCord = () => {
       ctx.fillStyle = handleColor
       ctx.fill()
 
-      const flashElapsed = performance.now() - flashStart
-      if (flashStart && flashElapsed < FLASH_DURATION) {
-        const t = flashElapsed / FLASH_DURATION
+      const t = flashProgress()
+      if (t < 1) {
         ctx.beginPath()
         ctx.arc(last.x, last.y, HANDLE_RADIUS + t * 20, 0, Math.PI * 2)
         ctx.strokeStyle = flashToLight ? '#f97316' : '#3b82f6'
@@ -214,7 +216,7 @@ export const ThemePullCord = () => {
       }
       draw()
 
-      const flashing = performance.now() - flashStart < FLASH_DURATION
+      const flashing = flashProgress() < 1
       if (!dragging && !flashing && totalMotion() < 0.25) {
         calmFrames++
       } else {
@@ -237,18 +239,16 @@ export const ThemePullCord = () => {
       rafId = requestAnimationFrame(loop)
     }
 
-    const toCanvasPoint = (e: PointerEvent) => ({
-      x: e.clientX - canvasRect.left,
-      y: e.clientY - canvasRect.top,
-    })
+    const clamp = (value: number, min: number, max: number) =>
+      Math.min(Math.max(value, min), max)
 
-    const clampDragTarget = (x: number, y: number) => {
-      const dx = x - ANCHOR_X
-      const dy = y - ANCHOR_Y
+    const setDragTarget = (e: PointerEvent) => {
+      const dx = e.clientX - canvasRect.left - ANCHOR_X
+      const dy = e.clientY - canvasRect.top - ANCHOR_Y
       const dist = Math.hypot(dx, dy) || 0.0001
       const scale = dist > MAX_STRETCH ? MAX_STRETCH / dist : 1
-      dragX = Math.min(Math.max(ANCHOR_X + dx * scale, 10), CANVAS_WIDTH - 10)
-      dragY = Math.min(Math.max(ANCHOR_Y + dy * scale, 4), CANVAS_HEIGHT - 12)
+      dragX = clamp(ANCHOR_X + dx * scale, 10, CANVAS_WIDTH - 10)
+      dragY = clamp(ANCHOR_Y + dy * scale, 4, CANVAS_HEIGHT - 12)
     }
 
     const onHandleDown = (e: PointerEvent) => {
@@ -256,15 +256,13 @@ export const ThemePullCord = () => {
       handle.setPointerCapture(e.pointerId)
       dragging = true
       handle.style.cursor = 'grabbing'
-      const { x, y } = toCanvasPoint(e)
-      clampDragTarget(x, y)
+      setDragTarget(e)
       wake()
     }
 
     const onHandleMove = (e: PointerEvent) => {
       if (!dragging) return
-      const { x, y } = toCanvasPoint(e)
-      clampDragTarget(x, y)
+      setDragTarget(e)
     }
 
     const settleHandle = () => {
