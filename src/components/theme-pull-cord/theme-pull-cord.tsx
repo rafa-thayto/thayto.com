@@ -20,6 +20,7 @@ const GRAVITY = 2200
 const STEP = 1 / 120
 const CONSTRAINT_ITERATIONS = 5
 const FLASH_DURATION = 350
+const LAMP_CLICK_VOLUME = 0.35
 // frames of near-zero motion before the rAF loop goes to sleep
 const SLEEP_FRAMES = 120
 
@@ -90,6 +91,8 @@ export const ThemePullCord = () => {
     const lampOffSound = new Audio('/static/sounds/lamp-off.mp3')
     lampOnSound.preload = 'auto'
     lampOffSound.preload = 'auto'
+    lampOnSound.volume = LAMP_CLICK_VOLUME
+    lampOffSound.volume = LAMP_CLICK_VOLUME
 
     const playLampClick = (toLight: boolean) => {
       const sound = toLight ? lampOnSound : lampOffSound
