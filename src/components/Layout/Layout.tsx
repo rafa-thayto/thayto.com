@@ -3,6 +3,7 @@
 import { PropsWithChildren, useEffect } from 'react'
 import { Footer } from '../'
 import { OnlineBadge } from '../online-badge'
+import { ThemePullCord } from '../theme-pull-cord'
 
 export const Layout = ({ children }: PropsWithChildren) => {
   const setAppTheme = () => {
@@ -37,6 +38,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-50 dark:bg-black">
       <OnlineBadge />
+      <ThemePullCord />
       {children}
       <Footer />
     </div>
