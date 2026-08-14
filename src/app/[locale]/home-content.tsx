@@ -131,12 +131,23 @@ function HintTooltip({
   trigger: ReactNode
   children: ReactNode
 }) {
+  // Radix tooltips ignore touch, so control the state and toggle on tap/click.
+  // preventDefault stops Radix's own click handler from re-closing it.
+  const [open, setOpen] = useState(false)
   return (
-    <Tooltip>
+    <Tooltip open={open} onOpenChange={setOpen}>
       <TooltipTrigger asChild>
-        <span className="underline cursor-help">{trigger}</span>
+        <span
+          className="underline cursor-help"
+          onClick={(e) => {
+            e.preventDefault()
+            setOpen((prev) => !prev)
+          }}
+        >
+          {trigger}
+        </span>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent onPointerDownOutside={() => setOpen(false)}>
         <p>{children}</p>
       </TooltipContent>
     </Tooltip>
