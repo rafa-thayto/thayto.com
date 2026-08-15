@@ -1,7 +1,6 @@
 import { Layout } from '@/components'
 import { Metadata } from 'next'
 import { getYearsOfProfessionalExperience } from '@/constants'
-import { SITE_URL } from '@/utils/constants'
 import { Locale } from '@/i18n/config'
 import { getTranslations } from 'next-intl/server'
 import { Fragment } from 'react'

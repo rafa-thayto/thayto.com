@@ -20,6 +20,11 @@ export type OgCopy = {
   headline: string
 }
 
+export const OG_POST_GREETING: Record<Locale, string> = {
+  en: 'Check out this post',
+  pt: 'Dá uma olhada nesse post',
+}
+
 export const OG_COPY: Record<OgPage, Record<Locale, OgCopy>> = {
   home: {
     en: {

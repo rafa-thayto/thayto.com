@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { ImageResponse } from 'next/og'
 import type { Locale } from '@/i18n/config'
-import { OG_COPY, type OgPage } from './copy'
+import { OG_COPY, OG_POST_GREETING, type OgPage } from './copy'
 
 export const OG_SIZE = { width: 1200, height: 630 }
 export const OG_CONTENT_TYPE = 'image/png'
@@ -145,7 +145,9 @@ export function pageOgImage(page: OgPage, locale: Locale) {
 }
 
 export function postOgImage(locale: Locale, title: string, tags?: string[]) {
-  const greeting =
-    locale === 'pt' ? 'Dá uma olhada nesse post' : 'Check out this post'
-  return renderCard({ greeting, headline: title, tags })
+  return renderCard({
+    greeting: OG_POST_GREETING[locale],
+    headline: title,
+    tags,
+  })
 }
