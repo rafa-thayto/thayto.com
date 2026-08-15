@@ -18,6 +18,13 @@ const { withPlaiceholder } = require('@plaiceholder/next')
  **/
 const nextConfig = {
   reactStrictMode: true,
+  // og image routes read these with fs at runtime; make sure they ship in the function bundle
+  outputFileTracingIncludes: {
+    '/[locale]/**': [
+      './src/assets/og-fonts/*.ttf',
+      './public/static/images/profile.jpg',
+    ],
+  },
   images: {
     remotePatterns: [
       {

@@ -26,12 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `${SITE_URL}/linktree`,
       title: 'Rafael Thayto - Linktree',
       description,
-      images: [
-        {
-          url: `${SITE_URL}/static/images/seo-card-linktree.png`,
-          type: 'image/png',
-        },
-      ],
       siteName: 'Thayto.com',
     },
     twitter: TWITTER_CARD,

@@ -55,21 +55,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: toOgLocale(validLocale),
       alternateLocale: toAlternateOgLocale(validLocale),
       siteName: 'Rafael Thayto',
-      images: [
-        {
-          url: `${SITE_URL}/static/images/seo-card-default.png`,
-          width: 1290,
-          height: 675,
-          alt: t('title'),
-          type: 'image/png',
-        },
-      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: t('title'),
       description: t('description'),
-      images: [`${SITE_URL}/static/images/seo-card-default.png`],
     },
   }
 }

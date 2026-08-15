@@ -56,12 +56,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       locale: toOgLocale(validLocale),
       alternateLocale: toAlternateOgLocale(validLocale),
-      images: [
-        {
-          url: `${SITE_URL}/static/images/seo-card-home.png`,
-          type: 'image/png',
-        },
-      ],
       siteName: 'Thayto.com',
     },
     twitter: TWITTER_CARD,

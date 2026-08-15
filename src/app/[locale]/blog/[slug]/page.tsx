@@ -108,27 +108,13 @@ export async function generateMetadata({
       description,
       locale: toOgLocale(validLocale),
       alternateLocale: toAlternateOgLocale(validLocale),
-      images: [
-        {
-          url: `${SITE_URL}/static/images/${
-            image?.src ?? 'seo-card-default.png'
-          }`,
-          width: 460,
-          height: 460,
-          alt: 'Blog Hero',
-          type: image?.type ?? 'image/png',
-        },
-      ],
       siteName: 'Thayto',
       publishedTime: frontMatter.publishedTime,
       modifiedTime: frontMatter.modifiedTime,
       authors: ['Rafael Thayto'],
       tags,
     },
-    twitter: {
-      ...TWITTER_CARD,
-      images: [`${SITE_URL}/static/images/${image?.src ?? 'profile.jpg'}`],
-    },
+    twitter: TWITTER_CARD,
   }
 }
 
