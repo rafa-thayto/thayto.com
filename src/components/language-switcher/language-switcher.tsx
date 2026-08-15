@@ -4,14 +4,22 @@ import { useLocale } from 'next-intl'
 import { usePathname, useRouter } from '@/i18n/routing'
 import { locales } from '@/i18n/config'
 import { useParams } from 'next/navigation'
+import posthog from 'posthog-js'
 
-export function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  source: 'header' | 'footer' | 'blog-listing' | 'blog-post' | 'books'
+}
+
+export function LanguageSwitcher({ source }: LanguageSwitcherProps) {
   const locale = useLocale()
   const pathname = usePathname()
   const router = useRouter()
   const params = useParams()
 
   const switchLocale = (newLocale: string) => {
+    if (newLocale !== locale) {
+      posthog.capture('switch-locale', { from: locale, to: newLocale, source })
+    }
     router.replace(
       // @ts-expect-error -- TypeScript will validate that only known `params`
       // are used in combination with a given `pathname`. Since the two will

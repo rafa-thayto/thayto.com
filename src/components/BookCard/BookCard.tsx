@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import posthog from 'posthog-js'
 import { BookStatus } from '@/data/books.types'
 
 interface BookCardProps {
@@ -88,6 +89,15 @@ export const BookCard = ({
         rel="noopener noreferrer"
         className="block transition-opacity hover:opacity-90"
         aria-label={`View ${title} on Amazon`}
+        onClick={() => {
+          posthog.capture('book-amazon-link-clicked', {
+            title,
+            author,
+            status,
+            stars,
+            amazonUrl,
+          })
+        }}
       >
         {cardContent}
       </a>

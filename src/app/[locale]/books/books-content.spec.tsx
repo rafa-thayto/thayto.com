@@ -4,6 +4,10 @@ import ptMessages from '@/messages/pt.json'
 import { BooksContent } from './books-content'
 import type { Book } from '@/data/books.types'
 
+vi.mock('posthog-js', () => ({
+  default: { capture: vi.fn() },
+}))
+
 // Fixtures: 5 books spanning all relevant test dimensions
 const fixtures: Book[] = [
   {

@@ -21,6 +21,7 @@ import {
   BookOpen,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import posthog from 'posthog-js'
 
 interface BooksContentProps {
   books: Book[]
@@ -90,11 +91,31 @@ export function BooksContent({ books, locale }: BooksContentProps) {
   }, [books, selectedStatus, selectedSort, showFavorites])
 
   const toggleFilter = (status: BookStatus) => {
-    setSelectedStatus(selectedStatus === status ? null : status)
+    const next = selectedStatus === status ? null : status
+    posthog.capture('book-filter-toggled', {
+      status,
+      active: next !== null,
+      locale,
+    })
+    setSelectedStatus(next)
   }
 
   const toggleSort = (sort: SortType) => {
-    setSelectedSort(selectedSort === sort ? null : sort)
+    const next = selectedSort === sort ? null : sort
+    posthog.capture('book-sort-toggled', {
+      sort,
+      active: next !== null,
+      locale,
+    })
+    setSelectedSort(next)
+  }
+
+  const toggleFavorites = () => {
+    posthog.capture('book-favorites-toggled', {
+      active: !showFavorites,
+      locale,
+    })
+    setShowFavorites(!showFavorites)
   }
 
   return (
@@ -140,7 +161,7 @@ export function BooksContent({ books, locale }: BooksContentProps) {
               })}
 
               <button
-                onClick={() => setShowFavorites(!showFavorites)}
+                onClick={toggleFavorites}
                 className={`flex items-center gap-2 text-sm w-full cursor-pointer transition-opacity text-pink-500 ${
                   selectedStatus ? 'opacity-50' : ''
                 } hover:opacity-100`}
@@ -189,7 +210,7 @@ export function BooksContent({ books, locale }: BooksContentProps) {
               <Languages className="w-4 h-4" />
               {t('lang')}
             </div>
-            <LanguageSwitcher />
+            <LanguageSwitcher source="books" />
           </div>
         </aside>
 

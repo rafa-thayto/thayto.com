@@ -29,39 +29,10 @@ import {
   CompanyGroup,
 } from '@/data/companies'
 import { curiosityLinks } from '@/data/curiosity-links'
+import { TrackedLink } from '@/components/tracked-link'
 
 interface HomeContentProps {
   posts: Post[]
-}
-
-function TrackedLink({
-  href,
-  event,
-  eventProps,
-  children,
-}: {
-  href: string
-  event: string
-  eventProps?: Record<string, string>
-  children: ReactNode
-}) {
-  const locale = useLocale()
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="hover:opacity-75 transition-opacity"
-      // the unlayered `a { text-decoration: inherit }` reset in styles.css
-      // beats Tailwind's `underline` utility, so underline inline
-      style={{ textDecoration: 'underline', textUnderlineOffset: 2 }}
-      onClick={() =>
-        posthog.capture(event, { ...eventProps, url: href, locale })
-      }
-    >
-      {children}
-    </a>
-  )
 }
 
 type BrandIconProps = { className?: string; style?: CSSProperties }
@@ -125,22 +96,37 @@ const curiosityRenderers = Object.fromEntries(
 )
 
 function HintTooltip({
+  hintId,
   trigger,
   children,
 }: {
+  hintId: string
   trigger: ReactNode
   children: ReactNode
 }) {
   // Radix tooltips ignore touch, so control the state and toggle on tap/click.
   // preventDefault stops Radix's own click handler from re-closing it.
   const [open, setOpen] = useState(false)
+  const locale = useLocale()
+  const trackOpen = (next: boolean) => {
+    if (next && !open) {
+      posthog.capture('home-hint-opened', { hint: hintId, locale })
+    }
+  }
   return (
-    <Tooltip open={open} onOpenChange={setOpen}>
+    <Tooltip
+      open={open}
+      onOpenChange={(next) => {
+        trackOpen(next)
+        setOpen(next)
+      }}
+    >
       <TooltipTrigger asChild>
         <span
           className="underline cursor-help"
           onClick={(e) => {
             e.preventDefault()
+            trackOpen(!open)
             setOpen((prev) => !prev)
           }}
         >
@@ -210,11 +196,20 @@ export function HomeContent({ posts }: HomeContentProps) {
     })
   }
 
+  const triggerPhotoEasterEgg = (via: 'hover' | 'click') => {
+    posthog.capture('photo-easter-egg-triggered', {
+      surface: 'home',
+      via,
+      locale,
+    })
+    setShowConfetti(true)
+  }
+
   const handleMouseEnter = () => {
     setIsHovering(true)
     timeoutRef.current = setTimeout(() => {
       setShowAnimation(true)
-      handlePhotoClick()
+      triggerPhotoEasterEgg('hover')
     }, 500)
   }
 
@@ -225,10 +220,6 @@ export function HomeContent({ posts }: HomeContentProps) {
       clearTimeout(timeoutRef.current)
       timeoutRef.current = null
     }
-  }
-
-  const handlePhotoClick = () => {
-    setShowConfetti(true)
   }
 
   const renderCompanyLink = (company: CompanyLink) => (
@@ -270,7 +261,7 @@ export function HomeContent({ posts }: HomeContentProps) {
           className="relative w-20 h-20 cursor-pointer"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          onClick={handlePhotoClick}
+          onClick={() => triggerPhotoEasterEgg('click')}
         >
           <div
             className={`absolute -inset-1 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 rounded-full blur-sm transition-all duration-500 ${
@@ -316,10 +307,12 @@ export function HomeContent({ posts }: HomeContentProps) {
           {t.rich('bio.intro', {
             years,
             exp: (chunks) => (
-              <HintTooltip trigger={chunks}>{t('bio.startDate')}</HintTooltip>
+              <HintTooltip hintId="experience-years" trigger={chunks}>
+                {t('bio.startDate')}
+              </HintTooltip>
             ),
           })}{' '}
-          <HintTooltip trigger={t('bio.companies')}>
+          <HintTooltip hintId="companies" trigger={t('bio.companies')}>
             {companies.map((entry, index) => (
               <Fragment key={entry.name}>
                 {index > 0 && ', '}

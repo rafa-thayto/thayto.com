@@ -39,7 +39,7 @@ export function BlogPostNavigation({
           <ArrowLeftIcon className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" />
           {t('backToBlog')}
         </Link>
-        <LanguageSwitcher />
+        <LanguageSwitcher source="blog-post" />
       </nav>
     )
   }

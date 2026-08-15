@@ -6,6 +6,7 @@ import { Locale } from '@/i18n/config'
 import { getTranslations } from 'next-intl/server'
 import { Fragment } from 'react'
 import { companies, getCompanyLabel, CompanyLink } from '@/data/companies'
+import { TrackedLink } from '@/components/tracked-link'
 import {
   TWITTER_CARD,
   toOgLocale,
@@ -68,15 +69,13 @@ export default async function AboutPage({ params }: Props) {
   })
 
   const companyLink = (company: CompanyLink) => (
-    <a
+    <TrackedLink
       href={company.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      // unlayered `a` reset in styles.css beats Tailwind's underline utility
-      style={{ textDecoration: 'underline', textUnderlineOffset: 2 }}
+      event="company-link-clicked"
+      eventProps={{ company: company.name }}
     >
       {getCompanyLabel(company, validLocale)}
-    </a>
+    </TrackedLink>
   )
 
   return (

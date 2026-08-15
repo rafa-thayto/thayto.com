@@ -244,7 +244,7 @@ export const Header = () => {
                     isScrolled ? 'scale-90' : 'scale-100'
                   }`}
                 >
-                  <LanguageSwitcher />
+                  <LanguageSwitcher source="header" />
                 </div>
                 <div
                   className={`transition-all duration-500 ease-out ${

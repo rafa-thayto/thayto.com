@@ -1,5 +1,8 @@
+'use client'
+
 import { nanoid } from 'nanoid'
 import NextLink from 'next/link'
+import posthog from 'posthog-js'
 import { Link } from '@/i18n/routing'
 import { useMemo } from 'react'
 import { ThemeSwitcher } from '../theme-switcher/theme-switcher'
@@ -86,6 +89,13 @@ export const Footer = ({
                     className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200"
                     target={isExternal ? '_blank' : undefined}
                     rel={isExternal ? 'noopener noreferrer' : undefined}
+                    onClick={() => {
+                      posthog.capture('footer-link-clicked', {
+                        href: link.href,
+                        name: link.name,
+                        external: isExternal,
+                      })
+                    }}
                   >
                     <Text
                       variant="hover-decoration"
@@ -111,7 +121,7 @@ export const Footer = ({
             <div className="flex items-center">
               <span className="ml-3 text-gray-400 dark:text-gray-600">•</span>
               <div className="ml-3">
-                <LanguageSwitcher />
+                <LanguageSwitcher source="footer" />
               </div>
             </div>
           </nav>

@@ -1,4 +1,5 @@
-import { Layout, CodeBlock, Pre, MDXImage } from '@/components'
+import { Layout, CodeBlock, Pre, MDXImage, CustomLink } from '@/components'
+import { ReadingProgress } from '@/components/reading-progress'
 import { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
@@ -41,6 +42,9 @@ const components = {
   ),
   Image: (props: React.ComponentProps<typeof MDXImage>) => (
     <MDXImage {...props} />
+  ),
+  a: (props: React.ComponentProps<typeof CustomLink>) => (
+    <CustomLink {...props} />
   ),
 }
 
@@ -195,6 +199,12 @@ export default async function PostPage({
   return (
     <Layout>
       <JsonLd data={blogPostingSchema} />
+      <ReadingProgress
+        slug={slug}
+        title={title}
+        locale={validLocale}
+        wordCount={wordCount}
+      />
 
       <div className="min-h-screen bg-slate-50 dark:bg-black">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">

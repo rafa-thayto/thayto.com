@@ -7,6 +7,7 @@ import { IconProps } from '@/components/Icons/types'
 import { YouTube } from '@/components/Icons/YouTube'
 import { linktreeLinks } from '@/data/linktree-links'
 import { Instagram, ExternalLink } from 'lucide-react'
+import { useLocale } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import posthog from 'posthog-js'
@@ -38,16 +39,26 @@ const links: ButtonLink[] = linktreeLinks.map((link) => ({
 }))
 
 export function LinktreeContent() {
+  const locale = useLocale()
   const [showAnimation, setShowAnimation] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+  const triggerPhotoEasterEgg = (via: 'hover' | 'click') => {
+    posthog.capture('photo-easter-egg-triggered', {
+      surface: 'linktree',
+      via,
+      locale,
+    })
+    setShowConfetti(true)
+  }
+
   const handleMouseEnter = () => {
     setIsHovering(true)
     timeoutRef.current = setTimeout(() => {
       setShowAnimation(true)
-      handlePhotoClick()
+      triggerPhotoEasterEgg('hover')
     }, 500)
   }
 
@@ -58,10 +69,6 @@ export function LinktreeContent() {
       clearTimeout(timeoutRef.current)
       timeoutRef.current = null
     }
-  }
-
-  const handlePhotoClick = () => {
-    setShowConfetti(true)
   }
 
   useEffect(() => {
@@ -81,7 +88,7 @@ export function LinktreeContent() {
               className="relative w-32 h-32 cursor-pointer"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-              onClick={handlePhotoClick}
+              onClick={() => triggerPhotoEasterEgg('click')}
             >
               <div
                 className={`absolute -inset-1 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 rounded-full blur-sm transition-all duration-500 ${

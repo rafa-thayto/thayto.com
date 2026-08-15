@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import posthog from 'posthog-js'
 import { Link, useRouter } from '@/i18n/routing'
 
 type PostData = {
@@ -64,6 +65,7 @@ export function PostsCanvas({ posts, locale }: Props) {
     maxScroll: 0,
     lines: [] as LineInfo[],
     isDragging: false,
+    reachedEnd: false,
     lastTouchY: 0,
     lastTouchTime: 0,
     focusedPostIndex: 0,
@@ -193,6 +195,15 @@ export function PostsCanvas({ posts, locale }: Props) {
       if (!state.isDragging) {
         state.scrollY += state.velocity
         state.velocity *= CONFIG.friction
+
+        if (
+          !state.reachedEnd &&
+          state.maxScroll > 0 &&
+          state.scrollY >= state.maxScroll
+        ) {
+          state.reachedEnd = true
+          posthog.capture('posts-canvas-scroll-end-reached', { locale })
+        }
 
         // Elastic overscroll with bounce-back
         if (state.scrollY < 0) {
@@ -336,6 +347,13 @@ export function PostsCanvas({ posts, locale }: Props) {
     function onClick() {
       const post = posts[state.focusedPostIndex]
       if (post) {
+        posthog.capture('posts-canvas-post-opened', {
+          href: post.href,
+          title: post.title,
+          postIndex: state.focusedPostIndex,
+          method: 'click',
+          locale,
+        })
         router.push(post.href)
       }
     }
@@ -354,7 +372,16 @@ export function PostsCanvas({ posts, locale }: Props) {
           break
         case 'Enter': {
           const post = posts[state.focusedPostIndex]
-          if (post) router.push(post.href)
+          if (post) {
+            posthog.capture('posts-canvas-post-opened', {
+              href: post.href,
+              title: post.title,
+              postIndex: state.focusedPostIndex,
+              method: 'keyboard',
+              locale,
+            })
+            router.push(post.href)
+          }
           break
         }
       }

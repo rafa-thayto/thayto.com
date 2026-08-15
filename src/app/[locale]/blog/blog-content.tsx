@@ -7,8 +7,9 @@ import { Post } from '@/utils/mdx'
 import { matchesSearch } from '@/utils/post-search'
 import Link from 'next/link'
 import { ArrowLeft, Search } from 'lucide-react'
-import { useState } from 'react'
-import { useTranslations } from 'next-intl'
+import posthog from 'posthog-js'
+import { useEffect, useRef, useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 
 interface BlogContentProps {
   posts: Post[]
@@ -16,6 +17,7 @@ interface BlogContentProps {
 
 export function BlogContent({ posts: p }: BlogContentProps) {
   const t = useTranslations('blog')
+  const locale = useLocale()
   const searchParams = useSearchParams()
   const search = searchParams?.get('tags') || searchParams?.get('tag')
   const [query, setQuery] = useState(searchParams?.get('q') ?? '')
@@ -25,6 +27,35 @@ export function BlogContent({ posts: p }: BlogContentProps) {
       !tags?.length ? true : post.data.tags.some((t) => tags.includes(t)),
     )
     .filter((post) => matchesSearch(query, post.data))
+
+  const resultsCount = posts.length
+  // Skip the mount run so a shared ?q= URL doesn't count as a performed search
+  const isFirstSearchRender = useRef(true)
+
+  useEffect(() => {
+    if (isFirstSearchRender.current) {
+      isFirstSearchRender.current = false
+      return
+    }
+    if (!query) return
+    const timeout = setTimeout(() => {
+      posthog.capture('blog-search-performed', {
+        query,
+        resultsCount,
+        activeTags: search ? search.split(',') : [],
+        locale,
+      })
+    }, 500)
+    return () => clearTimeout(timeout)
+  }, [query, search, locale, resultsCount])
+
+  useEffect(() => {
+    if (!search) return
+    posthog.capture('blog-tag-filter-viewed', {
+      tags: search.split(','),
+      locale,
+    })
+  }, [search, locale])
 
   const handleQueryChange = (value: string) => {
     setQuery(value)
@@ -54,7 +85,7 @@ export function BlogContent({ posts: p }: BlogContentProps) {
           <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
           Index
         </Link>
-        <LanguageSwitcher />
+        <LanguageSwitcher source="blog-listing" />
       </div>
       <label className="flex items-center gap-2 mb-2 text-sm text-slate-600 dark:text-gray-400 focus-within:text-slate-800 dark:focus-within:text-gray-100 transition-colors duration-200">
         <Search className="w-4 h-4 flex-shrink-0" aria-hidden="true" />

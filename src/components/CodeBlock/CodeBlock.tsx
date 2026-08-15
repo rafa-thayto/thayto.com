@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback } from 'react'
 import { ClipboardIcon, CheckIcon } from '@heroicons/react/24/outline'
+import posthog from 'posthog-js'
 
 interface CodeBlockProps {
   children?: React.ReactNode
@@ -13,8 +14,18 @@ interface CodeBlockProps {
 export const Pre = ({ children, ...props }: any) => {
   const [copied, setCopied] = useState(false)
   const preRef = React.useRef<HTMLPreElement>(null)
+  const language =
+    /language-([\w-]+)/.exec(props.className ?? '')?.[1] ?? 'unknown'
 
   const copyToClipboard = useCallback(async () => {
+    const trackCopy = (success: boolean, charCount: number) => {
+      posthog.capture('code-block-copy-clicked', {
+        language,
+        success,
+        charCount,
+      })
+    }
+
     try {
       // Get the text content directly from the DOM element
       const code = preRef.current?.textContent || ''
@@ -25,6 +36,7 @@ export const Pre = ({ children, ...props }: any) => {
       }
 
       await navigator.clipboard.writeText(code)
+      trackCopy(true, code.length)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
@@ -37,13 +49,15 @@ export const Pre = ({ children, ...props }: any) => {
         textArea.select()
         document.execCommand('copy')
         document.body.removeChild(textArea)
+        trackCopy(true, textArea.value.length)
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
       } catch (fallbackErr) {
         console.error('Fallback copy also failed:', fallbackErr)
+        trackCopy(false, 0)
       }
     }
-  }, [])
+  }, [language])
 
   return (
     <div className="relative group">
