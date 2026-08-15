@@ -5,6 +5,10 @@ export type LinktreeLink = {
 
 export const linktreeLinks: LinktreeLink[] = [
   {
+    href: 'https://ajustacv.com/?ref=thayto',
+    text: 'melhorar currículo',
+  },
+  {
     href: 'https://hub.la/r/lista-espera',
     text: 'lista de espera | linkedin',
   },
