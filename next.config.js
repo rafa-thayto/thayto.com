@@ -12,6 +12,9 @@ const withMDX = require('@next/mdx')({
   },
 })
 const { withPlaiceholder } = require('@plaiceholder/next')
+// Single source of truth, shared with src/utils/image-optimization.ts so the
+// MDXImage fallback and the optimizer agree on which remote images are allowed.
+const optimizedImageHosts = require('./src/data/optimized-image-hosts.json')
 
 /**
  * @type {import('next').NextConfig}
@@ -26,14 +29,12 @@ const nextConfig = {
     ],
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'dev-to-uploads.s3.amazonaws.com',
-        port: '',
-        pathname: '/uploads/**',
-      },
-    ],
+    remotePatterns: optimizedImageHosts.map(({ hostname, pathPrefix }) => ({
+      protocol: 'https',
+      hostname,
+      port: '',
+      pathname: `${pathPrefix}**`,
+    })),
   },
 
   async rewrites() {

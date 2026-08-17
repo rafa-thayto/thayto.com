@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import { XMarkIcon, EyeIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { posthog } from 'posthog-js'
+import { canOptimizeImage } from '@/utils/image-optimization'
 
 interface MDXImageProps {
   src: string
@@ -29,6 +30,9 @@ export const MDXImage = ({
   const isExternalImage =
     src.startsWith('http://') || src.startsWith('https://')
   const isLocalImage = src.startsWith('/static/images/')
+  // Remote images go through next/image whenever the optimizer accepts the
+  // host; the raw img tag is only for hosts it would reject at runtime.
+  const isOptimizable = canOptimizeImage(src)
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -75,7 +79,7 @@ export const MDXImage = ({
 
   const fullscreenModal = (
     <div
-      className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 font-sans"
       onClick={closeFullscreen}
     >
       <div className="relative max-w-7xl max-h-full w-full h-full flex items-center justify-center">
@@ -91,7 +95,10 @@ export const MDXImage = ({
           className="relative w-full h-full max-w-none max-h-none"
           onClick={(e) => e.stopPropagation()}
         >
-          {isExternalImage ? (
+          {!isOptimizable ? (
+            /* eslint-disable-next-line @next/next/no-img-element -- next/image
+               throws on hosts outside remotePatterns, so an unoptimized tag is
+               the only way to render them */
             <img src={src} alt={alt} className="w-full h-full object-contain" />
           ) : (
             <Image
@@ -124,7 +131,9 @@ export const MDXImage = ({
         className={`relative block cursor-pointer group transition-transform duration-300 hover:scale-[1.02] rounded-lg overflow-hidden ${className}`}
         onClick={openFullscreen}
       >
-        {isExternalImage ? (
+        {!isOptimizable ? (
+          /* eslint-disable-next-line @next/next/no-img-element -- see the
+             fullscreen modal above */
           <img
             src={src}
             alt={alt}

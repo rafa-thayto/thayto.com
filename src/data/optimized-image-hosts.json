@@ -1,0 +1,6 @@
+[
+  {
+    "hostname": "dev-to-uploads.s3.amazonaws.com",
+    "pathPrefix": "/uploads/"
+  }
+]

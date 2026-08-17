@@ -14,7 +14,9 @@ const Image = ({
   quality,
   ...props
 }: any) => {
-  return <img src={src} alt={alt} {...props} />
+  // Marks the element as next/image output so tests can tell it apart from a
+  // plain img rendered deliberately by a component.
+  return <img src={src} alt={alt} data-next-image="true" {...props} />
 }
 
 export default Image
