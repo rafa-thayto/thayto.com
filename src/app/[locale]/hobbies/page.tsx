@@ -82,10 +82,10 @@ export default async function HobbiesPage({ params }: Props) {
   }
 
   return (
-    <Layout>
+    <Layout stickyFooter>
       <JsonLd data={webPageSchema} />
 
-      <main className="max-w-4xl mx-auto bg-neutral-50 dark:bg-black py-4 px-4 sm:px-24">
+      <main className="w-full flex-1 max-w-4xl mx-auto bg-neutral-50 dark:bg-black py-4 px-4 sm:px-24">
         <h1 className="text-2xl text-gray-900 dark:text-white font-bold mt-2">
           {t('title')}
         </h1>
