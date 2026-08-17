@@ -92,7 +92,6 @@ export function generateHomeMarkdown(locale: string): string {
     '## Links',
     '',
     `- [Blog](${SITE_URL}${prefix}/blog)`,
-    `- [About](${SITE_URL}${prefix}/about)`,
     `- [Books](${SITE_URL}${prefix}/books)`,
     `- [Hobbies](${SITE_URL}${prefix}/hobbies)`,
     `- [Linktree](${SITE_URL}${prefix}/linktree)`,
@@ -144,22 +143,6 @@ export async function generateBlogPostMarkdown(
     throw Object.assign(new Error('Invalid slug'), { code: 'ENOENT' })
   }
   return fs.readFile(filePath, 'utf-8')
-}
-
-export function generateAboutMarkdown(locale: string): string {
-  const messages = getMessages(locale)
-  const years = getYearsOfProfessionalExperience()
-
-  const lines: string[] = [
-    `# ${messages.about.title}`,
-    '',
-    interpolate(messages.about.bio.paragraph1, { years }),
-    '',
-    messages.about.bio.paragraph2,
-    '',
-  ]
-
-  return lines.join('\n')
 }
 
 export function generateHobbiesMarkdown(locale: string): string {

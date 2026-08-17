@@ -4,7 +4,6 @@ import {
   generateHomeMarkdown,
   generateBlogIndexMarkdown,
   generateBlogPostMarkdown,
-  generateAboutMarkdown,
   generateBooksMarkdown,
   generateHobbiesMarkdown,
   generateLinktreeMarkdown,
@@ -70,11 +69,6 @@ export async function GET(request: NextRequest) {
       const slug = blogPostMatch[1]
       const content = await generateBlogPostMarkdown(slug, locale)
       return markdownResponse(content)
-    }
-
-    // About
-    if (normalizedPath === '/about') {
-      return markdownResponse(generateAboutMarkdown(locale))
     }
 
     // Books

@@ -92,7 +92,7 @@ export default async function BooksPage({ params }: Props) {
     author: {
       '@type': 'Person' as const,
       name: 'Rafael Thayto',
-      url: toCanonicalUrl(validLocale, '/about'),
+      url: toCanonicalUrl(validLocale, '/'),
       ...PERSON_REF,
     },
     mainEntity: {
@@ -120,7 +120,7 @@ export default async function BooksPage({ params }: Props) {
                   author: {
                     '@type': 'Person' as const,
                     name: 'Rafael Thayto',
-                    url: toCanonicalUrl(validLocale, '/about'),
+                    url: toCanonicalUrl(validLocale, '/'),
                   },
                 },
               }

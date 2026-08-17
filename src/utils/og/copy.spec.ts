@@ -34,7 +34,6 @@ describe('OG_COPY', () => {
   it('lists every fixed page exactly once', () => {
     const expected: OgPage[] = [
       'home',
-      'about',
       'blog',
       'posts',
       'books',

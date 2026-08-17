@@ -5,7 +5,6 @@ export const resolveOgLocale = (locale: string): Locale =>
 
 export const OG_PAGES = [
   'home',
-  'about',
   'blog',
   'posts',
   'books',
@@ -36,16 +35,6 @@ export const OG_COPY: Record<OgPage, Record<Locale, OgCopy>> = {
       greeting: 'Oi, prazer!',
       headline:
         'Eu sou o Rafael Thayto,\nSenior Software Engineer\ne usuário de VIM/Neovim ❤️ (desde 2022)',
-    },
-  },
-  about: {
-    en: {
-      greeting: 'About me',
-      headline: 'A little about who I am\nand how I got here',
-    },
-    pt: {
-      greeting: 'Sobre mim',
-      headline: 'Um pouco sobre quem eu sou\ne como cheguei até aqui',
     },
   },
   blog: {

@@ -104,7 +104,7 @@ export const personSummary = (locale: Locale) => ({
   '@type': 'Person' as const,
   '@id': `${SITE_URL}/#person`,
   name: 'Rafael Thayto',
-  url: toCanonicalUrl(locale, '/about'),
+  url: toCanonicalUrl(locale, '/'),
   jobTitle: 'Senior Software Engineer',
   sameAs: [...SOCIAL_LINKS],
 })

@@ -22,7 +22,6 @@ import {
   Sparkles,
   SunMoon,
   Twitter,
-  User,
   Youtube,
   type LucideIcon,
 } from 'lucide-react'
@@ -60,7 +59,6 @@ const PAGES: { key: string; pathname: string; Icon: LucideIcon }[] = [
   { key: 'home', pathname: '/', Icon: Home },
   { key: 'blog', pathname: '/blog', Icon: Newspaper },
   { key: 'books', pathname: '/books', Icon: BookOpen },
-  { key: 'about', pathname: '/about', Icon: User },
   { key: 'hobbies', pathname: '/hobbies', Icon: Sparkles },
   { key: 'linktree', pathname: '/linktree', Icon: Link2 },
 ]

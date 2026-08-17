@@ -11,7 +11,7 @@ const buildUrl = (path: string, locale: string): string => {
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = []
 
-  const staticPages = ['', 'blog', 'books', 'about', 'linktree', 'hobbies']
+  const staticPages = ['', 'blog', 'books', 'linktree', 'hobbies']
 
   // Generate static pages: one entry per page per locale, so English URLs
   // are discoverable as their own <loc>, not only inside alternates.
