@@ -72,7 +72,9 @@ export const Pre = ({
   }, [language, slug, locale, title])
 
   return (
-    <div className="relative group">
+    // font-sans stops the chrome below inheriting the serif that `.prose` sets
+    // on its container for body copy
+    <div className="relative group font-sans">
       <pre ref={preRef} {...props}>
         {children}
       </pre>
