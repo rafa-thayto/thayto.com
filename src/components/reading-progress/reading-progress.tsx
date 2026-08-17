@@ -50,7 +50,6 @@ export function ReadingProgress({
       }
     }
 
-    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [slug, title, locale, wordCount])

@@ -8,6 +8,7 @@ import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
+import { useLocale } from 'next-intl'
 import posthog from 'posthog-js'
 import { useCallback, useState } from 'react'
 
@@ -26,6 +27,9 @@ interface BlogCardProps {
   reactionsLength: number
   commentsLength: number
   priority?: boolean
+  position?: number
+  activeQuery?: string
+  activeTags?: string[]
 }
 
 export const BlogCard = ({
@@ -39,9 +43,13 @@ export const BlogCard = ({
   reactionsLength,
   commentsLength,
   priority = false,
+  position,
+  activeQuery,
+  activeTags,
 }: BlogCardProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const locale = useLocale()
 
   const [hasLike, setHasLike] = useState(false)
 
@@ -67,6 +75,10 @@ export const BlogCard = ({
           posthog.capture('blog-card-clicked', {
             href,
             title,
+            locale,
+            position,
+            activeQuery,
+            activeTags,
           })
         }}
         className="flex flex-col sm:flex-row"

@@ -6,7 +6,11 @@ import { SITE_URL } from '@/utils/constants'
 
 type NextLinkProps = React.ComponentPropsWithRef<typeof Link>
 
-interface CustomLinkProps extends NextLinkProps {}
+interface CustomLinkProps extends NextLinkProps {
+  slug?: string
+  locale?: string
+  title?: string
+}
 
 const siteHost = new URL(SITE_URL).hostname
 
@@ -15,6 +19,9 @@ export const CustomLink = ({
   href,
   ref: _,
   onClick,
+  slug,
+  locale,
+  title,
   ...otherProps
 }: CustomLinkProps) => {
   if (typeof href === 'string' && /^https?:\/\//.test(href)) {
@@ -26,11 +33,32 @@ export const CustomLink = ({
           {...otherProps}
           onClick={(event) => {
             onClick?.(event)
-            posthog.capture('blog-post-outbound-link-clicked', { href, host })
+            posthog.capture('blog-post-outbound-link-clicked', {
+              href,
+              host,
+              slug,
+              locale,
+              title,
+            })
           }}
         />
       )
     }
   }
-  return <Link as={as} href={href} onClick={onClick} {...otherProps} />
+  return (
+    <Link
+      as={as}
+      href={href}
+      onClick={(event) => {
+        onClick?.(event)
+        posthog.capture('blog-post-internal-link-clicked', {
+          href,
+          locale,
+          slug,
+          title,
+        })
+      }}
+      {...otherProps}
+    />
+  )
 }

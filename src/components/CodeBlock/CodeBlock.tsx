@@ -7,11 +7,20 @@ import posthog from 'posthog-js'
 interface CodeBlockProps {
   children?: React.ReactNode
   className?: string
+  slug?: string
+  locale?: string
+  title?: string
   [key: string]: any
 }
 
 // Custom Pre component to handle the pre wrapper with copy button
-export const Pre = ({ children, ...props }: any) => {
+export const Pre = ({
+  children,
+  slug,
+  locale,
+  title,
+  ...props
+}: CodeBlockProps) => {
   const [copied, setCopied] = useState(false)
   const preRef = React.useRef<HTMLPreElement>(null)
   const language =
@@ -23,6 +32,9 @@ export const Pre = ({ children, ...props }: any) => {
         language,
         success,
         charCount,
+        slug,
+        locale,
+        title,
       })
     }
 
@@ -57,7 +69,7 @@ export const Pre = ({ children, ...props }: any) => {
         trackCopy(false, 0)
       }
     }
-  }, [language])
+  }, [language, slug, locale, title])
 
   return (
     <div className="relative group">
@@ -93,6 +105,9 @@ export const Pre = ({ children, ...props }: any) => {
 export const CodeBlock = ({
   children,
   className,
+  slug,
+  locale,
+  title,
   ...props
 }: CodeBlockProps) => {
   return (

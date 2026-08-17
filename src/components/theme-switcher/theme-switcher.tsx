@@ -56,6 +56,7 @@ export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
     ).matches
     const initialIsDark = theme === 'dark' || (!theme && systemPrefersDark)
     setIsDark(initialIsDark)
+    posthog.register({ theme: initialIsDark ? 'dark' : 'light' })
 
     if (initialIsDark) {
       document.documentElement.classList.add('dark')
@@ -71,7 +72,9 @@ export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
         const systemPrefersDark = window.matchMedia(
           '(prefers-color-scheme: dark)',
         ).matches
-        setIsDark(theme === 'dark' || (!theme && systemPrefersDark))
+        const nowIsDark = theme === 'dark' || (!theme && systemPrefersDark)
+        setIsDark(nowIsDark)
+        posthog.register({ theme: nowIsDark ? 'dark' : 'light' })
       }
     }
 
@@ -80,7 +83,9 @@ export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
       const systemPrefersDark = window.matchMedia(
         '(prefers-color-scheme: dark)',
       ).matches
-      setIsDark(theme === 'dark' || (!theme && systemPrefersDark))
+      const nowIsDark = theme === 'dark' || (!theme && systemPrefersDark)
+      setIsDark(nowIsDark)
+      posthog.register({ theme: nowIsDark ? 'dark' : 'light' })
     }
 
     window.addEventListener('storage', handleStorageChange)
@@ -96,7 +101,9 @@ export const ThemeSwitcher = ({ onThemeChange }: ThemeSwitcherProps) => {
     const newTheme = isDark ? 'light' : 'dark'
 
     posthog.capture('switch-theme', {
-      from: isDark ? 'dark-to-light' : 'light-to-dark',
+      from: isDark ? 'dark' : 'light',
+      to: newTheme,
+      source: 'header-toggle',
     })
 
     setIsDark(!isDark)

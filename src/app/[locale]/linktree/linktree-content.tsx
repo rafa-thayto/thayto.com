@@ -143,6 +143,8 @@ export function LinktreeContent() {
                   posthog.capture('linktree-button-clicked', {
                     href,
                     title: text,
+                    locale,
+                    position: index,
                   })
                 }}
               >

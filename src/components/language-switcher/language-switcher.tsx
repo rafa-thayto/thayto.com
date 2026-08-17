@@ -7,7 +7,13 @@ import { useParams } from 'next/navigation'
 import posthog from 'posthog-js'
 
 interface LanguageSwitcherProps {
-  source: 'header' | 'footer' | 'blog-listing' | 'blog-post' | 'books'
+  source:
+    | 'header'
+    | 'footer'
+    | 'blog-listing'
+    | 'blog-post'
+    | 'books'
+    | 'command-palette'
 }
 
 export function LanguageSwitcher({ source }: LanguageSwitcherProps) {

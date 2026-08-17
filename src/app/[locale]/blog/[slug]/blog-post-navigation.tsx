@@ -10,6 +10,7 @@ interface BlogPostNavigationProps {
   prevPost?: { slug: string; title: string } | null
   nextPost?: { slug: string; title: string } | null
   title: string
+  slug: string
   position: 'top' | 'bottom'
 }
 
@@ -17,6 +18,7 @@ export function BlogPostNavigation({
   prevPost,
   nextPost,
   title,
+  slug,
   position,
 }: BlogPostNavigationProps) {
   const t = useTranslations('blog')
@@ -31,6 +33,7 @@ export function BlogPostNavigation({
           onClick={() => {
             posthog.capture('blog-post-back-btn', {
               title: title,
+              slug,
               locale,
             })
           }}
@@ -57,6 +60,7 @@ export function BlogPostNavigation({
                   posthog.capture('change-post-btn', {
                     href: `${blogPath}/${prevPost.slug}`,
                     title: prevPost.title,
+                    slug: prevPost.slug,
                     locale,
                   })
                 }}
@@ -85,6 +89,7 @@ export function BlogPostNavigation({
                   posthog.capture('change-post-btn', {
                     href: `${blogPath}/${nextPost.slug}`,
                     title: nextPost.title,
+                    slug: nextPost.slug,
                     locale,
                   })
                 }}
