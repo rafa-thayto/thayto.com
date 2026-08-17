@@ -1,5 +1,6 @@
 'use client'
 
+import posthog from 'posthog-js'
 import { PropsWithChildren, useEffect } from 'react'
 import { Footer } from '../'
 import { OnlineBadge } from '../online-badge'
@@ -20,6 +21,12 @@ export const Layout = ({ children }: PropsWithChildren) => {
     const darkQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
     darkQuery.onchange = (e) => {
+      posthog.capture('switch-theme', {
+        from: e.matches ? 'light' : 'dark',
+        to: e.matches ? 'dark' : 'light',
+        source: 'system',
+      })
+
       if (e.matches) {
         document.documentElement.classList.add('dark')
         localStorage.setItem('theme', 'dark')
@@ -27,6 +34,8 @@ export const Layout = ({ children }: PropsWithChildren) => {
         document.documentElement.classList.remove('dark')
         localStorage.setItem('theme', 'light')
       }
+
+      window.dispatchEvent(new Event('themeChange'))
     }
   }
 

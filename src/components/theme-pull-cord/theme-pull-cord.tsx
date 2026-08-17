@@ -112,7 +112,8 @@ export const ThemePullCord = () => {
       playLampClick(flashToLight)
 
       posthog.capture('switch-theme', {
-        from: newTheme === 'light' ? 'dark-to-light' : 'light-to-dark',
+        from: isDark() ? 'dark' : 'light',
+        to: newTheme,
         source: 'pull-cord',
       })
 

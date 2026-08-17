@@ -53,9 +53,10 @@ export function BlogContent({ posts: p }: BlogContentProps) {
     if (!search) return
     posthog.capture('blog-tag-filter-viewed', {
       tags: search.split(','),
+      resultsCount,
       locale,
     })
-  }, [search, locale])
+  }, [search, locale, resultsCount])
 
   const handleQueryChange = (value: string) => {
     setQuery(value)
@@ -121,6 +122,9 @@ export function BlogContent({ posts: p }: BlogContentProps) {
             reactionsLength={post.data.reactionsLength}
             commentsLength={post.data.commentsLength}
             priority={index < 3}
+            position={index}
+            activeQuery={query}
+            activeTags={tags}
           />
         </article>
       ))}

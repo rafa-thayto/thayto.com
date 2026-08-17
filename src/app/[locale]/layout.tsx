@@ -7,6 +7,7 @@ import { SITE_URL } from '@/utils/constants'
 import { SCHEMA_CONTEXT, JsonLd } from '@/utils/seo'
 import { getPosts } from '@/utils/mdx'
 import { CommandPalette } from '@/components/command-palette'
+import { PosthogLocaleRegister } from '@/components/posthog-locale-register'
 import { getBooks } from './books/books-data'
 
 type Props = {
@@ -66,6 +67,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
       <JsonLd data={websiteSchema} />
+      <PosthogLocaleRegister locale={locale} />
       <CommandPalette posts={palettePosts} books={paletteBooks} />
       {children}
     </NextIntlClientProvider>

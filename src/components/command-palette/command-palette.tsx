@@ -115,6 +115,14 @@ export const CommandPalette = ({ posts, books }: CommandPaletteProps) => {
     openRef.current = open
   }, [open])
 
+  // Mirror `locale` for the same reason as openRef above: the mount-only
+  // keydown effect closes over this on mount, so without a ref it would
+  // keep reporting the locale active at mount time after a language switch.
+  const localeRef = useRef(locale)
+  useEffect(() => {
+    localeRef.current = locale
+  }, [locale])
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key !== 'k' || (!e.metaKey && !e.ctrlKey)) return
@@ -132,12 +140,18 @@ export const CommandPalette = ({ posts, books }: CommandPaletteProps) => {
       if (isEditableTarget(e.target)) return
 
       e.preventDefault()
-      posthog.capture('command-palette-opened', { via: 'keyboard' })
+      posthog.capture('command-palette-opened', {
+        via: 'keyboard',
+        locale: localeRef.current,
+      })
       setOpen(true)
     }
 
     const onOpenEvent = () => {
-      posthog.capture('command-palette-opened', { via: 'button' })
+      posthog.capture('command-palette-opened', {
+        via: 'button',
+        locale: localeRef.current,
+      })
       setOpen(true)
     }
 
@@ -155,7 +169,7 @@ export const CommandPalette = ({ posts, books }: CommandPaletteProps) => {
   }, [])
 
   const navigate = (href: string) => {
-    posthog.capture('command-palette-navigate', { href })
+    posthog.capture('command-palette-navigate', { href, locale })
     router.push(href)
   }
 
@@ -163,11 +177,21 @@ export const CommandPalette = ({ posts, books }: CommandPaletteProps) => {
   // (matching BookCard), otherwise fall back to the library page.
   const openBook = (book: CommandPaletteBook) => {
     if (book.amazonUrl) {
-      posthog.capture('command-palette-book', { id: book.id, via: 'amazon' })
+      posthog.capture('command-palette-book', {
+        id: book.id,
+        title: book.title,
+        via: 'amazon',
+        locale,
+      })
       window.open(book.amazonUrl, '_blank', 'noopener,noreferrer')
       return
     }
-    posthog.capture('command-palette-book', { id: book.id, via: 'page' })
+    posthog.capture('command-palette-book', {
+      id: book.id,
+      title: book.title,
+      via: 'page',
+      locale,
+    })
     router.push('/books')
   }
 
@@ -176,8 +200,10 @@ export const CommandPalette = ({ posts, books }: CommandPaletteProps) => {
     const newTheme = isDark ? 'light' : 'dark'
 
     posthog.capture('switch-theme', {
-      from: isDark ? 'dark-to-light' : 'light-to-dark',
-      via: 'command-palette',
+      from: isDark ? 'dark' : 'light',
+      to: newTheme,
+      source: 'command-palette',
+      locale,
     })
 
     document.documentElement.classList.toggle('dark', newTheme === 'dark')
@@ -187,7 +213,11 @@ export const CommandPalette = ({ posts, books }: CommandPaletteProps) => {
 
   const switchLocale = () => {
     const newLocale = locale === 'pt' ? 'en' : 'pt'
-    posthog.capture('command-palette-switch-locale', { to: newLocale })
+    posthog.capture('switch-locale', {
+      from: locale,
+      to: newLocale,
+      source: 'command-palette',
+    })
     router.replace(
       // @ts-expect-error -- pathname/params always match the current route,
       // so we can skip next-intl's compile-time route validation here.
@@ -197,7 +227,7 @@ export const CommandPalette = ({ posts, books }: CommandPaletteProps) => {
   }
 
   const openExternal = (href: string) => {
-    posthog.capture('command-palette-external-link', { href })
+    posthog.capture('command-palette-external-link', { href, locale })
     window.open(href, '_blank', 'noopener,noreferrer')
   }
 

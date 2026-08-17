@@ -5,6 +5,7 @@ import posthog from 'posthog-js'
 import { BookStatus } from '@/data/books.types'
 
 interface BookCardProps {
+  id: string
   title: string
   author: string
   coverUrl: string
@@ -12,6 +13,7 @@ interface BookCardProps {
   status: BookStatus
   statusLabel: string
   stars?: number
+  locale: string
 }
 
 const statusColors: Record<BookStatus, string> = {
@@ -23,6 +25,7 @@ const statusColors: Record<BookStatus, string> = {
 }
 
 export const BookCard = ({
+  id,
   title,
   author,
   coverUrl,
@@ -30,6 +33,7 @@ export const BookCard = ({
   status,
   statusLabel,
   stars,
+  locale,
 }: BookCardProps) => {
   const cardContent = (
     <div className="group relative w-fit">
@@ -91,11 +95,13 @@ export const BookCard = ({
         aria-label={`View ${title} on Amazon`}
         onClick={() => {
           posthog.capture('book-amazon-link-clicked', {
+            id,
             title,
             author,
             status,
             stars,
             amazonUrl,
+            locale,
           })
         }}
       >

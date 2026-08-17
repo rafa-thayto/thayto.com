@@ -32,21 +32,31 @@ import {
   JsonLd,
 } from '@/utils/seo'
 
-const components = {
-  pre: (props: React.ComponentProps<typeof Pre>) => <Pre {...props} />,
+const getComponents = ({
+  slug,
+  locale,
+  title,
+}: {
+  slug: string
+  locale: Locale
+  title: string
+}) => ({
+  pre: (props: React.ComponentProps<typeof Pre>) => (
+    <Pre {...props} slug={slug} locale={locale} title={title} />
+  ),
   code: (props: React.ComponentProps<typeof CodeBlock>) => (
-    <CodeBlock {...props} />
+    <CodeBlock {...props} slug={slug} locale={locale} title={title} />
   ),
   img: (props: React.ComponentProps<typeof MDXImage>) => (
-    <MDXImage {...props} />
+    <MDXImage {...props} slug={slug} locale={locale} postTitle={title} />
   ),
   Image: (props: React.ComponentProps<typeof MDXImage>) => (
-    <MDXImage {...props} />
+    <MDXImage {...props} slug={slug} locale={locale} postTitle={title} />
   ),
   a: (props: React.ComponentProps<typeof CustomLink>) => (
-    <CustomLink {...props} />
+    <CustomLink {...props} slug={slug} locale={locale} title={title} />
   ),
-}
+})
 
 const mdxOptions = {
   remarkPlugins: [remarkGfm, remarkA11yEmoji],
@@ -198,6 +208,7 @@ export default async function PostPage({
             prevPost={prevPost}
             nextPost={nextPost}
             title={title}
+            slug={slug}
             position="top"
           />
 
@@ -254,7 +265,11 @@ export default async function PostPage({
               <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-blue-500 prose-blockquote:bg-blue-50 dark:prose-blockquote:bg-black dark:prose-blockquote:border-l-blue-400">
                 <MDXRemote
                   source={mdxSource}
-                  components={components}
+                  components={getComponents({
+                    slug,
+                    locale: validLocale,
+                    title,
+                  })}
                   options={{ mdxOptions }}
                 />
               </div>
@@ -265,6 +280,7 @@ export default async function PostPage({
             prevPost={prevPost}
             nextPost={nextPost}
             title={title}
+            slug={slug}
             position="bottom"
           />
         </div>

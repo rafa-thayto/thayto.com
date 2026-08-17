@@ -2,6 +2,7 @@
 
 import { nanoid } from 'nanoid'
 import NextLink from 'next/link'
+import { useLocale } from 'next-intl'
 import posthog from 'posthog-js'
 import { Link } from '@/i18n/routing'
 import { useMemo } from 'react'
@@ -21,6 +22,7 @@ export const Footer = ({
 }: {
   onThemeChange?: (theme: 'dark' | 'light') => void
 }) => {
+  const locale = useLocale()
   const allLinks = useMemo<FooterLink[]>(
     () => [
       {
@@ -94,6 +96,8 @@ export const Footer = ({
                         href: link.href,
                         name: link.name,
                         external: isExternal,
+                        locale,
+                        position: index,
                       })
                     }}
                   >

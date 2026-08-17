@@ -84,7 +84,11 @@ const curiosityRenderers = Object.fromEntries(
     return [
       tag,
       (chunks: ReactNode) => (
-        <TrackedLink href={url} event="curiosity-link-clicked">
+        <TrackedLink
+          href={url}
+          event="curiosity-link-clicked"
+          eventProps={{ tag }}
+        >
           {BrandIcon && (
             <BrandIcon className="w-3.5 h-3.5 mr-1" style={brandIconStyle} />
           )}
@@ -347,6 +351,12 @@ export function HomeContent({ posts }: HomeContentProps) {
                 '/static/sounds/tap_03.wav',
               ])
             }
+            onClick={() =>
+              posthog.capture('blog-index-link-clicked', {
+                source: 'home',
+                locale,
+              })
+            }
           >
             {t('recentPosts')}
             <ChevronRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -368,41 +378,58 @@ export function HomeContent({ posts }: HomeContentProps) {
               .map(Number)
               .sort((a, b) => b - a)
 
+            const yearOffsets = sortedYears.reduce<Record<number, number>>(
+              (acc, year, i) => {
+                const previousYear = sortedYears[i - 1]
+                acc[year] =
+                  i === 0
+                    ? 0
+                    : acc[previousYear] + postsByYear[previousYear].length
+                return acc
+              },
+              {},
+            )
+
             return sortedYears.map((year) => (
               <div key={year}>
                 {postsByYear[year].map(
-                  ({ data: { publishedTime, title, href } }, index) => (
-                    <Link
-                      key={title}
-                      href={href}
-                      className="group flex items-center py-2 px-3 -mx-3 rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800/50"
-                      onClick={() => {
-                        posthog.capture('blog-card-clicked-home', {
-                          href,
-                          title,
-                          locale,
-                        })
-                      }}
-                    >
-                      <div className="w-12 flex-shrink-0 text-sm text-gray-500 dark:text-gray-400">
-                        {index === 0 ? year : ''}
-                      </div>
-                      <div className="flex-1 text-sm text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-200">
-                        {title}
-                      </div>
-                      <div className="text-xs text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400 transition-colors duration-200">
-                        <time dateTime={publishedTime.toString()}>
-                          {new Intl.DateTimeFormat(
-                            locale === 'pt' ? 'pt-BR' : 'en-US',
-                            {
-                              month: '2-digit',
-                              day: '2-digit',
-                            },
-                          ).format(new Date(publishedTime))}
-                        </time>
-                      </div>
-                    </Link>
-                  ),
+                  ({ data: { publishedTime, title, href } }, index) => {
+                    const currentPosition = yearOffsets[year] + index + 1
+                    return (
+                      <Link
+                        key={title}
+                        href={href}
+                        className="group flex items-center py-2 px-3 -mx-3 rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800/50"
+                        onClick={() => {
+                          posthog.capture('blog-card-clicked-home', {
+                            href,
+                            title,
+                            locale,
+                            position: currentPosition,
+                            year,
+                          })
+                        }}
+                      >
+                        <div className="w-12 flex-shrink-0 text-sm text-gray-500 dark:text-gray-400">
+                          {index === 0 ? year : ''}
+                        </div>
+                        <div className="flex-1 text-sm text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-200">
+                          {title}
+                        </div>
+                        <div className="text-xs text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400 transition-colors duration-200">
+                          <time dateTime={publishedTime.toString()}>
+                            {new Intl.DateTimeFormat(
+                              locale === 'pt' ? 'pt-BR' : 'en-US',
+                              {
+                                month: '2-digit',
+                                day: '2-digit',
+                              },
+                            ).format(new Date(publishedTime))}
+                          </time>
+                        </div>
+                      </Link>
+                    )
+                  },
                 )}
               </div>
             ))

@@ -227,6 +227,7 @@ export function BooksContent({ books, locale }: BooksContentProps) {
             {filteredBooks.map((book) => (
               <BookCard
                 key={book.id}
+                id={book.id}
                 title={locale === 'pt' ? book.title : book.englishTitle}
                 author={book.author}
                 coverUrl={book.coverUrl}
@@ -240,6 +241,7 @@ export function BooksContent({ books, locale }: BooksContentProps) {
                   }`,
                 )}
                 stars={book.stars}
+                locale={locale}
               />
             ))}
           </div>

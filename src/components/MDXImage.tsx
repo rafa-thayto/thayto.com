@@ -13,6 +13,9 @@ interface MDXImageProps {
   height?: number
   className?: string
   title?: string
+  slug?: string
+  locale?: string
+  postTitle?: string
 }
 
 export const MDXImage = ({
@@ -22,6 +25,9 @@ export const MDXImage = ({
   height,
   className = '',
   title,
+  slug,
+  locale,
+  postTitle,
 }: MDXImageProps) => {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -60,6 +66,9 @@ export const MDXImage = ({
       alt,
       isExternal: isExternalImage,
       isLocal: isLocalImage,
+      slug,
+      locale,
+      title: postTitle,
     })
   }
 
@@ -70,6 +79,9 @@ export const MDXImage = ({
       alt,
       isExternal: isExternalImage,
       isLocal: isLocalImage,
+      slug,
+      locale,
+      title: postTitle,
     })
   }
 
