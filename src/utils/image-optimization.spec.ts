@@ -49,6 +49,23 @@ describe('canOptimizeImage', () => {
     ).toBe(false)
   })
 
+  // remotePatterns pins `port: ''`, which only matches the protocol default.
+  it('refuses allowed hosts served from a non-default port', () => {
+    expect(
+      canOptimizeImage(
+        'https://dev-to-uploads.s3.amazonaws.com:9999/uploads/a.png',
+      ),
+    ).toBe(false)
+  })
+
+  it('allows the explicit default https port', () => {
+    expect(
+      canOptimizeImage(
+        'https://dev-to-uploads.s3.amazonaws.com:443/uploads/a.png',
+      ),
+    ).toBe(true)
+  })
+
   it('refuses malformed urls instead of throwing', () => {
     expect(canOptimizeImage('https://')).toBe(false)
   })

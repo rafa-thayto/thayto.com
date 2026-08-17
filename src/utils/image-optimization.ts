@@ -1,4 +1,13 @@
-import optimizedImageHosts from '@/data/optimized-image-hosts.json'
+import optimizedImageHostsData from '@/data/optimized-image-hosts.json'
+
+export type OptimizedImageHost = {
+  hostname: string
+  pathPrefix: string
+}
+
+// Typed here so a malformed entry in the JSON fails the build rather than
+// silently disagreeing with the remotePatterns next.config.js derives from it.
+export const optimizedImageHosts: OptimizedImageHost[] = optimizedImageHostsData
 
 /**
  * Whether `next/image` can serve this source. Remote images only work when
@@ -12,11 +21,14 @@ export const canOptimizeImage = (src: string): boolean => {
   }
 
   try {
-    const { protocol, hostname, pathname } = new URL(src)
+    const { protocol, hostname, port, pathname } = new URL(src)
 
+    // `port: ''` in remotePatterns matches the protocol default only, and URL
+    // leaves `port` empty for it, so anything else here would be rejected.
     return optimizedImageHosts.some(
       (host) =>
         protocol === 'https:' &&
+        port === '' &&
         hostname.toLowerCase() === host.hostname &&
         pathname.startsWith(host.pathPrefix),
     )
