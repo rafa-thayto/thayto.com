@@ -22,7 +22,7 @@ export const companies: CompanyEntry[] = [
     name: 'BlindPay',
     url: 'https://blindpay.com/',
     current: true,
-    startDate: '2026-08',
+    startDate: '2026-08-24',
   },
   { name: 'Clerk', url: 'https://clerk.com' },
   { name: 'Nike', url: 'https://nike.com' },
