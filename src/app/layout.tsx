@@ -75,6 +75,11 @@ export default function RootLayout({
           media="(prefers-color-scheme: dark)"
           content="black"
         />
+        <meta
+          name="impact-site-verification"
+          // @ts-expect-error Impact's scanner requires the non-standard `value` attribute
+          value="a3b6a1c1-04c4-4aae-b703-d7ad57163c26"
+        />
       </head>
       <body className={`${poppins.variable} ${lora.variable} font-sans`}>
         <Providers>{children}</Providers>
