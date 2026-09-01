@@ -36,6 +36,7 @@ describe('OG_COPY', () => {
       'home',
       'blog',
       'posts',
+      'notes',
       'books',
       'hobbies',
       'linktree',

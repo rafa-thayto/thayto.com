@@ -7,6 +7,7 @@ export const OG_PAGES = [
   'home',
   'blog',
   'posts',
+  'notes',
   'books',
   'hobbies',
   'linktree',
@@ -22,6 +23,11 @@ export type OgCopy = {
 export const OG_POST_GREETING: Record<Locale, string> = {
   en: 'Check out this post',
   pt: 'Dá uma olhada nesse post',
+}
+
+export const OG_NOTE_GREETING: Record<Locale, string> = {
+  en: "Rafael's Notes",
+  pt: 'Notas do Rafael',
 }
 
 export const OG_COPY: Record<OgPage, Record<Locale, OgCopy>> = {
@@ -56,6 +62,16 @@ export const OG_COPY: Record<OgPage, Record<Locale, OgCopy>> = {
     pt: {
       greeting: 'Posts',
       headline: 'Todos os meus posts\nnum lugar só',
+    },
+  },
+  notes: {
+    en: {
+      greeting: "Rafael's Notes",
+      headline: 'Quick notes:\nideas, drafts\nand loose thoughts',
+    },
+    pt: {
+      greeting: 'Notas do Rafael',
+      headline: 'Notas rápidas:\nideias, rascunhos\ne pensamentos soltos',
     },
   },
   books: {

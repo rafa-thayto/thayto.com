@@ -1,4 +1,5 @@
 import { getPosts } from '@/utils/mdx'
+import { getNotes } from '@/utils/notes'
 import { SITE_URL } from '@/utils/constants'
 import { getYearsOfProfessionalExperience } from '@/constants'
 import { SOCIAL_LINKS } from '@/utils/seo'
@@ -16,6 +17,8 @@ const OPEN_SOURCE: [string, string][] = [
 export async function GET() {
   const ptPosts = getPosts('pt')
   const enPosts = getPosts('en')
+  const ptNotes = getNotes('pt')
+  const enNotes = getNotes('en')
   const years = getYearsOfProfessionalExperience()
 
   const openSource = OPEN_SOURCE.map(
@@ -37,6 +40,7 @@ export async function GET() {
     '',
     `- [Home](${SITE_URL}/index.md)`,
     `- [Blog](${SITE_URL}/blog.md)`,
+    `- [Notes](${SITE_URL}/notes.md): numbered field notes — quick ideas, drafts and loose thoughts`,
     `- [Books](${SITE_URL}/books.md): personal library — books read, currently reading, and to-read, with star ratings`,
     `- [Hobbies](${SITE_URL}/hobbies.md)`,
     `- [Linktree](${SITE_URL}/linktree.md)`,
@@ -59,6 +63,20 @@ export async function GET() {
           '.mdx',
           '',
         )}.md): ${post.data.description}`,
+    ),
+    '',
+    '## Notes (Portuguese)',
+    '',
+    ...ptNotes.map(
+      (note) =>
+        `- [Notas do Rafael #${note.number}](${SITE_URL}/notes/${note.number}.md): ${note.description}`,
+    ),
+    '',
+    '## Notes (English)',
+    '',
+    ...enNotes.map(
+      (note) =>
+        `- [Rafael's Notes #${note.number}](${SITE_URL}/en/notes/${note.number}.md): ${note.description}`,
     ),
     '',
     '## Profiles',

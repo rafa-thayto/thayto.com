@@ -8,6 +8,10 @@
       "title": "Rafael Thayto - Blog",
       "description": "Here you'll find various articles about technology and career."
     },
+    "notes": {
+      "title": "Rafael Thayto - Notes",
+      "description": "Quick notes: ideas, drafts and loose thoughts on code and product."
+    },
     "linktree": {
       "title": "Rafael Thayto - Linktree",
       "description": "Links and social media"
@@ -36,6 +40,11 @@
     "readMore": "Read more",
     "pageTitle": "Blog",
     "searchPlaceholder": "Search posts..."
+  },
+  "notes": {
+    "label": "Rafael's Notes",
+    "backToNotes": "Back to notes",
+    "noteAriaLabel": "Note #{number}"
   },
   "home": {
     "greeting": "Hi, I'm Rafael Thayto, nice to meet you! :)",
@@ -101,6 +110,7 @@
     "page": {
       "home": "Home",
       "blog": "Blog",
+      "notes": "Notes",
       "books": "Books",
       "linktree": "Linktree",
       "hobbies": "Hobbies"

@@ -1,5 +1,6 @@
-import { Layout, CodeBlock, Pre, MDXImage, CustomLink } from '@/components'
+import { Layout } from '@/components'
 import { ReadingProgress } from '@/components/reading-progress'
+import { getMdxComponents, mdxOptions } from '@/components/mdx/mdx-config'
 import { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
@@ -12,12 +13,6 @@ import {
 import { SITE_URL } from '@/utils/constants'
 import { Locale, locales } from '@/i18n/config'
 import { BlogPostNavigation } from './blog-post-navigation'
-import remarkGfm from 'remark-gfm'
-import remarkA11yEmoji from '@fec/remark-a11y-emoji'
-import rehypeSlug from 'rehype-slug'
-import rehypePrismPlus from 'rehype-prism-plus'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import { h } from 'hastscript'
 import {
   TWITTER_CARD,
   SCHEMA_CONTEXT,
@@ -31,53 +26,6 @@ import {
   breadcrumbSchema,
   JsonLd,
 } from '@/utils/seo'
-
-const getComponents = ({
-  slug,
-  locale,
-  title,
-}: {
-  slug: string
-  locale: Locale
-  title: string
-}) => ({
-  pre: (props: React.ComponentProps<typeof Pre>) => (
-    <Pre {...props} slug={slug} locale={locale} title={title} />
-  ),
-  code: (props: React.ComponentProps<typeof CodeBlock>) => (
-    <CodeBlock {...props} slug={slug} locale={locale} title={title} />
-  ),
-  img: (props: React.ComponentProps<typeof MDXImage>) => (
-    <MDXImage {...props} slug={slug} locale={locale} postTitle={title} />
-  ),
-  Image: (props: React.ComponentProps<typeof MDXImage>) => (
-    <MDXImage {...props} slug={slug} locale={locale} postTitle={title} />
-  ),
-  a: (props: React.ComponentProps<typeof CustomLink>) => (
-    <CustomLink {...props} slug={slug} locale={locale} title={title} />
-  ),
-})
-
-const mdxOptions = {
-  remarkPlugins: [remarkGfm, remarkA11yEmoji],
-  rehypePlugins: [
-    rehypeSlug,
-    rehypePrismPlus,
-    [
-      rehypeAutolinkHeadings,
-      {
-        behavior: 'prepend',
-        properties: {
-          ariaLabel: 'Link to this section',
-          classname: ['no-underline'],
-        },
-        content: h('span.text-indigo-500', '# '),
-      },
-    ],
-  ] as NonNullable<
-    NonNullable<Parameters<typeof MDXRemote>[0]['options']>['mdxOptions']
-  >['rehypePlugins'],
-}
 
 export async function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -265,7 +213,7 @@ export default async function PostPage({
               <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-blue-500 prose-blockquote:bg-blue-50 dark:prose-blockquote:bg-black dark:prose-blockquote:border-l-blue-400">
                 <MDXRemote
                   source={mdxSource}
-                  components={getComponents({
+                  components={getMdxComponents({
                     slug,
                     locale: validLocale,
                     title,

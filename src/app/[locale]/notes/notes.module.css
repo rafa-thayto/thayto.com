@@ -1,0 +1,236 @@
+/* Shared by the index and the single-note page. The index is a stack of
+   viewport-tall "stages", each holding a marker blob (visible on hover) and a
+   hand-drawn number; the note page is a narrow column with a drawn title. */
+
+.root {
+  --viewport-height: 100vh;
+  --blob-width: min(100.8vw, 1163px, calc(var(--viewport-height) * 1.96));
+  --blob-height: calc(var(--blob-width) * 379 / 831);
+  --number-unit: calc(var(--blob-width) / 860);
+  --peek: calc(var(--blob-height) * 0.4);
+  --ink: #ff484c;
+  --marker: #eaeaea;
+  position: relative;
+  overflow-x: hidden;
+}
+
+@supports (height: 100svh) {
+  .root {
+    --viewport-height: 100svh;
+  }
+}
+
+:global(.dark) .root {
+  --marker: #1c1c1c;
+}
+
+.label {
+  position: fixed;
+  top: 45px;
+  left: 45px;
+  z-index: 1;
+  margin: 0;
+  font-size: 17px;
+  color: #8f8f8f;
+}
+
+.label a {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.label a:hover,
+.label a:focus-visible {
+  color: #171717;
+  outline: none;
+}
+
+:global(.dark) .label a:hover,
+:global(.dark) .label a:focus-visible {
+  color: #ededed;
+}
+
+.item {
+  display: grid;
+  place-items: center;
+  height: var(--viewport-height);
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+.item:focus-visible .blob {
+  opacity: 1;
+}
+
+/* pull every stage after the first up so the next blob peeks in from the
+   bottom of the viewport, inviting the scroll */
+.item:not(:last-child) {
+  margin-bottom: calc(
+    var(--blob-height) / 2 - var(--peek) - var(--viewport-height) / 2
+  );
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--blob-width);
+  height: var(--blob-height);
+}
+
+.blob {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.blob path {
+  fill: var(--marker);
+}
+
+@media (pointer: fine) {
+  .item:hover .blob {
+    opacity: 1;
+  }
+}
+
+.number {
+  position: relative;
+  height: calc(var(--number-unit) * 263);
+  width: auto;
+  color: var(--ink);
+}
+
+/* single note */
+
+.note {
+  --ink: #ff484c;
+  --section-gap: 200px;
+  --column: 640px;
+  --bleed: 960px;
+  width: 100%;
+  max-width: var(--column);
+  margin: 0 auto;
+  padding: 200px 16px 120px;
+}
+
+.title {
+  width: 88%;
+  height: auto;
+  color: var(--ink);
+  margin-bottom: var(--section-gap);
+}
+
+.article h2,
+.article p,
+.article li {
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.article h2 {
+  font-weight: 500;
+  color: #6f6f6f;
+  margin: 24px 0 0;
+}
+
+.article h2:not(:first-child) {
+  margin-top: var(--section-gap);
+  color: var(--ink);
+}
+
+.article p,
+.article li {
+  color: #171717;
+  margin: 0;
+}
+
+.article p + p,
+.article ul,
+.article ol {
+  margin-top: 16px;
+}
+
+.article ul,
+.article ol {
+  padding-left: 24px;
+}
+
+.article a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article strong {
+  font-weight: 600;
+}
+
+.article pre {
+  margin: 32px 0;
+}
+
+/* media breaks out of the column, up to --bleed, and stays centred */
+.article [data-media],
+.article figure,
+.article video {
+  display: block;
+  width: min(var(--bleed), 100vw - 32px);
+  max-width: none;
+  margin: 32px 0 32px calc(50% - min(var(--bleed), 100vw - 32px) / 2);
+}
+
+:global(.dark) .article p,
+:global(.dark) .article li {
+  color: #ededed;
+}
+
+:global(.dark) .article h2 {
+  color: #8f8f8f;
+}
+
+:global(.dark) .article h2:not(:first-child) {
+  color: var(--ink);
+}
+
+.signature {
+  width: 132px;
+  height: auto;
+  color: var(--ink);
+  margin-top: 120px;
+}
+
+@media (max-width: 960px) {
+  .label {
+    position: relative;
+    top: unset;
+    left: unset;
+    width: 100%;
+    text-align: center;
+    margin: 32px auto 0;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 800px) {
+  .note {
+    --section-gap: 150px;
+    padding-top: 96px;
+  }
+
+  .article h2,
+  .article p,
+  .article li {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob,
+  .label a {
+    transition: none;
+  }
+}

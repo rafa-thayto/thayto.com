@@ -34,6 +34,10 @@ export const Footer = ({
         name: 'Blog',
       },
       {
+        href: '/notes',
+        name: 'Notes',
+      },
+      {
         href: '/books',
         name: 'Books',
       },

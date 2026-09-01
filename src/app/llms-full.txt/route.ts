@@ -6,7 +6,9 @@ import {
   generateHobbiesMarkdown,
   generateHomeMarkdown,
   generateLinktreeMarkdown,
+  generateNoteMarkdown,
 } from '@/utils/markdown-response'
+import { getNotes } from '@/utils/notes'
 import { promises as fs } from 'fs'
 import path from 'path'
 import { NextResponse } from 'next/server'
@@ -72,6 +74,25 @@ export async function GET() {
       '---',
       '',
     )
+  }
+
+  for (const locale of ['pt', 'en'] as const) {
+    sections.push(
+      `## Notes (${locale === 'pt' ? 'Portuguese' : 'English'})`,
+      '',
+    )
+    for (const note of getNotes(locale)) {
+      sections.push(
+        `Source: ${SITE_URL}${locale === 'en' ? '/en' : ''}/notes/${
+          note.number
+        }`,
+        '',
+        generateNoteMarkdown(note.number, locale),
+        '',
+        '---',
+        '',
+      )
+    }
   }
 
   sections.push(

@@ -1,0 +1,42 @@
+.root {
+  --handwriting-stroke: currentColor;
+  display: block;
+  overflow: visible;
+}
+
+/* pathLength="1" on every stroke makes the dash math unit-free: a dash of 1
+   with a 1.01 offset hides the whole stroke, then the offset animates to 0 and
+   the pen "writes" it. The 0.02 slack avoids a hairline dot at round caps. */
+.stroke {
+  fill: none;
+  stroke: var(--handwriting-stroke);
+  stroke-width: var(--handwriting-stroke-width);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 1.02;
+  stroke-dashoffset: 1.01;
+}
+
+.root[data-drawing='true'] .stroke {
+  animation: draw var(--handwriting-duration) ease forwards;
+  animation-delay: calc(
+    var(--stroke-order) * var(--handwriting-stagger) + var(--handwriting-delay)
+  );
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1.01;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stroke,
+  .root[data-drawing='true'] .stroke {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
