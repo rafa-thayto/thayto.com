@@ -52,16 +52,26 @@ const nextConfig = {
       // excludes dotted paths, so the .md URLs need explicit rewrites.
       // No query params here: rewrites preserve the original URL, so the
       // route handler derives page + locale from the .md pathname itself.
-      ...['index', 'blog', 'books', 'linktree', 'hobbies'].flatMap((page) => [
-        {
-          source: `/${page}.md`,
-          destination: '/api/markdown',
-        },
-        {
-          source: `/en/${page}.md`,
-          destination: '/api/markdown',
-        },
-      ]),
+      ...['index', 'blog', 'notes', 'books', 'linktree', 'hobbies'].flatMap(
+        (page) => [
+          {
+            source: `/${page}.md`,
+            destination: '/api/markdown',
+          },
+          {
+            source: `/en/${page}.md`,
+            destination: '/api/markdown',
+          },
+        ],
+      ),
+      {
+        source: '/notes/:number(\\d+).md',
+        destination: '/api/markdown',
+      },
+      {
+        source: '/en/notes/:number(\\d+).md',
+        destination: '/api/markdown',
+      },
     ]
   },
   async redirects() {

@@ -2,7 +2,12 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { ImageResponse } from 'next/og'
 import type { Locale } from '@/i18n/config'
-import { OG_COPY, OG_POST_GREETING, type OgPage } from './copy'
+import {
+  OG_COPY,
+  OG_NOTE_GREETING,
+  OG_POST_GREETING,
+  type OgPage,
+} from './copy'
 
 export const OG_SIZE = { width: 1200, height: 630 }
 export const OG_CONTENT_TYPE = 'image/png'
@@ -149,5 +154,16 @@ export function postOgImage(locale: Locale, title: string, tags?: string[]) {
     greeting: OG_POST_GREETING[locale],
     headline: title,
     tags,
+  })
+}
+
+export function noteOgImage(
+  locale: Locale,
+  number: number,
+  description: string,
+) {
+  return renderCard({
+    greeting: OG_NOTE_GREETING[locale],
+    headline: description ? `#${number}\n${description}` : `#${number}`,
   })
 }

@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { getPosts } from '@/utils/mdx'
+import { getNotes } from '@/utils/notes'
 import { defaultLocale } from '@/i18n/config'
 
 // Helper function to build URLs based on locale
@@ -11,7 +12,7 @@ const buildUrl = (path: string, locale: string): string => {
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = []
 
-  const staticPages = ['', 'blog', 'books', 'linktree', 'hobbies']
+  const staticPages = ['', 'blog', 'notes', 'books', 'linktree', 'hobbies']
 
   // Generate static pages: one entry per page per locale, so English URLs
   // are discoverable as their own <loc>, not only inside alternates.
@@ -89,6 +90,33 @@ export default function sitemap(): MetadataRoute.Sitemap {
         languages,
       },
     })
+  }
+
+  // Notes share numbers across locales, so every number gets both alternates
+  const ptNotes = getNotes('pt')
+  const enNumbers = new Set(getNotes('en').map((note) => note.number))
+
+  for (const note of ptNotes) {
+    const notePath = `notes/${note.number}`
+    const languages: { [key: string]: string } = {
+      'x-default': buildUrl(notePath, 'pt'),
+      pt: buildUrl(notePath, 'pt'),
+    }
+    if (enNumbers.has(note.number)) {
+      languages.en = buildUrl(notePath, 'en')
+    }
+
+    for (const locale of Object.keys(languages).filter(
+      (key) => key !== 'x-default',
+    )) {
+      entries.push({
+        url: buildUrl(notePath, locale),
+        lastModified: new Date(note.modifiedTime),
+        changeFrequency: 'monthly',
+        priority: 0.6,
+        alternates: { languages },
+      })
+    }
   }
 
   return entries

@@ -8,6 +8,10 @@
       "title": "Rafael Thayto - Blog",
       "description": "Aqui você encontra vários artigos sobre tecnologia e carreira."
     },
+    "notes": {
+      "title": "Rafael Thayto - Notas",
+      "description": "Notas rápidas: ideias, rascunhos e pensamentos soltos sobre código e produto."
+    },
     "linktree": {
       "title": "Rafael Thayto - Linktree",
       "description": "Links e redes sociais"
@@ -36,6 +40,11 @@
     "readMore": "Ler mais",
     "pageTitle": "Blog",
     "searchPlaceholder": "Buscar posts..."
+  },
+  "notes": {
+    "label": "Notas do Rafael",
+    "backToNotes": "Voltar para as notas",
+    "noteAriaLabel": "Nota #{number}"
   },
   "home": {
     "greeting": "Oi, sou o Rafael Thayto, prazer! :)",
@@ -101,6 +110,7 @@
     "page": {
       "home": "Home",
       "blog": "Blog",
+      "notes": "Notas",
       "books": "Livros",
       "linktree": "Linktree",
       "hobbies": "Hobbies"

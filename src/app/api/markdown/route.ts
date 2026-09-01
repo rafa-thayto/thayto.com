@@ -7,6 +7,8 @@ import {
   generateBooksMarkdown,
   generateHobbiesMarkdown,
   generateLinktreeMarkdown,
+  generateNotesIndexMarkdown,
+  generateNoteMarkdown,
 } from '@/utils/markdown-response'
 
 const MARKDOWN_HEADERS = {
@@ -69,6 +71,19 @@ export async function GET(request: NextRequest) {
       const slug = blogPostMatch[1]
       const content = await generateBlogPostMarkdown(slug, locale)
       return markdownResponse(content)
+    }
+
+    // Notes index
+    if (normalizedPath === '/notes') {
+      return markdownResponse(generateNotesIndexMarkdown(locale))
+    }
+
+    // Single note
+    const noteMatch = normalizedPath.match(/^\/notes\/(\d+)$/)
+    if (noteMatch) {
+      return markdownResponse(
+        generateNoteMarkdown(Number(noteMatch[1]), locale),
+      )
     }
 
     // Books

@@ -1,4 +1,5 @@
 import { getPosts } from '@/utils/mdx'
+import { getNote, getNotes } from '@/utils/notes'
 import { SITE_URL } from '@/utils/constants'
 import { getPostsPath } from '@/constants'
 import { getYearsOfProfessionalExperience } from '@/constants'
@@ -143,6 +144,50 @@ export async function generateBlogPostMarkdown(
     throw Object.assign(new Error('Invalid slug'), { code: 'ENOENT' })
   }
   return fs.readFile(filePath, 'utf-8')
+}
+
+const localePrefix = (locale: string) => (locale === 'en' ? '/en' : '')
+
+export function generateNotesIndexMarkdown(locale: string): string {
+  const messages = getMessages(locale)
+  const notes = getNotes(locale)
+
+  const lines: string[] = [
+    `# ${messages.notes.label}`,
+    '',
+    `> ${messages.metadata.notes.description}`,
+    '',
+    ...notes.map(
+      (note) =>
+        `- [${messages.notes.label} #${note.number}](${SITE_URL}${localePrefix(
+          locale,
+        )}/notes/${note.number}.md): ${note.description}`,
+    ),
+    '',
+  ]
+
+  return lines.join('\n')
+}
+
+export function generateNoteMarkdown(number: number, locale: string): string {
+  const messages = getMessages(locale)
+  const note = getNote(locale, number)
+  if (!note) {
+    throw Object.assign(new Error('Note not found'), { code: 'ENOENT' })
+  }
+
+  const lines: string[] = [
+    `# ${messages.notes.label} #${note.number}`,
+    '',
+    `> ${note.description}`,
+    '',
+    `Published: ${note.publishedTime}`,
+    '',
+    note.content.trim(),
+    '',
+  ]
+
+  return lines.join('\n')
 }
 
 export function generateHobbiesMarkdown(locale: string): string {

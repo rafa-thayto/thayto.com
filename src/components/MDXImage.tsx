@@ -140,6 +140,7 @@ export const MDXImage = ({
   return (
     <>
       <span
+        data-media="true"
         className={`relative block cursor-pointer group transition-transform duration-300 hover:scale-[1.02] rounded-lg overflow-hidden ${className}`}
         onClick={openFullscreen}
       >

@@ -19,6 +19,7 @@ import {
   Linkedin,
   Mail,
   Newspaper,
+  NotebookPen,
   Sparkles,
   SunMoon,
   Twitter,
@@ -58,6 +59,7 @@ type CommandPaletteProps = {
 const PAGES: { key: string; pathname: string; Icon: LucideIcon }[] = [
   { key: 'home', pathname: '/', Icon: Home },
   { key: 'blog', pathname: '/blog', Icon: Newspaper },
+  { key: 'notes', pathname: '/notes', Icon: NotebookPen },
   { key: 'books', pathname: '/books', Icon: BookOpen },
   { key: 'hobbies', pathname: '/hobbies', Icon: Sparkles },
   { key: 'linktree', pathname: '/linktree', Icon: Link2 },
