@@ -52,6 +52,7 @@ export async function generateMetadata({
     title: `${title} - Rafael Thayto`,
     description,
     keywords: tags?.join(', '),
+    authors: [{ name: 'Rafael Thayto', url: SITE_URL }],
     alternates: {
       canonical: canonicalUrl,
       languages: alternateLanguages(`/blog/${slug}`),
@@ -119,12 +120,26 @@ export default async function PostPage({
     learningResourceType: 'tutorial',
     author: personSummary(validLocale),
     publisher: organizationPublisher(),
-    image: {
-      '@type': 'ImageObject',
-      url: `${SITE_URL}/static/images/${image?.src ?? 'profile.jpg'}`,
-      width: 1200,
-      height: 630,
-    },
+    isAccessibleForFree: true,
+    articleSection: tags?.[0],
+    // The generated OG card is guaranteed 1200x630; the cover image keeps its
+    // own aspect ratio, so it is listed without fabricated dimensions.
+    image: [
+      {
+        '@type': 'ImageObject',
+        url: `${postUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+      },
+      ...(image?.src
+        ? [
+            {
+              '@type': 'ImageObject',
+              url: `${SITE_URL}/static/images/${image.src}`,
+            },
+          ]
+        : []),
+    ],
     breadcrumb: breadcrumbSchema(validLocale, [
       { name: 'Home', path: '/' },
       { name: 'Blog', path: '/blog' },

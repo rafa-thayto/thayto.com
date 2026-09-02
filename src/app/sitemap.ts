@@ -1,123 +1,145 @@
 import { MetadataRoute } from 'next'
-import { getPosts } from '@/utils/mdx'
+import { getPosts, Post } from '@/utils/mdx'
 import { getNotes } from '@/utils/notes'
-import { defaultLocale } from '@/i18n/config'
+import { locales, Locale } from '@/i18n/config'
+import { toCanonicalUrl } from '@/utils/seo'
 
-// Helper function to build URLs based on locale
-const buildUrl = (path: string, locale: string): string => {
-  const prefix = locale === 'pt' ? '' : `${locale}/`
-  return `https://thayto.com/${prefix}${path}`
+type EntryOptions = {
+  changeFrequency: 'weekly' | 'monthly'
+  priority: number
 }
 
+// Anything with a stable cross-locale key (post slug, note number) and a
+// modification date. One key may exist in only some locales.
+type LocalizedItem = {
+  key: string
+  path: string
+  modifiedTime: string | Date
+}
+
+const latestDate = (dates: (string | Date)[]): Date | undefined => {
+  const times = dates
+    .map((date) => new Date(date).getTime())
+    .filter((time) => !Number.isNaN(time))
+  return times.length ? new Date(Math.max(...times)) : undefined
+}
+
+// Every locale that has the page gets its own <loc>, so English URLs are
+// discoverable directly rather than only inside alternates. Alternates list
+// only the locales that really exist; x-default prefers pt, the site default.
+const localizedEntries = (
+  path: string,
+  availableLocales: Locale[],
+  options: EntryOptions,
+  lastModifiedFor: (locale: Locale) => Date | undefined,
+): MetadataRoute.Sitemap => {
+  const defaultLocale = availableLocales.includes('pt')
+    ? 'pt'
+    : availableLocales[0]
+  const languages: Record<string, string> = {
+    'x-default': toCanonicalUrl(defaultLocale, path),
+  }
+  for (const locale of availableLocales) {
+    languages[locale] = toCanonicalUrl(locale, path)
+  }
+  return availableLocales.map((locale) => ({
+    url: toCanonicalUrl(locale, path),
+    lastModified: lastModifiedFor(locale),
+    ...options,
+    alternates: { languages },
+  }))
+}
+
+const contentEntries = (
+  itemsByLocale: Record<Locale, LocalizedItem[]>,
+  options: EntryOptions,
+): MetadataRoute.Sitemap => {
+  const allItems = locales.flatMap((locale) => itemsByLocale[locale])
+  const keys = Array.from(new Set(allItems.map((item) => item.key)))
+
+  return keys.flatMap((key) => {
+    const variants = new Map(
+      locales.flatMap((locale) => {
+        const item = itemsByLocale[locale].find((it) => it.key === key)
+        return item ? [[locale, item] as const] : []
+      }),
+    )
+    const availableLocales = Array.from(variants.keys())
+    const { path } = variants.get(availableLocales[0])!
+    return localizedEntries(
+      path,
+      availableLocales,
+      options,
+      (locale) => new Date(variants.get(locale)!.modifiedTime),
+    )
+  })
+}
+
+const byLocale = <T>(load: (locale: Locale) => T[]): Record<Locale, T[]> =>
+  Object.fromEntries(locales.map((locale) => [locale, load(locale)])) as Record<
+    Locale,
+    T[]
+  >
+
+const newestOf = (itemsByLocale: Record<Locale, LocalizedItem[]>) =>
+  latestDate(
+    locales
+      .flatMap((locale) => itemsByLocale[locale])
+      .map((i) => i.modifiedTime),
+  )
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const entries: MetadataRoute.Sitemap = []
+  const posts = byLocale<LocalizedItem>((locale) =>
+    (getPosts(locale) as Post[]).map((post) => ({
+      key: post.filePath.replace('.mdx', ''),
+      path: post.data.href,
+      modifiedTime: post.data.modifiedTime,
+    })),
+  )
+  const notes = byLocale<LocalizedItem>((locale) =>
+    getNotes(locale).map((note) => ({
+      key: String(note.number),
+      path: `/notes/${note.number}`,
+      modifiedTime: note.modifiedTime,
+    })),
+  )
 
-  const staticPages = ['', 'blog', 'notes', 'books', 'linktree', 'hobbies']
+  // <lastmod> must reflect real content changes. Search engines learn to
+  // ignore sitemaps whose dates bump on every deploy, so listing pages
+  // inherit the newest child date and pages with no dated content omit it.
+  const latestPostDate = newestOf(posts)
+  const latestNoteDate = newestOf(notes)
 
-  // Generate static pages: one entry per page per locale, so English URLs
-  // are discoverable as their own <loc>, not only inside alternates.
-  for (const page of staticPages) {
-    const pageUrl = page === '' ? '' : `${page}`
-    const alternates = {
-      languages: {
-        'x-default': buildUrl(pageUrl, 'pt'),
-        pt: buildUrl(pageUrl, 'pt'),
-        en: buildUrl(pageUrl, 'en'),
+  const staticPages: (EntryOptions & { path: string; lastModified?: Date })[] =
+    [
+      {
+        path: '/',
+        lastModified: latestPostDate,
+        changeFrequency: 'weekly',
+        priority: 1.0,
       },
-    }
-
-    for (const locale of ['pt', 'en']) {
-      entries.push({
-        url: buildUrl(pageUrl, locale),
-        lastModified: new Date(),
-        changeFrequency:
-          page === '' ? 'weekly' : page === 'blog' ? 'weekly' : 'monthly',
-        priority: page === '' ? 1.0 : page === 'blog' ? 0.9 : 0.8,
-        alternates,
-      })
-    }
-  }
-
-  // Fetch posts from both locales
-  const ptPosts = getPosts('pt')
-  const enPosts = getPosts('en')
-
-  // Create a map of slug -> {pt: Post, en: Post}
-  const postsBySlug = new Map<string, { pt?: any; en?: any }>()
-
-  ptPosts.forEach((post) => {
-    const slug = post.filePath.replace('.mdx', '')
-    postsBySlug.set(slug, { pt: post })
-  })
-
-  enPosts.forEach((post) => {
-    const slug = post.filePath.replace('.mdx', '')
-    const existing = postsBySlug.get(slug)
-    if (existing) {
-      existing.en = post
-    } else {
-      postsBySlug.set(slug, { en: post })
-    }
-  })
-
-  // Generate blog post URLs (one entry per post with alternates)
-  for (const [slug, variants] of Array.from(postsBySlug.entries())) {
-    const ptPost = variants.pt
-    const enPost = variants.en
-
-    // Use Portuguese version as default (or English if PT doesn't exist)
-    const defaultPost = ptPost || enPost!
-
-    // Build alternates object
-    const languages: { [key: string]: string } = {}
-
-    if (ptPost) {
-      languages.pt = buildUrl(`blog/${slug}`, 'pt')
-    }
-    if (enPost) {
-      languages.en = buildUrl(`blog/${slug}`, 'en')
-    }
-
-    // x-default points to pt if available, otherwise en
-    languages['x-default'] = buildUrl(`blog/${slug}`, ptPost ? 'pt' : 'en')
-
-    entries.push({
-      url: buildUrl(`blog/${slug}`, ptPost ? 'pt' : 'en'),
-      lastModified: new Date(defaultPost.data.modifiedTime),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-      alternates: {
-        languages,
+      {
+        path: '/blog',
+        lastModified: latestPostDate,
+        changeFrequency: 'weekly',
+        priority: 0.9,
       },
-    })
-  }
-
-  // Notes share numbers across locales, so every number gets both alternates
-  const ptNotes = getNotes('pt')
-  const enNumbers = new Set(getNotes('en').map((note) => note.number))
-
-  for (const note of ptNotes) {
-    const notePath = `notes/${note.number}`
-    const languages: { [key: string]: string } = {
-      'x-default': buildUrl(notePath, 'pt'),
-      pt: buildUrl(notePath, 'pt'),
-    }
-    if (enNumbers.has(note.number)) {
-      languages.en = buildUrl(notePath, 'en')
-    }
-
-    for (const locale of Object.keys(languages).filter(
-      (key) => key !== 'x-default',
-    )) {
-      entries.push({
-        url: buildUrl(notePath, locale),
-        lastModified: new Date(note.modifiedTime),
+      {
+        path: '/notes',
+        lastModified: latestNoteDate,
         changeFrequency: 'monthly',
-        priority: 0.6,
-        alternates: { languages },
-      })
-    }
-  }
+        priority: 0.8,
+      },
+      { path: '/books', changeFrequency: 'monthly', priority: 0.8 },
+      { path: '/linktree', changeFrequency: 'monthly', priority: 0.8 },
+      { path: '/hobbies', changeFrequency: 'monthly', priority: 0.8 },
+    ]
 
-  return entries
+  return [
+    ...staticPages.flatMap(({ path, lastModified, ...options }) =>
+      localizedEntries(path, [...locales], options, () => lastModified),
+    ),
+    ...contentEntries(posts, { changeFrequency: 'monthly', priority: 0.7 }),
+    ...contentEntries(notes, { changeFrequency: 'monthly', priority: 0.6 }),
+  ]
 }

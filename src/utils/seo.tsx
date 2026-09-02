@@ -100,12 +100,40 @@ export const ALUMNI_ORGANIZATIONS = companyLinks
   .filter((company) => !company.current)
   .map(toOrganization)
 
+// Name variants LLMs and knowledge graphs will encounter across the web.
+// Keeping them on the entity lets "Thayto", "Rafael Thayto" and the full
+// legal name resolve to the same Person instead of three low-confidence ones.
+export const PERSON_NAME = 'Rafael Thayto'
+export const PERSON_ALTERNATE_NAMES = ['Thayto', 'Rafael Thayto Tani']
+
+export const PERSON_KNOWS_ABOUT = [
+  'TypeScript',
+  'Next.js',
+  'React',
+  'Node.js',
+  'Microservices',
+  'Microfrontends',
+  'Distributed Systems',
+  'Observability',
+  'Software Architecture',
+  'Full-Stack Development',
+  'Web Performance',
+  'PWA Development',
+  'SEO',
+  'AI Coding Agents',
+  'Claude Code',
+  'Developer Tooling',
+  'Git Worktrees',
+]
+
 export const personSummary = (locale: Locale) => ({
   '@type': 'Person' as const,
   '@id': `${SITE_URL}/#person`,
-  name: 'Rafael Thayto',
+  name: PERSON_NAME,
+  alternateName: PERSON_ALTERNATE_NAMES,
   url: toCanonicalUrl(locale, '/'),
   jobTitle: 'Senior Software Engineer',
+  image: { ...PROFILE_IMAGE },
   sameAs: [...SOCIAL_LINKS],
 })
 

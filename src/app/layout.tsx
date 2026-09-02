@@ -25,7 +25,26 @@ const lora = Lora({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://thayto.com'),
-  robots: 'index follow',
+  // Snippet controls decide how much Google may quote in classic snippets and
+  // AI Overviews. Unlimited snippet + large image preview is the standard
+  // "cite me freely" configuration.
+  robots: {
+    index: true,
+    follow: true,
+    'max-snippet': -1,
+    'max-image-preview': 'large',
+    'max-video-preview': -1,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
+  },
+  authors: [{ name: 'Rafael Thayto', url: 'https://thayto.com' }],
+  creator: 'Rafael Thayto',
+  publisher: 'Rafael Thayto',
   verification: {
     google: GOOGLE_SITE_VERIFICATION,
   },
